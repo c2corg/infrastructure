@@ -44,7 +44,7 @@ deb http://www.backports.org/debian lenny-backports main contrib non-free
     "elinks", "ethtool",
     "git-core", "git-svn", "gnupg",
     "iotop", "iptraf",
-    "less", "lsof",
+    "less", "locales-all", "lsof",
     "m4", "make", "mtr-tiny",
     "netcat", "nmap", "ntp",
     "patch", "pwgen",
@@ -55,6 +55,30 @@ deb http://www.backports.org/debian lenny-backports main contrib non-free
     "vim", "vlan",
     "wget"
     ]: ensure => installed
+  }
+
+  # kernel must reboot if panic occurs
+  sysctl::set_value { "kernel.panic":
+    value => "60",
+  }
+
+  augeas { "sysstat history":
+    context => "/files/etc/default/sysstat",
+    changes => ["set HISTORY 30", "set ENABLED true"],
+  }
+
+  augeas { "disable ctrl-alt-delete":
+    context => "/files/etc/inittab/*[action='ctrlaltdel']/",
+    changes => [
+      "set runlevels 12345",
+      "set process '/bin/echo ctrlaltdel disabled'"
+    ],
+    notify  => Exec["refresh init"],
+  }
+
+  exec { "refresh init":
+    refreshonly => true,
+    command     => "kill -HUP 1",
   }
 
 }
