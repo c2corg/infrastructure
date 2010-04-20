@@ -78,3 +78,7 @@ then
         done
 fi
 
+# run sync-modules.sh after each push
+if (cd $GIT_WORK_TREE/modules; test -x sync-modules.sh >/dev/null); then
+  (cd $GIT_WORK_TREE/modules && ./sync-modules.sh)
+fi
