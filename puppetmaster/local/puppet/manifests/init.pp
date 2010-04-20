@@ -35,7 +35,9 @@ class puppet::server {
     changes => [
       "set modulepath /srv/puppetmaster/modules:/srv/puppetmaster/local",
       "set manifestdir /srv/puppetmaster/manifests",
+      "set manifest /srv/puppetmaster/manifests/site.pp",
     ],
+    notify => Service["puppetmaster"],
   }
 
   augeas { "puppetmaster environments":
@@ -44,7 +46,9 @@ class puppet::server {
       "set puppetmasterd/environments marc",
       "set marc/modulepath /home/marc/puppetmaster/modules:/home/marc/puppetmaster/local",
       "set marc/manifestdir /home/marc/puppetmaster/manifests",
+      "set marc/manifest /home/marc/puppetmaster/manifests/site.pp",
     ],
+    notify => Service["puppetmaster"],
   }
 
   file { "/srv/puppetmaster/.git/hooks/post-update":
