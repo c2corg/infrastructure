@@ -47,4 +47,10 @@ class puppet::server {
     ],
   }
 
+  file { "/srv/puppetmaster/.git/hooks/post-update":
+    ensure => present,
+    mode   => "0755",
+    source => "puppet:///puppet/post-update",
+  }
+
 }
