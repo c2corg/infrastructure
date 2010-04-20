@@ -20,7 +20,7 @@ class puppet::client {
 
 class puppet::server {
 
-  package { ["puppetmaster", "vim-puppet"]:
+  package { ["puppetmaster", "vim-puppet", "git-core", "git-svn"]:
     ensure => latest,
   }
 
@@ -35,6 +35,15 @@ class puppet::server {
     changes => [
       "set modulepath /srv/puppetmaster/modules:/srv/puppetmaster/local",
       "set manifestdir /srv/puppetmaster/manifests",
+    ],
+  }
+
+  augeas { "puppetmaster environments":
+    context => "/files/etc/puppet/puppet.conf",
+    changes => [
+      "set puppetmasterd/environments marc",
+      "set marc/modulepath /home/marc/puppetmaster/modules:/home/marc/puppetmaster/local",
+      "set marc/manifestdir /home/marc/puppetmaster/manifests",
     ],
   }
 
