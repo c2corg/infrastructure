@@ -20,7 +20,7 @@ class puppet::client {
 
 class puppet::server {
 
-  package { ["puppetmaster", "vim-puppet", "git-core", "git-svn"]:
+  package { ["puppetmaster", "vim-puppet"]:
     ensure => latest,
   }
 

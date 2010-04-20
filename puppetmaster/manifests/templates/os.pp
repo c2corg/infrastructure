@@ -37,4 +37,24 @@ deb http://www.backports.org/debian lenny-backports main contrib non-free
      priority => "1010",
   }
 
+  package { [
+    "bash-completion",
+    "curl", "cvs",
+    "dnsutils",
+    "elinks", "ethtool",
+    "git-core", "git-svn", "gnupg",
+    "iotop", "iptraf",
+    "less", "lsof",
+    "m4", "make", "mtr-tiny",
+    "netcat", "nmap", "ntp",
+    "patch", "pwgen",
+    "rsync",
+    "screen", "strace", "subversion", "subversion-tools", "sysstat",
+    "tcpdump", "telnet", "traceroute", "tshark",
+    "unzip",
+    "vim", "vlan",
+    "wget"
+    ]: ensure => installed
+  }
+
 }
