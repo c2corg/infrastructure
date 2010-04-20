@@ -10,8 +10,8 @@ git://github.com/camptocamp/puppet-apt.git apt origin/master
 git://github.com/camptocamp/puppet-openssl.git openssl origin/master
 git://github.com/camptocamp/puppet-rsyncd.git rsyncd origin/master
 git://github.com/camptocamp/puppet-postfix.git postfix origin/master
+git://github.com/camptocamp/puppet-sysctl.git sysctl origin/master
 git://github.com/bodepd/puppet-sudo.git sudo origin/master
-git://puppet-modules.git.puzzle.ch/module-sysctl.git sysctl origin/master
 
 git://github.com/camptocamp/puppet-pacemaker.git pacemaker origin/master
 git://github.com/camptocamp/puppet-varnish.git varnish origin/master
