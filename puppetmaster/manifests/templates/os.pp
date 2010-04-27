@@ -7,8 +7,8 @@ deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updat
 ",
   }
 
-  apt::sources_list { "backports.org": }
-  apt::sources_list { "debian-volatile": }
+  apt::sources_list { "backports.org": content => "" }
+  apt::sources_list { "debian-volatile": content => "" }
 
   apt::key { "16BA136C":
     source => "http://backports.org/debian/archive.key",
