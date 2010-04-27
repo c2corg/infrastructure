@@ -27,7 +27,7 @@ deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updat
     "elinks", "ethtool",
     "git-core", "git-svn", "gnupg",
     "iotop", "iptraf",
-    "less", "locales-all", "lsof",
+    "less", "locales-all", "lsb-release", "lsof",
     "m4", "make", "mtr-tiny",
     "netcat", "nmap", "ntp",
     "patch", "pwgen",
