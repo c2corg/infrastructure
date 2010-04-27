@@ -1,6 +1,6 @@
 node 'base-node' {
 
-  include os
+  include "os::$lsbdistcodename"
   include apt
   include puppet::client
   include account

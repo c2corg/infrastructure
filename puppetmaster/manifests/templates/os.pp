@@ -2,21 +2,12 @@ class os {
 
   apt::sources_list { "debian":
     content => "# file managed by puppet
-deb http://mirror.switch.ch/ftp/mirror/debian/ lenny main contrib non-free
-deb http://mirror.switch.ch/ftp/mirror/debian-security/ lenny/updates main contrib non-free
-deb http://volatile.debian.org/debian-volatile lenny/volatile main
+deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename} main contrib non-free
+deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updates main contrib non-free
+deb http://volatile.debian.org/debian-volatile ${lsbdistcodename}/volatile main
 ",
   }
 
-  apt::sources_list{ "backports.org":
-    content => "# file managed by puppet
-deb http://www.backports.org/debian lenny-backports main contrib non-free
-",
-  }
-
-  apt::key { "16BA136C":
-    source => "http://backports.org/debian/archive.key",
-  }
 
   file { "/etc/apt/sources.list":
     content => "# file managed by puppet\n",
@@ -24,18 +15,6 @@ deb http://www.backports.org/debian lenny-backports main contrib non-free
     notify => Exec["apt-get_update"],
   }
 
-
-  apt::preferences { "lenny-backports":
-    package => "*",
-    pin   => "release a=${lsbdistcodename}-backports",
-    priority => "400",
-  }
-
-  apt::preferences { "puppet-packages_from_bp.o":
-     package  => "facter augeas-tools libaugeas0 augeas-lenses puppet puppetmaster",
-     pin      => "release a=${lsbdistcodename}-backports",
-     priority => "1010",
-  }
 
   package { [
     "bash-completion",
@@ -81,4 +60,32 @@ deb http://www.backports.org/debian lenny-backports main contrib non-free
     command     => "kill -HUP 1",
   }
 
+}
+
+class os::lenny inherits os {
+
+  apt::sources_list{ "backports.org":
+    content => "# file managed by puppet
+deb http://www.backports.org/debian ${lsbdistcodename}-backports main contrib non-free
+",
+  }
+
+  apt::key { "16BA136C":
+    source => "http://backports.org/debian/archive.key",
+  }
+
+  apt::preferences { "lenny-backports":
+    package => "*",
+    pin   => "release a=${lsbdistcodename}-backports",
+    priority => "400",
+  }
+
+  apt::preferences { "puppet-packages_from_bp.o":
+     package  => "facter augeas-tools libaugeas0 augeas-lenses puppet puppetmaster",
+     pin      => "release a=${lsbdistcodename}-backports",
+     priority => "1010",
+  }
+}
+
+class os::squeeze inherits os {
 }
