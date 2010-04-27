@@ -26,8 +26,8 @@ git://github.com/camptocamp/puppet-nagios.git nagios origin/refactorisation
 
 git://github.com/camptocamp/puppet-python.git python origin/master
 git://github.com/camptocamp/puppet-ruby.git ruby origin/master
-git://github.com/camptocamp/puppet-perl.git perl origin/master
-git://github.com/camptocamp/puppet-php.git php origin/master
+#git://github.com/camptocamp/puppet-perl.git perl origin/master
+#git://github.com/camptocamp/puppet-php.git php origin/master
 git://github.com/camptocamp/puppet-java.git java origin/master
 git://github.com/camptocamp/puppet-buildenv.git buildenv origin/master
 
