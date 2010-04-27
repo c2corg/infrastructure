@@ -4,17 +4,21 @@ class os {
     content => "# file managed by puppet
 deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename} main contrib non-free
 deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updates main contrib non-free
-deb http://volatile.debian.org/debian-volatile ${lsbdistcodename}/volatile main
 ",
   }
 
+  apt::sources_list { "backports.org": }
+  apt::sources_list { "debian-volatile": }
+
+  apt::key { "16BA136C":
+    source => "http://backports.org/debian/archive.key",
+  }
 
   file { "/etc/apt/sources.list":
     content => "# file managed by puppet\n",
     before => Exec["apt-get_update"],
     notify => Exec["apt-get_update"],
   }
-
 
   package { [
     "bash-completion",
@@ -64,17 +68,19 @@ deb http://volatile.debian.org/debian-volatile ${lsbdistcodename}/volatile main
 
 class os::lenny inherits os {
 
-  apt::sources_list{ "backports.org":
+  Apt::Sources_list["backports.org"] {
     content => "# file managed by puppet
 deb http://www.backports.org/debian ${lsbdistcodename}-backports main contrib non-free
 ",
   }
 
-  apt::key { "16BA136C":
-    source => "http://backports.org/debian/archive.key",
+  Apt::Sources_list["debian-volatile"] {
+    content => "# file managed by puppet
+deb http://volatile.debian.org/debian-volatile ${lsbdistcodename}/volatile main
+",
   }
 
-  apt::preferences { "lenny-backports":
+  apt::preferences { "backports.org":
     package => "*",
     pin   => "release a=${lsbdistcodename}-backports",
     priority => "400",
@@ -85,7 +91,12 @@ deb http://www.backports.org/debian ${lsbdistcodename}-backports main contrib no
      pin      => "release a=${lsbdistcodename}-backports",
      priority => "1010",
   }
+
 }
 
 class os::squeeze inherits os {
+
+  Apt::Sources_list["backports.org"] { ensure => absent }
+  Apt::Sources_list["debian-volatile"] { ensure => absent }
+
 }
