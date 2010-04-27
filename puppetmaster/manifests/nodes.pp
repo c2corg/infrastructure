@@ -13,3 +13,7 @@ node 'c2cpc1.camptocamp.com' inherits 'base-node' {
 
   realize Account::User[marc]
 }
+
+node 'hn0-c2corg.camptocamp.com' inherits 'base-node' {
+
+}
