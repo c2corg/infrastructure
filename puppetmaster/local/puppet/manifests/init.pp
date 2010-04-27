@@ -7,7 +7,13 @@ class puppet::client {
   service { "puppet":
     enable  => true,
     ensure  => running,
-    require => Package["puppet"],
+    pattern => "ruby1.8 /usr/sbin/puppetd$",
+    require => [Package["puppet"], Augeas["enable puppetd at boot"]],
+  }
+
+  augeas { "enable puppetd at boot":
+    context => "/files/etc/default/puppet",
+    changes => "set START yes",
   }
 
   augeas { "set puppet server":
