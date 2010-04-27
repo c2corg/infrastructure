@@ -4,11 +4,27 @@ class os {
     content => "# file managed by puppet
 deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename} main contrib non-free
 deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updates main contrib non-free
+
+deb http://mirror.switch.ch/ftp/mirror/debian/ testing main contrib non-free
+
+deb http://mirror.switch.ch/ftp/mirror/debian/ unstable main contrib non-free
 ",
   }
 
   apt::sources_list { "backports.org": content => "" }
   apt::sources_list { "debian-volatile": content => "" }
+
+  apt::preferences { "testing":
+    package => "*",
+    pin   => "release a=testing",
+    priority => "200",
+  }
+
+  apt::preferences { "unstable":
+    package => "*",
+    pin   => "release a=unstable",
+    priority => "100",
+  }
 
   apt::key { "16BA136C":
     source => "http://backports.org/debian/archive.key",
