@@ -15,4 +15,12 @@ class app-vz-host {
     require => Apt::Preferences["openvz-kernel"],
   }
 
+  sysctl::set_value {
+    "net.ipv4.ip_forward":                  value => "1";
+    "net.ipv4.conf.default.proxy_arp":      value => "0";
+    "net.ipv4.conf.all.rp_filter":          value => "1";
+    "net.ipv4.conf.default.send_redirects": value => "1";
+    "net.ipv4.conf.all.send_redirects":     value => "0";
+  }
+
 }
