@@ -6,7 +6,7 @@ echo -e "
 # URL<one space>modulename<one space>commit<newline>
 
 git://github.com/camptocamp/puppet-common.git common origin/master
-git://github.com/camptocamp/puppet-apt.git apt origin/master
+git://github.com/camptocamp/puppet-apt.git apt ed1e916173e
 git://github.com/camptocamp/puppet-openssl.git openssl origin/master
 git://github.com/camptocamp/puppet-rsyncd.git rsyncd origin/master
 git://github.com/camptocamp/puppet-postfix.git postfix origin/master
