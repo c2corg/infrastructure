@@ -16,6 +16,6 @@ node 'c2cpc1.camptocamp.com' inherits 'base-node' {
 
 node 'hn0-c2corg.camptocamp.com' inherits 'base-node' {
 
-  include app-vz-host
+  include vz
 
 }
