@@ -40,7 +40,7 @@ class vz {
 
 }
 
-define vz::ve ($ensure="running", $hname, $template="debian-5.0-amd64-minimal", $net="192.168.191") {
+define vz::ve ($ensure="running", $hname, $template="debian-5.0-amd64-with-puppet", $net="192.168.191") {
 
   case $ensure {
     present,stopped,running: {
