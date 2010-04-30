@@ -23,6 +23,13 @@ class vz {
     "net.ipv4.conf.all.send_redirects":     value => "0";
   }
 
+  service { "vz":
+    ensure    => running,
+    enable    => true,
+    hasstatus => true,
+    require   => Package["vzctl"]
+  }
+
 }
 
 define vz::ve ($ensure="running", $hname, $template="debian-5.0-amd64-minimal", $net="192.168.191") {
