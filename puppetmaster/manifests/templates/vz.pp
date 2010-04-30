@@ -1,6 +1,6 @@
 class app-vz-host {
 
-  package { ["vzctl", "vzquota", "vzdump", "bridge-utils"]:
+  package { ["vzctl", "vzquota", "vzdump", "bridge-utils", "debootstrap"]:
     ensure => present,
   }
 
