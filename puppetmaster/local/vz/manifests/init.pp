@@ -30,6 +30,11 @@ class vz {
     require   => Package["vzctl"]
   }
 
+  file { "/etc/vz/conf/ve-vps.unlimited.conf-sample":
+    source  => "puppet:///vz/ve-vps.unlimited.conf-sample",
+    require => Package["vzctl"],
+  }
+
   iptables { "setup nat":
     table    => "nat",
     chain    => "POSTROUTING",
@@ -40,14 +45,15 @@ class vz {
 
 }
 
-define vz::ve ($ensure="running", $hname, $template="debian-5.0-amd64-with-puppet", $net="192.168.191") {
+define vz::ve ($ensure="running", $hname, $template="debian-5.0-amd64-with-puppet", $config="vps.unlimited", $net="192.168.191") {
 
   case $ensure {
     present,stopped,running: {
 
       exec { "vzctl create $name":
-        command => "vzctl create $name --ostemplate $template --hostname $hname",
+        command => "vzctl create $name --ostemplate $template --config $config --hostname $hname",
         creates => ["/etc/vz/conf/${name}.conf", "/var/lib/vz/private/${name}/"],
+        require => Package["vzctl"],
       }
 
       exec { "configure VE $name":
