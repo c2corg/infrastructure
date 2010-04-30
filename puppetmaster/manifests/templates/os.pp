@@ -36,6 +36,15 @@ deb http://mirror.switch.ch/ftp/mirror/debian/ unstable main contrib non-free
     notify => Exec["apt-get_update"],
   }
 
+  file { "/etc/resolv.conf":
+    content => "# file managed by puppet
+search camptocamp.org
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+options rotate edns0
+",
+  }
+
   package { [
     "at",
     "bash-completion",
