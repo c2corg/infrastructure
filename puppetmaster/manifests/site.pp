@@ -11,6 +11,7 @@ File {
   ignore => '.svn',
   owner  => root,
   group  => root,
+  mode   => 0644,
 }
 
 Package {
