@@ -37,23 +37,70 @@ deb http://mirror.switch.ch/ftp/mirror/debian/ unstable main contrib non-free
   }
 
   package { [
+    "at",
     "bash-completion",
-    "curl", "cvs",
+    "curl", "cron", "cvs",
     "dnsutils",
     "elinks", "ethtool",
     "git-core", "git-svn", "gnupg",
     "iotop", "iptraf",
     "less", "locales-all", "lsb-release", "lsof",
     "m4", "make", "mtr-tiny",
-    "netcat", "nmap", "ntp",
+    "netcat", "nmap", "nscd", "ntp",
+    "openssh-server",
     "patch", "pwgen",
-    "rsync",
+    "rsyslog", "rsync",
     "screen", "strace", "subversion", "subversion-tools", "sysstat",
     "tcpdump", "telnet", "traceroute", "tshark",
     "unzip",
     "vim", "vlan",
     "wget"
     ]: ensure => installed
+  }
+
+  /* Base services */
+  service { "cron":
+    ensure => running, enable => true,
+    require => Package["cron"],
+  }
+
+  service { "atd":
+    ensure => running, enable => true,
+    require => Package["at"],
+  }
+
+  service { "rsyslog":
+    ensure => running, enable => true, hasstatus => true,
+    require => Package["rsyslog"],
+  }
+
+  service { "nscd":
+    ensure => running, enable => true, hasstatus => true,
+    require => Package["nscd"],
+  }
+
+  service { "ntp":
+    ensure => running, enable => true, hasstatus => true,
+    require => Package["ntp"],
+  }
+
+  service { "ssh":
+    ensure => running, enable => true, hasstatus => true,
+    require => Package["openssh-server"],
+  }
+
+  service { "sysstat":
+    require => Package["sysstat"],
+  }
+
+  file { "/etc/timezone":
+    content => "Europe/Zurich\n",
+    notify  => Exec["configure timezone"],
+  }
+
+  exec { "configure timezone":
+    command     => "dpkg-reconfigure --priority critical tzdata",
+    refreshonly => true,
   }
 
   # kernel must reboot if panic occurs
@@ -64,6 +111,7 @@ deb http://mirror.switch.ch/ftp/mirror/debian/ unstable main contrib non-free
   augeas { "sysstat history":
     context => "/files/etc/default/sysstat",
     changes => ["set HISTORY 30", "set ENABLED true"],
+    notify  => Service["sysstat"],
   }
 
   augeas { "disable ctrl-alt-delete":
