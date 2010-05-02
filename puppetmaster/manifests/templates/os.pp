@@ -26,8 +26,8 @@ deb http://mirror.switch.ch/ftp/mirror/debian/ unstable main contrib non-free
     priority => "100",
   }
 
-  apt::key { "16BA136C":
-    source => "http://backports.org/debian/archive.key",
+  package { "debian-archive-keyring":
+    ensure => latest,
   }
 
   file { "/etc/apt/sources.list":
@@ -154,8 +154,8 @@ deb http://volatile.debian.org/debian-volatile ${lsbdistcodename}/volatile main
   }
 
   apt::preferences { "backports.org":
-    package => "*",
-    pin   => "release a=${lsbdistcodename}-backports",
+    package  => "*",
+    pin      => "release a=${lsbdistcodename}-backports",
     priority => "400",
   }
 
