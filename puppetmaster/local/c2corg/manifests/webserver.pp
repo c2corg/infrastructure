@@ -6,8 +6,11 @@ class c2corg::webserver::base {
   $epsg_file = "minimal"
   include mapserver::debian
 
-  /* repo key is imported in mapserver::debian */
-  apt::sources_list {"c2corg-${lsbdistcodename}":
+  apt::key { "5C662D02":
+    source => "http://dev.camptocamp.com/packages/pub.key",
+  }
+
+  apt::sources_list { "c2corg-${lsbdistcodename}":
     ensure  => present,
     content => "deb http://dev.camptocamp.com/packages ${lsbdistcodename} c2corg\n",
   }
