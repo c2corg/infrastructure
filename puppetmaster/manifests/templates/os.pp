@@ -1,5 +1,7 @@
 class os {
 
+  include apt::unattended-upgrade::automatic
+
   apt::sources_list { "debian":
     content => "# file managed by puppet
 deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename} main contrib non-free
