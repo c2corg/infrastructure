@@ -21,6 +21,11 @@ class puppet::client {
     changes => "set server c2cpc1.camptocamp.com",
   }
 
+  augeas { "set puppet certname":
+    context => "/files/etc/puppet/puppet.conf/main",
+    changes => "set certname $hostname",
+  }
+
 }
 
 
