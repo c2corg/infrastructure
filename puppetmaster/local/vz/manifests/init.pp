@@ -39,6 +39,7 @@ class vz {
     table    => "nat",
     chain    => "POSTROUTING",
     outiface => "eth0.22",
+    source   => "192.168.191.0/24",
     jump     => "MASQUERADE",
     require  => Sysctl::Set_value["net.ipv4.ip_forward"],
   }
@@ -103,5 +104,17 @@ define vz::ve ($ensure="running", $hname, $template="debian-5.0-amd64-with-puppe
 
     }
 
+  }
+}
+
+define vz::fwd ($net="192.168.191", $host, $from, $to) {
+
+  iptables { "forward from $from to $host:$to":
+    chain       => "PREROUTING",
+    table       => "nat",
+    proto       => "tcp",
+    todest      => "${net}.${host}:${to}",
+    dport       => $from,
+    jump        => "DNAT",
   }
 }
