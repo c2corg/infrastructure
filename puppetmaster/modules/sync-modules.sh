@@ -14,6 +14,7 @@ git://github.com/camptocamp/puppet-sysctl.git sysctl origin/master
 git://github.com/camptocamp/puppet-iptables.git iptables origin/master
 git://github.com/bodepd/puppet-sudo.git sudo origin/master
 git://github.com/bruce/puppet-vcsrepo.git vcsrepo origin/master
+git://github.com/reductivelabs/puppet-lvm.git lvm origin/master
 
 git://github.com/camptocamp/puppet-pacemaker.git pacemaker origin/master
 git://github.com/camptocamp/puppet-varnish.git varnish origin/master
