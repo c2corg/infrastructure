@@ -22,7 +22,7 @@ class puppet::client {
   }
 
   augeas { "set puppet certname":
-    context => "/files/etc/puppet/puppet.conf/main",
+    context => "/files/etc/puppet/puppet.conf/puppetd",
     changes => "set certname $hostname",
   }
 
