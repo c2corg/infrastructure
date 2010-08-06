@@ -37,5 +37,11 @@ node 'hn0' inherits 'base-node' {
   }
 
   vz::ve { "101": hname => "pm.c2corg" }
+
+  vz::fwd { "forward puppetmaster port":
+    ve   => "101",
+    from => "8140",
+    to   => "8140",
+  }
 }
 
