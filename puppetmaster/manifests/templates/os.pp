@@ -40,7 +40,7 @@ deb http://mirror.switch.ch/ftp/mirror/debian/ unstable main contrib non-free
 
   file { "/etc/resolv.conf":
     content => "# file managed by puppet
-search camptocamp.org
+search c2corg
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 options rotate edns0
