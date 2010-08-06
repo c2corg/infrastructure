@@ -30,11 +30,15 @@ class vz {
     require   => [Package["vzctl"], Mount["/var/lib/vz"]],
   }
 
-  lvm::volume { "vz":
-    ensure => present,
-    vg => "vg0",
-    pv => "/dev/cciss/c0d0p2",
-    fstype => "ext3",
+  logical_volume { "vz":
+    ensure       => present,
+    volume_group => "vg0",
+    initial_size => "10G",
+  }
+
+  filesystem { "/dev/vg0/vz":
+    ensure  => "ext3",
+    require => Logical_volume["vz"],
   }
 
   mount { "/var/lib/vz":
@@ -42,7 +46,7 @@ class vz {
     options => "auto",
     fstype  => "ext3",
     device  => "/dev/vg0/vz",
-    require => [Lvm::Volume["vz"], Package["vzctl"]],
+    require => [Filesystem["/dev/vg0/vz"], Package["vzctl"]],
   }
 
   file { [
