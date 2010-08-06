@@ -65,15 +65,6 @@ class vz {
     require => Package["vzctl"],
   }
 
-  iptables { "setup nat":
-    table    => "nat",
-    chain    => "POSTROUTING",
-    outiface => "eth2",
-    source   => "192.168.191.0/24",
-    jump     => "MASQUERADE",
-    require  => Sysctl::Set_value["net.ipv4.ip_forward"],
-  }
-
 }
 
 define vz::ve ($ensure="running", $hname, $template="debian-5.0-amd64-with-puppet", $config="vps.unlimited", $net="192.168.191") {
