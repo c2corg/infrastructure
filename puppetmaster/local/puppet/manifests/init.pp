@@ -18,7 +18,7 @@ class puppet::client {
 
   augeas { "set puppet server":
     context => "/files/etc/puppet/puppet.conf/main",
-    changes => "set server c2cpc1.camptocamp.com",
+    changes => "set server pm",
   }
 
   augeas { "set puppet pluginsync":
@@ -29,6 +29,15 @@ class puppet::client {
   augeas { "set puppet certname":
     context => "/files/etc/puppet/puppet.conf/puppetd",
     changes => "set certname $hostname",
+  }
+
+  host { "pm.c2corg":
+    host_aliases => ["pm"],
+    ip => $ipaddress ? {
+      /192\.168\.19.*/ => '192.168.191.101',
+      '128.179.66.13'  => '192.168.191.101',
+      default          => '128.179.66.13',
+    },
   }
 
 }
@@ -44,6 +53,11 @@ class puppet::server {
     enable  => true,
     ensure  => running,
     require => Package["puppetmaster"],
+  }
+
+  augeas { "set puppetmaster certname":
+    context => "/files/etc/puppet/puppet.conf/puppetmasterd",
+    changes => "set certname pm",
   }
 
   augeas { "puppetmaster paths":
