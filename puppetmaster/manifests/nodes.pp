@@ -20,6 +20,7 @@ node 'hn0' inherits 'base-node' {
 
   iptables { "setup nat for private LAN":
     table    => "nat",
+    proto    => "all",
     chain    => "POSTROUTING",
     outiface => "eth2",
     source   => "192.168.192.0/24",
@@ -29,6 +30,7 @@ node 'hn0' inherits 'base-node' {
 
   iptables { "setup nat for VZ nodes":
     table    => "nat",
+    proto    => "all",
     chain    => "POSTROUTING",
     outiface => "eth2",
     source   => "192.168.191.0/24",
