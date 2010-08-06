@@ -7,7 +7,8 @@
 
 git-update-server-info
 
-git checkout master && git reset --hard
+git checkout master
+git reset --hard
 
 # run sync-modules.sh after each push
 if (test -x ../modules/sync-modules.sh >/dev/null); then
