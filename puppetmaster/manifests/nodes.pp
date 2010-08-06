@@ -7,7 +7,7 @@ node 'base-node' {
 
 }
 
-node 'c2cpc1.camptocamp.com' inherits 'base-node' {
+node 'pm' inherits 'base-node' {
 
   include puppet::server
 
@@ -36,7 +36,6 @@ node 'hn0' inherits 'base-node' {
     require  => Sysctl::Set_value["net.ipv4.ip_forward"],
   }
 
-
-
+  vz::ve { "101": hname => "pm.c2corg" }
 }
 
