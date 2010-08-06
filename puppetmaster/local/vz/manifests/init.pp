@@ -68,7 +68,7 @@ class vz {
   iptables { "setup nat":
     table    => "nat",
     chain    => "POSTROUTING",
-    outiface => "eth0.22",
+    outiface => "eth2",
     source   => "192.168.191.0/24",
     jump     => "MASQUERADE",
     require  => Sysctl::Set_value["net.ipv4.ip_forward"],
