@@ -107,13 +107,13 @@ define vz::ve ($ensure="running", $hname, $template="debian-5.0-amd64-with-puppe
   }
 }
 
-define vz::fwd ($net="192.168.191", $host, $from, $to) {
+define vz::fwd ($net="192.168.191", $ve, $from, $to) {
 
   iptables { "forward from $from to $host:$to":
     chain       => "PREROUTING",
     table       => "nat",
     proto       => "tcp",
-    todest      => "${net}.${host}:${to}",
+    todest      => "${net}.${ve}:${to}",
     dport       => $from,
     jump        => "DNAT",
   }
