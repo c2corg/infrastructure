@@ -14,6 +14,10 @@ node 'pm' inherits 'base-node' {
   realize Account::User[marc]
 }
 
+node 'lists' inherits 'base-node' {
+
+}
+
 node 'hn0' inherits 'base-node' {
 
   include vz
@@ -38,6 +42,8 @@ node 'hn0' inherits 'base-node' {
     require  => Sysctl::Set_value["net.ipv4.ip_forward"],
   }
 
+  /* puppetmaster */
+
   vz::ve { "101": hname => "pm.c2corg" }
 
   vz::fwd { "forward puppetmaster port":
@@ -45,5 +51,26 @@ node 'hn0' inherits 'base-node' {
     from => "8140",
     to   => "8140",
   }
+  vz::fwd { "forward puppetmaster ssh port":
+    ve   => "101",
+    from => "10122",
+    to   => "22",
+  }
+
+  /* mailing-lists */
+
+  vz::ve { "102": hname => "lists.c2corg" }
+
+  vz::fwd { "forward smtp port":
+    ve   => "102",
+    from => "25",
+    to   => "25",
+  }
+  vz::fwd { "forward lists ssh port":
+    ve   => "102",
+    from => "10222",
+    to   => "22",
+  }
+
 }
 
