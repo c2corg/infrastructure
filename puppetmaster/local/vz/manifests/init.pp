@@ -5,12 +5,12 @@ class vz {
   }
 
   apt::preferences { "openvz-kernel":
-     package  => "linux-image-2.6.32-4-openvz-amd64",
+     package  => "linux-image-2.6.32-5-openvz-amd64",
      pin      => "release a=unstable",
      priority => "1010",
   }
 
-  package { "linux-image-2.6.32-4-openvz-amd64":
+  package { "linux-image-2.6.32-5-openvz-amd64":
     ensure  => present,
     require => Apt::Preferences["openvz-kernel"],
   }
