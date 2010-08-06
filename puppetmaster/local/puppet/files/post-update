@@ -7,9 +7,9 @@
 
 git-update-server-info
 
-git reset --hard HEAD
+git checkout master && git reset --hard
 
 # run sync-modules.sh after each push
-if (cd modules; test -x sync-modules.sh >/dev/null); then
-  (cd modules && ./sync-modules.sh)
+if (test -x ../modules/sync-modules.sh >/dev/null); then
+  (cd ../modules && ./sync-modules.sh)
 fi
