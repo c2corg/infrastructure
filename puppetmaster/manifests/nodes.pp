@@ -4,6 +4,7 @@ node 'base-node' {
   include apt
   include puppet::client
   include account
+  include mta
 
 }
 
