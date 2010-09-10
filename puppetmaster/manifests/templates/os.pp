@@ -4,32 +4,53 @@ class os {
 
   apt::sources_list { "debian":
     content => "# file managed by puppet
-deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename} main contrib non-free
-deb http://mirror.switch.ch/ftp/mirror/debian-security/ ${lsbdistcodename}/updates main contrib non-free
+deb http://mirror.switch.ch/ftp/mirror/debian/ lenny main contrib non-free
+deb http://mirror.switch.ch/ftp/mirror/debian-security/ lenny/updates main contrib non-free
 
-deb http://mirror.switch.ch/ftp/mirror/debian/ testing main contrib non-free
+deb http://mirror.switch.ch/ftp/mirror/debian/ squeeze main contrib non-free
+deb http://mirror.switch.ch/ftp/mirror/debian-security/ squeeze/updates main contrib non-free
 
-deb http://mirror.switch.ch/ftp/mirror/debian/ unstable main contrib non-free
+deb http://mirror.switch.ch/ftp/mirror/debian/ sid main contrib non-free
 ",
   }
 
-  apt::sources_list { "backports.org": content => "" }
-  apt::sources_list { "debian-volatile": content => "" }
-
-  apt::preferences { "testing":
-    package => "*",
-    pin   => "release a=testing",
-    priority => "200",
+  apt::preferences { "lenny":
+    package  => "*",
+    pin      => "release n=lenny",
+    priority => undef,
   }
 
-  apt::preferences { "unstable":
-    package => "*",
-    pin   => "release a=unstable",
-    priority => "100",
+  apt::preferences { "squeeze":
+    package  => "*",
+    pin      => "release n=squeeze",
+    priority => undef,
+  }
+
+  apt::preferences { "sid":
+    package  => "*",
+    pin      => "release n=sid",
+    priority => "20",
+  }
+
+  apt::preferences { "snapshots":
+    package  => "*",
+    pin      => "origin snapshot.debian.org",
+    priority => "10",
+  }
+
+  apt::preferences { "backports":
+    package  => "*",
+    pin      => "release a=${lsbdistcodename}-backports",
+    priority => "50",
   }
 
   package { "debian-archive-keyring":
     ensure => latest,
+  }
+
+  apt::conf { "10apt-cache-limit":
+    ensure  => present,
+    content => 'APT::Cache-Limit 50000000;',
   }
 
   file { "/etc/apt/sources.list":
@@ -143,48 +164,42 @@ options rotate edns0
 
 class os::lenny inherits os {
 
-  Apt::Sources_list["backports.org"] {
+  Apt::Preferences["lenny"] {
+    priority => "99",
+  }
+
+  Apt::Preferences["squeeze"] {
+    priority => "50",
+  }
+
+  apt::sources_list { "backports.org":
     content => "# file managed by puppet
 deb http://www.backports.org/debian ${lsbdistcodename}-backports main contrib non-free
 ",
   }
 
-  Apt::Sources_list["debian-volatile"] {
+  apt::sources_list { "debian-volatile":
     content => "# file managed by puppet
 deb http://volatile.debian.org/debian-volatile ${lsbdistcodename}/volatile main
 ",
   }
 
-  apt::preferences { "backports.org":
-    package  => "*",
+  apt::preferences { "augeas_from_backports.org":
+    package  => "augeas-tools libaugeas0 augeas-lenses",
     pin      => "release a=${lsbdistcodename}-backports",
-    priority => "400",
-  }
-
-  apt::preferences { "puppet-packages_from_bpo":
-     package  => "facter augeas-tools libaugeas0 augeas-lenses puppet puppetmaster puppet-common",
-     pin      => "release a=${lsbdistcodename}-backports",
-     priority => "1010",
+    priority => "1010",
   }
 
 }
 
 class os::squeeze inherits os {
 
-  # While waiting for 2.6 migration,
-  # use lenny backports in squeeze for puppet related stuff
-  Apt::Sources_list["backports.org"] {
-    content => "# file managed by puppet
-deb http://www.backports.org/debian lenny-backports main contrib non-free
-",
+  Apt::Preferences["lenny"] {
+    priority => "50",
   }
 
-  apt::preferences { "puppet-packages_from_bpo":
-     package  => "facter puppet puppet-common puppetmaster",
-     pin      => "release a=lenny-backports",
-     priority => "1010",
+  Apt::Preferences["squeeze"] {
+    priority => "99",
   }
-
-  Apt::Sources_list["debian-volatile"] { ensure => absent }
 
 }

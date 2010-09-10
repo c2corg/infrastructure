@@ -1,7 +1,28 @@
 class puppet::client {
 
+  apt::sources_list { "debian-snaphots-puppet-0.25.5":
+    content => "# file managed by puppet
+deb http://snapshot.debian.org/archive/debian/20100720T084354Z/ squeeze main
+",
+    require => Apt::Conf["90snapshot-validity"],
+  }
+
+  # workaround for expired release files in snapshot.debian.org
+  # see http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=595801
+  apt::conf { "90snapshot-validity":
+    ensure  => present,
+    content => 'Acquire::Check-Valid-Until "false";',
+  }
+
+  apt::preferences { "puppet-packages_from_snapshot":
+    package  => "facter puppet puppetmaster puppet-common",
+    pin      => "origin snapshot.debian.org",
+    priority => "1010",
+  }
+
   package { ["puppet", "facter", "augeas-lenses"]:
-    ensure => latest,
+    ensure  => latest,
+    require => Apt::Preferences["puppet-packages_from_snapshot"],
   }
 
   service { "puppet":
@@ -46,7 +67,8 @@ class puppet::client {
 class puppet::server {
 
   package { ["puppetmaster", "vim-puppet"]:
-    ensure => latest,
+    ensure  => latest,
+    require => Apt::Preferences["puppet-packages_from_snapshot"],
   }
 
   service { "puppetmaster":
