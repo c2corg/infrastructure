@@ -161,8 +161,8 @@ deb http://volatile.debian.org/debian-volatile ${lsbdistcodename}/volatile main
     priority => "400",
   }
 
-  apt::preferences { "puppet-packages_from_bp.o":
-     package  => "facter augeas-tools libaugeas0 augeas-lenses puppet puppetmaster",
+  apt::preferences { "puppet-packages_from_bpo":
+     package  => "facter augeas-tools libaugeas0 augeas-lenses puppet puppetmaster puppet-common",
      pin      => "release a=${lsbdistcodename}-backports",
      priority => "1010",
   }
@@ -171,7 +171,20 @@ deb http://volatile.debian.org/debian-volatile ${lsbdistcodename}/volatile main
 
 class os::squeeze inherits os {
 
-  Apt::Sources_list["backports.org"] { ensure => absent }
+  # While waiting for 2.6 migration,
+  # use lenny backports in squeeze for puppet related stuff
+  Apt::Sources_list["backports.org"] {
+    content => "# file managed by puppet
+deb http://www.backports.org/debian lenny-backports main contrib non-free
+",
+  }
+
+  apt::preferences { "puppet-packages_from_bpo":
+     package  => "facter puppet puppet-common puppetmaster",
+     pin      => "release a=lenny-backports",
+     priority => "1010",
+  }
+
   Apt::Sources_list["debian-volatile"] { ensure => absent }
 
 }
