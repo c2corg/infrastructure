@@ -15,7 +15,7 @@ deb http://snapshot.debian.org/archive/debian/20100720T084354Z/ squeeze main
   }
 
   apt::preferences { "puppet-packages_from_snapshot":
-    package  => "facter puppet puppetmaster puppet-common",
+    package  => "facter puppet puppetmaster puppet-common vim-puppet",
     pin      => "origin snapshot.debian.org",
     priority => "1010",
   }
