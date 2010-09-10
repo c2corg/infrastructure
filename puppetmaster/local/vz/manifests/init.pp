@@ -95,7 +95,7 @@ define vz::ve ($ensure="running", $hname, $template="debian-5.0-amd64-with-puppe
 
           exec { "enable boottime start for $name":
             command => "vzctl set $name --onboot yes --save",
-            onlyif  => "egrep -q 'ONBOOT=.?no.?' /etc/vz/names/${hname}",
+            unless  => "egrep -q 'ONBOOT=.?yes.?' /etc/vz/names/${hname}",
             require => Exec["configure VE $name"],
           }
         }
