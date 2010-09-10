@@ -95,3 +95,9 @@ fi
 
 }
 
+node 'hn1' inherits 'base-node' {
+
+  include puppet::devel
+  include varnish
+}
+
