@@ -43,6 +43,13 @@ node 'hn0' inherits 'base-node' {
     require  => Sysctl::Set_value["net.ipv4.ip_forward"],
   }
 
+  vz::fwd { "forward hn1 ssh port":
+    net  => "192.168.192",
+    ve   => "2",
+    from => "20022",
+    to   => "22",
+  }
+
   file { "/etc/network/if-pre-up.d/iptables":
     ensure  => present,
     mode    => 0755,
