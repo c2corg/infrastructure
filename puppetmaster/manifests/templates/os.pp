@@ -55,6 +55,12 @@ deb http://mirror.switch.ch/ftp/mirror/debian/ sid main contrib non-free
     content => 'APT::Cache-Limit 50000000;',
   }
 
+  apt::conf { "01default-release":
+    ensure  => present,
+    content => undef,
+  }
+
+
   file { "/etc/apt/sources.list":
     content => "# file managed by puppet\n",
     before => Exec["apt-get_update"],
@@ -174,6 +180,10 @@ class os::lenny inherits os {
     priority => "50",
   }
 
+  Apt::Conf["01default-release"] {
+    content => 'APT::Default-Release "stable";', # warning: changing this can break the system !
+  }
+
   apt::sources_list { "backports.org":
     content => "# file managed by puppet
 deb http://www.backports.org/debian ${lsbdistcodename}-backports main contrib non-free
@@ -202,6 +212,10 @@ class os::squeeze inherits os {
 
   Apt::Preferences["squeeze"] {
     priority => "99",
+  }
+
+  Apt::Conf["01default-release"] {
+    content => 'APT::Default-Release "testing";', # warning: changing this can break the system !
   }
 
 }
