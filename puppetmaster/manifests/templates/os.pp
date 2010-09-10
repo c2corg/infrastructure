@@ -81,21 +81,31 @@ options rotate edns0
     "bash-completion",
     "curl", "cron", "cvs",
     "dnsutils",
-    "elinks", "ethtool",
+    "elinks",
     "git-core", "git-svn", "gnupg",
-    "iotop", "iptraf",
-    "less", "locales-all", "lsb-release", "lsof",
+    "less", "locales-all", "lsb-release",
     "m4", "make", "mtr-tiny",
     "netcat", "nmap", "nscd", "ntp",
     "openssh-server",
     "patch", "pwgen",
     "rsyslog", "rsync",
-    "screen", "strace", "subversion", "subversion-tools", "sysstat",
-    "tcpdump", "telnet", "traceroute", "tshark",
+    "screen", "subversion", "subversion-tools", "sysstat",
+    "tcpdump", "telnet", "tshark",
     "unzip",
-    "vim", "vlan",
+    "vim",
     "wget"
     ]: ensure => installed
+  }
+
+  case $operatingsystem {
+    "Debian": {
+      package { [
+        "ethtool", "iotop", "iptraf", "lsof", "strace", "traceroute", "vlan",
+        ]: ensure => installed
+      }
+    }
+    "GNU/kFreeBSD": {
+    }
   }
 
   /* Base services */
@@ -143,9 +153,15 @@ options rotate edns0
     refreshonly => true,
   }
 
-  # kernel must reboot if panic occurs
-  sysctl::set_value { "kernel.panic":
-    value => "60",
+  case $operatingsystem {
+    "Debian": {
+      # kernel must reboot if panic occurs
+      sysctl::set_value { "kernel.panic": value => "60" }
+    }
+    "GNU/kFreeBSD": {
+      # avoid sysctl type failure
+      file { "/etc/sysctl.conf": ensure => present }
+    }
   }
 
   augeas { "sysstat history":
