@@ -197,7 +197,7 @@ deb http://volatile.debian.org/debian-volatile ${lsbdistcodename}/volatile main
   }
 
   apt::preferences { "augeas_from_backports.org":
-    package  => "augeas-tools libaugeas0 augeas-lenses",
+    package  => "augeas-tools libaugeas0 augeas-lenses libaugeas-ruby1.8",
     pin      => "release a=${lsbdistcodename}-backports",
     priority => "1010",
   }
