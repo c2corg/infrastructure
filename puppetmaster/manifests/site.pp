@@ -17,3 +17,10 @@ File {
 Package {
   require => Exec["apt-get_update"],
 }
+
+# purge unmanaged users.
+resources { "user":
+  purge => true,
+  unless_system_user => "999",
+}
+
