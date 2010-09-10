@@ -43,6 +43,19 @@ node 'hn0' inherits 'base-node' {
     require  => Sysctl::Set_value["net.ipv4.ip_forward"],
   }
 
+  file { "/etc/network/if-pre-up.d/iptables":
+    ensure  => present,
+    mode    => 0755,
+    content => "#!/bin/sh
+# file managed by puppet
+
+if [ -e /etc/iptables.rules ]; then
+  /sbin/iptables-restore /etc/iptables.rules
+fi
+",
+  }
+
+
   /* puppetmaster */
 
   vz::ve { "101": hname => "pm.c2corg" }
