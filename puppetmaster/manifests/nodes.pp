@@ -101,3 +101,7 @@ node 'hn1' inherits 'base-node' {
   include varnish
 }
 
+node 'hn2' inherits 'base-node' {
+
+}
+
