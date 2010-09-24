@@ -50,6 +50,13 @@ node 'hn0' inherits 'base-node' {
     to   => "22",
   }
 
+  vz::fwd { "forward hn2 ssh port":
+    net  => "192.168.192",
+    ve   => "3",
+    from => "20023",
+    to   => "22",
+  }
+
   file { "/etc/network/if-pre-up.d/iptables":
     ensure  => present,
     mode    => 0755,
