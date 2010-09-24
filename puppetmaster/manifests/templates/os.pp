@@ -155,7 +155,7 @@ options rotate edns0
 
   case $operatingsystem {
     "Debian": {
-      if $virtual == "physical" {
+      if $is_virtual != true {
         # kernel must reboot if panic occurs
         sysctl::set_value { "kernel.panic": value => "60" }
         # disable tcp_sack due to Cisco bug in epnet routers
