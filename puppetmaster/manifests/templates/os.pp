@@ -77,7 +77,7 @@ options rotate edns0
   }
 
   package { [
-    "at",
+    "arping", "at",
     "bash-completion",
     "curl", "cron", "cvs",
     "dnsutils",
