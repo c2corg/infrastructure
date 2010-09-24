@@ -100,6 +100,13 @@ fi
     to   => "22",
   }
 
+  vz::ve { "123": hname => "test-marc.c2corg" }
+
+  vz::fwd { "forward test-marc ssh port":
+    ve   => "123",
+    from => "10123",
+    to   => "22",
+  }
 }
 
 node 'hn1' inherits 'base-node' {
@@ -119,6 +126,10 @@ node 'hn2' inherits 'base-node' {
     ],
     notify  => Exec["refresh init"],
   }
+
+}
+
+node 'test-marc' inherits 'base-node' {
 
 }
 
