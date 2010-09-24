@@ -3,17 +3,19 @@ class os {
   include apt::unattended-upgrade::automatic
 
   apt::sources_list { "debian":
-    content => "# file managed by puppet
+    content => inline_template("# file managed by puppet
+<% if operatingsystem != 'GNU/kFreeBSD' -%>
 deb http://mirror.switch.ch/ftp/mirror/debian/ lenny main contrib non-free
 deb http://mirror.switch.ch/ftp/mirror/debian-security/ lenny/updates main contrib non-free
 deb http://mirror.switch.ch/ftp/mirror/debian/ lenny-proposed-updates main contrib non-free
+<% end -%>
 
 deb http://mirror.switch.ch/ftp/mirror/debian/ squeeze main contrib non-free
 deb http://mirror.switch.ch/ftp/mirror/debian-security/ squeeze/updates main contrib non-free
 deb http://mirror.switch.ch/ftp/mirror/debian/ squeeze-proposed-updates main contrib non-free
 
 deb http://mirror.switch.ch/ftp/mirror/debian/ sid main contrib non-free
-",
+"),
   }
 
   apt::preferences { "lenny":
