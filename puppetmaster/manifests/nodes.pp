@@ -107,12 +107,25 @@ fi
     from => "10123",
     to   => "22",
   }
+
+  # testing-out haproxy setup
+  vz::fwd { "forward test-marc http port":
+    ve   => "123",
+    from => "80",
+    to   => "80",
+  }
 }
 
 node 'hn1' inherits 'base-node' {
 
   include puppet::devel
   include varnish
+
+  varnish::instance { $hostname:
+    backend    => "192.168.192.3:80",
+    storage    => "malloc,7900M",
+    varnishlog => false,
+  }
 }
 
 node 'hn2' inherits 'base-node' {
@@ -130,6 +143,8 @@ node 'hn2' inherits 'base-node' {
 }
 
 node 'test-marc' inherits 'base-node' {
+
+  include haproxy
 
 }
 
