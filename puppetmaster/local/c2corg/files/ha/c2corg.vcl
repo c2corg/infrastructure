@@ -13,14 +13,58 @@ backend c2corg {
 sub vcl_recv {
 
   if ( req.url == "/probe.txt" ) {
+    // switch to eject varnish from haproxy
     error 200 "I am healthy";
+    //error 502 "I am sick";
+  }
+
+  if (!req.http.Cookie) {
+    set req.http.X-maybe-a-robot = "1";
+  }
+
+  /* allow pictures to get served directly from cache */
+  if (req.url ~ "\.(gif|png|jpg|jpeg)$") {
+    remove req.http.Cookie;
+  }
+
+  /* in case apache is down, serve expired content from cache */
+  if (!req.backend.healthy) {
+    remove req.http.Cookie;
+    set req.grace = 14d;
+    return(lookup);
   }
 }
 
-/*
- * Add a header indicating hit/miss
- */
+sub vcl_fetch {
+
+  if (req.url ~ "\.(gif|png|jpg|jpeg)$") {
+    remove beresp.http.Set-Cookie; // allow pictures to get stored in cache
+  } else {
+    set beresp.ttl = 6h; // default TTL for generated content
+  }
+
+  /* Remove header which prevent caching */
+  if (req.http.X-maybe-a-robot) {
+    remove beresp.http.Set-Cookie;
+    remove beresp.http.Pragma;
+    remove beresp.http.Cache-Control;
+    remove beresp.http.Expires;
+    remove beresp.http.Vary;
+  }
+
+  set beresp.grace = 14d; // time to keep expired objects in cache
+
+}
+
 sub vcl_deliver {
+
+  // fake cookie to prevent newcomers from never recieving any cookie at all
+  if (req.http.X-maybe-a-robot) {
+    unset req.http.X-maybe-a-robot;
+    set resp.http.Set-Cookie = "iamabot=no; path=/";
+  }
+
+  // Add a header indicating hit/miss
   if (obj.hits > 0) {
     set resp.http.X-Cache = "HIT";
     set resp.http.X-Cache-Hits = obj.hits;
@@ -28,4 +72,3 @@ sub vcl_deliver {
     set resp.http.X-Cache = "MISS";
   }
 }
-
