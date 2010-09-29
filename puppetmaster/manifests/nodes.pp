@@ -23,6 +23,7 @@ node 'lists' inherits 'base-node' {
 node 'hn0' inherits 'base-node' {
 
   include vz
+  include c2corg::vz
 
   iptables { "setup nat for private LAN":
     table    => "nat",
@@ -75,50 +76,6 @@ fi
     source => "puppet:///c2corg/network/hn0",
   }
 
-  /* puppetmaster */
-
-  vz::ve { "101": hname => "pm.c2corg" }
-
-  vz::fwd { "forward puppetmaster port":
-    ve   => "101",
-    from => "8140",
-    to   => "8140",
-  }
-  vz::fwd { "forward puppetmaster ssh port":
-    ve   => "101",
-    from => "10122",
-    to   => "22",
-  }
-
-  /* mailing-lists */
-
-  vz::ve { "102": hname => "lists.c2corg" }
-
-  vz::fwd { "forward smtp port":
-    ve   => "102",
-    from => "25",
-    to   => "25",
-  }
-  vz::fwd { "forward lists ssh port":
-    ve   => "102",
-    from => "10222",
-    to   => "22",
-  }
-
-  vz::ve { "123": hname => "test-marc.c2corg" }
-
-  vz::fwd { "forward test-marc ssh port":
-    ve   => "123",
-    from => "10123",
-    to   => "22",
-  }
-
-  # testing-out haproxy setup
-  vz::fwd { "forward test-marc http port":
-    ve   => "123",
-    from => "80",
-    to   => "80",
-  }
 }
 
 # ProLiant DL360 G4 - debian/kFreeBSD
