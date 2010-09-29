@@ -19,6 +19,7 @@ node 'lists' inherits 'base-node' {
 
 }
 
+# ProLiant DL360 G4p - debian/squeeze
 node 'hn0' inherits 'base-node' {
 
   include vz
@@ -69,6 +70,10 @@ fi
 ",
   }
 
+  file { "/etc/network/interfaces":
+    ensure => present,
+    source => "puppet:///c2corg/network/hn0",
+  }
 
   /* puppetmaster */
 
@@ -116,10 +121,16 @@ fi
   }
 }
 
+# ProLiant DL360 G4 - debian/kFreeBSD
 node 'hn1' inherits 'base-node' {
 
   include puppet::devel
   include varnish
+
+  file { "/etc/network/interfaces":
+    ensure => present,
+    source => "puppet:///c2corg/network/hn1",
+  }
 
   varnish::instance { $hostname:
     backend    => "192.168.192.3:80",
@@ -128,7 +139,13 @@ node 'hn1' inherits 'base-node' {
   }
 }
 
+# PowerEdge 2950 - debian/lenny
 node 'hn2' inherits 'base-node' {
+
+  file { "/etc/network/interfaces":
+    ensure => present,
+    source => "puppet:///c2corg/network/hn2",
+  }
 
   augeas { "enable console on serial port":
     context => "/files/etc/inittab/T0/",
