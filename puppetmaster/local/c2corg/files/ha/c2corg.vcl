@@ -49,7 +49,6 @@ sub vcl_fetch {
     remove beresp.http.Pragma;
     remove beresp.http.Cache-Control;
     remove beresp.http.Expires;
-    remove beresp.http.Vary;
   }
 
   set beresp.grace = 14d; // time to keep expired objects in cache
