@@ -1,4 +1,4 @@
-backend c2corg {
+backend apache {
   .host = "192.168.192.3";
   .port = "80";
   .probe = {
