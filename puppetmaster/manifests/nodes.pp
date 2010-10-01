@@ -99,6 +99,8 @@ node 'hn1' inherits 'base-node' {
 # PowerEdge 2950 - debian/lenny
 node 'hn2' inherits 'base-node' {
 
+  include haproxy
+
   file { "/etc/network/interfaces":
     ensure => present,
     source => "puppet:///c2corg/network/hn2",
@@ -117,8 +119,6 @@ node 'hn2' inherits 'base-node' {
 }
 
 node 'test-marc' inherits 'base-node' {
-
-  include haproxy
 
 }
 
