@@ -18,7 +18,6 @@ git://github.com/reductivelabs/puppet-lvm.git lvm origin/master
 
 git://github.com/camptocamp/puppet-pacemaker.git pacemaker origin/master
 git://github.com/camptocamp/puppet-varnish.git varnish origin/master
-git://github.com/camptocamp/puppet-haproxy.git haproxy origin/master
 
 git://github.com/camptocamp/puppet-apache.git apache origin/master
 git://github.com/camptocamp/puppet-postgresql.git postgresql origin/master
