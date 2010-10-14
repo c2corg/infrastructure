@@ -46,14 +46,15 @@ sub vcl_fetch {
     remove beresp.http.Set-Cookie; // allow pictures to get stored in cache
   } else {
     set beresp.ttl = 6h; // default TTL for generated content
-  }
 
-  /* Remove header which prevent caching */
-  if (req.http.X-maybe-a-robot) {
-    remove beresp.http.Set-Cookie;
-    remove beresp.http.Pragma;
-    remove beresp.http.Cache-Control;
-    remove beresp.http.Expires;
+    /* Remove header which prevent caching */
+    if (req.http.X-maybe-a-robot) {
+      remove beresp.http.Set-Cookie;
+      remove beresp.http.Pragma;
+      remove beresp.http.Cache-Control;
+      remove beresp.http.Expires;
+    }
+
   }
 
   set beresp.grace = 14d; // time to keep expired objects in cache
