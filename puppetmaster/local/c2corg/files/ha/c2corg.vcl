@@ -23,13 +23,13 @@ sub vcl_recv {
     return(pass);
   }
 
-  if (!req.http.Cookie) {
-    set req.http.X-maybe-a-robot = "1";
-  }
-
   /* allow pictures and static content to get served directly from cache */
   if (req.url ~ "\.(gif|png|jpg|jpeg)$" || req.http.host == "s.camptocamp.org") {
     remove req.http.Cookie;
+  } else {
+    if (!req.http.Cookie) {
+      set req.http.X-maybe-a-robot = "1";
+    }
   }
 
   /* in case apache is down, serve expired content from cache */
