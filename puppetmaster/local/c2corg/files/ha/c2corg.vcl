@@ -18,6 +18,11 @@ sub vcl_recv {
     //error 502 "I am sick";
   }
 
+  // cache only production services
+  if (!req.http.host ~ "^.*\.camptocamp\.org$") {
+    return(pass);
+  }
+
   if (!req.http.Cookie) {
     set req.http.X-maybe-a-robot = "1";
   }
