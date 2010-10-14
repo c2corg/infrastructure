@@ -22,8 +22,8 @@ sub vcl_recv {
     set req.http.X-maybe-a-robot = "1";
   }
 
-  /* allow pictures to get served directly from cache */
-  if (req.url ~ "\.(gif|png|jpg|jpeg)$") {
+  /* allow pictures and static content to get served directly from cache */
+  if (req.url ~ "\.(gif|png|jpg|jpeg)$" || req.http.host == "s.camptocamp.org") {
     remove req.http.Cookie;
   }
 
@@ -37,7 +37,7 @@ sub vcl_recv {
 
 sub vcl_fetch {
 
-  if (req.url ~ "\.(gif|png|jpg|jpeg)$") {
+  if (req.url ~ "\.(gif|png|jpg|jpeg)$" || req.http.host == "s.camptocamp.org") {
     remove beresp.http.Set-Cookie; // allow pictures to get stored in cache
   } else {
     set beresp.ttl = 6h; // default TTL for generated content
