@@ -224,6 +224,12 @@ deb http://volatile.debian.org/debian-volatile ${lsbdistcodename}/volatile main
     priority => "1010",
   }
 
+  apt::preferences { "haproxy_from_backports.org":
+    package  => "haproxy",
+    pin      => "release a=${lsbdistcodename}-backports",
+    priority => "1010",
+  }
+
 }
 
 class os::squeeze inherits os {
