@@ -22,6 +22,7 @@ git://github.com/camptocamp/puppet-varnish.git varnish origin/master
 
 git://github.com/camptocamp/puppet-apache.git apache origin/master
 git://github.com/camptocamp/puppet-postgresql.git postgresql origin/master
+git://github.com/camptocamp/puppet-postgis.git postgis origin/master
 git://github.com/camptocamp/puppet-mapserver.git mapserver origin/master
 git://github.com/camptocamp/puppet-mysql.git mysql origin/master
 
