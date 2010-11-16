@@ -1,5 +1,7 @@
 class puppet::client {
 
+  include augeas
+
   apt::sources_list { "debian-snaphots-puppet-0.25.5":
     content => "# file managed by puppet
 deb http://snapshot.debian.org/archive/debian/20100720T084354Z/ squeeze main
@@ -18,11 +20,11 @@ deb http://snapshot.debian.org/archive/debian/20100720T084354Z/ squeeze main
     package  => "facter puppet puppetmaster puppet-common vim-puppet",
     pin      => "origin snapshot.debian.org",
     priority => "1010",
+    before   => Package["puppet", "facter", "augeas-lenses"],
   }
 
-  package { ["puppet", "facter", "augeas-lenses"]:
+  package { ["puppet", "facter"]:
     ensure  => latest,
-    require => Apt::Preferences["puppet-packages_from_snapshot"],
   }
 
   service { "puppet":
