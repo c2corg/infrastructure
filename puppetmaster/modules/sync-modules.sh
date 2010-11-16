@@ -11,6 +11,7 @@ git://github.com/camptocamp/puppet-openssl.git openssl origin/master
 git://github.com/camptocamp/puppet-rsyncd.git rsyncd origin/master
 git://github.com/camptocamp/puppet-postfix.git postfix origin/master
 git://github.com/camptocamp/puppet-sysctl.git sysctl origin/master
+git://github.com/camptocamp/puppet-reprepro.git reprepro origin/master
 git://github.com/kbarber/puppet-iptables.git iptables origin/master
 git://github.com/bodepd/puppet-sudo.git sudo origin/master
 git://github.com/bruce/puppet-vcsrepo.git vcsrepo origin/master
