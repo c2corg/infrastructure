@@ -1,6 +1,26 @@
 class c2corg::database::base {
 
-  include postgresql::v8-3::postgis
+  include postgresql
+  include postgis
+
+  include c2corg::password
+
+  postgis::database { ["c2corg", "metaengine"]:
+    ensure  => present,
+    owner   => "c2corg",
+    require => Postgresql::User["c2corg"],
+  }
+
+  postgresql::user { "c2corg":
+    ensure   => present,
+    password => $c2corg::password::pgsql,
+  }
+
+  postgresql::user { "sympa":
+    ensure   => present,
+    password => $c2corg::password::sympa,
+  }
+
 
 }
 
