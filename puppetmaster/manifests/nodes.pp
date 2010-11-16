@@ -91,7 +91,7 @@ node 'hn1' inherits 'base-node' {
 
   varnish::instance { $hostname:
     vcl_file   => "puppet:///c2corg/ha/c2corg.vcl",
-    storage    => "malloc,7900M",
+    storage    => "malloc,7400M",
     varnishlog => false,
   }
 }
