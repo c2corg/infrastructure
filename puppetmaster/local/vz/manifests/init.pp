@@ -30,7 +30,8 @@ class vz {
   }
 
   filesystem { "/dev/vg0/vz":
-    ensure  => "ext3",
+    ensure  => present,
+    fs_type => "ext3",
     require => Logical_volume["vz"],
   }
 
