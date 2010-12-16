@@ -1,6 +1,7 @@
 class os {
 
   include apt::unattended-upgrade::automatic
+  include gnupg
 
   apt::sources_list { "debian":
     content => inline_template("# file managed by puppet
@@ -84,7 +85,7 @@ options rotate edns0
     "curl", "cron", "cvs",
     "dnsutils",
     "elinks",
-    "git-core", "git-svn", "gnupg",
+    "git-core", "git-svn",
     "less", "locales-all", "lsb-release",
     "m4", "make", "mtr-tiny",
     "netcat", "nmap", "nscd", "ntp",
