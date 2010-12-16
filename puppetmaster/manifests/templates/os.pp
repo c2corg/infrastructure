@@ -19,6 +19,19 @@ deb http://mirror.switch.ch/ftp/mirror/debian/ sid main contrib non-free
 "),
   }
 
+  apt::sources_list { "c2corg":
+    content => "# file managed by puppet
+deb http://192.168.191.125/test/ lenny main
+deb http://192.168.191.125/prod/ lenny main
+deb http://192.168.191.125/test/ squeeze main
+deb http://192.168.191.125/prod/ squeeze main
+",
+  }
+
+  apt::key { "c2corg":
+    source => "http://192.168.191.125/pubkey.txt",
+  }
+
   apt::preferences { "lenny":
     package  => "*",
     pin      => "release n=lenny",
@@ -47,6 +60,12 @@ deb http://mirror.switch.ch/ftp/mirror/debian/ sid main contrib non-free
     package  => "*",
     pin      => "release a=${lsbdistcodename}-backports",
     priority => "50",
+  }
+
+  apt::preferences { "c2corg":
+    package  => "*",
+    pin      => "release l=C2corg, a=${lsbdistcodename}",
+    priority => "110",
   }
 
   package { "debian-archive-keyring":
