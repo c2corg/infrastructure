@@ -1,0 +1,10 @@
+# see /usr/share/doc/gnupg/DETAILS.gz
+Key-Type: <%= keytype %>
+Key-Length: <%= keylength %>
+Name-Real: <%=  realname %>
+Name-Email: <%= name %>
+<% if passphrase.length != 0 -%>
+Passphrase: <%= passphrase %>
+<% end -%>
+Expire-Date: <%= expiry %>
+%commit
