@@ -19,6 +19,12 @@ node 'lists' inherits 'base-node' {
 
 }
 
+node 'pkg' inherits 'base-node' {
+
+  include c2corg::reprepro
+
+}
+
 # ProLiant DL360 G4p - debian/squeeze
 node 'hn0' inherits 'base-node' {
 

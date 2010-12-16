@@ -48,4 +48,16 @@ class c2corg::vz {
     from => "80",
     to   => "80",
   }
+
+  vz::ve { "125":
+    hname => "pkg.c2corg",
+    template => "debian-squeeze-amd64-with-puppet",
+  }
+
+    vz::fwd { "forward pkg ssh port":
+    ve   => "125",
+    from => "10125",
+    to   => "22",
+  }
+
 }
