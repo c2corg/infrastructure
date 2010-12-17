@@ -12,7 +12,7 @@ node 'pm' inherits 'base-node' {
 
   include puppet::server
 
-  realize Account::User[marc]
+  realize C2corg::Account::User[marc]
 }
 
 node 'lists' inherits 'base-node' {
