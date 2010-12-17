@@ -1,4 +1,3 @@
-import "templates/*.pp"
 import "nodes.pp"
 import "common"
 

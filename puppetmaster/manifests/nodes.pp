@@ -1,10 +1,13 @@
 node 'base-node' {
 
-  include "os::$lsbdistcodename"
   include apt
   include puppet::client
   include c2corg::account
-  include mta
+  include c2corg::mta
+  include "c2corg::apt::$lsbdistcodename"
+  include c2corg::common::packages
+  include c2corg::common::services
+  include c2corg::common::config
 
 }
 
