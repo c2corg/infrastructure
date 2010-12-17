@@ -1,12 +1,12 @@
-class account {
+class c2corg::account {
 
-  account::user { "marc@root": user => "marc", account => "root" }
+  c2corg::account::user { "marc@root": user => "marc", account => "root" }
 
-  @account::user { "marc": account => "marc" }
-  @account::user { "alex": account => "alex" }
+  @c2corg::account::user { "marc": account => "marc" }
+  @c2corg::account::user { "alex": account => "alex" }
 }
 
-define account::user ($ensure=present, $user=$name, $account) {
+define c2corg::account::user ($ensure=present, $user=$name, $account) {
 
   if !defined(User[$account]) {
     user { $account:

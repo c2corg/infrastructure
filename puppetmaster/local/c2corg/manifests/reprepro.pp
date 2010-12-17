@@ -10,7 +10,7 @@ class c2corg::reprepro {
   }
 
   # allowed uploader(s)
-  account::user { "marc@reprepro":
+  c2corg::account::user { "marc@reprepro":
     user    => "marc",
     account => "reprepro",
     require => File[$reprepro_basedir],

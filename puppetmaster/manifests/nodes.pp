@@ -3,7 +3,7 @@ node 'base-node' {
   include "os::$lsbdistcodename"
   include apt
   include puppet::client
-  include account
+  include c2corg::account
   include mta
 
 }
