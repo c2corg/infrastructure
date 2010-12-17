@@ -34,6 +34,8 @@ class c2corg::vz {
     to   => "22",
   }
 
+  /* test nodes */
+
   vz::ve { "123": hname => "test-marc.c2corg" }
 
   vz::fwd { "forward test-marc ssh port":
@@ -42,12 +44,24 @@ class c2corg::vz {
     to   => "22",
   }
 
-  # testing-out haproxy setup
-  vz::fwd { "forward test-marc http port":
-    ve   => "123",
+  vz::ve { "124":
+    hname => "pre-prod.c2corg",
+    template => "debian-squeeze-amd64-with-puppet",
+  }
+
+  vz::fwd { "forward pre-prod ssh port":
+    ve   => "124",
+    from => "10124",
+    to   => "22",
+  }
+
+  vz::fwd { "forward pre-prod http port":
+    ve   => "124",
     from => "80",
     to   => "80",
   }
+
+  /* package repo */
 
   vz::ve { "125":
     hname => "pkg.c2corg",

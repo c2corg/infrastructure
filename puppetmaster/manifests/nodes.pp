@@ -70,7 +70,20 @@ node 'hn2' inherits 'base-node' {
 
 }
 
-node 'test-marc' inherits 'base-node' {
+node 'pre-prod' inherits 'base-node' {
+
+  include c2corg::database::prod
+
+  include c2corg::webserver::symfony
+  include c2corg::webserver::carto
+  include c2corg::webserver::svg
+
+  apache::vhost { "camptocamp.org": }
+
+  c2corg::account::user { "alex@root": user => "alex", account => "root" }
 
 }
 
+node 'test-marc' inherits 'base-node' {
+
+}
