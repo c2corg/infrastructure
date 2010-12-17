@@ -15,7 +15,10 @@ deb http://mirror.switch.ch/ftp/mirror/debian/ squeeze main contrib non-free
 deb http://mirror.switch.ch/ftp/mirror/debian-security/ squeeze/updates main contrib non-free
 deb http://mirror.switch.ch/ftp/mirror/debian/ squeeze-proposed-updates main contrib non-free
 
+<% if lsbdistcodename != 'lenny' -%>
+# sid disabled on Lenny because of bug debbug#400768
 deb http://mirror.switch.ch/ftp/mirror/debian/ sid main contrib non-free
+<% end -%>
 "),
   }
 
