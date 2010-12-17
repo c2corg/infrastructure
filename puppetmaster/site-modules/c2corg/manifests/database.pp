@@ -45,6 +45,10 @@ class c2corg::database::prod inherits c2corg::database::base {
 
 }
 
+class c2corg::database::test inherits c2corg::database::base {
+
+}
+
 class c2corg::database::dev inherits c2corg::database::base {
 
 }
