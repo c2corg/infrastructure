@@ -11,8 +11,13 @@ class c2corg::webserver::symfony {
   include php
 
   apache::module { ["headers", "expires"]: }
-  package { ["php-pear", "php5-xcache", "php5-fileinfo", "php-symfony"]: }
+  package { ["php-pear", "php5-xcache", "php-symfony"]: }
   package { "msmtp": }
+
+  # fileinfo is included recent PHPs
+  if ($lsbdistcodename == 'lenny') {
+    package { "php5-fileinfo": }
+  }
 }
 
 class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
