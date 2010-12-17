@@ -87,7 +87,7 @@ class puppet::server {
   augeas { "puppetmaster paths":
     context => "/files/etc/puppet/puppet.conf/puppetmasterd",
     changes => [
-      "set modulepath /srv/puppetmaster/modules:/srv/puppetmaster/local",
+      "set modulepath /srv/puppetmaster/modules:/srv/puppetmaster/site-modules",
       "set manifestdir /srv/puppetmaster/manifests",
       "set manifest /srv/puppetmaster/manifests/site.pp",
     ],
@@ -98,7 +98,7 @@ class puppet::server {
     context => "/files/etc/puppet/puppet.conf",
     changes => [
       "set puppetmasterd/environments marc",
-      "set marc/modulepath /home/marc/puppetmaster/modules:/home/marc/puppetmaster/local",
+      "set marc/modulepath /home/marc/puppetmaster/modules:/home/marc/puppetmaster/site-modules",
       "set marc/manifestdir /home/marc/puppetmaster/manifests",
       "set marc/manifest /home/marc/puppetmaster/manifests/site.pp",
     ],
