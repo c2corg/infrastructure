@@ -15,6 +15,10 @@ node 'pm' inherits 'base-node' {
 
   include puppet::server
 
+  c2corg::backup::dir {
+    ["/srv/puppetmaster", "/var/lib/puppet/ssl", "/home"]:
+  }
+
   realize C2corg::Account::User[marc]
 }
 
@@ -26,6 +30,8 @@ node 'pkg' inherits 'base-node' {
 
   include c2corg::reprepro
 
+  c2corg::backup::dir { "/srv/deb-repo/": }
+
 }
 
 # ProLiant DL360 G4p - debian/squeeze
@@ -36,6 +42,7 @@ node 'hn0' inherits 'base-node' {
   include vz
   include c2corg::vz
 
+  # c2corg::backup::dir { "/var/lib/vz/template/cache/": }
 }
 
 # ProLiant DL360 G4 - debian/kFreeBSD
@@ -51,6 +58,7 @@ node 'hn1' inherits 'base-node' {
     storage    => "malloc,7400M",
     varnishlog => false,
   }
+
 }
 
 # PowerEdge 2950 - debian/lenny
