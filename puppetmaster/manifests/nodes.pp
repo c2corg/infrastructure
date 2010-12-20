@@ -81,6 +81,9 @@ node 'pre-prod' inherits 'base-node' {
   apache::vhost { "camptocamp.org": }
 
   c2corg::account::user { "alex@root": user => "alex", account => "root" }
+  c2corg::account::user { "gottferdom@root": user => "gottferdom", account => "root" }
+  c2corg::account::user { "xbrrr@root": user => "xbrrr", account => "root" }
+  c2corg::account::user { "gerbaux@root": user => "gerbaux", account => "root" }
 
 }
 
