@@ -11,8 +11,8 @@ class c2corg::webserver::symfony {
   include php
 
   apache::module { ["headers", "expires"]: }
-  package { ["php-pear", "php5-xcache", "php-symfony"]: }
-  package { "msmtp": }
+  package { ["php5-pgsql", "php5-xcache", "php-pear", "php-symfony"]: }
+  package { ["gettext", "msmtp"]: }
 
   # fileinfo is included recent PHPs
   if ($lsbdistcodename == 'lenny') {
