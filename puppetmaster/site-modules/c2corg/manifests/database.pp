@@ -7,11 +7,11 @@ class c2corg::database::base {
 
   postgis::database { ["c2corg", "metaengine"]:
     ensure  => present,
-    owner   => "c2corg",
-    require => Postgresql::User["c2corg"],
+    owner   => "www-data",
+    require => Postgresql::User["www-data"],
   }
 
-  postgresql::user { "c2corg":
+  postgresql::user { "www-data":
     ensure   => present,
     password => $c2corg::password::pgsql,
   }
@@ -31,6 +31,7 @@ class c2corg::database::prod inherits c2corg::database::base {
     changes   => "set pg_hba.conf/*[type='local'][user='all'][database='all']/method md5",
     load_path => "/usr/share/augeas/lenses/contrib/",
     notify    => Service["postgresql"],
+    require   => Package["postgresql"],
   }
 
   postgresql::hba { "access to sympa user":
