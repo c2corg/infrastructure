@@ -14,9 +14,17 @@ class c2corg::webserver::symfony {
   package { ["php5-pgsql", "php5-xcache", "php-pear", "php-symfony"]: }
   package { ["gettext", "msmtp"]: }
 
-  # fileinfo is included recent PHPs
+  # fileinfo is included in recent PHPs
   if ($lsbdistcodename == 'lenny') {
     package { "php5-fileinfo": }
+  }
+
+  # workaround while http://code.google.com/p/paver/issues/detail?id=53
+  # prevents from building a debian package of python-jstools.
+  package { "python-setuptools": }
+  exec { "easy_install jstools":
+    creates => "/usr/local/bin/jsbuild",
+    require => Package["python-setuptools"],
   }
 }
 
