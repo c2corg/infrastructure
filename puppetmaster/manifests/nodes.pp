@@ -78,7 +78,9 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::webserver::carto
   include c2corg::webserver::svg
 
-  apache::vhost { "camptocamp.org": }
+  apache::vhost { "camptocamp.org":
+    aliases => ["www.camptocamp.org", "www-preprod.camptocamp.org"],
+  }
 
   c2corg::account::user { "alex@root": user => "alex", account => "root" }
   c2corg::account::user { "gottferdom@root": user => "gottferdom", account => "root" }
