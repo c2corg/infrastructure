@@ -80,6 +80,22 @@ node 'pre-prod' inherits 'base-node' {
 
   apache::vhost { "camptocamp.org":
     aliases => ["www.camptocamp.org", "www-preprod.camptocamp.org"],
+    docroot => "/srv/www/camptocamp.org/web",
+    cgibin  => false,
+  }
+
+  apache::auth::htpasswd { "c2corg@camptocamp.org":
+    vhost    => "camptocamp.org",
+    username => "c2corg",
+    cryptPassword => "UxYkCOe3sNVJc",
+  }
+
+  apache::auth::basic::file::user { "prevent-robots-from-indexing":
+    vhost => "camptocamp.org",
+  }
+
+  augeas { "temporarily disable php-xcache admin auth":
+    changes => "set /files/etc/php5/conf.d/xcache.ini/xcache.admin/xcache.admin.enable_auth Off",
   }
 
   c2corg::account::user { "alex@root": user => "alex", account => "root" }
