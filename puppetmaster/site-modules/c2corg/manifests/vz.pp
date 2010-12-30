@@ -68,10 +68,24 @@ class c2corg::vz {
     template => "debian-squeeze-amd64-with-puppet",
   }
 
-    vz::fwd { "forward pkg ssh port":
+  vz::fwd { "forward pkg ssh port":
     ve   => "125",
     from => "10125",
     to   => "22",
   }
+
+  /* collectd, syslog, nagios */
+
+  vz::ve { "126":
+    hname => "monit.c2corg",
+    template => "debian-squeeze-amd64-with-puppet",
+  }
+
+  vz::fwd { "forward monit ssh port":
+    ve   => "126",
+    from => "10126",
+    to   => "22",
+  }
+
 
 }

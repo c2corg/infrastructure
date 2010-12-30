@@ -14,6 +14,7 @@ node 'base-node' {
 node 'pm' inherits 'base-node' {
 
   include puppet::server
+  include c2corg::collectd::client
 
   c2corg::backup::dir {
     ["/srv/puppetmaster", "/var/lib/puppet/ssl", "/home"]:
@@ -34,6 +35,14 @@ node 'pkg' inherits 'base-node' {
 
 }
 
+node 'monit' inherits 'base-node' {
+
+  include c2corg::collectd::server
+
+  c2corg::backup::dir { "/srv/collectd": }
+
+}
+
 # ProLiant DL360 G4p - debian/squeeze
 node 'hn0' inherits 'base-node' {
 
@@ -42,6 +51,7 @@ node 'hn0' inherits 'base-node' {
   include vz
   include c2corg::vz
 
+  include c2corg::collectd::client
   # c2corg::backup::dir { "/var/lib/vz/template/cache/": }
 }
 
@@ -59,6 +69,7 @@ node 'hn1' inherits 'base-node' {
     varnishlog => false,
   }
 
+  include c2corg::collectd::client
 }
 
 # PowerEdge 2950 - debian/lenny
@@ -68,6 +79,7 @@ node 'hn2' inherits 'base-node' {
 
   include haproxy
 
+  #include c2corg::collectd::client # warning: don't break existing collectd installation !!
 }
 
 node 'pre-prod' inherits 'base-node' {
@@ -103,6 +115,7 @@ node 'pre-prod' inherits 'base-node' {
   c2corg::account::user { "xbrrr@root": user => "xbrrr", account => "root" }
   c2corg::account::user { "gerbaux@root": user => "gerbaux", account => "root" }
 
+  include c2corg::collectd::client
 }
 
 node 'test-marc' inherits 'base-node' {
