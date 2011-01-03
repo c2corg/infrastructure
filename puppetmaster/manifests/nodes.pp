@@ -60,16 +60,11 @@ node 'hn1' inherits 'base-node' {
 
   include c2corg::hn::hn1
 
-  include puppet::devel
-  include varnish
-
-  varnish::instance { $hostname:
-    vcl_file   => "puppet:///c2corg/ha/c2corg.vcl",
-    storage    => "malloc,7400M",
-    varnishlog => false,
-  }
+  include c2corg::varnish::instance
 
   include c2corg::collectd::client
+
+  include puppet::devel
 }
 
 # PowerEdge 2950 - debian/lenny
@@ -90,12 +85,15 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::webserver::carto
   include c2corg::webserver::svg
 
+  include c2corg::varnish::instance
+
   apache::vhost { "camptocamp.org":
-    aliases => ["www.camptocamp.org", "www-preprod.camptocamp.org"],
+    aliases => ["www.camptocamp.org", "www-preprod.camptocamp.org", "symfony-backend.c2corg"],
     docroot => "/srv/www/camptocamp.org/web",
     cgibin  => false,
   }
 
+  # FIXME: this prevents varnish storage from working as it should
   apache::auth::htpasswd { "c2corg@camptocamp.org":
     vhost    => "camptocamp.org",
     username => "c2corg",

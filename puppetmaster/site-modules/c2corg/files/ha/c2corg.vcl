@@ -1,5 +1,5 @@
 backend apache {
-  .host = "192.168.192.3";
+  .host = "symfony-backend.c2corg"; # configure this in /etc/hosts
   .port = "80";
   .probe = {
     .url = "/probe.txt";
