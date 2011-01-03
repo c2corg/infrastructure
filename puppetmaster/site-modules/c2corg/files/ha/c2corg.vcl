@@ -18,13 +18,14 @@ sub vcl_recv {
     //error 502 "I am sick";
   }
 
-  // cache only production services
-  if (!req.http.host ~ "^.*\.camptocamp\.org$") {
+  // cache only prod/pre-prod services
+  // this can be removed once trac/test/wiki stuff has moved.
+  if (!req.http.host ~ "^.*\.(camptocamp\.org|c2corg)$") {
     return(pass);
   }
 
   /* allow pictures and static content to get served directly from cache */
-  if (req.url ~ "\.(gif|png|jpg|jpeg)$" || req.http.host == "s.camptocamp.org") {
+  if (req.url ~ "\.(gif|png|jpg|jpeg)$" || req.http.host ~ "s\.camptocamp\.org|s-preprod\.c2corg") {
     remove req.http.Cookie;
   } else {
     if (!req.http.Cookie) {
@@ -42,7 +43,7 @@ sub vcl_recv {
 
 sub vcl_fetch {
 
-  if (req.url ~ "\.(gif|png|jpg|jpeg)$" || req.http.host == "s.camptocamp.org") {
+  if (req.url ~ "\.(gif|png|jpg|jpeg)$" || req.http.host ~ "s\.camptocamp\.org|s-preprod\.c2corg") {
     remove beresp.http.Set-Cookie; // allow pictures to get stored in cache
   } else {
     set beresp.ttl = 6h; // default TTL for generated content

@@ -55,10 +55,10 @@ class c2corg::vz {
     to   => "22",
   }
 
-  vz::fwd { "forward pre-prod http port":
+  vz::fwd { "forward pre-prod varnish port":
     ve   => "124",
     from => "80",
-    to   => "80",
+    to   => "8080",
   }
 
   /* package repo */

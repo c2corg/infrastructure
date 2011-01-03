@@ -88,7 +88,14 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::varnish::instance
 
   apache::vhost { "camptocamp.org":
-    aliases => ["www.camptocamp.org", "www-preprod.c2corg", "s-preprod.c2corg", "m-preprod.c2corg", "symfony-backend.c2corg"],
+    aliases => [
+      "www.camptocamp.org",
+      "s.camptocamp.org",
+      "m.camptocamp.org",
+      "www-preprod.c2corg",
+      "s-preprod.c2corg",
+      "m-preprod.c2corg",
+      "symfony-backend.c2corg"],
     docroot => "/srv/www/camptocamp.org/web",
     cgibin  => false,
   }
