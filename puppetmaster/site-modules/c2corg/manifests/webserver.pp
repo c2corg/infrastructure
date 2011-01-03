@@ -3,6 +3,11 @@ class c2corg::webserver::base {
   include apache
   include php::apache
 
+  augeas { "dont expose PHP version":
+    changes => "set /files/etc/php5/apache2/php.ini/PHP/expose_php Off",
+    notify  => Service["apache"],
+  }
+
 }
 
 class c2corg::webserver::symfony {
