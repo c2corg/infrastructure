@@ -1,5 +1,18 @@
 class c2corg::apacheconf::redirections {
 
+  /* redirect requests without www */
+
+  apache::directive { "avoid being indexed twice by search engines":
+    vhost     => "camptocamp.org",
+    directive => '
+RewriteEngine On
+RewriteCond %{HTTP_HOST} =camptocamp.org
+RewriteRule /(.*)   http://www.camptocamp.org/$1 [R=301,L]
+'
+  }
+
+  /* v4 to v5 URL redirections */
+
   apache::vhost { "redirect-v4v5":
     cgibin  => false,
     aliases => [
