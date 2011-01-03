@@ -85,20 +85,9 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::webserver::carto
   include c2corg::webserver::svg
 
-  include c2corg::varnish::instance
+  include c2corg::apacheconf::preprod
 
-  apache::vhost { "camptocamp.org":
-    aliases => [
-      "www.camptocamp.org",
-      "s.camptocamp.org",
-      "m.camptocamp.org",
-      "www-preprod.c2corg",
-      "s-preprod.c2corg",
-      "m-preprod.c2corg",
-      "symfony-backend.c2corg"],
-    docroot => "/srv/www/camptocamp.org/web",
-    cgibin  => false,
-  }
+  include c2corg::varnish::instance
 
   augeas { "temporarily disable php-xcache admin auth":
     changes => "set /files/etc/php5/conf.d/xcache.ini/xcache.admin/xcache.admin.enable_auth Off",

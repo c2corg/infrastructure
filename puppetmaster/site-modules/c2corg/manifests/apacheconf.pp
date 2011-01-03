@@ -1,3 +1,46 @@
+class c2corg::apacheconf::common {
+
+  apache::vhost { "camptocamp.org":
+    aliases => [
+      "www.camptocamp.org",
+      "s.camptocamp.org",
+      "m.camptocamp.org",
+      "symfony-backend.c2corg"],
+    docroot => "/srv/www/camptocamp.org/web",
+    cgibin  => false,
+  }
+
+  file { "/var/www/camptocamp.org/conf/camptocamp.org.conf":
+    ensure  => link,
+    target  => "/srv/www/camptocamp.org/config/camptocamp.org.conf",
+    require => Apache::Vhost["camptocamp.org"],
+  }
+
+}
+
+
+class c2corg::apacheconf::prod inherits c2corg::apacheconf::common {
+
+  include c2corg::apacheconf::redirections
+}
+
+class c2corg::apacheconf::preprod inherits c2corg::apacheconf::common {
+
+  include c2corg::apacheconf::redirections
+
+  Apache::Vhost["camptocamp.org"] {
+    aliases +> [ "www-preprod.c2corg", "s-preprod.c2corg", "m-preprod.c2corg"],
+  }
+}
+
+class c2corg::apacheconf::dev inherits c2corg::apacheconf::common {
+
+  Apache::Vhost["camptocamp.org"] {
+    enable_default => false,
+  }
+}
+
+
 class c2corg::apacheconf::redirections {
 
   /* redirect requests without www */
