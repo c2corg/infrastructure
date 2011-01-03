@@ -29,7 +29,7 @@ class c2corg::apacheconf::preprod inherits c2corg::apacheconf::common {
   include c2corg::apacheconf::redirections
 
   Apache::Vhost["camptocamp.org"] {
-    aliases +> [ "www-preprod.c2corg", "s-preprod.c2corg", "m-preprod.c2corg"],
+    aliases +> [ "www.preprod.c2corg", "s.preprod.c2corg", "m.preprod.c2corg"],
   }
 }
 
