@@ -88,20 +88,9 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::varnish::instance
 
   apache::vhost { "camptocamp.org":
-    aliases => ["www.camptocamp.org", "www-preprod.camptocamp.org", "symfony-backend.c2corg"],
+    aliases => ["www.camptocamp.org", "www-preprod.c2corg", "s-preprod.c2corg", "m-preprod.c2corg", "symfony-backend.c2corg"],
     docroot => "/srv/www/camptocamp.org/web",
     cgibin  => false,
-  }
-
-  # FIXME: this prevents varnish storage from working as it should
-  apache::auth::htpasswd { "c2corg@camptocamp.org":
-    vhost    => "camptocamp.org",
-    username => "c2corg",
-    cryptPassword => "UxYkCOe3sNVJc",
-  }
-
-  apache::auth::basic::file::user { "prevent-robots-from-indexing":
-    vhost => "camptocamp.org",
   }
 
   augeas { "temporarily disable php-xcache admin auth":
