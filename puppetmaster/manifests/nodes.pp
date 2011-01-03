@@ -93,6 +93,44 @@ node 'pre-prod' inherits 'base-node' {
     changes => "set /files/etc/php5/conf.d/xcache.ini/xcache.admin/xcache.admin.enable_auth Off",
   }
 
+  /* hackish stuff to autotomatically install and update c2corg codebase */
+  vcsrepo { "/srv/www/camptocamp.org/":
+    ensure   => "present",
+    revision => "HEAD",
+    provider => "svn",
+    source   => "http://dev.camptocamp.org/svn/c2corg/trunk/camptocamp.org/",
+    notify   => Exec["c2corg refresh"],
+  }
+
+  file { ["/srv/www/camptocamp.org/cache", "/srv/www/camptocamp.org/log"]:
+    ensure  => directory,
+    owner   => "www-data",
+    require => Vcsrepo["/srv/www/camptocamp.org/"],
+  }
+
+  file { "c2corg preprod.ini":
+    path    => "/srv/www/camptocamp.org/deployment/preprod.ini",
+    source  => "puppet:///c2corg/symfony/preprod.ini",
+    require => Vcsrepo["/srv/www/camptocamp.org/"],
+    notify  => [Exec["c2corg refresh"], Exec["c2corg install"]],
+  }
+
+  exec { "c2corg install":
+    command => "php c2corg --install --conf preprod",
+    cwd     => "/srv/www/camptocamp.org/",
+    require => [File["/srv/www/camptocamp.org/cache"], File["/srv/www/camptocamp.org/log"]],
+    logoutput   => true,
+    refreshonly => true,
+  }
+
+  exec { "c2corg refresh":
+    command => "php c2corg --refresh --conf preprod --build",
+    cwd     => "/srv/www/camptocamp.org/",
+    require => Exec["c2corg install"],
+    logoutput   => true,
+    refreshonly => true,
+  }
+
   c2corg::account::user { "alex@root": user => "alex", account => "root" }
   c2corg::account::user { "gottferdom@root": user => "gottferdom", account => "root" }
   c2corg::account::user { "xbrrr@root": user => "xbrrr", account => "root" }
