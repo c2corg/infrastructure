@@ -29,6 +29,7 @@ git://github.com/camptocamp/puppet-mysql.git mysql origin/master
 
 git://github.com/camptocamp/puppet-collectd.git collectd origin/master
 git://github.com/camptocamp/puppet-nagios.git nagios origin/refactorisation
+git://github.com/camptocamp/puppet-syslog-ng.git syslog-ng origin/master
 
 git://github.com/camptocamp/puppet-python.git python origin/master
 git://github.com/camptocamp/puppet-ruby.git ruby origin/master

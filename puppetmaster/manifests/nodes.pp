@@ -38,8 +38,9 @@ node 'pkg' inherits 'base-node' {
 node 'monit' inherits 'base-node' {
 
   include c2corg::collectd::server
+  include syslog-ng::server
 
-  c2corg::backup::dir { "/srv/collectd": }
+  c2corg::backup::dir { ["/srv/collectd", "/srv/syslog"]: }
 
 }
 

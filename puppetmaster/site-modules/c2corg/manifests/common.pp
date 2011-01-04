@@ -14,7 +14,7 @@ class c2corg::common::packages {
     "netcat", "nmap", "nscd", "ntp",
     "openssh-server",
     "patch", "pwgen",
-    "rsyslog", "rsync",
+    "rsync",
     "screen", "subversion", "subversion-tools", "sysstat",
     "tcpdump", "telnet", "tshark",
     "unzip",
@@ -49,9 +49,20 @@ class c2corg::common::services {
     require => Package["at"],
   }
 
-  service { "rsyslog":
-    ensure => running, enable => true, hasstatus => true,
-    require => Package["rsyslog"],
+  if $ipaddress != $syslog_server {
+    package { "rsyslog": ensure => present }
+
+    service { "rsyslog":
+      ensure => running, enable => true, hasstatus => true,
+      require => Package["rsyslog"],
+    }
+
+    file { "/etc/rsyslog.d/remotelogs.conf":
+      ensure  => present,
+      content => "# file managed by puppet\n*.*    @${syslog_server}\n",
+      require => Package["rsyslog"],
+      notify  => Service["rsyslog"],
+    }
   }
 
   service { "nscd":
