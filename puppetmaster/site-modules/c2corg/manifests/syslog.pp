@@ -16,7 +16,12 @@ class c2corg::syslog::client {
   file { "local syslog config":
     path    => "/etc/rsyslog.d/remotelogs.conf",
     ensure  => present,
-    content => "# file managed by puppet\n*.*    @${syslog_server}\n",
+    content => inline_template('# file managed by puppet
+<% if operatingsystem != "lenny" -%>
+$MaxMessageSize 64k
+<% end -%>
+*.*    @@<%= syslog_server %>
+'),
     require => Package["syslog"],
     notify  => Service["syslog"],
   }
@@ -32,7 +37,7 @@ class c2corg::syslog::server inherits c2corg::syslog::client {
     path    => "/etc/syslog-ng/local.conf",
     content => "# file managed by puppet
 source s_remote {
-  udp();
+  tcp(log_msg_size(65536));
 };
 
 destination d_hosts {
