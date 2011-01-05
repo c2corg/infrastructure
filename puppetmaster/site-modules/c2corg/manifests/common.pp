@@ -49,22 +49,6 @@ class c2corg::common::services {
     require => Package["at"],
   }
 
-  if $ipaddress != $syslog_server {
-    package { "rsyslog": ensure => present }
-
-    service { "rsyslog":
-      ensure => running, enable => true, hasstatus => true,
-      require => Package["rsyslog"],
-    }
-
-    file { "/etc/rsyslog.d/remotelogs.conf":
-      ensure  => present,
-      content => "# file managed by puppet\n*.*    @${syslog_server}\n",
-      require => Package["rsyslog"],
-      notify  => Service["rsyslog"],
-    }
-  }
-
   service { "nscd":
     ensure => running, enable => true, hasstatus => true,
     require => Package["nscd"],

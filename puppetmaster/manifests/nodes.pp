@@ -8,6 +8,7 @@ node 'base-node' {
   include c2corg::common::packages
   include c2corg::common::services
   include c2corg::common::config
+  include c2corg::syslog::client
 
 }
 
@@ -38,7 +39,7 @@ node 'pkg' inherits 'base-node' {
 node 'monit' inherits 'base-node' {
 
   include c2corg::collectd::server
-  include syslog-ng::server
+  include c2corg::syslog::server
 
   c2corg::backup::dir { ["/srv/collectd", "/srv/syslog"]: }
 

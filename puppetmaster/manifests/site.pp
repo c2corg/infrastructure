@@ -22,7 +22,3 @@ resources { "user":
   purge => true,
   unless_system_user => "999",
 }
-
-/* misc global attributes */
-$syslog_server = "192.168.191.126"
-
