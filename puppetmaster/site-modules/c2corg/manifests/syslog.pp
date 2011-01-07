@@ -41,10 +41,26 @@ source s_remote {
 };
 
 destination d_hosts {
-  file('/srv/syslog/\$HOST/\$FACILITY.log'
+  file('/srv/syslog/logs/\$HOST/\$FACILITY.log'
     dir_perm(0755)
     create_dirs(yes)
   );
+};
+
+destination d_postgresql_prod {
+  file('/srv/syslog/postgresql/prod.log');
+};
+
+filter f_postgresql_prod {
+  program('postgres') and
+  host('192.168.192.3');
+};
+
+log {
+  source(s_remote);
+  filter(f_postgresql_prod);
+  destination(d_postgresql_prod);
+  flags(final);
 };
 
 log {
@@ -56,6 +72,10 @@ log {
 ",
   }
 
+  augeas { "disable syslog-ng capabilies since they are unavailable inside vz nodes":
+    changes => "set /files/etc/default/syslog-ng/SYSLOGNG_OPTS --no-caps",
+  }
+
   line { "include local syslog config":
     file    => "/etc/syslog-ng/syslog-ng.conf",
     line    => 'include "/etc/syslog-ng/local.conf";',
@@ -63,18 +83,17 @@ log {
     notify  => Service["syslog"],
   }
 
-  file { ["/srv/syslog"]:
-    ensure => directory,
-  }
+  file { ["/srv/syslog", "/srv/syslog/postgresql"]: ensure => directory }
 
   augeas { "logrotate syslog-ng files":
     context => "/files/etc/logrotate.d/srv-syslog/rule",
     changes => [
-      "set file /srv/syslog/*/*.log",
+      "set file /srv/syslog/logs/*/*.log",
       "set schedule weekly",
       "set rotate 52",
       "set compress compress",
       "set missingok missingok",
+      "set postrotate '/usr/sbin/invoke-rc.d syslog-ng reload >/dev/null'",
     ],
   }
 
