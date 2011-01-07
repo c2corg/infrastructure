@@ -112,7 +112,7 @@ class c2corg::syslog::pgfouine {
   file { "/srv/syslog/postgresql/processlog":
     ensure  => present,
     mode    => 0755,
-    content => "#!/usr/bin/env logrotate
+    content => "#!/usr/sbin/logrotate
 
 # file managed by puppet
 
