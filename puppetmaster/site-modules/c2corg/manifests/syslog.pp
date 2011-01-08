@@ -105,7 +105,7 @@ class c2corg::syslog::pgfouine {
 
   $pgfouinemem = "2048M"
 
-  file { "/srv/syslog/postgresql/reports": ensure => directory }
+  file { "/var/www/pgfouine": ensure => directory }
 
   # TODO: fix this:
   # PHP Fatal error:  Class 'awVera' not found in /usr/share/pgfouine/include/reporting/artichow/php5/Graph.class.php on line 133
@@ -123,7 +123,7 @@ class c2corg::syslog::pgfouine {
   delaycompress
   postrotate
     /usr/sbin/invoke-rc.d syslog-ng reload >/dev/null
-    /usr/bin/pgfouine -file /srv/syslog/postgresql/prod.log.1 -top 30 -format html -memorylimit ${pgfouinemem} -report /srv/syslog/postgresql/reports/$(date +%Y%m%d-%Hh%Mm).html=overall,hourly,bytype,slowest,n-mosttime,n-mostfrequent,n-slowestaverage,n-mostfrequenterrors 2>&1 | logger -t pgfouine
+    /usr/bin/pgfouine -file /srv/syslog/postgresql/prod.log.1 -top 30 -format html -memorylimit ${pgfouinemem} -report /var/www/pgfouine/$(date +%Y%m%d-%Hh%Mm).html=overall,hourly,bytype,slowest,n-mosttime,n-mostfrequent,n-slowestaverage,n-mostfrequenterrors 2>&1 | logger -t pgfouine
   endscript
 }
 ",
