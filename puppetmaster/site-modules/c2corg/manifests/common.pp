@@ -126,4 +126,28 @@ options rotate edns0
     command     => "kill -HUP 1",
   }
 
+  file { "/etc/vim/vimrc.local":
+    ensure  => present,
+    content => '" file managed by puppet
+syntax on
+set visualbell
+set tabstop=2
+set shiftwidth=2
+set title
+set expandtab
+set smartindent
+set smarttab
+set showcmd
+set showmatch
+set ignorecase
+set incsearch
+set pastetoggle=<F2>
+',
+  }
+
+  line { "l shell alias":
+    file => "/root/.bashrc",
+    line => 'alias l="ls -Falh"',
+  }
+
 }
