@@ -105,6 +105,7 @@ class c2corg::syslog::pgfouine {
 
   $pgfouinemem = "2048M"
 
+  # TODO: tidy this directory from old reports
   file { "/var/www/pgfouine": ensure => directory }
 
   # TODO: fix this:
@@ -141,7 +142,7 @@ class c2corg::syslog::pgfouine {
     command => "/srv/syslog/postgresql/processlog",
     user    => "root",
     hour    => "*/6",
-    minute  => "30",
+    minute  => "0",
     require => File["/srv/syslog/postgresql/processlog"],
   }
 
