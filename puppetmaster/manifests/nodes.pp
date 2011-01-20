@@ -92,7 +92,7 @@ node 'hn2' inherits 'base-node' {
   # Solution transitoire. Il faudrait trouver une solution qui s'intègre plus
   # intelligemment dans l'infra, peut-être au niveau de haproxy ou varnish.
   collectd::plugin { "httplogsc2corg":
-    content => template("c2corg/collectd/httplogsc2corg.conf"), # argh, file() doesn't handle puppet:// URLs :-(
+    source => "puppet:///c2corg/collectd/httplogsc2corg.conf",
   }
 
 }
