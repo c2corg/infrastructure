@@ -50,8 +50,10 @@ class c2corg::dashboard {
   apache::directive { "rewrite drraws hardcoded URLs":
     vhost     => "admin-backends",
     directive => "
-SetOutputFilter proxy-html
-ProxyHTMLURLMap http://192.168.191.126/cgi-bin/drraw.cgi /drraw.cgi
+<Location /drraw.cgi>
+  SetOutputFilter proxy-html
+  ProxyHTMLURLMap http://192.168.191.126/cgi-bin/drraw.cgi /drraw.cgi
+</Location>
 ",
     require   => Apache::Module["proxy_html"],
   }
