@@ -76,6 +76,7 @@ node 'hn2' inherits 'base-node' {
   include c2corg::hn::hn2
 
   include haproxy
+  include haproxy::collectd
 
   include c2corg::collectd::client
   include apache::collectd

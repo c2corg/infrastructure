@@ -4,6 +4,8 @@ class c2corg::collectd::client {
   collectd::conf {
     'FQDNLookup':
       value => 'false';
+    'TypesDB':
+      value => '/usr/share/collectd/types.db', quote => true;
     'LoadPlugin':
       value => $operatingsystem ? {
         'GNU/kFreeBSD' => ['interface', 'load', 'memory', 'processes', 'tcpconns', 'users'],
@@ -59,6 +61,8 @@ class c2corg::collectd::server inherits c2corg::collectd::client {
   Collectd::Network["network"] {
     listen => '"0.0.0.0" "25826"',
   }
+
+  include haproxy::collectd::typedb
 
 
   # visualisation stuff
