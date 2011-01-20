@@ -96,6 +96,21 @@ node 'hn2' inherits 'base-node' {
     source => "puppet:///c2corg/collectd/httplogsc2corg.conf",
   }
 
+  # solution temporaire pour envoyer les stats postgresql vers collectd.
+  collectd::plugin { "postgresql":
+    content => "# file managed by puppet
+LoadPlugin \"postgresql\"
+<Plugin postgresql>
+  <Database c2corg>
+    Host \"/srv/chroot-c2corg/var/run/postgresql/\"
+    Port \"5433\"
+    User \"www-data\"
+    Password \"www-data\"
+  </Database>
+</Plugin>
+",
+  }
+
 }
 
 node 'pre-prod' inherits 'base-node' {
