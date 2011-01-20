@@ -21,7 +21,18 @@ class c2corg::database::base {
     password => $c2corg::password::sympa,
   }
 
-  #TODO: collectd
+  collectd::plugin { "postgresql":
+    content => "# file managed by puppet
+LoadPlugin \"postgresql\"
+<Plugin postgresql>
+  <Database c2corg>
+    Port \"5432\"
+    User \"www-data\"
+    Password \"${c2corg::password::pgsql}\"
+  </Database>
+</Plugin>
+",
+  }
 
 }
 
