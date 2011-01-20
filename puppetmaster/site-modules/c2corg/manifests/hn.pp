@@ -5,6 +5,8 @@ class c2corg::hn {
     source => "puppet:///c2corg/network/${hostname}",
   }
 
+  collectd::plugin { ['cpu', 'df', 'entropy']: }
+
 }
 
 /* openvz host */
