@@ -181,6 +181,12 @@ node 'pre-prod' inherits 'base-node' {
     vhost    => "admin-backends",
   }
 
+  apache::proxypass { "apache-status":
+    location => "/apache-server-status",
+    url      => "http://192.168.192.3/server-status",
+    vhost    => "admin-backends",
+  }
+
   apache::proxypass { "drraw rrd viewer":
     location => "/drraw.cgi",
     url      => "http://192.168.191.126/cgi-bin/drraw.cgi",
