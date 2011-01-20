@@ -16,6 +16,8 @@ class c2corg::apacheconf::common {
     require => Apache::Vhost["camptocamp.org"],
   }
 
+  include apache::collectd
+
 }
 
 

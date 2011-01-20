@@ -21,6 +21,7 @@ class c2corg::database::base {
     password => $c2corg::password::sympa,
   }
 
+  #TODO: collectd
 
 }
 

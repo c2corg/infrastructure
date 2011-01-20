@@ -6,8 +6,8 @@ class c2corg::collectd::client {
       value => 'false';
     'LoadPlugin':
       value => $operatingsystem ? {
-        'GNU/kFreeBSD' => ['interface', 'load', 'memory', 'processes', 'users'],
-        default        => ['interface', 'load', 'memory', 'processes', 'users', 'vmem']
+        'GNU/kFreeBSD' => ['interface', 'load', 'memory', 'processes', 'tcpconns', 'users'],
+        default        => ['interface', 'load', 'memory', 'processes', 'tcpconns', 'users', 'vmem']
       };
   }
 
@@ -43,7 +43,11 @@ class c2corg::collectd::server inherits c2corg::collectd::client {
     ensure => directory,
   }
 
-  # TODO: tidy stall files in /srv/collectd
+  tidy { "/srv/collectd":
+    age     => "2w",
+    recurse => true,
+    rmdirs  => true,
+  }
 
   Collectd::Rrdtool['rrd'] {
     datadir           => "\"${datadir}\"",
@@ -60,6 +64,8 @@ class c2corg::collectd::server inherits c2corg::collectd::client {
   # visualisation stuff
 
   include thttpd
+
+  # thttpd::conf { "nochroot": }
 
   file { "/var/www/cgi-bin/":
     ensure  => directory,

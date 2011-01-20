@@ -5,7 +5,7 @@ class c2corg::hn {
     source => "puppet:///c2corg/network/${hostname}",
   }
 
-  collectd::plugin { ['cpu', 'df', 'entropy']: }
+  collectd::plugin { ['cpu', 'df', 'disk', 'entropy', 'irq', 'swap']: }
 
 }
 

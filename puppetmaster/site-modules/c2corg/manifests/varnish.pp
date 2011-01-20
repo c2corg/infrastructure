@@ -32,4 +32,6 @@ class c2corg::varnish::instance {
     }
   }
 
+  #TODO: collectd
+
 }

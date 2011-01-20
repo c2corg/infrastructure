@@ -4,6 +4,19 @@ OpenVZ node + firewall definition
 */
 class c2corg::vz {
 
+  collectd::plugin { "openvz":
+    content => '# file managed by puppet
+<LoadPlugin "perl">
+  Globals true
+</LoadPlugin>
+
+<Plugin "perl">
+  BaseName "Collectd::Plugins"
+  LoadPlugin "OpenVZ"
+</Plugin>
+',
+  }
+
   /* puppetmaster */
 
   vz::ve { "101": hname => "pm.c2corg" }

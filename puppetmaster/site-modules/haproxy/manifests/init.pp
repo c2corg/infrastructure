@@ -26,4 +26,6 @@ class haproxy {
     notify => Service["haproxy"],
   }
 
+  #TODO: collectd
+
 }
