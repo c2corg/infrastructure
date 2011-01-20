@@ -1,5 +1,9 @@
 class c2corg::dashboard {
 
+  Apache::Proxypass {
+    notify => Exec["make index.html"],
+  }
+
   /* required for ddraw.cgi */
   package { "libapache2-mod-proxy-html": }
 
@@ -34,6 +38,13 @@ class c2corg::dashboard {
     location => "/drraw.cgi",
     url      => "http://192.168.191.126/cgi-bin/drraw.cgi",
     vhost    => "admin-backends",
+  }
+
+  exec { "make index.html":
+    command     => 'egrep -hi "proxypass\s+" *.conf | awk \' { printf "<li><a href=%s>%s</a></li>\n", $2, $2 } \' > ../htdocs/index.html',
+    cwd         => "/var/www/admin-backends/conf/",
+    refreshonly => true,
+    require     => Apache::Vhost["admin-backends"],
   }
 
   apache::directive { "rewrite drraws hardcoded URLs":
