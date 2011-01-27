@@ -105,6 +105,21 @@ class puppet::server {
     notify => Service["puppetmaster"],
   }
 
+  augeas { "enable collected resources":
+    context => "/files/etc/puppet/puppet.conf/puppetmasterd",
+    changes => [
+      "set storeconfigs true",
+      "set dbadapter sqlite3",
+      "set thin_storeconfigs true",
+    ],
+    notify => Service["puppetmaster"],
+  }
+
+  package { ["sqlite3", "libsqlite3-ruby"]:
+    ensure => present,
+    before => Augeas["enable collected resources"],
+  }
+
 }
 
 class puppet::devel {
