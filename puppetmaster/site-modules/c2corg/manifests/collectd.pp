@@ -62,7 +62,7 @@ class c2corg::collectd::server inherits c2corg::collectd::client {
     listen => '"0.0.0.0" "25826"',
   }
 
-  include haproxy::collectd::typedb
+  include haproxy::collectd::typesdb
   include c2corg::varnish::typesdb
 
 

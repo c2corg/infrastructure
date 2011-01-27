@@ -60,7 +60,7 @@ Loadplugin \"exec\"
 
 }
 
-class haproxy::collectd::typedb {
+class haproxy::collectd::typesdb {
 
   $typesdb = "/usr/share/collectd/haproxy.db"
 
