@@ -32,6 +32,7 @@ class c2corg::varnish::instance {
     }
   }
 
+/* this crap doesn't work ! Grr !!
   # varnish plugin only backported for kFreeBSD instance
   if ($operatingsystem == "GNU/kFreeBSD") {
 
@@ -45,7 +46,7 @@ class c2corg::varnish::instance {
 
     collectd::plugin { "varnish":
       lines => [
-        '<Instance>',
+        "<Instance \"${hostname}\">",
         'CollectCache       true',
         'CollectConnections true',
         'CollectBackend     true',
@@ -62,7 +63,7 @@ class c2corg::varnish::instance {
       ],
     }
 
-  }
+  } */
 
 }
 
@@ -77,16 +78,21 @@ class c2corg::varnish::typesdb {
   file { "varnish collectd types":
     path    => $typesdb,
     content => "# file managed by puppet
-bytes     value:GAUGE:0:U
+#bytes     value:GAUGE:0:U
+#cache_operation   value:DERIVE:0:U
+#cache_result    value:DERIVE:0:U
+#connections   value:DERIVE:0:U
+#http_requests   value:DERIVE:0:U
+#requests    value:GAUGE:0:U
+#threads     value:GAUGE:0:U
+#total_bytes   value:DERIVE:0:U
+#total_operations  value:DERIVE:0:U
+#total_requests    value:DERIVE:0:U
+#total_sessions    value:DERIVE:0:U
+#total_threads   value:DERIVE:0:U
 cache_operation   value:DERIVE:0:U
-cache_result    value:DERIVE:0:U
-connections   value:DERIVE:0:U
-http_requests   value:DERIVE:0:U
 requests    value:GAUGE:0:U
-threads     value:GAUGE:0:U
-total_bytes   value:DERIVE:0:U
 total_operations  value:DERIVE:0:U
-total_requests    value:DERIVE:0:U
 total_sessions    value:DERIVE:0:U
 total_threads   value:DERIVE:0:U
 ",
