@@ -74,6 +74,12 @@ class c2corg::vz {
     to   => "8080",
   }
 
+  vz::fwd { "forward pre-prod https port":
+    ve   => "124",
+    from => "443",
+    to   => "443",
+  }
+
   /* package repo */
 
   vz::ve { "125":

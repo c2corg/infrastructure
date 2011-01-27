@@ -1,5 +1,7 @@
 class c2corg::dashboard {
 
+  include apache::ssl
+
   Apache::Proxypass {
     notify => Exec["make index.html"],
   }
@@ -12,8 +14,12 @@ class c2corg::dashboard {
     require => Package["libapache2-mod-proxy-html"]
   }
 
-  apache::vhost { "admin-backends":
+  $sslcert_country = "CH"
+  $sslcert_organisation = "Camptocamp.org"
+  apache::vhost-ssl { "admin-backends":
     aliases => ["128.179.66.13"],
+    certcn  => "128.179.66.13",
+    sslonly => true,
   }
 
   apache::proxypass { "pgfouine reports":
