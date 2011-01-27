@@ -8,6 +8,7 @@ node 'base-node' {
   include c2corg::common::packages
   include c2corg::common::services
   include c2corg::common::config
+  include c2corg::hosts
   include c2corg::syslog::client
 
 }
