@@ -105,8 +105,14 @@ class c2corg::syslog::pgfouine {
 
   $pgfouinemem = "2048M"
 
-  # TODO: tidy this directory from old reports
   file { "/var/www/pgfouine": ensure => directory }
+
+  tidy { "/var/www/pgfouine":
+    age     => "2w",
+    type    => "mtime",
+    recurse => true,
+  }
+
 
   # TODO: fix this:
   # PHP Fatal error:  Class 'awVera' not found in /usr/share/pgfouine/include/reporting/artichow/php5/Graph.class.php on line 133
