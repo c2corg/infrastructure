@@ -30,7 +30,7 @@ class haproxy {
 
 class haproxy::collectd {
 
-  include haproxy::collectd::typedb
+  include haproxy::collectd::typesdb
 
   $plugin= "/usr/local/sbin/haproxy-stat.sh"
 
