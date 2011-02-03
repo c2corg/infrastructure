@@ -32,7 +32,7 @@ class c2corg::apacheconf::preprod inherits c2corg::apacheconf::common {
   include apache::collectd
 
   Apache::Vhost["camptocamp.org"] {
-    aliases +> [ "www.preprod.c2corg", "s.preprod.c2corg", "m.preprod.c2corg"],
+    aliases +> ["www.preprod.c2corg", "s.preprod.c2corg", "m.preprod.c2corg"],
   }
 }
 
@@ -40,6 +40,7 @@ class c2corg::apacheconf::dev inherits c2corg::apacheconf::common {
 
   Apache::Vhost["camptocamp.org"] {
     enable_default => false,
+    aliases +> [$hostname, $fqdn],
   }
 }
 
