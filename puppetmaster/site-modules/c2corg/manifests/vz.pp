@@ -47,15 +47,7 @@ class c2corg::vz {
     to   => "22",
   }
 
-  /* test nodes */
-
-  vz::ve { "123": hname => "test-marc.c2corg" }
-
-  vz::fwd { "forward test-marc ssh port":
-    ve   => "123",
-    from => "10123",
-    to   => "22",
-  }
+  /* pre-prod nodes */
 
   vz::ve { "124":
     hname => "pre-prod.c2corg",
@@ -104,6 +96,36 @@ class c2corg::vz {
     ve   => "126",
     from => "10126",
     to   => "22",
+  }
+
+  /* test nodes */
+
+  vz::ve { "123": # TODO: upgrade to 20x to boot after more important nodes
+    hname => "test-marc.c2corg",
+    template => "debian-squeeze-amd64-with-puppet",
+  }
+
+  vz::fwd { "forward test-marc ssh port":
+    ve   => "123",
+    from => "10123",
+    to   => "22",
+  }
+
+  vz::ve { "201":
+    hname => "test-alex.c2corg",
+    template => "debian-squeeze-amd64-with-puppet",
+  }
+
+  vz::fwd { "forward test-alex ssh port":
+    ve   => "201",
+    from => "10201",
+    to   => "22",
+  }
+
+  vz::fwd { "forward test-alex http port":
+    ve   => "201",
+    from => "11201",
+    to   => "80",
   }
 
 
