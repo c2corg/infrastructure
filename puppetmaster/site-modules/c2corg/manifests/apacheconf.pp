@@ -16,19 +16,20 @@ class c2corg::apacheconf::common {
     require => Apache::Vhost["camptocamp.org"],
   }
 
-  include apache::collectd
-
 }
 
 
 class c2corg::apacheconf::prod inherits c2corg::apacheconf::common {
 
   include c2corg::apacheconf::redirections
+  include apache::collectd
+
 }
 
 class c2corg::apacheconf::preprod inherits c2corg::apacheconf::common {
 
   include c2corg::apacheconf::redirections
+  include apache::collectd
 
   Apache::Vhost["camptocamp.org"] {
     aliases +> [ "www.preprod.c2corg", "s.preprod.c2corg", "m.preprod.c2corg"],
