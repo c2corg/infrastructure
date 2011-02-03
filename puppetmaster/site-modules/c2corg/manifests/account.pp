@@ -14,6 +14,7 @@ define c2corg::account::user ($ensure=present, $user=$name, $account) {
   if !defined(User[$account]) {
     user { $account:
       ensure => $ensure,
+      managehome => true,
     }
   }
 
