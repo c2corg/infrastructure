@@ -1,7 +1,8 @@
 class haproxy {
 
   package { "haproxy":
-    ensure => present
+    ensure => present,
+    before => File["/etc/haproxy/haproxy.cfg"],
   }
 
   service { "haproxy":
