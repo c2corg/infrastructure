@@ -58,6 +58,8 @@ fi
 ",
   }
 
+  package { "netstat-nat": }
+
 }
 
 /* varnish server */
