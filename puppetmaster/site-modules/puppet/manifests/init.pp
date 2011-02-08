@@ -17,10 +17,17 @@ deb http://snapshot.debian.org/archive/debian/20100720T084354Z/ squeeze main
   }
 
   apt::preferences { "puppet-packages_from_snapshot":
-    package  => "facter puppet puppetmaster puppet-common vim-puppet",
+    package  => "puppet puppetmaster puppet-common vim-puppet",
     pin      => "origin snapshot.debian.org",
     priority => "1010",
-    before   => Package["puppet", "facter", "augeas-lenses"],
+    before   => [Package["puppet"], Package["augeas-lenses"]],
+  }
+
+  apt::preferences { "facter_from_c2corg_repo":
+    package  => "facter",
+    pin      => "release l=C2corg, a=${lsbdistcodename}",
+    priority => "1010",
+    before   => Package["puppet"],
   }
 
   package { ["puppet", "facter"]:
