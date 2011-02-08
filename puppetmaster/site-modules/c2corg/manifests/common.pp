@@ -55,7 +55,15 @@ class c2corg::common::services {
   }
 
   service { "ntp":
-    ensure => running, enable => true, hasstatus => true,
+    ensure => $is_virtual ? {
+      'true'  => stopped,
+      'false' => running,
+    },
+    enable => $is_virtual ? {
+      'true'  => false,
+      'false' => true,
+    },
+    hasstatus => true,
     require => Package["ntp"],
   }
 
