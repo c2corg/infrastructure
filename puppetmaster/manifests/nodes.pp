@@ -67,8 +67,6 @@ node 'hn1' inherits 'base-node' {
   include c2corg::varnish::instance
 
   include c2corg::collectd::client
-
-  include puppet::devel
 }
 
 # PowerEdge 2950 - debian/lenny

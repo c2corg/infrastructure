@@ -15,7 +15,8 @@ class c2corg::varnish::instance {
       }
 
       varnish::instance { $hostname:
-        storage => "malloc,7400M",
+        storage => "malloc,64G", # malloc on a huge swap partition
+        params  => [ "ban_lurker_sleep=3" ],
       }
     }
 
