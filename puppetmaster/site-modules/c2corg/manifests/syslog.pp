@@ -2,6 +2,14 @@ class c2corg::syslog::client {
 
   $syslog_server = "192.168.191.126"
 
+  if $lsbdistcodename == "lenny" {
+    apt::preferences { "rsyslog_from_backports.org":
+      package  => "rsyslog",
+      pin      => "release a=${lsbdistcodename}-backports",
+      priority => "1010",
+    }
+  }
+
   package { "syslog":
     name   => "rsyslog",
     ensure => present,
@@ -47,6 +55,8 @@ destination d_hosts {
   );
 };
 
+# PostgreSQL production logs
+
 destination d_postgresql_prod {
   file('/srv/syslog/postgresql/prod.log');
 };
@@ -62,6 +72,26 @@ log {
   destination(d_postgresql_prod);
   flags(final);
 };
+
+# HAProxy production logs
+
+destination d_haproxy_prod {
+  file('/srv/syslog/haproxy/prod.log');
+};
+
+filter f_haproxy_prod {
+  program('haproxy') and
+  host('192.168.192.3');
+};
+
+log {
+  source(s_remote);
+  filter(f_haproxy_prod);
+  destination(d_haproxy_prod);
+  flags(final);
+};
+
+# Default logs
 
 log {
   source(s_remote);
@@ -83,7 +113,7 @@ log {
     notify  => Service["syslog"],
   }
 
-  file { ["/srv/syslog", "/srv/syslog/postgresql"]: ensure => directory }
+  file { ["/srv/syslog", "/srv/syslog/postgresql", "/srv/syslog/haproxy"]: ensure => directory }
 
   augeas { "logrotate syslog-ng files":
     context => "/files/etc/logrotate.d/srv-syslog/rule",

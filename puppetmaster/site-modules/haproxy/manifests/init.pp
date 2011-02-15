@@ -27,6 +27,21 @@ class haproxy {
     notify => Service["haproxy"],
   }
 
+  file { "/etc/rsyslog.d/zzz-haproxy.conf":
+    ensure  => present,
+    notify  => Service["syslog"],
+    content => '# file managed by puppet
+
+# enable local UDP syslog service, as haproxy runs chrooted
+$ModLoad imudp
+$UDPServerAddress 127.0.0.1
+$UDPServerRun 514
+
+# localy discard logs coming from haproxy
+local1.* ~
+',
+  }
+
 }
 
 class haproxy::collectd {
