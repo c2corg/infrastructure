@@ -63,7 +63,7 @@ class c2corg::collectd::server inherits c2corg::collectd::client {
   }
 
   include haproxy::collectd::typesdb
-  # include c2corg::varnish::typesdb
+  include c2corg::varnish::typesdb
 
 
   # visualisation stuff
