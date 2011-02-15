@@ -177,10 +177,50 @@ class c2corg::syslog::pgfouine {
   cron { "rotate and process postgresql logs":
     command => "/srv/syslog/postgresql/processlog",
     user    => "root",
-    hour    => "*/6",
+    hour    => [0,6,12,18], # avoid overlap with haproxy
     minute  => "0",
     require => File["/srv/syslog/postgresql/processlog"],
   }
 
 }
 
+class c2corg::syslog::haproxy {
+
+  file { "/var/www/haproxy": ensure => directory }
+
+  tidy { "/var/www/haproxy":
+    age     => "2w",
+    type    => "mtime",
+    recurse => true,
+  }
+
+  # TODO: install and enable request-log-analyzer
+
+  file { "/srv/syslog/haproxy/processlog":
+    ensure  => present,
+    mode    => 0755,
+    content => "#!/usr/sbin/logrotate
+
+# file managed by puppet
+
+/srv/syslog/haproxy/prod.log {
+  size 1k
+  rotate 50
+  compress
+  delaycompress
+  postrotate
+    /usr/sbin/invoke-rc.d syslog-ng reload >/dev/null
+  endscript
+}
+",
+  }
+
+  cron { "rotate and process haproxy logs":
+    command => "/srv/syslog/haproxy/processlog",
+    user    => "root",
+    hour    => [3,9,15,21], # avoid overlap with pgfouine
+    minute  => "0",
+    require => File["/srv/syslog/haproxy/processlog"],
+  }
+
+}

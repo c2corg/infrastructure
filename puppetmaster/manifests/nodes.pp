@@ -42,6 +42,7 @@ node 'monit' inherits 'base-node' {
   include c2corg::collectd::server
   include c2corg::syslog::server
   include c2corg::syslog::pgfouine
+  include c2corg::syslog::haproxy
 
   c2corg::backup::dir { ["/srv/collectd", "/srv/syslog"]: }
 
