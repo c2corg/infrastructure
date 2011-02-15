@@ -91,6 +91,7 @@ total_operations  value:DERIVE:0:U
 total_sessions    value:DERIVE:0:U
 total_threads   value:DERIVE:0:U
 ",
+    notify => Service["collectd"],
   }
 
 }

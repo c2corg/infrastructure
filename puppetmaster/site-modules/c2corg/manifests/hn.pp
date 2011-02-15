@@ -6,7 +6,7 @@ class c2corg::hn {
   }
 
   $collectdplugins = $operatingsystem ? {
-    'GNU/kFreeBSD' => ['cpu', 'df', 'entropy', 'irq', 'swap'],
+    'GNU/kFreeBSD' => ['cpu', 'df', 'swap'],
     default        => ['cpu', 'df', 'disk', 'entropy', 'irq', 'swap'],
   }
   collectd::plugin { $collectdplugins: lines => [] }
