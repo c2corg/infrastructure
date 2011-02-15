@@ -5,7 +5,11 @@ class c2corg::hn {
     source => "puppet:///c2corg/network/${hostname}",
   }
 
-  collectd::plugin { ['cpu', 'df', 'disk', 'entropy', 'irq', 'swap']: lines => [] }
+  $collectdplugins = $operatingsystem ? {
+    'GNU/kFreeBSD' => ['cpu', 'df', 'entropy', 'irq', 'swap'],
+    default        => ['cpu', 'df', 'disk', 'entropy', 'irq', 'swap'],
+  }
+  collectd::plugin { $collectdplugins: lines => [] }
 
 }
 
