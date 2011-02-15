@@ -45,7 +45,7 @@ class c2corg::syslog::server inherits c2corg::syslog::client {
     path    => "/etc/syslog-ng/local.conf",
     content => "# file managed by puppet
 source s_remote {
-  tcp(log_msg_size(65536));
+  tcp(log_msg_size(65536) max-connections(50));
 };
 
 destination d_hosts {
