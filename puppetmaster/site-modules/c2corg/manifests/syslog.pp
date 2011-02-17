@@ -210,7 +210,7 @@ class c2corg::syslog::haproxy {
   delaycompress
   postrotate
     /usr/sbin/invoke-rc.d syslog-ng reload >/dev/null
-    RUBYLIB=/srv/syslog/haproxy/request-log-analyzer/lib/ ruby1.8 /srv/syslog/haproxy/request-log-analyzer/bin/request-log-analyzer --format /srv/syslog/haproxy/haproxy.rb --output html --report-amount 50 --silent --file /var/www/haproxy-logs/$(date +%Y%m%d-%Hh%Mm).html /srv/syslog/haproxy/prod.log.1 2>&1 | logger -t RLA
+    time RUBYLIB=/srv/syslog/haproxy/request-log-analyzer/lib/ ruby1.8 /srv/syslog/haproxy/request-log-analyzer/bin/request-log-analyzer --format /srv/syslog/haproxy/haproxy.rb --output html --report-amount 50 --silent --file /var/www/haproxy-logs/$(date +%Y%m%d-%Hh%Mm).html /srv/syslog/haproxy/prod.log.1 2>&1 | logger -t RLA
   endscript
 }
 ",
