@@ -30,7 +30,7 @@ class c2corg::dashboard {
 
   apache::proxypass { "haproxy logs":
     location => "/haproxy-logs",
-    url      => "http://192.168.191.126/haproxy",
+    url      => "http://192.168.191.126/haproxy-logs",
     vhost    => "admin-backends",
   }
 
