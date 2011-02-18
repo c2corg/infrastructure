@@ -16,7 +16,7 @@ class c2corg::common::packages {
     "patch", "pwgen",
     "rsync",
     "screen", "subversion", "subversion-tools", "sysstat",
-    "tcpdump", "telnet", "tshark",
+    "tcpdump", "telnet", "time", "tshark",
     "unzip",
     "vim",
     "wget"
