@@ -21,15 +21,22 @@ deb http://mirror.switch.ch/ftp/mirror/debian/ sid main contrib non-free
 "),
   }
 
+  $pkgrepo = $ipaddress ? {
+    /192\.168\.19.*/ => '192.168.191.125',
+    '128.179.66.13'  => '192.168.191.125',
+    default          => '128.179.66.13:8083',
+  }
+
+
   apt::sources_list { "c2corg":
     content => "# file managed by puppet
-deb http://192.168.191.125/test/ $lsbdistcodename main
-deb http://192.168.191.125/prod/ $lsbdistcodename main
+deb http://$pkgrepo/test/ $lsbdistcodename main
+deb http://$pkgrepo/prod/ $lsbdistcodename main
 ",
   }
 
   apt::key { "c2corg":
-    source => "http://192.168.191.125/pubkey.txt",
+    source => "http://$pkgrepo/pubkey.txt",
   }
 
   apt::preferences { "lenny":

@@ -85,6 +85,12 @@ class c2corg::vz {
     to   => "22",
   }
 
+  vz::fwd { "forward pkg http port":
+    ve   => "125",
+    from => "8083",
+    to   => "80",
+  }
+
   /* collectd, syslog, nagios */
 
   vz::ve { "126":
