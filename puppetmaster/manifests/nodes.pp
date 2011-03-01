@@ -45,7 +45,11 @@ node 'monit' inherits 'base-node' {
   include c2corg::syslog::pgfouine
   include c2corg::syslog::haproxy
 
-  c2corg::backup::dir { ["/srv/collectd", "/srv/syslog"]: }
+  c2corg::backup::dir { [
+    "/srv/collectd",
+    "/var/www/pgfouine/",
+    "/var/www/haproxy-logs/",
+  ]: }
 
 }
 
@@ -82,6 +86,11 @@ node 'hn1' inherits 'base-node' {
 node 'hn2' inherits 'base-node' {
 
   include c2corg::hn::hn2
+
+  c2corg::backup::dir { [
+    "/srv/chroot-c2corg/var/www/camptocamp.org/web/uploads/",
+    "/srv/chroot-c2corg/var/local/backup/pgsql/",
+  ]: }
 
   include haproxy
   include haproxy::collectd
