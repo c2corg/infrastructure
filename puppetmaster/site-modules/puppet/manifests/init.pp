@@ -63,10 +63,9 @@ deb http://snapshot.debian.org/archive/debian/20100720T084354Z/ squeeze main
 
   host { "pm.c2corg":
     host_aliases => ["pm"],
-    ip => $ipaddress ? {
-      /192\.168\.19.*/ => '192.168.191.101',
-      '128.179.66.13'  => '192.168.191.101',
-      default          => '128.179.66.13',
+    ip => $datacenter ? {
+      /c2corg|epnet/ => '192.168.191.101',
+      default        => '128.179.66.13',
     },
   }
 

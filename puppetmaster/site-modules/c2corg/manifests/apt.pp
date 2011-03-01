@@ -21,10 +21,9 @@ deb http://mirror.switch.ch/ftp/mirror/debian/ sid main contrib non-free
 "),
   }
 
-  $pkgrepo = $ipaddress ? {
-    /192\.168\.19.*/ => '192.168.191.125',
-    '128.179.66.13'  => '192.168.191.125',
-    default          => '128.179.66.13:8083',
+  $pkgrepo = $datacenter ? {
+    /c2corg|epnet/ => '192.168.191.125',
+    default        => '128.179.66.13:8083',
   }
 
 

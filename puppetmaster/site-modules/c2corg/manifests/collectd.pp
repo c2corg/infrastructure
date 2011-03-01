@@ -15,9 +15,11 @@ class c2corg::collectd::client {
 
   collectd::rrdtool { 'rrd': }
 
-  collectd::network { 'network':
-    server      => '192.168.191.126',
-    cache_flush => 86400,
+  if $datacenter =~ /c2corg|epnet/ {
+    collectd::network { 'network':
+      server      => '192.168.191.126',
+      cache_flush => 86400,
+    }
   }
 
   collectd::syslog { 'info': }

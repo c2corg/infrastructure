@@ -21,17 +21,19 @@ class c2corg::syslog::client {
     require => Package["syslog"],
   }
 
-  file { "local syslog config":
-    path    => "/etc/rsyslog.d/remotelogs.conf",
-    ensure  => present,
-    content => inline_template('# file managed by puppet
+  if $datacenter =~ /c2corg|epnet/ {
+    file { "local syslog config":
+      path    => "/etc/rsyslog.d/remotelogs.conf",
+      ensure  => present,
+      content => inline_template('# file managed by puppet
 <% if operatingsystem != "lenny" -%>
 $MaxMessageSize 64k
 <% end -%>
 *.*    @@<%= syslog_server %>
 '),
-    require => Package["syslog"],
-    notify  => Service["syslog"],
+      require => Package["syslog"],
+      notify  => Service["syslog"],
+    }
   }
 
 }
