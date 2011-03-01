@@ -12,7 +12,6 @@ class c2corg::common::packages {
     "less", "locales-all", "lsb-release",
     "m4", "make", "mtr-tiny",
     "netcat", "nmap", "nscd", "ntp",
-    "openssh-server",
     "patch", "pwgen",
     "rsync",
     "screen", "subversion", "subversion-tools", "sysstat",
@@ -65,11 +64,6 @@ class c2corg::common::services {
     },
     hasstatus => true,
     require => Package["ntp"],
-  }
-
-  service { "ssh":
-    ensure => running, enable => true, hasstatus => true,
-    require => Package["openssh-server"],
   }
 
   service { "sysstat":
