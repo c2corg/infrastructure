@@ -123,6 +123,13 @@ options rotate edns0
     notify  => Exec["refresh init"],
   }
 
+  # Gandi VMs have bad filemodes on /
+  # This breaks sshd.
+  file { "/":
+    ensure => directory, mode => 0755,
+    owner => "root", group => "root",
+  }
+
   exec { "refresh init":
     refreshonly => true,
     command     => "kill -HUP 1",
