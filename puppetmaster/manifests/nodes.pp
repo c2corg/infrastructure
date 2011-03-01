@@ -49,6 +49,13 @@ node 'monit' inherits 'base-node' {
 
 }
 
+# xen VM hosted at gandi.net - 95.142.173.157
+node 'backup' inherits 'base-node' {
+
+  include c2corg::backup::server
+
+}
+
 # ProLiant DL360 G4p - debian/squeeze
 node 'hn0' inherits 'base-node' {
 
