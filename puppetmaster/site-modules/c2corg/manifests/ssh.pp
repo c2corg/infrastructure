@@ -40,4 +40,29 @@ class c2corg::sshd {
     ensure  => running, hasstatus => true, enable => true,
     require => Package["openssh-server"],
   }
+
+  # export and collect ssh host keys
+
+  Sshkey { require => Package["openssh-server"] }
+
+  @@sshkey { "$fqdn":
+    type => rsa,
+    key  => $sshrsakey
+  }
+
+  @@sshkey { "$hostname":
+    type => rsa,
+    key  => $sshrsakey
+  }
+
+  Sshkey <<| |>>
+
+  resources { "sshkey": purge => true }
+
+  file { "/etc/ssh/ssh_known_hosts":
+    ensure => present,
+    mode   => 0644,
+    owner  => "root",
+  }
+
 }
