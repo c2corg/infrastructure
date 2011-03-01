@@ -11,27 +11,71 @@ class c2corg::backup {
       account => "root",
       type    => "rsa",
       key     => $backupkey,
-      opts    => "no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc,no-pty",
+      opts    => "command=\"rsync --server -logDtprRe.iLsf --delete --numeric-ids . /srv/backups/mirror/${hostname}/\",no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc,no-pty",
       tag     => "backups",
     }
+
+    cron { "rsync important stuff to backup server":
+      command => "rsync --rsh='ssh -i /root/.backupkey' --archive --numeric-ids --delete --relative --quiet $(cat /root/.backups.include) root@backup.c2corg:/srv/backups/mirror/$(hostname)/ || echo 'backup failed'",
+      hour    => ip_to_cron(1, 6),
+      minute  => ip_to_cron(),
+    }
   }
-}
-
-class c2corg::backup::server {
-
-  file { "/backups":
-    ensure => directory,
-  }
-
-  package { "pdumpfs": }
-
-  C2corg::Sshkey <<| tag == 'backups' |>>
-
-
 }
 
 define c2corg::backup::dir {
 
   include c2corg::backup
-  # TODO
+
+  $fname = regsubst($name, "\/", "_", "G")
+
+  common::concatfilepart { "include $fname in backups":
+    file    => "/root/.backups.include",
+    content => "${name}\n",
+    manage  => true,
+    before  => Cron["rsync important stuff to backup server"],
+  }
+}
+
+class c2corg::backup::server {
+
+  file { ["/srv/backups", "/srv/backups/mirror", "/srv/backups/increments"]:
+    ensure => directory,
+  }
+
+  C2corg::Sshkey <<| tag == 'backups' |>>
+
+  cron { "daily backup increment":
+    command => "/usr/local/sbin/increment-backups.sh",
+    hour    => 11,
+    minute  => 20,
+  }
+
+  file { "/usr/local/sbin/increment-backups.sh":
+    mode    => 0755,
+    owner   => "root",
+    before  => Cron["daily backup increment"],
+    content => '#!/bin/sh
+
+BASE="/srv/backups/"
+DATEFMT="%Y/%m/%d"
+RETENSION=$(date -d "now - 30 days" +$DATEFMT)
+
+MIRROR="$BASE/mirror/"
+NEWINCR="$BASE/increments/$(date +$DATEFMT)"
+OLDINCR="$BASE/increments/$RETENSION"
+
+if ! [ -d $NEWINCR ]; then
+  mkdir -p $NEWINCR
+  for host in $MIRROR/*; do
+    cp -al $host $NEWINCR/
+  done
+fi
+
+if [ -d $OLDINCR ]; then
+  rm -fr $OLDINCR
+fi
+',
+  }
+
 }
