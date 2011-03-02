@@ -98,8 +98,10 @@ options rotate edns0
       if $is_virtual != true {
         # kernel must reboot if panic occurs
         sysctl::set_value { "kernel.panic": value => "60" }
-        # disable tcp_sack due to Cisco bug in epnet routers
-        sysctl::set_value { "net.ipv4.tcp_sack": value => "0" }
+        if $datacenter =~ /c2corg|epnet/ {
+          # disable tcp_sack due to Cisco bug in epnet routers
+          sysctl::set_value { "net.ipv4.tcp_sack": value => "0" }
+        }
       }
     }
     "GNU/kFreeBSD": {
