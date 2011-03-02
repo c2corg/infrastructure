@@ -107,6 +107,9 @@ node 'hn2' inherits 'base-node' {
 ',
   }
 
+  # accès temporaire en attendant réinstallation machine.
+  c2corg::account::user { "alex@root": user => "alex", account => "root" }
+
   # Solution transitoire. Il faudrait trouver une solution qui s'intègre plus
   # intelligemment dans l'infra, peut-être au niveau de haproxy ou varnish.
   collectd::plugin { "httplogsc2corg":
