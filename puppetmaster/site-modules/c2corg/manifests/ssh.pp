@@ -55,6 +55,11 @@ class c2corg::sshd {
     key  => $sshrsakey
   }
 
+  @@sshkey { "$ipaddress":
+    type => rsa,
+    key  => $sshrsakey
+  }
+
   Sshkey <<| |>>
 
   resources { "sshkey": purge => true }

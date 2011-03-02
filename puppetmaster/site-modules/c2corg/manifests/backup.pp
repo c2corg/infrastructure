@@ -21,6 +21,11 @@ class c2corg::backup {
       minute  => ip_to_cron(),
     }
   }
+
+  # ssh host keys should be managed in /etc/ssh/ssh_known_hosts or it's a bug.
+  file { "/root/.ssh/known_hosts":
+    ensure => absent,
+  }
 }
 
 define c2corg::backup::dir {
