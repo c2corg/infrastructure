@@ -64,21 +64,21 @@ class c2corg::backup::server {
 
 BASE="/srv/backups/"
 DATEFMT="%Y/%m/%d"
-RETENSION=$(date -d "now - 30 days" +$DATEFMT)
+RETENSION=$(date -d "now - 10 days" +$DATEFMT)
 
 MIRROR="$BASE/mirror/"
 NEWINCR="$BASE/increments/$(date +$DATEFMT)"
 OLDINCR="$BASE/increments/$RETENSION"
+
+if [ -d $OLDINCR ]; then
+  rm -fr $OLDINCR
+fi
 
 if ! [ -d $NEWINCR ]; then
   mkdir -p $NEWINCR
   for host in $MIRROR/*; do
     cp -al $host $NEWINCR/
   done
-fi
-
-if [ -d $OLDINCR ]; then
-  rm -fr $OLDINCR
 fi
 ',
   }
