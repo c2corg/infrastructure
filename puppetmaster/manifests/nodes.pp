@@ -46,6 +46,7 @@ node 'monit' inherits 'base-node' {
   include c2corg::syslog::haproxy
 
   c2corg::backup::dir { [
+    "/var/lib/drraw",
     "/srv/collectd",
     "/var/www/pgfouine/",
     "/var/www/haproxy-logs/",
