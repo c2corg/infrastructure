@@ -16,7 +16,10 @@ class c2corg::varnish::instance {
 
       varnish::instance { $hostname:
         storage => "malloc,64G", # malloc on a huge swap partition
-        params  => [ "ban_lurker_sleep=3" ],
+        corelimit => "unlimited",
+        params  => [ "ban_lurker_sleep=3",
+                     "ping_interval=6",
+                     "thread_pool_min=15" ],
       }
     }
 
