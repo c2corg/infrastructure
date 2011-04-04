@@ -50,9 +50,21 @@ deb http://$pkgrepo/prod/ $lsbdistcodename main
     priority => undef,
   }
 
+  apt::preferences { "lenny-proposed-updates":
+    package  => "*",
+    pin      => "release n=lenny-proposed-updates",
+    priority => undef,
+  }
+
   apt::preferences { "squeeze":
     package  => "*",
     pin      => "release n=squeeze",
+    priority => undef,
+  }
+
+  apt::preferences { "squeeze-proposed-updates":
+    package  => "*",
+    pin      => "release n=squeeze-proposed-updates",
     priority => undef,
   }
 
@@ -109,7 +121,15 @@ class c2corg::apt::lenny inherits c2corg::apt {
     priority => "99",
   }
 
+  Apt::Preferences["lenny-proposed-updates"] {
+    priority => "99",
+  }
+
   Apt::Preferences["squeeze"] {
+    priority => "50",
+  }
+
+  Apt::Preferences["squeeze-proposed-updates"] {
     priority => "50",
   }
 
@@ -149,7 +169,15 @@ class c2corg::apt::squeeze inherits c2corg::apt {
     priority => "50",
   }
 
+  Apt::Preferences["lenny-proposed-updates"] {
+    priority => "50",
+  }
+
   Apt::Preferences["squeeze"] {
+    priority => "99",
+  }
+
+  Apt::Preferences["squeeze-proposed-updates"] {
     priority => "99",
   }
 
