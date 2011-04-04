@@ -2,23 +2,15 @@ class puppet::client {
 
   include augeas
 
-  apt::sources_list { "debian-snaphots-puppet-0.25.5":
-    content => "# file managed by puppet
-deb http://snapshot.debian.org/archive/debian/20100720T084354Z/ squeeze main
-",
-    require => Apt::Conf["90snapshot-validity"],
-  }
-
-  # workaround for expired release files in snapshot.debian.org
-  # see http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=595801
+  # undo workaround for expired release files in snapshot.debian.org
   apt::conf { "90snapshot-validity":
     ensure  => present,
-    content => 'Acquire::Check-Valid-Until "false";',
+    content => 'Acquire::Check-Valid-Until "true";',
   }
 
-  apt::preferences { "puppet-packages_from_snapshot":
+  apt::preferences { "puppet-packages_from_c2corg_repo":
     package  => "puppet puppetmaster puppet-common vim-puppet",
-    pin      => "origin snapshot.debian.org",
+    pin      => "release l=C2corg, a=${lsbdistcodename}",
     priority => "1010",
     before   => [Package["puppet"], Package["augeas-lenses"]],
   }
@@ -76,7 +68,7 @@ class puppet::server {
 
   package { ["puppetmaster", "vim-puppet"]:
     ensure  => latest,
-    require => Apt::Preferences["puppet-packages_from_snapshot"],
+    require => Apt::Preferences["puppet-packages_from_c2corg_repo"],
   }
 
   service { "puppetmaster":
