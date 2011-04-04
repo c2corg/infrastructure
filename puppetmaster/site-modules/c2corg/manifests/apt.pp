@@ -134,7 +134,7 @@ class c2corg::apt::lenny inherits c2corg::apt {
   }
 
   Apt::Conf["01default-release"] {
-    content => 'APT::Default-Release "stable";', # warning: changing this can break the system !
+    content => 'APT::Default-Release "oldstable";', # warning: changing this can break the system !
   }
 
   apt::sources_list { "backports.org":
@@ -182,7 +182,7 @@ class c2corg::apt::squeeze inherits c2corg::apt {
   }
 
   Apt::Conf["01default-release"] {
-    content => 'APT::Default-Release "testing";', # warning: changing this can break the system !
+    content => 'APT::Default-Release "stable";', # warning: changing this can break the system !
   }
 
 }
