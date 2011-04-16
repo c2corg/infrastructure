@@ -30,6 +30,14 @@ class c2corg::webserver::symfony {
     notify  => Service["apache"],
   }
 
+  # this should no longer be necessary after migrating to a more recent symfony
+  # version.
+  exec { "remove incompatible php option":
+    command => "sed -i '/zend.ze1_compatibility_mode/ d' /usr/share/php/data/symfony/config/php.yml",
+    onlyif  => "grep -q 'zend.ze1_compatibility_mode' /usr/share/php/data/symfony/config/php.yml",
+    require => Package["php-symfony"],
+  }
+
   # workaround while http://code.google.com/p/paver/issues/detail?id=53
   # prevents from building a debian package of python-jstools.
   package { "python-setuptools": }
