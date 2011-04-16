@@ -16,12 +16,18 @@ class c2corg::webserver::symfony {
   include php
 
   apache::module { ["headers", "expires"]: }
-  package { ["php5-pgsql", "php5-xcache", "php-pear", "php-symfony"]: }
+  package { ["php5-pgsql", "php5-gd", "php5-xcache", "php-pear", "php-symfony"]: }
   package { ["gettext", "msmtp"]: }
 
   # fileinfo is included in recent PHPs
   if ($lsbdistcodename == 'lenny') {
     package { "php5-fileinfo": }
+  }
+
+  # short_open_tag conflicts with <?xml ... headers
+  augeas { "disable php short open tags":
+    changes => "set /files/etc/php5/apache2/php.ini/PHP/short_open_tag Off",
+    notify  => Service["apache"],
   }
 
   # workaround while http://code.google.com/p/paver/issues/detail?id=53
