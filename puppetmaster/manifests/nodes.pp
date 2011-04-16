@@ -134,6 +134,23 @@ LoadPlugin \"postgresql\"
 
 }
 
+# X3550 M3 - debian/squeeze
+node 'hn3' inherits 'base-node' {
+
+  include c2corg::hn::hn3
+
+  include c2corg::collectd::client
+}
+
+# X3550 M3 - debian/squeeze
+node 'hn4' inherits 'base-node' {
+
+  include c2corg::hn::hn4
+
+  include c2corg::collectd::client
+}
+
+
 node 'pre-prod' inherits 'base-node' {
 
   include c2corg::database::prod
