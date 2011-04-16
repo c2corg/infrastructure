@@ -184,6 +184,7 @@ node 'pre-prod' inherits 'base-node' {
     command => "php c2corg --refresh --conf preprod --build",
     cwd     => "/srv/www/camptocamp.org/",
     require => Exec["c2corg install"],
+    notify  => Service["apache"],
     logoutput   => true,
     refreshonly => true,
   }
