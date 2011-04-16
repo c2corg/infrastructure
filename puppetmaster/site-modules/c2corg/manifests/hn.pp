@@ -50,6 +50,20 @@ class c2corg::hn::hn0 inherits c2corg::hn {
     to   => "22",
   }
 
+  vz::fwd { "forward hn3 ssh port":
+    net  => "192.168.192",
+    ve   => "4",
+    from => "20024",
+    to   => "22",
+  }
+
+  vz::fwd { "forward hn4 ssh port":
+    net  => "192.168.192",
+    ve   => "5",
+    from => "20025",
+    to   => "22",
+  }
+
   file { "/etc/network/if-pre-up.d/iptables":
     ensure  => present,
     mode    => 0755,
