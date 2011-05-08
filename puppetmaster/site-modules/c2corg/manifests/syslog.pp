@@ -65,7 +65,7 @@ destination d_postgresql_prod {
 
 filter f_postgresql_prod {
   program('postgres') and
-  host('192.168.192.3');
+  host('192.168.192.5');
 };
 
 log {
