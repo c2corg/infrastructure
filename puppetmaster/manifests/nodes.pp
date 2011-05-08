@@ -147,6 +147,26 @@ node 'hn4' inherits 'base-node' {
 
   include c2corg::hn::hn4
 
+  include c2corg::database::prod
+
+  mount { "/var/lib/postgresql/8.4/main/":
+    ensure  => present,
+    atboot  => true,
+    device  => "/dev/mapper/vg0-pgdata",
+    fstype  => "ext3",
+    options => "noatime",
+  }
+
+  mount { "/var/lib/postgresql/8.4/main/pg_xlog/":
+    ensure  => present,
+    atboot  => true,
+    device  => "/dev/mapper/vg0-pgxlog",
+    fstype  => "xfs",
+    options => "noatime,nobarrier",
+    require => Mount["/var/lib/postgresql/8.4/main/"],
+    before  => Service["postgresql"],
+  }
+
   include c2corg::collectd::client
 }
 
