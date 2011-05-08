@@ -34,11 +34,13 @@ define c2corg::backup::dir {
 
   $fname = regsubst($name, "\/", "_", "G")
 
-  common::concatfilepart { "include $fname in backups":
-    file    => "/root/.backups.include",
-    content => "${name}\n",
-    manage  => true,
-    before  => Cron["rsync important stuff to backup server"],
+  if $backupkey {
+    common::concatfilepart { "include $fname in backups":
+      file    => "/root/.backups.include",
+      content => "${name}\n",
+      manage  => true,
+      before  => Cron["rsync important stuff to backup server"],
+    }
   }
 }
 
