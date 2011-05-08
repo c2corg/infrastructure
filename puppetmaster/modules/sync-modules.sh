@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo -e "
+IFS=' ' echo -e "
 
 # format:
 # URL<one space>modulename<one space>commit<newline>
@@ -37,11 +37,7 @@ git://github.com/camptocamp/puppet-php.git php 0f99a0114
 git://github.com/camptocamp/puppet-java.git java f72f1541
 git://github.com/camptocamp/puppet-buildenv.git buildenv 49aa5eb66
 
-" | egrep -v '^$|^#' | while read item; do
-
-  url=$(echo "$item" | cut -d' ' -f1)
-  module=$(echo "$item" | cut -d' ' -f2)
-  commit=$(echo "$item" | cut -d' ' -f3)
+" | egrep -v '^$|^#' | while read url module commit; do
 
   if ! [ -e "$module" ]; then
     echo -e "\n\n@@@ Cloning module $module\n"
