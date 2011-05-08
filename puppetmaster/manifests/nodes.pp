@@ -169,8 +169,7 @@ node 'pre-prod' inherits 'base-node' {
 
   /* hackish stuff to autotomatically install and update c2corg codebase */
   vcsrepo { "/srv/www/camptocamp.org/":
-    ensure   => "present",
-    revision => "HEAD",
+    ensure   => "latest",
     provider => "svn",
     source   => "http://dev.camptocamp.org/svn/c2corg/trunk/camptocamp.org/",
     notify   => Exec["c2corg refresh"],
