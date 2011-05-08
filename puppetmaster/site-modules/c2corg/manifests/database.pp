@@ -48,6 +48,8 @@ class c2corg::database::prod inherits c2corg::database::base {
     method   => 'md5',
   }
 
+  package { ["pgtune", "sysbench"]: }
+
   #TODO
   #postgresql::conf {
   #  "log_statement": value => "all";

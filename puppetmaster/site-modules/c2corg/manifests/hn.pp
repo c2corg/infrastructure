@@ -11,6 +11,8 @@ class c2corg::hn {
   }
   collectd::plugin { $collectdplugins: lines => [] }
 
+  package { ["hdparm", "iozone3"]: }
+
 }
 
 /* openvz host */
