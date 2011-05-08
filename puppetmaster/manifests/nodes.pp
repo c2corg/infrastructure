@@ -147,7 +147,21 @@ node 'hn4' inherits 'base-node' {
 
   include c2corg::hn::hn4
 
+  Sysctl::Set_value { before => Service["postgresql"] }
+
   include c2corg::database::prod
+
+  file { "/etc/postgresql/8.4/main/postgresql.conf":
+    ensure => present,
+    source => "puppet:///c2corg/pgsql/postgresql.conf.hn4",
+    mode   => 0644,
+    notify => Service["postgresql"],
+  }
+
+  sysctl::set_value {
+    "kernel.shmmax": value => "4127514624";
+    "kernel.shmall": value => "2097152";
+  }
 
   mount { "/var/lib/postgresql/8.4/main/":
     ensure  => present,

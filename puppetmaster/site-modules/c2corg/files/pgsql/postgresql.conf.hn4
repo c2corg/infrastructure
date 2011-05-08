@@ -507,3 +507,20 @@ wal_buffers = 4MB # pgtune wizard 2011-05-08
 checkpoint_segments = 8 # pgtune wizard 2011-05-08
 shared_buffers = 3840MB # pgtune wizard 2011-05-08
 max_connections = 200 # pgtune wizard 2011-05-08
+
+listen_addresses = '*'
+
+maintenance_work_mem = 512MB # 50-75% de la plus grande table -> ls -lhrS pgdata/base/*
+
+
+log_statement = 'all'
+log_destination = 'syslog'
+syslog_facility = 'LOCAL0'
+log_line_prefix = '%t'
+log_min_duration_statement = 0
+
+track_activities = on
+track_counts = on
+track_functions = none			# none, pl, all
+# track_activity_query_size = 1024 # default to 1024
+
