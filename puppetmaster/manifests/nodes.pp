@@ -163,25 +163,37 @@ node 'hn4' inherits 'base-node' {
     "kernel.shmall": value => "2097152";
   }
 
-  mount { "/var/lib/postgresql/8.4/main/":
-    ensure  => present,
+  mount { "/var/lib/postgresql/8.4/main":
+    ensure  => mounted,
     atboot  => true,
     device  => "/dev/mapper/vg0-pgdata",
     fstype  => "ext3",
     options => "noatime",
   }
 
-  mount { "/var/lib/postgresql/8.4/main/pg_xlog/":
-    ensure  => present,
+  mount { "/var/lib/postgresql/8.4/main/pg_xlog":
+    ensure  => mounted,
     atboot  => true,
     device  => "/dev/mapper/vg0-pgxlog",
     fstype  => "xfs",
     options => "noatime,nobarrier",
-    require => Mount["/var/lib/postgresql/8.4/main/"],
+    require => Mount["/var/lib/postgresql/8.4/main"],
     before  => Service["postgresql"],
   }
 
   include c2corg::collectd::client
+
+  include postgresql::backup
+  c2corg::backup::dir { "/var/backups/pgsql": }
+
+  mount { "/var/backups/pgsql":
+    ensure  => mounted,
+    atboot  => true,
+    device  => "/dev/mapper/vg0-pgbackup",
+    fstype  => "ext3",
+    options => "defaults",
+  }
+
 }
 
 
