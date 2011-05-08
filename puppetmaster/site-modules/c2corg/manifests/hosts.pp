@@ -7,7 +7,14 @@ class c2corg::hosts {
   if ($fqdn != "pm.c2corg") {
   # pm.c2corg is handled in puppet::client
     @@host { "$fqdn":
-      ip => $ipaddress,
+      ip => $fqdn ? {
+        "hn0.c2corg" => "192.168.192.1",
+        "hn1.c2corg" => "192.168.192.2",
+        "hn2.c2corg" => "192.168.192.3",
+        "hn3.c2corg" => "192.168.192.4",
+        "hn4.c2corg" => "192.168.192.5",
+        default      => $ipaddress,
+      },
       host_aliases => $hostname,
       tag => 'poor-man-dns'
     }
