@@ -16,6 +16,17 @@ class c2corg::apacheconf::common {
     require => Apache::Vhost["camptocamp.org"],
   }
 
+  apache::vhost { "meta.camptocamp.org":
+    docroot => "/srv/www/meta.camptocamp.org/web",
+    cgibin  => false,
+  }
+
+  file { "/var/www/meta.camptocamp.org/conf/camptocamp.org.conf":
+    ensure  => link,
+    target  => "/srv/www/meta.camptocamp.org/config/meta.camptocamp.org.conf",
+    require => Apache::Vhost["meta.camptocamp.org"],
+  }
+
 }
 
 
