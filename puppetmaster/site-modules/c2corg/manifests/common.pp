@@ -132,6 +132,13 @@ options rotate edns0
     owner => "root", group => "root",
   }
 
+  file { "/tmp":
+    ensure => directory,
+    mode   => 1777,
+    owner  => "root",
+    group  => "root",
+  }
+
   exec { "refresh init":
     refreshonly => true,
     command     => "kill -HUP 1",
