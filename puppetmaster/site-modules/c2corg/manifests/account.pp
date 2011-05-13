@@ -16,6 +16,7 @@ define c2corg::account::user ($ensure=present, $user, $account) {
   if !defined(User[$account]) {
     user { $account:
       ensure => $ensure,
+      shell  => "/bin/bash",
       managehome => true,
     }
   }
