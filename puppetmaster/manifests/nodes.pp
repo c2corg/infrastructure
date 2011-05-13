@@ -90,7 +90,6 @@ node 'hn2' inherits 'base-node' {
 
   c2corg::backup::dir { [
     "/srv/chroot-c2corg/var/www/camptocamp.org/web/uploads/",
-    "/srv/chroot-c2corg/var/local/backup/pgsql/",
   ]: }
 
   include haproxy
@@ -103,7 +102,6 @@ node 'hn2' inherits 'base-node' {
     content => '# Avoid LoadPlugin as processes is already loaded elsewhere
 <Plugin processes>
   Process "apache2"
-  Process "postgres"
 </Plugin>
 ',
   }
@@ -116,22 +114,6 @@ node 'hn2' inherits 'base-node' {
   collectd::plugin { "httplogsc2corg":
     source => "puppet:///c2corg/collectd/httplogsc2corg.conf",
   }
-
-  # solution temporaire pour envoyer les stats postgresql vers collectd.
-  collectd::plugin { "postgresql":
-    content => "# file managed by puppet
-LoadPlugin \"postgresql\"
-<Plugin postgresql>
-  <Database c2corg>
-    Host \"/srv/chroot-c2corg/var/run/postgresql/\"
-    Port \"5433\"
-    User \"www-data\"
-    Password \"www-data\"
-  </Database>
-</Plugin>
-",
-  }
-
 }
 
 # X3550 M3 - debian/squeeze

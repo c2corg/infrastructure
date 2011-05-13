@@ -101,6 +101,14 @@ LoadPlugin \"postgresql\"
 ",
   }
 
+  collectd::plugin { "processes":
+    content => '# Avoid LoadPlugin as processes is already loaded elsewhere
+<Plugin processes>
+  Process "postgres"
+</Plugin>
+',
+  }
+
 }
 
 class c2corg::database::test inherits c2corg::database::base {
