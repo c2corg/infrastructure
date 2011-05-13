@@ -39,7 +39,7 @@ class c2corg::database::prod inherits c2corg::database::base {
     require   => Package["postgresql"],
   }
 
-  postgresql::hba { "access to sympa user":
+  postgresql::hba { "access for sympa user to c2corg db":
     ensure   => present,
     type     => 'hostssl',
     database => 'c2corg',
@@ -48,10 +48,19 @@ class c2corg::database::prod inherits c2corg::database::base {
     method   => 'md5',
   }
 
-  postgresql::hba { "access to www-data user":
+  postgresql::hba { "access for www-data user to c2corg db":
     ensure   => present,
     type     => 'hostssl',
     database => 'c2corg',
+    user     => 'www-data',
+    address  => '192.168.192.3/32',
+    method   => 'md5',
+  }
+
+  postgresql::hba { "access for www-data user to metaengine db":
+    ensure   => present,
+    type     => 'hostssl',
+    database => 'metaengine',
     user     => 'www-data',
     address  => '192.168.192.3/32',
     method   => 'md5',
