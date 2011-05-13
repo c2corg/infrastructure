@@ -34,7 +34,7 @@ class c2corg::vz {
 
   /* mailing-lists */
 
-  vz::ve { "102": hname => "lists.c2corg" }
+  vz::ve { "102": hname => "lists.c2corg", ensure => stopped }
 
   vz::fwd { "forward smtp port":
     ve   => "102",
@@ -106,17 +106,6 @@ class c2corg::vz {
 
   /* test nodes */
 
-  vz::ve { "123": # TODO: upgrade to 20x to boot after more important nodes
-    hname => "test-marc.c2corg",
-    template => "debian-squeeze-amd64-with-puppet",
-  }
-
-  vz::fwd { "forward test-marc ssh port":
-    ve   => "123",
-    from => "10123",
-    to   => "22",
-  }
-
   vz::ve { "201":
     hname => "test-alex.c2corg",
     template => "debian-squeeze-amd64-with-puppet",
@@ -132,6 +121,34 @@ class c2corg::vz {
     ve   => "201",
     from => "11201",
     to   => "80",
+  }
+
+  vz::ve { "202":
+    hname => "test-xbrrr.c2corg",
+    template => "debian-squeeze-amd64-with-puppet",
+  }
+
+  vz::fwd { "forward test-xbrrr ssh port":
+    ve   => "202",
+    from => "10202",
+    to   => "22",
+  }
+
+  vz::fwd { "forward test-xbrrr http port":
+    ve   => "202",
+    from => "11202",
+    to   => "80",
+  }
+
+  vz::ve { "203":
+    hname => "test-marc.c2corg",
+    template => "debian-squeeze-amd64-with-puppet",
+  }
+
+  vz::fwd { "forward test-marc ssh port":
+    ve   => "203",
+    from => "10203",
+    to   => "22",
   }
 
 

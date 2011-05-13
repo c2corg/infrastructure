@@ -266,3 +266,21 @@ node 'test-alex' inherits 'base-node' {
   }
 
 }
+node 'test-xbrrr' inherits 'base-node' {
+
+  realize C2corg::Account::User[xbrrr]
+  c2corg::account::user { "xbrrr@root": user => "xbrrr", account => "root" }
+
+  include c2corg::database::dev
+
+  include c2corg::webserver::symfony
+  include c2corg::webserver::carto
+  include c2corg::webserver::svg
+
+  include c2corg::apacheconf::dev
+
+  augeas { "temporarily disable php-xcache admin auth":
+    changes => "set /files/etc/php5/conf.d/xcache.ini/xcache.admin/xcache.admin.enable_auth Off",
+  }
+
+}
