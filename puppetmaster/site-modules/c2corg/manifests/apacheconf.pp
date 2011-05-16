@@ -45,6 +45,10 @@ class c2corg::apacheconf::preprod inherits c2corg::apacheconf::common {
   Apache::Vhost["camptocamp.org"] {
     aliases +> ["www.preprod.c2corg", "s.preprod.c2corg", "m.preprod.c2corg"],
   }
+
+  Apache::Vhost["meta.camptocamp.org"] {
+    aliases +> ["meta.preprod.c2corg"],
+  }
 }
 
 class c2corg::apacheconf::dev inherits c2corg::apacheconf::common {

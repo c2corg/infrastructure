@@ -203,10 +203,21 @@ node 'pre-prod' inherits 'base-node' {
     notify   => Exec["c2corg refresh"],
   }
 
-  file { ["/srv/www/camptocamp.org/cache", "/srv/www/camptocamp.org/log"]:
+  vcsrepo { "/srv/www/meta.camptocamp.org":
+    ensure   => "latest",
+    provider => "svn",
+    source   => "http://dev.camptocamp.org/svn/c2corg/trunk/meta.camptocamp.org/",
+  }
+
+  file { [
+      "/srv/www/camptocamp.org/cache",
+      "/srv/www/camptocamp.org/log",
+      "/srv/www/meta.camptocamp.org/cache",
+      "/srv/www/meta.camptocamp.org/log",
+    ]:
     ensure  => directory,
     owner   => "www-data",
-    require => Vcsrepo["/srv/www/camptocamp.org/"],
+    require => [Vcsrepo["/srv/www/camptocamp.org/"], Vcsrepo["/srv/www/meta.camptocamp.org"]],
   }
 
   file { "c2corg preprod.ini":
