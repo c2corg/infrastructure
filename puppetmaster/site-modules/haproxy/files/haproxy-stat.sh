@@ -5,7 +5,7 @@ sock='/var/run/haproxy.sock'
 host="$(hostname)"
 pause=10
 
-while getopts "h:p:s:" c; do
+while getopts "x:h:p:s:" c; do
   case $c in
     x)  proxy=$OPTARG;;
     h)  host=$OPTARG;;
