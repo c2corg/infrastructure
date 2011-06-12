@@ -114,6 +114,10 @@ node 'hn2' inherits 'base-node' {
   collectd::plugin { "httplogsc2corg":
     source => "puppet:///c2corg/collectd/httplogsc2corg.conf",
   }
+
+  # preventive workaround, while trac#745 isn't properly fixed
+  host { "meta.camptocamp.org": ip => "127.0.0.2" }
+
 }
 
 # X3550 M3 - debian/squeeze
