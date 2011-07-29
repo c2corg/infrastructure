@@ -53,12 +53,16 @@ class puppet::client {
     changes => "set certname $hostname",
   }
 
-  host { "pm.c2corg":
-    host_aliases => ["pm"],
-    ip => $datacenter ? {
-      /c2corg|epnet/ => '192.168.191.101',
-      default        => '128.179.66.13',
-    },
+  # if datacenter fact is set, then pluginsync has successfully run at least
+  # once.
+  if $datacenter {
+    host { "pm.c2corg":
+      host_aliases => ["pm"],
+      ip => $datacenter ? {
+        /c2corg|epnet/ => '192.168.191.101',
+        default        => '128.179.66.13',
+      },
+    }
   }
 
 }

@@ -41,9 +41,12 @@ class c2corg::sshd {
     require => Package["openssh-server"],
   }
 
-  # export and collect ssh host keys
-
-  Sshkey { require => Package["openssh-server"] }
+  # if datacenter fact is set, then pluginsync has successfully run at least
+  # once.
+  if $datacenter {
+    # export and collect ssh host keys
+    Sshkey { require => Package["openssh-server"] }
+  }
 
   @@sshkey { "$fqdn":
     type => rsa,

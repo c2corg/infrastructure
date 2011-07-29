@@ -19,7 +19,12 @@ class c2corg::hosts {
       tag => 'poor-man-dns'
     }
   }
-  Host <<| tag == 'poor-man-dns' |>>
+
+  # if datacenter fact is set, then pluginsync has successfully run at least
+  # once.
+  if $datacenter {
+    Host <<| tag == 'poor-man-dns' |>>
+  }
 
   host { "localhost.localdomain":
     ip => "127.0.0.1",
