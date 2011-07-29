@@ -56,7 +56,8 @@ class c2corg::collectd::server inherits c2corg::collectd::client {
   Collectd::Rrdtool['rrd'] {
     datadir           => "\"${datadir}\"",
     cache_flush       => 900,
-    cache_timeout     => 10,
+    cache_timeout     => 60,
+    writes_per_second => 10,
     require           => File[$datadir],
   }
 
