@@ -47,31 +47,6 @@ class c2corg::vz {
     to   => "22",
   }
 
-  /* pre-prod nodes */
-
-  vz::ve { "124":
-    hname => "pre-prod.c2corg",
-    template => "debian-squeeze-amd64-with-puppet",
-  }
-
-  vz::fwd { "forward pre-prod ssh port":
-    ve   => "124",
-    from => "10124",
-    to   => "22",
-  }
-
-  vz::fwd { "forward pre-prod varnish port":
-    ve   => "124",
-    from => "80",
-    to   => "8080",
-  }
-
-  vz::fwd { "forward pre-prod https port":
-    ve   => "124",
-    from => "443",
-    to   => "443",
-  }
-
   /* package repo */
 
   vz::ve { "125":
@@ -102,6 +77,48 @@ class c2corg::vz {
     ve   => "126",
     from => "10126",
     to   => "22",
+  }
+
+  /* integration/pre-prod nodes */
+
+  vz::ve { "140":
+    hname => "content-factory.c2corg",
+    template => "debian-squeeze-amd64-with-puppet",
+  }
+
+  vz::fwd { "forward content-factory ssh port":
+    ve   => "140",
+    from => "10140",
+    to   => "22",
+  }
+
+  vz::fwd { "forward content-factory http port":
+    ve   => "140",
+    from => "8081",
+    to   => "80",
+  }
+
+  vz::ve { "141":
+    hname => "pre-prod.c2corg",
+    template => "debian-squeeze-amd64-with-puppet",
+  }
+
+  vz::fwd { "forward pre-prod ssh port":
+    ve   => "141",
+    from => "10141",
+    to   => "22",
+  }
+
+  vz::fwd { "forward pre-prod varnish port":
+    ve   => "141",
+    from => "80",
+    to   => "8080",
+  }
+
+  vz::fwd { "forward pre-prod https port":
+    ve   => "141",
+    from => "443",
+    to   => "443",
   }
 
   /* test nodes */
