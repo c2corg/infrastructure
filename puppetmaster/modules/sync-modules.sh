@@ -7,7 +7,7 @@ IFS=' ' echo -e "
 
 git://github.com/camptocamp/puppet-common.git common f447c9b1
 git://github.com/camptocamp/puppet-augeas.git augeas 7ce24e0c
-git://github.com/camptocamp/puppet-apt.git apt 5ce178ca8
+git://github.com/camptocamp/puppet-apt.git apt f5c2a018
 git://github.com/camptocamp/puppet-openssl.git openssl 7ad6bb88
 git://github.com/camptocamp/puppet-rsyncd.git rsyncd 6b195689
 git://github.com/camptocamp/puppet-postfix.git postfix c371b493a
@@ -21,9 +21,9 @@ git://github.com/puppetlabs/puppet-lvm.git lvm d92be18d
 git://github.com/camptocamp/puppet-pacemaker.git pacemaker 39428d04
 git://github.com/camptocamp/puppet-varnish.git varnish bb6603c7
 
-git://github.com/camptocamp/puppet-apache.git apache e2f46c2e4
-git://github.com/camptocamp/puppet-postgresql.git postgresql 2e7b8d4eb
-git://github.com/camptocamp/puppet-postgis.git postgis 4784d0cef
+git://github.com/camptocamp/puppet-apache.git apache 3a13c43e
+git://github.com/camptocamp/puppet-postgresql.git postgresql c307d756
+git://github.com/camptocamp/puppet-postgis.git postgis 42ccde5a
 git://github.com/camptocamp/puppet-mapserver.git mapserver 70bab2601
 git://github.com/camptocamp/puppet-mysql.git mysql cc1d19ae5
 
