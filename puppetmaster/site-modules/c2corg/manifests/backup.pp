@@ -6,7 +6,7 @@ class c2corg::backup {
   }
 
   if $backupkey {
-    @@c2corg::sshkey { "backup key for $hostname":
+    @@c2corg::sshuserkey { "backup key for $hostname":
       user    => "backup-${hostname}",
       account => "root",
       type    => "rsa",
@@ -50,7 +50,7 @@ class c2corg::backup::server {
     ensure => directory,
   }
 
-  C2corg::Sshkey <<| tag == 'backups' |>>
+  C2corg::Sshuserkey <<| tag == 'backups' |>>
 
   cron { "daily backup increment":
     command => "/usr/local/sbin/increment-backups.sh",

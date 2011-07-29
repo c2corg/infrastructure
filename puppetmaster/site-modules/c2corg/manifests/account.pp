@@ -23,7 +23,7 @@ define c2corg::account::user ($ensure=present, $user, $account) {
 
   case $user {
     "marc": {
-      c2corg::sshkey { "$name on $account":
+      c2corg::sshuserkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "rsa",
@@ -33,7 +33,7 @@ define c2corg::account::user ($ensure=present, $user, $account) {
     }
 
     "alex": {
-      c2corg::sshkey { "$name on $account":
+      c2corg::sshuserkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "dss",
@@ -43,7 +43,7 @@ define c2corg::account::user ($ensure=present, $user, $account) {
     }
 
     "gottferdom": {
-      c2corg::sshkey { "$name on $account":
+      c2corg::sshuserkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "dss",
@@ -53,7 +53,7 @@ define c2corg::account::user ($ensure=present, $user, $account) {
     }
 
     "xbrrr": {
-      c2corg::sshkey { "$name on $account":
+      c2corg::sshuserkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "dss",
@@ -63,7 +63,7 @@ define c2corg::account::user ($ensure=present, $user, $account) {
     }
 
     "gerbaux": {
-      c2corg::sshkey { "$name on $account":
+      c2corg::sshuserkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "dss",

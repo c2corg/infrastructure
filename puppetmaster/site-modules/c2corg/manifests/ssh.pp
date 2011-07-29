@@ -1,4 +1,4 @@
-define c2corg::sshkey ($user, $account, $type, $key, $opts='') {
+define c2corg::sshuserkey ($user, $account, $type, $key, $opts='') {
 
   $comment = "$user on $account"
   $sshopts = $opts ? {
