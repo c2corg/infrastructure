@@ -11,7 +11,7 @@ class c2corg::trac {
 
   package { ["trac", "trac-accountmanager", "trac-email2trac"]:
     ensure  => present,
-    require => "sqlite3",
+    require => Package["sqlite3"],
   }
 
   package { ["libapache2-svn", "sqlite3"]: ensure => present }
