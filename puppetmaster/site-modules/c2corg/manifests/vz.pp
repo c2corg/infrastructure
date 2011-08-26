@@ -126,6 +126,7 @@ class c2corg::vz {
   vz::ve { "201":
     hname => "test-alex.c2corg",
     template => "debian-squeeze-amd64-with-puppet",
+    ensure => stopped,
   }
 
   vz::fwd { "forward test-alex ssh port":
@@ -143,6 +144,7 @@ class c2corg::vz {
   vz::ve { "202":
     hname => "test-xbrrr.c2corg",
     template => "debian-squeeze-amd64-with-puppet",
+    ensure => stopped,
   }
 
   vz::fwd { "forward test-xbrrr ssh port":
@@ -160,6 +162,7 @@ class c2corg::vz {
   vz::ve { "203":
     hname => "test-marc.c2corg",
     template => "debian-squeeze-amd64-with-puppet",
+    ensure => stopped,
   }
 
   vz::fwd { "forward test-marc ssh port":
