@@ -28,7 +28,7 @@ class c2corg::vz {
   }
   vz::fwd { "forward puppetmaster ssh port":
     ve   => "101",
-    from => "10122",
+    from => "10101",
     to   => "22",
   }
 
@@ -43,8 +43,27 @@ class c2corg::vz {
   }
   vz::fwd { "forward lists ssh port":
     ve   => "102",
-    from => "10222",
+    from => "10102",
     to   => "22",
+  }
+
+  /* trac */
+
+  vz::ve { "103":
+    hname => "trac.c2corg",
+    template => "debian-squeeze-amd64-with-puppet",
+  }
+
+  vz::fwd { "forward trac ssh port":
+    ve   => "103",
+    from => "10103",
+    to   => "22",
+  }
+
+  vz::fwd { "forward trac https port":
+    ve   => "103",
+    from => "443",
+    to   => "443",
   }
 
   /* package repo */
@@ -117,7 +136,7 @@ class c2corg::vz {
 
   vz::fwd { "forward pre-prod https port":
     ve   => "141",
-    from => "443",
+    from => "8443",
     to   => "443",
   }
 

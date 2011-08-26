@@ -38,6 +38,17 @@ node 'pkg' inherits 'base-node' {
 
 }
 
+node 'trac' inherits 'base-node' {
+
+  include c2corg::trac
+
+  c2corg::backup::dir { [
+    "/srv/trac",
+    "/srv/svn",
+  ]: }
+
+}
+
 node 'monit' inherits 'base-node' {
 
   include c2corg::collectd::server
