@@ -9,7 +9,12 @@ class c2corg::trac {
     sslonly => true,
   }
 
-  package { ["trac", "libapache2-svn", "sqlite3"]: ensure => present }
+  package { ["trac", "trac-accountmanager", "trac-email2trac"]:
+    ensure  => present,
+    require => "sqlite3",
+  }
+
+  package { ["libapache2-svn", "sqlite3"]: ensure => present }
 
   apache::module { "dav_svn":
     require => Package["libapache2-svn"],
@@ -44,5 +49,13 @@ Alias /tracdocs/ /usr/share/pyshared/trac/htdocs/
 ScriptAlias /trac/c2corg /var/www/dev.camptocamp.org/cgi-bin/trac.cgi
 ",
   }
+
+# trac upgrade notes:
+# trac-admin . upgrade
+# trac-admin . wiki upgrade
+# trac-admin . deploy /tmp/toto
+# cp /tmp/toto/cgi-bin/trac.cgi in cgi-bin
+# cp logo in htdocs
+# trac-admin . resync
 
 }
