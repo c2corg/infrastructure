@@ -59,6 +59,11 @@ class vz {
     require => Package["vzctl"],
   }
 
+  augeas { "compress vzctl logfiles":
+    changes => "set /files/etc/logrotate.d/vzctl/rule/compress compress",
+    require => Package["vzctl"],
+  }
+
 }
 
 define vz::ve ($ensure="running", $hname, $template="debian-5.0-amd64-with-puppet", $config="vps.unlimited", $net="192.168.191") {
