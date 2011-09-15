@@ -214,14 +214,14 @@ node 'pre-prod' inherits 'base-node' {
   vcsrepo { "/srv/www/camptocamp.org/":
     ensure   => "latest",
     provider => "svn",
-    source   => "http://dev.camptocamp.org/svn/c2corg/trunk/camptocamp.org/",
+    source   => "https://dev.camptocamp.org/svn/c2corg/trunk/camptocamp.org/",
     notify   => Exec["c2corg refresh"],
   }
 
   vcsrepo { "/srv/www/meta.camptocamp.org":
     ensure   => "latest",
     provider => "svn",
-    source   => "http://dev.camptocamp.org/svn/c2corg/trunk/meta.camptocamp.org/",
+    source   => "https://dev.camptocamp.org/svn/c2corg/trunk/meta.camptocamp.org/",
   }
 
   file { [
