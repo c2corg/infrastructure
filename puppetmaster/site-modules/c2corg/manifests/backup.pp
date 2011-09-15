@@ -52,6 +52,11 @@ class c2corg::backup::server {
 
   C2corg::Sshuserkey <<| tag == 'backups' |>>
 
+  @@sshkey { "$ipaddress":
+    type => rsa,
+    key  => $sshrsakey
+  }
+
   cron { "daily backup increment":
     command => "/usr/local/sbin/increment-backups.sh",
     hour    => 11,
