@@ -67,7 +67,7 @@ class c2corg::database::prod inherits c2corg::database::base {
   }
 
 
-  package { ["pgtune", "sysbench"]: }
+  package { ["pgtune", "sysbench", "ptop", "check-postgres"]: }
 
   #TODO
   #postgresql::conf {
