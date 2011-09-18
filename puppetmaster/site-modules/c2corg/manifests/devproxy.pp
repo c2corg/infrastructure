@@ -47,14 +47,14 @@ class c2corg::devproxy::https {
   }
 
   apache::proxypass { "pgfouine reports":
-    location => "/dashboard/pgfouine",
-    url      => "http://monit.psea.infra.camptocamp.org/pgfouine",
+    location => "/dashboard/pgfouine/",
+    url      => "http://monit.psea.infra.camptocamp.org/pgfouine/",
     vhost    => "dev.camptocamp.org",
   }
 
   apache::proxypass { "haproxy logs":
-    location => "/dashboard/haproxy-logs",
-    url      => "http://monit.psea.infra.camptocamp.org/haproxy-logs",
+    location => "/dashboard/haproxy-logs/",
+    url      => "http://monit.psea.infra.camptocamp.org/haproxy-logs/",
     vhost    => "dev.camptocamp.org",
   }
 
@@ -93,7 +93,29 @@ class c2corg::devproxy::https {
     directive => "
 <Location /dashboard/drraw.cgi>
   SetOutputFilter proxy-html
-  ProxyHTMLURLMap http://192.168.191.126/cgi-bin/drraw.cgi /dashboard/drraw.cgi
+  ProxyHTMLURLMap http://monit.psea.infra.camptocamp.org/cgi-bin/drraw.cgi /dashboard/drraw.cgi
+</Location>
+",
+    require   => Apache::Module["proxy_html"],
+  }
+
+  apache::directive { "rewrite haproxy hardcoded URLs":
+    vhost     => "dev.camptocamp.org",
+    directive => "
+<Location /dashboard/haproxy-logs/>
+  SetOutputFilter proxy-html
+  ProxyHTMLURLMap /haproxy-logs/ /dashboard/haproxy-logs/
+</Location>
+",
+    require   => Apache::Module["proxy_html"],
+  }
+
+  apache::directive { "rewrite pgfouine hardcoded URLs":
+    vhost     => "dev.camptocamp.org",
+    directive => "
+<Location /dashboard/pgfouine/>
+  SetOutputFilter proxy-html
+  ProxyHTMLURLMap /pgfouine/ /dashboard/pgfouine/
 </Location>
 ",
     require   => Apache::Module["proxy_html"],
