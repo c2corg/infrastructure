@@ -66,6 +66,12 @@ class c2corg::vz {
     to   => "443",
   }
 
+  vz::fwd { "forward trac http port":
+    ve   => "103",
+    from => "80",
+    to   => "80",
+  }
+
   /* package repo */
 
   vz::ve { "125":
@@ -79,11 +85,11 @@ class c2corg::vz {
     to   => "22",
   }
 
-  vz::fwd { "forward pkg http port":
-    ve   => "125",
-    from => "8083",
-    to   => "80",
-  }
+  #vz::fwd { "forward pkg http port":
+  #  ve   => "125",
+  #  from => "8083",
+  #  to   => "80",
+  #}
 
   /* collectd, syslog, nagios */
 
@@ -111,11 +117,11 @@ class c2corg::vz {
     to   => "22",
   }
 
-  vz::fwd { "forward content-factory http port":
-    ve   => "140",
-    from => "8081",
-    to   => "80",
-  }
+  #vz::fwd { "forward content-factory http port":
+  #  ve   => "140",
+  #  from => "8081",
+  #  to   => "80",
+  #}
 
   vz::ve { "141":
     hname => "pre-prod.psea.infra.camptocamp.org",
@@ -128,17 +134,17 @@ class c2corg::vz {
     to   => "22",
   }
 
-  vz::fwd { "forward pre-prod varnish port":
-    ve   => "141",
-    from => "80",
-    to   => "8080",
-  }
+  #vz::fwd { "forward pre-prod varnish port":
+  #  ve   => "141",
+  #  from => "80",
+  #  to   => "8080",
+  #}
 
-  vz::fwd { "forward pre-prod https port":
-    ve   => "141",
-    from => "8443",
-    to   => "443",
-  }
+  #vz::fwd { "forward pre-prod https port":
+  #  ve   => "141",
+  #  from => "8443",
+  #  to   => "443",
+  #}
 
   /* test nodes */
 
@@ -154,11 +160,11 @@ class c2corg::vz {
     to   => "22",
   }
 
-  vz::fwd { "forward test-alex http port":
-    ve   => "201",
-    from => "11201",
-    to   => "80",
-  }
+  #vz::fwd { "forward test-alex http port":
+  #  ve   => "201",
+  #  from => "11201",
+  #  to   => "80",
+  #}
 
   vz::ve { "202":
     hname => "test-xbrrr.psea.infra.camptocamp.org",
@@ -172,11 +178,11 @@ class c2corg::vz {
     to   => "22",
   }
 
-  vz::fwd { "forward test-xbrrr http port":
-    ve   => "202",
-    from => "11202",
-    to   => "80",
-  }
+  #vz::fwd { "forward test-xbrrr http port":
+  #  ve   => "202",
+  #  from => "11202",
+  #  to   => "80",
+  #}
 
   vz::ve { "203":
     hname => "test-marc.psea.infra.camptocamp.org",
