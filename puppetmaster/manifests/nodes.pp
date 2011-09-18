@@ -269,8 +269,6 @@ node 'pre-prod' inherits 'base-node' {
 
   include c2corg::collectd::client
 
-  include c2corg::dashboard
-
 }
 
 node 'content-factory' inherits 'base-node' {
