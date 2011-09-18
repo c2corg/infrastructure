@@ -23,7 +23,7 @@ class puppet::client {
   }
 
   package { ["puppet", "facter"]:
-    ensure  => latest,
+    ensure  => present,
   }
 
   service { "puppet":
@@ -71,7 +71,7 @@ class puppet::client {
 class puppet::server {
 
   package { ["puppetmaster", "vim-puppet"]:
-    ensure  => latest,
+    ensure  => present,
     require => Apt::Preferences["puppet-packages_from_c2corg_repo"],
   }
 
