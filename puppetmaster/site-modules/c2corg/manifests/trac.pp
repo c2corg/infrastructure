@@ -41,6 +41,11 @@ class c2corg::trac {
 ",
   }
 
+  @@host { "dev.camptocamp.org":
+    ip  => $ipaddress,
+    tag => "internal-hosts",
+  }
+
   apache::directive { "trac":
     vhost     => "dev.camptocamp.org",
     directive => "
