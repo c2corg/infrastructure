@@ -122,6 +122,14 @@ class puppet::server {
     before => Augeas["enable collected resources"],
   }
 
+  # puppetmaster leaks open FDs with sqlite :-(
+  # TODO: remove this nonsense after upgrading puppet
+  cron { "restart puppetmaster":
+    command => "/etc/init.d/puppetmaster restart",
+    minute  => ip_to_cron(),
+    hour    => 4,
+  }
+
 }
 
 class puppet::devel {
