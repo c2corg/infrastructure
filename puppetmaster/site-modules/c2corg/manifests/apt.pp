@@ -27,21 +27,15 @@ deb <%= debmirror %>/debian/ sid main contrib non-free
 "),
   }
 
-  $pkgrepo = $datacenter ? {
-    /c2corg|epnet/ => '192.168.191.125',
-    default        => '128.179.66.13:8083',
-  }
-
-
   apt::sources_list { "c2corg":
     content => "# file managed by puppet
-deb http://$pkgrepo/test/ $lsbdistcodename main
-deb http://$pkgrepo/prod/ $lsbdistcodename main
+deb http://pkg.dev.camptocamp.org/test/ $lsbdistcodename main
+deb http://pkg.dev.camptocamp.org/prod/ $lsbdistcodename main
 ",
   }
 
   apt::key { "c2corg":
-    source => "http://$pkgrepo/pubkey.txt",
+    source => "http://pkg.dev.camptocamp.org/pubkey.txt",
   }
 
   apt::preferences { "lenny":

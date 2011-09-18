@@ -84,7 +84,6 @@ class c2corg::reprepro {
     update      => "test2prod-lenny",
   }
 
-
   /* setup a mini-webserver to publish all this stuff. */
 
   include thttpd
@@ -99,6 +98,11 @@ port=80
 ",
     require => [Package["thttpd"], File[$reprepro_basedir]],
     notify  => Service["thttpd"],
+  }
+
+  @@host { "pkg.dev.camptocamp.org":
+    ip => $ipaddress,
+    tag => "internal-hosts",
   }
 
 }
