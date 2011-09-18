@@ -288,6 +288,17 @@ node 'content-factory' inherits 'base-node' {
   include postgresql::backup
   c2corg::backup::dir { "/var/backups/pgsql": }
 
+  apache::auth::htpasswd { "c2corg@camptocamp.org":
+    vhost    => "camptocamp.org",
+    username => "c2corg",
+    cryptPassword => "UxYkCOe3sNVJc",
+  }
+
+  apache::auth::basic::file::user { "require password for website access":
+    location => "/",
+    vhost    => "camptocamp.org",
+  }
+
 }
 
 node 'test-marc' inherits 'base-node' {

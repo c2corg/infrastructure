@@ -121,15 +121,10 @@ class c2corg::devproxy::https {
     require   => Apache::Module["proxy_html"],
   }
 
-  apache::auth::htpasswd { "c2corg@camptocamp.org":
-    vhost    => "dev.camptocamp.org",
-    username => "c2corg",
-    cryptPassword => "UxYkCOe3sNVJc",
-  }
-
   apache::auth::basic::file::user { "require password for dashboard access":
     location => "/dashboard",
     vhost    => "dev.camptocamp.org",
+    authUserFile => "/srv/trac/projects/c2corg/conf/htpasswd",
   }
 
 }

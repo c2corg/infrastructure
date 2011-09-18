@@ -60,7 +60,7 @@ class c2corg::apacheconf::dev inherits c2corg::apacheconf::common {
 
   Apache::Vhost["camptocamp.org"] {
     enable_default => false,
-    aliases +> [$hostname, $fqdn],
+    aliases +> [$hostname, $fqdn, "${hostname}.dev.camptocamp.org"],
   }
 
   Apache::Vhost["meta.camptocamp.org"] {
