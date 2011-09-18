@@ -7,6 +7,8 @@ class c2corg::trac {
   apache::vhost-ssl { "dev.camptocamp.org":
     certcn  => "dev.camptocamp.org",
     sslonly => true,
+    cert    => "file:///etc/puppet/dev.camptocamp.org.crt",
+    certchain => "puppet:///c2corg/apache/CAcert_chain.crt",
   }
 
   package { ["trac", "trac-accountmanager", "trac-email2trac"]:
