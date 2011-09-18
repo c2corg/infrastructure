@@ -19,7 +19,7 @@ class c2corg::vz {
 
   /* puppetmaster */
 
-  vz::ve { "101": hname => "pm.c2corg" }
+  vz::ve { "101": hname => "pm.psea.infra.camptocamp.org" }
 
   vz::fwd { "forward puppetmaster port":
     ve   => "101",
@@ -34,7 +34,7 @@ class c2corg::vz {
 
   /* mailing-lists */
 
-  vz::ve { "102": hname => "lists.c2corg", ensure => stopped }
+  vz::ve { "102": hname => "lists.psea.infra.camptocamp.org", ensure => stopped }
 
   vz::fwd { "forward smtp port":
     ve   => "102",
@@ -50,7 +50,7 @@ class c2corg::vz {
   /* trac */
 
   vz::ve { "103":
-    hname => "trac.c2corg",
+    hname => "trac.psea.infra.camptocamp.org",
     template => "debian-squeeze-amd64-with-puppet",
   }
 
@@ -69,7 +69,7 @@ class c2corg::vz {
   /* package repo */
 
   vz::ve { "125":
-    hname => "pkg.c2corg",
+    hname => "pkg.psea.infra.camptocamp.org",
     template => "debian-squeeze-amd64-with-puppet",
   }
 
@@ -88,7 +88,7 @@ class c2corg::vz {
   /* collectd, syslog, nagios */
 
   vz::ve { "126":
-    hname => "monit.c2corg",
+    hname => "monit.psea.infra.camptocamp.org",
     template => "debian-squeeze-amd64-with-puppet",
   }
 
@@ -101,7 +101,7 @@ class c2corg::vz {
   /* integration/pre-prod nodes */
 
   vz::ve { "140":
-    hname => "content-factory.c2corg",
+    hname => "content-factory.psea.infra.camptocamp.org",
     template => "debian-squeeze-amd64-with-puppet",
   }
 
@@ -118,7 +118,7 @@ class c2corg::vz {
   }
 
   vz::ve { "141":
-    hname => "pre-prod.c2corg",
+    hname => "pre-prod.psea.infra.camptocamp.org",
     template => "debian-squeeze-amd64-with-puppet",
   }
 
@@ -143,7 +143,7 @@ class c2corg::vz {
   /* test nodes */
 
   vz::ve { "201":
-    hname => "test-alex.c2corg",
+    hname => "test-alex.psea.infra.camptocamp.org",
     template => "debian-squeeze-amd64-with-puppet",
     ensure => stopped,
   }
@@ -161,7 +161,7 @@ class c2corg::vz {
   }
 
   vz::ve { "202":
-    hname => "test-xbrrr.c2corg",
+    hname => "test-xbrrr.psea.infra.camptocamp.org",
     template => "debian-squeeze-amd64-with-puppet",
     ensure => stopped,
   }
@@ -179,7 +179,7 @@ class c2corg::vz {
   }
 
   vz::ve { "203":
-    hname => "test-marc.c2corg",
+    hname => "test-marc.psea.infra.camptocamp.org",
     template => "debian-squeeze-amd64-with-puppet",
     ensure => stopped,
   }

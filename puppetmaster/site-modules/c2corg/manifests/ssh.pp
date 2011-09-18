@@ -48,19 +48,17 @@ class c2corg::sshd {
     Sshkey { require => Package["openssh-server"] }
   }
 
-  @@sshkey { "$fqdn":
-    type => rsa,
-    key  => $sshrsakey
+  if ($fqdn != "" and $hostname != "") {
+
+    resources { "sshkey": purge => true }
+    Sshkey <<| |>>
+
+    @@sshkey { "$fqdn":
+      type => rsa,
+      key  => $sshrsakey,
+      host_aliases => [$hostname, $ipaddress],
+    }
   }
-
-  @@sshkey { "$hostname":
-    type => rsa,
-    key  => $sshrsakey
-  }
-
-  Sshkey <<| |>>
-
-  resources { "sshkey": purge => true }
 
   file { "/etc/ssh/ssh_known_hosts":
     ensure => present,

@@ -16,7 +16,7 @@ class c2corg::backup {
     }
 
     cron { "rsync important stuff to backup server":
-      command => "test ! -f /var/run/backup.lock && (touch /var/run/backup.lock && rsync --rsh='ssh -i /root/.backupkey' --archive --numeric-ids --delete --relative --quiet $(cat /root/.backups.include) root@backup.c2corg:/srv/backups/mirror/$(hostname)/ || echo 'backup failed'; rm -f /var/run/backup.lock)",
+      command => "test ! -f /var/run/backup.lock && (touch /var/run/backup.lock && rsync --rsh='ssh -i /root/.backupkey' --archive --numeric-ids --delete --relative --quiet $(cat /root/.backups.include) root@backup.ghst.infra.camptocamp.org:/srv/backups/mirror/$(hostname)/ || echo 'backup failed'; rm -f /var/run/backup.lock)",
       hour    => ip_to_cron(1, 6),
       minute  => ip_to_cron(),
     }
@@ -54,7 +54,8 @@ class c2corg::backup::server {
 
   @@sshkey { "$ipaddress":
     type => rsa,
-    key  => $sshrsakey
+    key  => $sshrsakey,
+    ensure => absent,
   }
 
   cron { "daily backup increment":

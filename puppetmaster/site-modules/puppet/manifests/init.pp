@@ -56,7 +56,7 @@ class puppet::client {
   # if datacenter fact is set, then pluginsync has successfully run at least
   # once.
   if $datacenter {
-    host { "pm.c2corg":
+    host { "pm.psea.infra.camptocamp.org":
       host_aliases => ["pm"],
       ip => $datacenter ? {
         /c2corg|epnet/ => '192.168.191.101',
