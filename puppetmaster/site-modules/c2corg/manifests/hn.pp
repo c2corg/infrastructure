@@ -11,7 +11,11 @@ class c2corg::hn {
   }
   collectd::plugin { $collectdplugins: lines => [] }
 
-  package { ["hdparm", "iozone3"]: }
+  package { "iozone3": }
+
+  if ($operatingsystem != 'GNU/kFreeBSD') {
+    package { "hdparm": }
+  }
 
 }
 
