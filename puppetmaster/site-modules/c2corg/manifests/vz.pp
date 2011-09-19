@@ -34,7 +34,7 @@ class c2corg::vz {
 
   /* mailing-lists */
 
-  vz::ve { "102": hname => "lists.psea.infra.camptocamp.org", ensure => stopped }
+  vz::ve { "102": hname => "lists.psea.infra.camptocamp.org", ensure => present }
 
   vz::fwd { "forward smtp port":
     ve   => "102",
@@ -151,7 +151,7 @@ class c2corg::vz {
   vz::ve { "201":
     hname => "test-alex.psea.infra.camptocamp.org",
     template => "debian-squeeze-amd64-with-puppet",
-    ensure => stopped,
+    ensure => present,
   }
 
   vz::fwd { "forward test-alex ssh port":
@@ -169,7 +169,7 @@ class c2corg::vz {
   vz::ve { "202":
     hname => "test-xbrrr.psea.infra.camptocamp.org",
     template => "debian-squeeze-amd64-with-puppet",
-    ensure => stopped,
+    ensure => present,
   }
 
   vz::fwd { "forward test-xbrrr ssh port":
@@ -187,7 +187,7 @@ class c2corg::vz {
   vz::ve { "203":
     hname => "test-marc.psea.infra.camptocamp.org",
     template => "debian-squeeze-amd64-with-puppet",
-    ensure => stopped,
+    ensure => present,
   }
 
   vz::fwd { "forward test-marc ssh port":
