@@ -76,7 +76,7 @@ class c2corg::common::config {
 
   file { "/etc/resolv.conf":
     content => "# file managed by puppet
-search c2corg
+search camptocamp.org
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 options rotate edns0
