@@ -47,26 +47,26 @@ class c2corg::vz {
     to   => "22",
   }
 
-  /* trac */
+  /* dev */
 
   vz::ve { "103":
-    hname => "trac.psea.infra.camptocamp.org",
+    hname => "dev.psea.infra.camptocamp.org",
     template => "debian-squeeze-amd64-with-puppet",
   }
 
-  vz::fwd { "forward trac ssh port":
+  vz::fwd { "forward dev ssh port":
     ve   => "103",
     from => "10103",
     to   => "22",
   }
 
-  vz::fwd { "forward trac https port":
+  vz::fwd { "forward dev https port":
     ve   => "103",
     from => "443",
     to   => "443",
   }
 
-  vz::fwd { "forward trac http port":
+  vz::fwd { "forward dev http port":
     ve   => "103",
     from => "80",
     to   => "80",

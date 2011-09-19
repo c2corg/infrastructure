@@ -38,7 +38,7 @@ node 'pkg' inherits 'base-node' {
 
 }
 
-node 'trac' inherits 'base-node' {
+node 'dev' inherits 'base-node' {
 
   include c2corg::trac
   include c2corg::wikiassoce
