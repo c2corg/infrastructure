@@ -16,7 +16,7 @@ class c2corg::webserver::symfony {
   include php
 
   apache::module { ["headers", "expires"]: }
-  package { ["php5-pgsql", "php5-gd", "php5-xcache", "php-pear", "php-symfony"]: }
+  package { ["php5-pgsql", "php5-gd", "php-pear", "php-symfony"]: }
   package { ["gettext", "msmtp"]: }
 
   # fileinfo is included in recent PHPs

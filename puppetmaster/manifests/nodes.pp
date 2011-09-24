@@ -208,12 +208,9 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::webserver::svg
 
   include c2corg::apacheconf::preprod
+  include c2corg::xcache
 
   include c2corg::varnish::instance
-
-  augeas { "temporarily disable php-xcache admin auth":
-    changes => "set /files/etc/php5/conf.d/xcache.ini/xcache.admin/xcache.admin.enable_auth Off",
-  }
 
   /* hackish stuff to autotomatically install and update c2corg codebase */
   vcsrepo { "/srv/www/camptocamp.org/":
@@ -283,10 +280,6 @@ node 'content-factory' inherits 'base-node' {
 
   include c2corg::apacheconf::dev
 
-  augeas { "temporarily disable php-xcache admin auth":
-    changes => "set /files/etc/php5/conf.d/xcache.ini/xcache.admin/xcache.admin.enable_auth Off",
-  }
-
   include postgresql::backup
   c2corg::backup::dir { "/var/backups/pgsql": }
 
@@ -320,10 +313,6 @@ node 'test-alex' inherits 'base-node' {
 
   include c2corg::apacheconf::dev
 
-  augeas { "temporarily disable php-xcache admin auth":
-    changes => "set /files/etc/php5/conf.d/xcache.ini/xcache.admin/xcache.admin.enable_auth Off",
-  }
-
 }
 node 'test-xbrrr' inherits 'base-node' {
 
@@ -337,9 +326,5 @@ node 'test-xbrrr' inherits 'base-node' {
   include c2corg::webserver::svg
 
   include c2corg::apacheconf::dev
-
-  augeas { "temporarily disable php-xcache admin auth":
-    changes => "set /files/etc/php5/conf.d/xcache.ini/xcache.admin/xcache.admin.enable_auth Off",
-  }
 
 }
