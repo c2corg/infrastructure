@@ -16,7 +16,7 @@ class c2corg::webserver::symfony {
   include php
 
   apache::module { ["headers", "expires"]: }
-  package { ["php5-pgsql", "php5-gd", "php-pear"}
+  package { ["php5-pgsql", "php5-gd", "php-pear"]: }
   package { ["gettext", "msmtp"]: }
 
   # installed via an svn external from now on.
