@@ -14,17 +14,6 @@ class c2corg::preprod::autoupdate {
     source   => "https://dev.camptocamp.org/svn/c2corg/trunk/meta.camptocamp.org/",
   }
 
-  file { [
-      "/srv/www/camptocamp.org/cache",
-      "/srv/www/camptocamp.org/log",
-      "/srv/www/meta.camptocamp.org/cache",
-      "/srv/www/meta.camptocamp.org/log",
-    ]:
-    ensure  => directory,
-    owner   => "www-data",
-    require => [Vcsrepo["/srv/www/camptocamp.org/"], Vcsrepo["/srv/www/meta.camptocamp.org"]],
-  }
-
   file { "c2corg preprod.ini":
     path    => "/srv/www/camptocamp.org/deployment/preprod.ini",
     source  => "file:///srv/www/camptocamp.org/deployment/conf.ini-dist",
@@ -54,7 +43,6 @@ class c2corg::preprod::autoupdate {
   exec { "c2corg install":
     command => "C2CORG_VARS='${c2corg_vars}' php c2corg --install --conf preprod",
     cwd     => "/srv/www/camptocamp.org/",
-    require => [File["/srv/www/camptocamp.org/cache"], File["/srv/www/camptocamp.org/log"]],
     notify  => Service["apache"],
     logoutput   => true,
     refreshonly => true,
