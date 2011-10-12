@@ -22,6 +22,7 @@ git://github.com/camptocamp/puppet-pacemaker.git pacemaker 39428d04
 git://github.com/camptocamp/puppet-varnish.git varnish bb6603c7
 
 git://github.com/camptocamp/puppet-apache.git apache 3a13c43e
+git://github.com/camptocamp/puppet-nginx.git nginx 2a310734
 git://github.com/camptocamp/puppet-postgresql.git postgresql c307d756
 git://github.com/camptocamp/puppet-postgis.git postgis 42ccde5a
 git://github.com/camptocamp/puppet-mapserver.git mapserver 70bab2601

@@ -1,0 +1,10 @@
+server {
+  listen   [::]:80 default ipv6only=on;
+  server_name camptocamp.org www.camptocamp.org m.camptocamp.org s.camptocamp.org meta.camptocamp.org;
+  access_log /var/log/nginx/ipv6gw.access.log;
+
+  location / {
+    proxy_pass        http://128.179.66.23:80;
+    proxy_set_header  Host  $host;
+  }
+}

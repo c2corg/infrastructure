@@ -79,6 +79,7 @@ node 'monit' inherits 'base-node' {
 node 'backup' inherits 'base-node' {
 
   include c2corg::backup::server
+  include c2corg::webserver::ipv6gw
 
 }
 
