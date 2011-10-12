@@ -111,6 +111,8 @@ node 'hn2' inherits 'base-node' {
 
   c2corg::backup::dir { [
     "/srv/chroot-c2corg/var/www/camptocamp.org/web/uploads/",
+    "/srv/chroot-c2corg/var/www/camptocamp.org/web/forums/img/avatars/",
+    "/srv/chroot-c2corg/var/www/camptocamp.org/web/stats/",
   ]: }
 
   include haproxy
