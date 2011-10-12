@@ -11,22 +11,27 @@ class c2corg::database::base {
     require => Postgresql::User["www-data"],
   }
 
-  postgresql::user { "www-data":
+  postgresql::user { "${c2corg::password::www_db_user}":
     ensure   => present,
-    password => $c2corg::password::pgsql,
   }
 
-  postgresql::user { "sympa":
+  postgresql::user { "${c2corg::password::ml_db_user}":
     ensure   => present,
-    password => $c2corg::password::sympa,
+    password => $c2corg::password::ml_db_pass,
   }
 
 }
 
 class c2corg::database::prod inherits c2corg::database::base {
 
+  include c2corg::password
+
   $pgver = "8.4"
   $logfacility = "LOCAL0"
+
+  Postgresql::User["${c2corg::password::www_db_user}"] {
+    password => $c2corg::password::prod_db_pass,
+  }
 
   Augeas { context => "/files/etc/postgresql/${pgver}/main/" }
   Postgresql::Hba { pgver => $pgver }
@@ -39,29 +44,29 @@ class c2corg::database::prod inherits c2corg::database::base {
     require   => Package["postgresql"],
   }
 
-  postgresql::hba { "access for sympa user to c2corg db":
+  postgresql::hba { "access for ml user to c2corg db":
     ensure   => present,
     type     => 'hostssl',
     database => 'c2corg',
-    user     => 'sympa',
+    user     => "${c2corg::password::ml_db_user}",
     address  => '192.168.0.0/16',
     method   => 'md5',
   }
 
-  postgresql::hba { "access for www-data user to c2corg db":
+  postgresql::hba { "access for www user to c2corg db":
     ensure   => present,
     type     => 'hostssl',
     database => 'c2corg',
-    user     => 'www-data',
+    user     => "${c2corg::password::www_db_user}",
     address  => '192.168.192.3/32',
     method   => 'md5',
   }
 
-  postgresql::hba { "access for www-data user to metaengine db":
+  postgresql::hba { "access for www user to metaengine db":
     ensure   => present,
     type     => 'hostssl',
     database => 'metaengine',
-    user     => 'www-data',
+    user     => "${c2corg::password::www_db_user}",
     address  => '192.168.192.3/32',
     method   => 'md5',
   }
@@ -94,8 +99,8 @@ LoadPlugin \"postgresql\"
 <Plugin postgresql>
   <Database c2corg>
     Port \"5432\"
-    User \"www-data\"
-    Password \"${c2corg::password::pgsql}\"
+    User \"${c2corg::password::www_db_user}\"
+    Password \"${c2corg::password::prod_db_pass}\"
   </Database>
 </Plugin>
 ",
@@ -111,11 +116,13 @@ LoadPlugin \"postgresql\"
 
 }
 
-class c2corg::database::test inherits c2corg::database::base {
-
-}
-
 class c2corg::database::dev inherits c2corg::database::base {
+
+  include c2corg::password
+
+  Postgresql::User["${c2corg::password::www_db_user}"] {
+    password => $c2corg::password::dev_db_pass,
+  }
 
 }
 

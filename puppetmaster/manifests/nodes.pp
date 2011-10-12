@@ -19,8 +19,13 @@ node 'pm' inherits 'base-node' {
   include puppet::server
   include c2corg::collectd::client
 
+  file { "/etc/c2corg":
+    ensure => directory,
+    owner  => "marc",
+  }
+
   c2corg::backup::dir {
-    ["/srv/puppetmaster", "/var/lib/puppet/ssl", "/home"]:
+    ["/srv/puppetmaster", "/var/lib/puppet/ssl", "/home", "/etc/c2corg"]:
   }
 
   realize C2corg::Account::User[marc]
