@@ -43,6 +43,8 @@ class c2corg::syslog::server inherits c2corg::syslog::client {
   Package["syslog"] { name => "syslog-ng" }
   Service["syslog"] { name => "syslog-ng", hasstatus => false }
 
+  package { "petit": ensure => present }
+
   File["local syslog config"] {
     path    => "/etc/syslog-ng/local.conf",
     content => "# file managed by puppet
