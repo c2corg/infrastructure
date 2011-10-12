@@ -1,6 +1,5 @@
 class c2corg::preprod::autoupdate {
 
-
   /* hackish stuff to autotomatically install and update c2corg codebase */
   vcsrepo { "/srv/www/camptocamp.org/":
     ensure   => "latest",
@@ -34,9 +33,23 @@ class c2corg::preprod::autoupdate {
   }
 
   include c2corg::password
-  $db_user = "www-data"
   $sitename = "pre-prod.dev.camptocamp.org"
-  $c2corg_vars = "DB_USER=${db_user};DB_PASS=${c2corg::password::pgsql};SERVER_NAME=www.${sitename};MOBILE_VERSION_HOST=m.${sitename};CLASSIC_VERSION_HOST=www.${sitename};STATIC_HOST=s.${sitename};STATIC_BASE_URL=http://s.${sitename}"
+
+  $c2corg_vars = inline_template("<%=
+
+  c2corg_vars = {
+    'DB_USER'               => '${c2corg::password::www_db_user}',
+    'DB_PASS'               => '${c2corg::password::prod_db_pass}',
+    'SERVER_NAME'           => 'www.${sitename}',
+    'MOBILE_VERSION_HOST'   => 'm.${sitename}',
+    'CLASSIC_VERSION_HOST'  => 'www.${sitename}',
+    'STATIC_HOST'           => 's.${sitename}',
+    'STATIC_BASE_URL'       => 'http://s.${sitename}',
+  }
+
+ c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';')
+
+%>")
 
   exec { "c2corg install":
     command => "C2CORG_VARS='${c2corg_vars}' php c2corg --install --conf preprod",
