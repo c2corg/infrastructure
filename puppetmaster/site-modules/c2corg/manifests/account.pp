@@ -8,6 +8,7 @@ class c2corg::account {
     "gottferdom": user => "gottferdom", account => "gottferdom";
     "xbrrr": user => "xbrrr", account => "xbrrr";
     "gerbaux": user => "gerbaux", account => "gerbaux";
+    "c2corg": user => "c2corg", account => "c2corg";
   }
 }
 
