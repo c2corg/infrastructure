@@ -148,6 +148,9 @@ node 'hn3' inherits 'base-node' {
 
   include c2corg::hn::hn3
 
+  #include c2corg::prod::filesystems::symfony
+  #include c2corg::prodenv::symfony
+
   include c2corg::collectd::client
 }
 
@@ -156,52 +159,14 @@ node 'hn4' inherits 'base-node' {
 
   include c2corg::hn::hn4
 
-  Sysctl::Set_value { before => Service["postgresql"] }
-
   include c2corg::database::prod
-
-  file { "/etc/postgresql/8.4/main/postgresql.conf":
-    ensure => present,
-    source => "puppet:///c2corg/pgsql/postgresql.conf.hn4",
-    mode   => 0644,
-    notify => Service["postgresql"],
-  }
-
-  sysctl::set_value {
-    "kernel.shmmax": value => "4127514624";
-    "kernel.shmall": value => "2097152";
-  }
-
-  mount { "/var/lib/postgresql/8.4/main":
-    ensure  => mounted,
-    atboot  => true,
-    device  => "/dev/mapper/vg0-pgdata",
-    fstype  => "ext3",
-    options => "noatime",
-  }
-
-  mount { "/var/lib/postgresql/8.4/main/pg_xlog":
-    ensure  => mounted,
-    atboot  => true,
-    device  => "/dev/mapper/vg0-pgxlog",
-    fstype  => "xfs",
-    options => "noatime,nobarrier",
-    require => Mount["/var/lib/postgresql/8.4/main"],
-    before  => Service["postgresql"],
-  }
+  include c2corg::prod::filesystems::postgres
+  include c2corg::prodenv::postgres
 
   include c2corg::collectd::client
 
   include postgresql::backup
   c2corg::backup::dir { "/var/backups/pgsql": }
-
-  mount { "/var/backups/pgsql":
-    ensure  => mounted,
-    atboot  => true,
-    device  => "/dev/mapper/vg0-pgbackup",
-    fstype  => "ext3",
-    options => "defaults",
-  }
 
 }
 
