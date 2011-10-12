@@ -14,8 +14,8 @@ git://github.com/camptocamp/puppet-postfix.git postfix c371b493a
 git://github.com/camptocamp/puppet-sysctl.git sysctl 64a38b3e
 git://github.com/camptocamp/puppet-reprepro.git reprepro 49a830b7
 git://github.com/kbarber/puppet-iptables.git iptables 9deddbbd
-git://github.com/bodepd/puppet-sudo.git sudo 9834ac93
-git://github.com/puppetlabs/puppet-vcsrepo.git vcsrepo e481dec2
+git://github.com/bodepd/puppet-sudo.git sudo 9202f636
+git://github.com/puppetlabs/puppet-vcsrepo.git vcsrepo 2723cbcd
 git://github.com/puppetlabs/puppet-lvm.git lvm d92be18d
 
 git://github.com/camptocamp/puppet-pacemaker.git pacemaker 39428d04
