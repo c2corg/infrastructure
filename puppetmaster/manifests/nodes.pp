@@ -24,8 +24,38 @@ node 'pm' inherits 'base-node' {
     owner  => "marc",
   }
 
+  #TODO: factorize
+  resources { 'sudoers':
+    purge => true,
+  }
+
+  #TODO: factorize
+  Sudoers {
+    hosts  => $hostname,
+    target => "/etc/sudoers",
+  }
+
+  #TODO: factorize
+  sudoers { 'Defaults':
+    parameters => [
+      '!authenticate',
+      'env_reset',
+      #'secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"', # unsopported on lenny
+    ],
+    type => 'default',
+  }
+
+
   c2corg::backup::dir {
     ["/srv/puppetmaster", "/var/lib/puppet/ssl", "/home", "/etc/c2corg"]:
+  }
+
+  sudoers { 'restart apache':
+    users => 'marc',
+    type  => "user_spec",
+    commands => [
+      '(root) /usr/sbin/puppetca',
+    ],
   }
 
   realize C2corg::Account::User[marc]
