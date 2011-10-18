@@ -34,6 +34,7 @@ class c2corg::preprod::autoupdate {
     'CLASSIC_VERSION_HOST'  => 'www.${sitename}',
     'STATIC_HOST'           => 's.${sitename}',
     'STATIC_BASE_URL'       => 'http://s.${sitename}',
+    'GMAPS_KEY'             => '${c2corg::password::preprod_gmaps_key}',
   }
 
  c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';')

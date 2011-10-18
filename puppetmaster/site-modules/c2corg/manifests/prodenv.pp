@@ -144,7 +144,7 @@ class c2corg::prodenv::symfony {
     'GANALYTICS_KEY'        => '${c2corg::password::ganalytics_key}',
     'MOBILE_GANALYTICS_KEY' => '${c2corg::password::mobile_ganalytics_key}',
     'METAENGINE_KEY'        => '${c2corg::password::metaengine_key}',
-    'GMAPS_KEY'             => '${c2corg::password::gmap_key}',
+    'GMAPS_KEY'             => '${c2corg::password::prod_gmaps_key}',
     'GEOPORTAIL_KEY'        => '${c2corg::password::geoportail_key}',
   }
 %>
