@@ -16,7 +16,7 @@ class c2corg::common::packages {
     "patch", "pwgen",
     "rsync",
     "screen", "sudo", "subversion", "subversion-tools", "sysstat",
-    "tcpdump", "telnet", "time", "tmux", "tshark",
+    "tcpdump", "telnet", "time", "tshark",
     "unzip",
     "vim",
     "wget"
@@ -31,6 +31,12 @@ class c2corg::common::packages {
       }
     }
     "GNU/kFreeBSD": {
+    }
+  }
+
+  case $lsbdistcodename {
+    "squeeze": {
+      package { ["tmux"]: ensure => installed }
     }
   }
 
