@@ -1,0 +1,207 @@
+## Configuration file for Sympa
+## many parameters are optional (defined in src/Conf.pm)
+## refer to the documentation for a detailed list of parameters
+
+###\\\\ Directories and file location ////###
+
+## Directory containing mailing lists subdirectories
+home	/var/lib/sympa/expl
+
+## Directory for configuration files ; it also contains scenari/ and templates/ directories
+etc	/etc/sympa
+
+## File containing Sympa PID while running.
+## Sympa also locks this file to ensure that it is not running more than once. Caution : user sympa need to write access without special privilegee.
+pidfile	/var/run/sympa/sympa.pid
+
+## Umask used for file creation by Sympa
+umask	027
+
+## Directory containing available NLS catalogues (Message internationalization)
+msgcat	/usr/lib/sympa/nls
+
+## The main spool containing various specialized spools
+## All spool are created at runtime by sympa.pl
+spool	/var/spool/sympa
+
+## Incoming spool
+queue	/var/spool/sympa/msg
+
+## Bounce incoming spool
+queuebounce	/var/spool/sympa/bounce
+
+###\\\\ Syslog ////###
+
+## The syslog facility for sympa
+## Do not forget to edit syslog.conf
+syslog	LOCAL1
+
+## Communication mode with syslogd is either unix (via Unix sockets) or inet (use of UDP)
+log_socket_type	unix
+
+## Log intensity
+## 0 : normal, 2,3,4 for debug
+log_level	0
+
+###\\\\ General definition ////###
+
+## Main robot hostname
+domain		<%= hname %>
+
+## Listmasters email list colon separated
+listmaster		<%= listmaster %>
+
+## Local part of sympa email adresse
+## Effective address will be [EMAIL]@[HOST]
+email	sympa
+
+## Default lang (fr | us | es | de | it | cn | tw | fi | pl | cz | hu | ro | et)
+lang		us
+
+## Who is able to create lists
+## This parameter is a scenario, check sympa documentation about scenarios if you want to define one
+create_list	public_listmaster
+
+## Secret used by Sympa to make MD5 fingerprint in web cookies secure
+## Should not be changed ! May invalid all user password
+cookie `/bin/cat /etc/sympa/cookie`
+
+###\\\\ Errors management ////###
+
+## Bouncing email rate for warn list owner
+#bounce_warn_rate	20
+
+## Bouncing email rate for halt the list (not implemented)
+## Not yet used in current version, Default is 50
+#bounce_halt_rate	50
+
+## Task name for expiration of old bounces
+#expire_bounce_task	daily
+
+## Welcome message return-path
+## If set to unique, new subcriber is removed if welcome message bounce
+#welcome_return_path	unique
+
+###\\\\ MTA related ////###
+
+## Path to the MTA (sendmail, postfix, exim or qmail)
+## should point to a sendmail-compatible binary (eg: a binary named 'sendmail' is distributed with Postfix)
+sendmail	/usr/sbin/sendmail
+
+rfc2369_header_fields none
+
+## Maximum number of recipients per call to Sendmail
+nrcpt	25
+
+## Max. number of different domains per call to Sendmail
+avg	10
+
+## Max. number of Sendmail processes (launched by Sympa) running simultaneously
+## Proposed value is quite low, you can rise it up to 100, 200 or even 300 with powerfull systems.
+maxsmtp	40
+
+###\\\\ Pluggin ////###
+
+## Path to the antivirus scanner engine
+## supported antivirus : McAfee/uvscan, Fsecure/fsav, Sophos, AVP and Trend Micro/VirusWall
+#antivirus_path	/usr/local/uvscan/uvscan
+
+## Antivirus pluggin command argument
+#antivirus_args	--secure --summary --dat /usr/local/uvscan
+
+###\\\\ S/MIME pluggin ////###
+
+## Path to OpenSSL
+## Sympa knowns S/MIME if openssl is installed
+#openssl	/usr/local/bin/openssl
+
+## The directory path use by OpenSSL for trusted CA certificates
+#capath	/etc/sympa/ssl.crt
+
+##  This parameter sets the all-in-one file where you can assemble the Certificates of Certification Authorities (CA)
+#cafile	/usr/local/apache/conf/ssl.crt/ca-bundle.crt
+
+## User CERTs directory
+ssl_cert_dir	/var/lib/sympa/x509-user-certs
+
+## Password used to crypt lists private keys
+#key_passwd	your_password
+
+###\\\\ Database ////###
+
+## Database type (mysql | Pg | Oracle | Sybase)
+## be carefull to the case
+#db_type	mysql
+
+## Name of the database
+#db_name	sympa
+
+## The host hosting your sympa database
+#db_host	localhost
+
+## Database user for connexion
+#db_user	sympa
+
+## Database password (associated to the db_user)
+## What ever you use a password or not, you must protect the SQL server (is it a not a public internet service ?)
+#db_passwd	your_passwd
+
+## Database private extention to user table
+## You need to extend the database format with these fields
+#db_additional_user_fields	age,address
+
+## Database private extention to subscriber table
+## You need to extend the database format with these fields
+#db_additional_subscriber_fields	billing_delay,subscription_expiration
+
+###\\\\ Web interface ////###
+
+## Sympa's main page URL
+wwsympa_url	http://localhost/wws
+
+## web interface color : dark
+dark_color	#006666
+
+## web interface color : selected_color
+selected_color	#996666
+
+## web interface color : light
+light_color	#cccc66
+
+## web_interface color : shaded
+shaded_color	#66cccc
+
+## web_interface color : background
+bg_color	#ffffcc
+
+#-- Database configuration begin
+# DO NOT REMOVE SURROUNDING COMMENTS
+
+# DO NOT EDIT BY HAND
+# USE dpkg-reconfigure -plow sympa TO RECONFIGURE
+
+## Database driver (DBD)
+#db_type		mysql
+db_type		<%= dbtype %>
+
+## Name of your database
+#db_name		sympa
+db_name		<%= dbname %>
+
+## Your database hostname
+#db_host		mysql.c2c
+db_host		<%= dbhost %>
+
+## Username to connect to the DB
+#db_user		apache
+db_user		<%= dbuser %>
+
+## Password for the user
+#db_passwd		apache
+db_passwd		<%= dbpwd %>
+
+## TCP port for the database connection
+#db_port		3306
+db_port		<%= dbport %>
+
+#-- Database configuration end

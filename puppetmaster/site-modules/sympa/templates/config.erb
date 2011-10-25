@@ -1,0 +1,30 @@
+subject <%= subject %>
+
+visibility noconceal
+
+send <%= send_from %>
+
+clean_delay_queuemod 15
+
+owner
+email <%= listmaster %>
+
+anonymous_sender "<%= anon_name %>" <<%= name %>@<%= hname %>>
+
+review owner
+
+subscribe closed
+
+unsubscribe closed
+
+invite default
+
+serial 0
+
+#reply_to_header
+#value other_email
+#other_email foo@bar.com
+#apply forced
+
+footer_type append
+
