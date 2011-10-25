@@ -8,7 +8,7 @@ class sympa {
   }
 
 
-  package { 'sympa':
+  package { ['sympa', 'libdbd-pg-perl']:
     ensure => present,
   }
 
@@ -22,7 +22,7 @@ class sympa {
   service { 'sympa':
     ensure  => running,
     enable  => true,
-    require => File["/etc/sympa/sympa.conf"],
+    require => [File["/etc/sympa/sympa.conf"], Package['libdbd-pg-perl']],
   }
 
 }
