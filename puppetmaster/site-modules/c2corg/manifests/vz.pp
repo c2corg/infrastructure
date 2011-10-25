@@ -34,7 +34,11 @@ class c2corg::vz {
 
   /* mailing-lists */
 
-  vz::ve { "102": hname => "lists.psea.infra.camptocamp.org", ensure => present }
+  vz::ve { "102":
+    hname    => "lists.psea.infra.camptocamp.org",
+    template => "debian-squeeze-amd64-with-puppet",
+    ensure   => running,
+  }
 
   vz::fwd { "forward smtp port":
     ve   => "102",

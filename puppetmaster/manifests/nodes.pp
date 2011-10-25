@@ -63,6 +63,8 @@ node 'pm' inherits 'base-node' {
 
 node 'lists' inherits 'base-node' {
 
+  include c2corg::mailinglists
+
 }
 
 node 'pkg' inherits 'base-node' {
