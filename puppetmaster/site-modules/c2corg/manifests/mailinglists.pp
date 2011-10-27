@@ -1,8 +1,9 @@
 class c2corg::mailinglists {
 
   include c2corg::password
+  include c2corg::mta # just import attributes
 
-  $dbhost = 'pre-prod.psea.infra.camptocamp.org' #TODO: prod db
+  $dbhost = '192.168.192.5' #TODO: factorize
   $dbport = '5432'
   $dbtype = 'Pg'
   $dbname = 'c2corg'
@@ -12,6 +13,7 @@ class c2corg::mailinglists {
   $listmaster = 'listmaster@camptocamp.org'
 
   $postfix_smtp_listen = "0.0.0.0"
+  $root_mail_recipient = $c2corg::mta::root_mail_recipient
 
   include sympa
   include sympa::mta

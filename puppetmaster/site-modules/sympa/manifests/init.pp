@@ -22,6 +22,7 @@ class sympa {
   service { 'sympa':
     ensure  => running,
     enable  => true,
+    status  => 'test $(pgrep -f "sympa/bin/(sympa|archived|task_manager|bounced).pl$" | wc -l) == 4',
     require => [File["/etc/sympa/sympa.conf"], Package['libdbd-pg-perl']],
   }
 
@@ -29,11 +30,11 @@ class sympa {
 
 class sympa::mta inherits postfix {
 
-  Postfix::Config["myorigin"] { value => $hname }
+  Postfix::Config["myorigin"] { value => $fqdn }
 
   postfix::config {
     "myhostname":         value => $fqdn;
-    "mydestination":      value => "\$myorigin";
+    "mydestination":      value => "$fqdn,$hname";
     "mynetworks":         value => "127.0.0.0/8";
     "virtual_alias_maps": value => "hash:/etc/postfix/virtual";
     "transport_maps":     value => "hash:/etc/postfix/transport";
@@ -87,11 +88,13 @@ define sympa::list ($ensure='present', $subject, $anon_name, $send_from, $footer
   mailalias { $name:
     ensure    => $ensure,
     recipient => "|/usr/lib/sympa/bin/queue ${name}@${hname}",
+    notify    => Exec["newaliases"],
   }
 
   mailalias { "${name}-owner":
     ensure    => $ensure,
     recipient => "|/usr/lib/sympa/bin/bouncequeue ${name}@${hname}",
+    notify    => Exec["newaliases"],
   }
 
 }
