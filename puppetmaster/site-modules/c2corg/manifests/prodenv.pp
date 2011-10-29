@@ -190,8 +190,8 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
     users => 'c2corg',
     type  => "user_spec",
     commands => [
-      '(root) /etc/init.d/apache',
-      '(root) /usr/sbin/invoke-rc.d apache',
+      '(root) /etc/init.d/apache2',
+      '(root) /usr/sbin/invoke-rc.d apache2 *',
       '(root) /usr/sbin/apachectl',
       '(root) /usr/sbin/apache2ctl',
     ],
