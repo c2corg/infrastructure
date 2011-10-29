@@ -23,6 +23,18 @@ Sudoers {
   require => Package["sudo"],
 }
 
+Apache::Vhost {
+  user  => "root",
+  group => "root",
+  mode  => 0755,
+}
+
+Apache::Vhost-ssl {
+  user  => "root",
+  group => "root",
+  mode  => 0755,
+}
+
 # purge unmanaged users.
 resources { "user":
   purge => true,
