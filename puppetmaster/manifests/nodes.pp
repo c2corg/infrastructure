@@ -63,7 +63,12 @@ node 'pm' inherits 'base-node' {
 
 node 'lists' inherits 'base-node' {
 
+  #TODO: graph/monitor postfix & sympa
+  #TODO: SPF headers
+  #TODO: script meteofrance
+
   include c2corg::mailinglists
+  include c2corg::collectd::client
 
 }
 
@@ -251,6 +256,8 @@ node 'content-factory' inherits 'base-node' {
     location => "/",
     vhost    => "camptocamp.org",
   }
+
+  include c2corg::collectd::client
 
 }
 
