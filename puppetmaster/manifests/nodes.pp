@@ -1,3 +1,4 @@
+# common template
 node 'base-node' {
 
   include apt
@@ -15,6 +16,7 @@ node 'base-node' {
 
 }
 
+# VM - configuration management
 node 'pm' inherits 'base-node' {
 
   include puppet::server
@@ -40,6 +42,7 @@ node 'pm' inherits 'base-node' {
   realize C2corg::Account::User[marc]
 }
 
+# VM - mailinglists
 node 'lists' inherits 'base-node' {
 
   #TODO: graph/monitor postfix & sympa
@@ -51,6 +54,7 @@ node 'lists' inherits 'base-node' {
 
 }
 
+# VM - package repository
 node 'pkg' inherits 'base-node' {
 
   include c2corg::reprepro
@@ -59,6 +63,7 @@ node 'pkg' inherits 'base-node' {
 
 }
 
+# VM - misc dev/private ressources
 node 'dev' inherits 'base-node' {
 
   include c2corg::trac
@@ -75,6 +80,7 @@ node 'dev' inherits 'base-node' {
 
 }
 
+# VM - logs, stats and graphs
 node 'monit' inherits 'base-node' {
 
   include c2corg::collectd::server
@@ -91,7 +97,7 @@ node 'monit' inherits 'base-node' {
 
 }
 
-# xen VM hosted at gandi.net - 95.142.173.157
+# xen VM hosted at gandi.net (95.142.173.157) - backup & IPv6 gateway
 node 'backup' inherits 'base-node' {
 
   include c2corg::backup::server
@@ -99,7 +105,7 @@ node 'backup' inherits 'base-node' {
 
 }
 
-# ProLiant DL360 G4p - debian/squeeze
+# ProLiant DL360 G4p - main router + virtualisation
 node 'hn0' inherits 'base-node' {
 
   include c2corg::hn::hn0
@@ -111,7 +117,7 @@ node 'hn0' inherits 'base-node' {
   # c2corg::backup::dir { "/var/lib/vz/template/cache/": }
 }
 
-# ProLiant DL360 G4 - debian/kFreeBSD
+# ProLiant DL360 G4 - varnish
 node 'hn1' inherits 'base-node' {
 
   include c2corg::hn::hn1
@@ -121,7 +127,7 @@ node 'hn1' inherits 'base-node' {
   include c2corg::collectd::client
 }
 
-# PowerEdge 2950 - debian/lenny
+# PowerEdge 2950 - legacy webserver + haproxy
 node 'hn2' inherits 'base-node' {
 
   include c2corg::hn::hn2
@@ -160,7 +166,7 @@ node 'hn2' inherits 'base-node' {
 
 }
 
-# X3550 M3 - debian/squeeze
+# X3550 M3 - prod webserver
 node 'hn3' inherits 'base-node' {
 
   include c2corg::hn::hn3
@@ -172,7 +178,7 @@ node 'hn3' inherits 'base-node' {
 
 }
 
-# X3550 M3 - debian/squeeze
+# X3550 M3 - prod database
 node 'hn4' inherits 'base-node' {
 
   include c2corg::hn::hn4
@@ -189,6 +195,7 @@ node 'hn4' inherits 'base-node' {
 }
 
 
+# VM - pre-prod database + webserver
 node 'pre-prod' inherits 'base-node' {
 
   include c2corg::database::prod
@@ -213,6 +220,7 @@ node 'pre-prod' inherits 'base-node' {
 
 }
 
+# VM - content-factory database + webserver
 node 'content-factory' inherits 'base-node' {
 
   include c2corg::database::dev
@@ -241,10 +249,12 @@ node 'content-factory' inherits 'base-node' {
 
 }
 
+# VM
 node 'test-marc' inherits 'base-node' {
 
 }
 
+# VM
 node 'test-alex' inherits 'base-node' {
 
   realize C2corg::Account::User[alex]
@@ -259,6 +269,8 @@ node 'test-alex' inherits 'base-node' {
   include c2corg::apacheconf::dev
 
 }
+
+# VM
 node 'test-xbrrr' inherits 'base-node' {
 
   realize C2corg::Account::User[xbrrr]
