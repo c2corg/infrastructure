@@ -22,7 +22,8 @@ class sympa {
   service { 'sympa':
     ensure  => running,
     enable  => true,
-    status  => 'test $(pgrep -f "sympa/bin/(sympa|archived|task_manager|bounced).pl$" | wc -l) == 4',
+    #status  => '[ $(pgrep -f "sympa/bin/(sympa|archived|task_manager|bounced).pl$" | wc -l) == 4 ]', # this seems broken in puppet 0.25.
+    hasstatus => false,
     require => [File["/etc/sympa/sympa.conf"], Package['libdbd-pg-perl']],
   }
 
