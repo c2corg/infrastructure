@@ -5,12 +5,25 @@
 auto lo
 iface lo inet loopback
 
+# public network interface
+auto eth0
+iface eth0 inet static
+  address 128.179.66.7
+  netmask 255.255.255.0
+  post-up /sbin/ip ro add 128.179.66.0/24 dev eth0 src 128.179.66.7 table 66
+  post-up /sbin/ip ro add default via 128.179.66.1 table 66
+  post-up /sbin/ip rule add from 128.179.66.7 table 66
+
 # internal network/vlan
 auto eth0.192
 iface eth0.192 inet static
   address 192.168.192.4
   netmask 255.255.255.0
   gateway 192.168.192.1
+  post-up /sbin/ip ro add 192.168.192.0/24 dev eth0.192 src 192.168.192.4 table 192
+  post-up /sbin/ip ro add default via 192.168.192.1 table 192
+  post-up /sbin/ip rule add from 192.168.192.4 table 192
+
 
 # IBM IMM
 auto eth1
