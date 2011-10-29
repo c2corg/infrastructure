@@ -120,7 +120,7 @@ class c2corg::prodenv::symfony {
 
   $sitename = "camptocamp.org"
   $smtp_server = "psemail.epfl.ch"
-  $db_host = "localhost"
+  $db_host = "192.168.192.5" # TODO: factorize
   $advertising_rw_dir = "/srv/www/camptocamp.org/www-data/persistent/advertising"
 
   file { "/home/c2corg/c2corg-envvars.sh":
