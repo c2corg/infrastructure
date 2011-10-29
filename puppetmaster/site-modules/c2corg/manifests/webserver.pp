@@ -8,6 +8,8 @@ class c2corg::webserver::base {
     notify  => Service["apache"],
   }
 
+  package { "apachetop": }
+
 }
 
 class c2corg::webserver::symfony {
