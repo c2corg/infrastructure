@@ -181,6 +181,7 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
     parameters => [
       '!authenticate',
       'env_reset',
+      'env_keep="SSH_AUTH_SOCK"',
       'secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"',
     ],
     type => 'default',
