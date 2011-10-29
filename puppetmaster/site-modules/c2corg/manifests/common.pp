@@ -170,9 +170,48 @@ set pastetoggle=<F2>
 ',
   }
 
-  line { "l shell alias":
-    file => "/root/.bashrc",
-    line => 'alias l="ls -Falh"',
+  file { "/etc/profile.d/path.sh":
+    ensure  => present,
+    content => '# file managed by puppet
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/nagios/plugins"
+',
+  }
+
+  file { "/etc/profile.d/less.sh":
+    ensure  => present,
+    content => '# file managed by puppet
+if [ "$PS1" ]; then
+  export LESS="-qRI"
+  eval `dircolors -b`
+  eval $(lesspipe)
+fi
+',
+  }
+
+  file { "/etc/profile.d/history.sh":
+    ensure  => present,
+    content => '# file managed by puppet
+if [ "$PS1" ]; then
+  export HISTIGNORE="fg:bg"
+  export HISTTIMEFORMAT="%h/%d – %H:%M:%S "
+  export HISTCONTROL="ignoredups"
+  export HISTSIZE="5000"
+  export HISTFILESIZE="5000"
+fi
+',
+  }
+
+  file { "/etc/profile.d/aliases.sh":
+    ensure  => present,
+    content => '# file managed by puppet
+if [ "$PS1" ]; then
+  alias ls="ls --color=auto --quoting-style=escape"
+  alias l="ls -Falh"
+  alias grep="grep --color=auto"
+  alias fgrep="fgrep --color=auto"
+  alias egrep="egrep --color=auto"
+fi
+',
   }
 
 }
