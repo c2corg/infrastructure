@@ -22,18 +22,12 @@ class c2corg::database::base {
 
 }
 
-class c2corg::database::prod inherits c2corg::database::base {
-
-  include c2corg::password
+class c2corg::database::common inherits c2corg::database::base {
 
   $pgver = "8.4"
-  $logfacility = "LOCAL0"
-
-  Postgresql::User["${c2corg::password::www_db_user}"] {
-    password => $c2corg::password::prod_db_pass,
-  }
 
   Augeas { context => "/files/etc/postgresql/${pgver}/main/" }
+
   Postgresql::Hba { pgver => $pgver }
   #Postgresql::Conf { pgver => $pgver }
 
@@ -71,8 +65,24 @@ class c2corg::database::prod inherits c2corg::database::base {
     method   => 'md5',
   }
 
+  #TODO
+  #postgresql::conf {
+  #  "listen_addresses": value => "*";
+  #}
 
   package { ["pgtune", "sysbench", "ptop", "check-postgres"]: }
+
+}
+
+class c2corg::database::prod inherits c2corg::database::common {
+
+  include c2corg::password
+
+  $logfacility = "LOCAL0"
+
+  Postgresql::User["${c2corg::password::www_db_user}"] {
+    password => $c2corg::password::prod_db_pass,
+  }
 
   #TODO
   #postgresql::conf {
@@ -116,7 +126,7 @@ LoadPlugin \"postgresql\"
 
 }
 
-class c2corg::database::dev inherits c2corg::database::base {
+class c2corg::database::dev inherits c2corg::database::common {
 
   include c2corg::password
 
