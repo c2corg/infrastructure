@@ -186,8 +186,8 @@ node 'hn3' inherits 'base-node' {
 
   include c2corg::hn::hn3
 
-  #include c2corg::prod::filesystems::symfony
-  #include c2corg::prodenv::symfony
+  include c2corg::prod::filesystems::symfony
+  include c2corg::prodenv::symfony
 
   include c2corg::collectd::client
 }

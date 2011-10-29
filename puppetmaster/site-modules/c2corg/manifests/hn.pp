@@ -14,7 +14,7 @@ class c2corg::hn {
   package { "iozone3": }
 
   if ($operatingsystem != 'GNU/kFreeBSD') {
-    package { "hdparm": }
+    package { ["hdparm", "xfsprogs"]: }
   }
 
 }
