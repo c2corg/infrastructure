@@ -11,6 +11,7 @@ node 'base-node' {
   include c2corg::common::config
   include c2corg::hosts
   include c2corg::syslog::client
+  include c2corg::sudo # TODO: only if package sudo is installed
 
 }
 
@@ -23,28 +24,6 @@ node 'pm' inherits 'base-node' {
     ensure => directory,
     owner  => "marc",
   }
-
-  #TODO: factorize
-  resources { 'sudoers':
-    purge => true,
-  }
-
-  #TODO: factorize
-  Sudoers {
-    hosts  => $hostname,
-    target => "/etc/sudoers",
-  }
-
-  #TODO: factorize
-  sudoers { 'Defaults':
-    parameters => [
-      '!authenticate',
-      'env_reset',
-      #'secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"', # unsopported on lenny
-    ],
-    type => 'default',
-  }
-
 
   c2corg::backup::dir {
     ["/srv/puppetmaster", "/var/lib/puppet/ssl", "/home", "/etc/c2corg"]:
@@ -190,6 +169,7 @@ node 'hn3' inherits 'base-node' {
   include c2corg::prodenv::symfony
 
   include c2corg::collectd::client
+
 }
 
 # X3550 M3 - debian/squeeze

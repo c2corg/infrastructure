@@ -165,28 +165,6 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
     require => User["c2corg"],
   }
 
-  #TODO: factorize
-  resources { 'sudoers':
-    purge => true,
-  }
-
-  #TODO: factorize
-  Sudoers {
-    hosts  => $hostname,
-    target => "/etc/sudoers",
-  }
-
-  #TODO: factorize
-  sudoers { 'Defaults':
-    parameters => [
-      '!authenticate',
-      'env_reset',
-      'env_keep="SSH_AUTH_SOCK"',
-      'secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"',
-    ],
-    type => 'default',
-  }
-
   sudoers { 'restart apache':
     users => 'c2corg',
     type  => "user_spec",

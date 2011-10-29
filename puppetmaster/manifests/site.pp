@@ -3,7 +3,7 @@ import "common"
 
 filebucket { main: server => $puppet_server }
 
-Exec { path => "/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin" }
+Exec { path => "/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/bin:/usr/local/sbin" }
 
 File {
   backup => main,
@@ -15,6 +15,12 @@ File {
 
 Package {
   require => Exec["apt-get_update"],
+}
+
+Sudoers {
+  hosts   => $hostname,
+  target  => "/etc/sudoers",
+  require => Package["sudo"],
 }
 
 # purge unmanaged users.
