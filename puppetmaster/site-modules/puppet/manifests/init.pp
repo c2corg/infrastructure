@@ -65,6 +65,16 @@ class puppet::client {
     }
   }
 
+  sudoers { 'puppet server':
+    users => '%adm',
+    type  => "user_spec",
+    commands => [
+      '(root) /usr/sbin/puppetca',
+      '(root) /etc/init.d/puppetmaster',
+      '(root) /usr/sbin/invoke-rc.d puppetmaster *',
+    ],
+  }
+
 }
 
 
@@ -120,6 +130,16 @@ class puppet::server {
   package { ["sqlite3", "libsqlite3-ruby"]:
     ensure => present,
     before => Augeas["enable collected resources"],
+  }
+
+  sudoers { 'puppet client':
+    users => '%adm',
+    type  => "user_spec",
+    commands => [
+      '(root) /usr/sbin/puppetd',
+      '(root) /etc/init.d/puppet',
+      '(root) /usr/sbin/invoke-rc.d puppet *',
+    ],
   }
 
   # puppetmaster leaks open FDs with sqlite :-(
