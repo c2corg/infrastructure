@@ -14,6 +14,11 @@ node 'base-node' {
   include c2corg::syslog::client
   include c2corg::sudo # TODO: only if package sudo is installed
 
+  # Marc doesn't need to use root's account every time he must
+  # manually run puppet.
+  realize C2corg::Account::User['marc']
+
+  # TODO: install mcollective
 }
 
 # VM - configuration management
@@ -32,7 +37,6 @@ node 'pm' inherits 'base-node' {
     ["/srv/puppetmaster", "/var/lib/puppet/ssl", "/home", "/etc/c2corg"]:
   }
 
-  realize C2corg::Account::User['marc']
 }
 
 # VM - mailinglists
@@ -163,7 +167,6 @@ node 'hn2' inherits 'base-node' {
 node 'hn3' inherits 'base-node' {
 
   realize C2corg::Account::User['alex']
-  realize C2corg::Account::User['marc']
   realize C2corg::Account::User['xbrrr']
   realize C2corg::Account::User['gottferdom']
   realize C2corg::Account::User['gerbaux']
@@ -208,7 +211,6 @@ node 'hn4' inherits 'base-node' {
 node 'pre-prod' inherits 'base-node' {
 
   realize C2corg::Account::User['alex']
-  realize C2corg::Account::User['marc']
   realize C2corg::Account::User['xbrrr']
   realize C2corg::Account::User['gottferdom']
   realize C2corg::Account::User['gerbaux']
