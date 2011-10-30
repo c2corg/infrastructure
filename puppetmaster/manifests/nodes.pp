@@ -32,7 +32,7 @@ node 'pm' inherits 'base-node' {
     ["/srv/puppetmaster", "/var/lib/puppet/ssl", "/home", "/etc/c2corg"]:
   }
 
-  realize C2corg::Account::User[marc]
+  realize C2corg::Account::User['marc']
 }
 
 # VM - mailinglists
@@ -162,13 +162,13 @@ node 'hn2' inherits 'base-node' {
 # X3550 M3 - prod webserver
 node 'hn3' inherits 'base-node' {
 
-  realize C2corg::Account::User[alex]
-  realize C2corg::Account::User[marc]
-  realize C2corg::Account::User[xbrrr]
-  realize C2corg::Account::User[gottferdom]
-  realize C2corg::Account::User[gerbaux]
+  realize C2corg::Account::User['alex']
+  realize C2corg::Account::User['marc']
+  realize C2corg::Account::User['xbrrr']
+  realize C2corg::Account::User['gottferdom']
+  realize C2corg::Account::User['gerbaux']
 
-  realize C2corg::Account::User[c2corg]
+  realize C2corg::Account::User['c2corg']
 
   include c2corg::hn::hn3
 
@@ -207,13 +207,13 @@ node 'hn4' inherits 'base-node' {
 # VM - pre-prod database + webserver
 node 'pre-prod' inherits 'base-node' {
 
-  realize C2corg::Account::User[alex]
-  realize C2corg::Account::User[marc]
-  realize C2corg::Account::User[xbrrr]
-  realize C2corg::Account::User[gottferdom]
-  realize C2corg::Account::User[gerbaux]
+  realize C2corg::Account::User['alex']
+  realize C2corg::Account::User['marc']
+  realize C2corg::Account::User['xbrrr']
+  realize C2corg::Account::User['gottferdom']
+  realize C2corg::Account::User['gerbaux']
 
-  realize C2corg::Account::User[c2corg]
+  realize C2corg::Account::User['c2corg']
 
   include c2corg::database::prod
 
@@ -269,7 +269,7 @@ node 'test-marc' inherits 'base-node' {
 # VM
 node 'test-alex' inherits 'base-node' {
 
-  realize C2corg::Account::User[alex]
+  realize C2corg::Account::User['alex']
   c2corg::account::user { "alex@root": user => "alex", account => "root" }
 
   include c2corg::database::dev
@@ -285,7 +285,7 @@ node 'test-alex' inherits 'base-node' {
 # VM
 node 'test-xbrrr' inherits 'base-node' {
 
-  realize C2corg::Account::User[xbrrr]
+  realize C2corg::Account::User['xbrrr']
   c2corg::account::user { "xbrrr@root": user => "xbrrr", account => "root" }
 
   include c2corg::database::dev
