@@ -162,13 +162,27 @@ node 'hn2' inherits 'base-node' {
 # X3550 M3 - prod webserver
 node 'hn3' inherits 'base-node' {
 
+  realize C2corg::Account::User[alex]
+  realize C2corg::Account::User[marc]
+  realize C2corg::Account::User[xbrrr]
+  realize C2corg::Account::User[gottferdom]
+  realize C2corg::Account::User[gerbaux]
+
   include c2corg::hn::hn3
+
+  include c2corg::webserver::symfony
+  include c2corg::webserver::carto
+  include c2corg::webserver::svg
+
+  include c2corg::apacheconf::prod
+  include c2corg::xcache
 
   include c2corg::prod::filesystems::symfony
   include c2corg::prodenv::symfony
 
   include c2corg::collectd::client
 
+  #TODO: backups
 }
 
 # X3550 M3 - prod database
