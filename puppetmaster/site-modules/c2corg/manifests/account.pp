@@ -85,5 +85,15 @@ define c2corg::account::user ($ensure=present, $user, $account, $groups=[]) {
       }
     }
 
+    "c2corg": {
+      # no one should login directly to this account, but anyone should be
+      # able to "sudo -iu" to it.
+      sudoers { 'do as c2corg':
+        users => '%adm',
+        type  => "user_spec",
+        commands => [ '(c2corg) ALL' ],
+      }
+    }
+
   }
 }

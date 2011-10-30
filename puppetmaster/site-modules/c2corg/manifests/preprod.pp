@@ -5,6 +5,8 @@ class c2corg::preprod::autoupdate {
     ensure   => "latest",
     provider => "svn",
     source   => "https://dev.camptocamp.org/svn/c2corg/trunk/camptocamp.org/",
+    owner    => "c2corg",
+    group    => "c2corg",
     notify   => Exec["c2corg refresh"],
   }
 
@@ -17,6 +19,8 @@ class c2corg::preprod::autoupdate {
   file { "c2corg preprod.ini":
     path    => "/srv/www/camptocamp.org/deployment/preprod.ini",
     source  => "file:///srv/www/camptocamp.org/deployment/conf.ini-dist",
+    owner   => "c2corg",
+    group   => "c2corg",
     require => Vcsrepo["/srv/www/camptocamp.org/"],
     notify  => [Exec["c2corg refresh"], Exec["c2corg install"]],
   }

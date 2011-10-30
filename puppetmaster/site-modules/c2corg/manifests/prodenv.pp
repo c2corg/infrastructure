@@ -4,8 +4,9 @@ class c2corg::prodenv::symfony {
 # - server-status
 # - db-backend dans fichier hosts + .psqlrc
 # - apache tuning, disable .htaccess
-# - php tuning
+# - php + xcache tuning
 # - prod metrics
+# - HAProxy + keepalived
 
 #postgres:
 # 8 5 * * 1 cd /var/www/camptocamp.org/batch && sh buildC2cShapefiles.sh
@@ -15,8 +16,6 @@ class c2corg::prodenv::symfony {
 #45 * * * * cd /var/www/camptocamp.org/batch && sh latest_docs_rss.sh
 #59 0 * * * /usr/bin/php -q /var/www/camptocamp.org/batch/removeExpiredPendingUsers.php
 #59 2 * * * cd /var/www/camptocamp.org/batch && sh removeOldTempImages.sh
-
-  realize C2corg::Account::User["c2corg"]
 
   file { "/srv/www":
     ensure => directory,
@@ -163,29 +162,6 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
     file    => "/home/c2corg/.bashrc",
     line    => ". ~/c2corg-envvars.sh",
     require => User["c2corg"],
-  }
-
-  sudoers { 'restart apache':
-    users => 'c2corg',
-    type  => "user_spec",
-    commands => [
-      '(root) /etc/init.d/apache2',
-      '(root) /usr/sbin/invoke-rc.d apache2 *',
-      '(root) /usr/sbin/apachectl',
-      '(root) /usr/sbin/apache2ctl',
-    ],
-  }
-
-  sudoers { 'do as c2corg':
-    users => '%adm',
-    type  => "user_spec",
-    commands => [ '(c2corg) ALL' ],
-  }
-
-  sudoers { 'do as www-data':
-    users => '%www-data',
-    type  => "user_spec",
-    commands => [ '(www-data) ALL' ],
   }
 
 }

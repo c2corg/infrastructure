@@ -168,6 +168,8 @@ node 'hn3' inherits 'base-node' {
   realize C2corg::Account::User[gottferdom]
   realize C2corg::Account::User[gerbaux]
 
+  realize C2corg::Account::User[c2corg]
+
   include c2corg::hn::hn3
 
   include c2corg::webserver::symfony
@@ -205,6 +207,14 @@ node 'hn4' inherits 'base-node' {
 # VM - pre-prod database + webserver
 node 'pre-prod' inherits 'base-node' {
 
+  realize C2corg::Account::User[alex]
+  realize C2corg::Account::User[marc]
+  realize C2corg::Account::User[xbrrr]
+  realize C2corg::Account::User[gottferdom]
+  realize C2corg::Account::User[gerbaux]
+
+  realize C2corg::Account::User[c2corg]
+
   include c2corg::database::prod
 
   include c2corg::webserver::symfony
@@ -217,11 +227,6 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::varnish::instance
 
   include c2corg::preprod::autoupdate
-
-  c2corg::account::user { "alex@root": user => "alex", account => "root" }
-  c2corg::account::user { "gottferdom@root": user => "gottferdom", account => "root" }
-  c2corg::account::user { "xbrrr@root": user => "xbrrr", account => "root" }
-  c2corg::account::user { "gerbaux@root": user => "gerbaux", account => "root" }
 
   include c2corg::collectd::client
 
