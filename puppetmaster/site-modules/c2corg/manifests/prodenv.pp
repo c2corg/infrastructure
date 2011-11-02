@@ -157,6 +157,25 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
     require => Vcsrepo["/srv/www/camptocamp.org"],
   }
 
+  file { "metaengine databases.yml":
+    path    => "/srv/www/meta.camptocamp.org/config/databases.yml",
+    content => "# file managed by puppet
+# DO NOT EDIT. DO NOT COMMIT.
+all:
+  myConnection:
+    class: sfDoctrineDatabase
+    param:
+      dsn: pgsql://${c2corg::password::www_db_user}:${c2corg::password::prod_db_pass}@${db_host}:5432/metaengine
+",
+    require => Vcsrepo["/srv/www/meta.camptocamp.org"],
+  }
+
+  exec { "purge metaengine generated config":
+    command     => "find /srv/www/meta.camptocamp.org/cache/frontend/prod/config/ -type f -delete",
+    refreshonly => true,
+    subscribe   => File["metaengine databases.yml"],
+  }
+
   line { "import c2corg_vars in environment":
     ensure  => present,
     file    => "/home/c2corg/.bashrc",
