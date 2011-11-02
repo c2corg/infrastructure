@@ -170,6 +170,13 @@ set pastetoggle=<F2>
 ',
   }
 
+  file { "/etc/profile.d/": ensure => directory }
+
+  file { "/etc/profile":
+    ensure => present,
+    source => "puppet:///c2corg/profile",
+  }
+
   file { "/etc/profile.d/path.sh":
     ensure  => present,
     content => '# file managed by puppet
