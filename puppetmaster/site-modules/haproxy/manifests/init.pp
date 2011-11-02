@@ -20,11 +20,11 @@ class haproxy {
   }
 
   file { "/etc/haproxy/haproxy.cfg":
-    ensure => present,
-    owner  => "root",
-    mode   => 0644,
-    source => "puppet:///c2corg/ha/haproxy.cfg",
-    notify => Service["haproxy"],
+    ensure  => present,
+    owner   => "root",
+    mode    => 0644,
+    content => template("haproxy/haproxy.cfg.erb"),
+    notify  => Service["haproxy"],
   }
 
   file { "/etc/rsyslog.d/zzz-haproxy.conf":
