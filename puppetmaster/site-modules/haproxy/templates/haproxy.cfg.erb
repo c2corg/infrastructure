@@ -19,16 +19,16 @@ defaults
   clitimeout 50s
   srvtimeout 50s
 
-listen c2corg 128.179.66.23:80
+listen c2corg <%= haproxy_vip_address %>:80
   stats   enable
   balance roundrobin
   #option  httpclose # prevent client-side keepalive
   timeout client 5000 # keep-alive on client-side
   option  http-server-close # but not on server-side
   option  forwardfor header X-Origin-IP # avoid messing around with X-Forwarded-For #678
-  option  httpchk HEAD /probe.txt
-  server  varnish 192.168.192.2:80 check inter 5000 downinter 500    # active node
-  server  apache  192.168.192.3:80 check inter 5000 backup           # passive node
+  option  httpchk HEAD /probe.txt HTTP/1.1\r\nHost:\ www.camptocamp.org
+  server  varnish <%= haproxy_varnish_address %>:80 check inter 5000 downinter 500    # active node
+  server  apache  <%= haproxy_apache_address %>:80 check inter 5000 backup           # passive node
   capture request  header Host len 4
   capture response header Content-Type len 15
   capture response header X-Cache len 4

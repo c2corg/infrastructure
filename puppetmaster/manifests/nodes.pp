@@ -127,6 +127,10 @@ node 'hn1' inherits 'base-node' {
 # PowerEdge 2950 - legacy webserver + haproxy
 node 'hn2' inherits 'base-node' {
 
+  $haproxy_vip_address = "128.179.66.23"
+  $haproxy_varnish_address = "192.168.192.2"
+  $haproxy_apache_address = "192.168.192.3"
+
   include c2corg::hn::hn2
 
   c2corg::backup::dir { [
@@ -173,6 +177,10 @@ node 'hn3' inherits 'base-node' {
 
   realize C2corg::Account::User['c2corg']
 
+  $haproxy_vip_address = "128.179.66.7"
+  $haproxy_varnish_address = "192.168.192.2"
+  $haproxy_apache_address = "192.168.192.4"
+
   include c2corg::hn::hn3
 
   include c2corg::webserver::symfony
@@ -184,6 +192,9 @@ node 'hn3' inherits 'base-node' {
 
   include c2corg::prod::filesystems::symfony
   include c2corg::prodenv::symfony
+
+  include haproxy
+  include haproxy::collectd
 
   include c2corg::collectd::client
 
