@@ -131,6 +131,8 @@ node 'hn2' inherits 'base-node' {
 
   include c2corg::collectd::client
 
+  c2corg::account::user { "alex@root": user => "alex", account => "root" }
+
 #  collectd::plugin { "processes":
 #    content => '# Avoid LoadPlugin as processes is already loaded elsewhere
 #<Plugin processes>
