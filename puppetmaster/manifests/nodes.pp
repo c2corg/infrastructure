@@ -181,7 +181,8 @@ node 'hn3' inherits 'base-node' {
 
   include c2corg::collectd::client
 
-  #TODO: backups
+  c2corg::backup::dir { "/srv/www/camptocamp.org/www-data/persistent": }
+
 }
 
 # X3550 M3 - prod database
