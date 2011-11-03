@@ -127,43 +127,26 @@ node 'hn1' inherits 'base-node' {
 # PowerEdge 2950 - legacy webserver + haproxy
 node 'hn2' inherits 'base-node' {
 
-  $haproxy_vip_address = "128.179.66.23"
-  $haproxy_varnish_address = "192.168.192.2"
-  $haproxy_apache_address = "192.168.192.3"
-
   include c2corg::hn::hn2
 
-  c2corg::backup::dir { [
-    "/srv/chroot-c2corg/var/www/camptocamp.org/web/uploads/",
-    "/srv/chroot-c2corg/var/www/camptocamp.org/web/forums/img/avatars/",
-    "/srv/chroot-c2corg/var/www/camptocamp.org/web/stats/",
-  ]: }
-
-  include haproxy
-  include haproxy::collectd
-
   include c2corg::collectd::client
-  include apache::collectd
 
-  collectd::plugin { "processes":
-    content => '# Avoid LoadPlugin as processes is already loaded elsewhere
-<Plugin processes>
-  Process "apache2"
-</Plugin>
-',
-  }
-
-  # accès temporaire en attendant réinstallation machine.
-  c2corg::account::user { "alex@root": user => "alex", account => "root" }
+#  collectd::plugin { "processes":
+#    content => '# Avoid LoadPlugin as processes is already loaded elsewhere
+#<Plugin processes>
+#  Process "apache2"
+#</Plugin>
+#',
+#  }
 
   # Solution transitoire. Il faudrait trouver une solution qui s'intègre plus
   # intelligemment dans l'infra, peut-être au niveau de haproxy ou varnish.
-  collectd::plugin { "httplogsc2corg":
-    source => "puppet:///c2corg/collectd/httplogsc2corg.conf",
-  }
+#  collectd::plugin { "httplogsc2corg":
+#    source => "puppet:///c2corg/collectd/httplogsc2corg.conf",
+#  }
 
   # preventive workaround, while trac#745 isn't properly fixed
-  host { "meta.camptocamp.org": ip => "127.0.0.2" }
+  #host { "meta.camptocamp.org": ip => "127.0.0.2" }
 
 }
 
@@ -177,9 +160,8 @@ node 'hn3' inherits 'base-node' {
 
   realize C2corg::Account::User['c2corg']
 
-  $haproxy_vip_address = "128.179.66.7"
-  #$haproxy_varnish_address = "192.168.192.2"
-  $haproxy_varnish_address = "192.168.192.4" # bypass varnish during migration tests
+  $haproxy_vip_address = "128.179.66.23"
+  $haproxy_varnish_address = "192.168.192.2"
   $haproxy_apache_address = "192.168.192.4"
 
   include c2corg::hn::hn3

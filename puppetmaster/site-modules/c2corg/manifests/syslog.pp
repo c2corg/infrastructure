@@ -85,7 +85,7 @@ destination d_haproxy_prod {
 
 filter f_haproxy_prod {
   program('haproxy') and
-  host('192.168.192.3');
+  host('192.168.192.4');
 };
 
 log {

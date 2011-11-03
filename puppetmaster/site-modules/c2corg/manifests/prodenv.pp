@@ -202,18 +202,16 @@ all:
     hour    => 2,
   }
 
-  #TODO: enable at migration
-  #cron { "removeExpiredPendingUsers":
-  #  command => "php -q /srv/www/camptocamp.org/batch/removeExpiredPendingUsers.php",
-  #  minute  => 59,
-  #  hour    => 0,
-  #}
+  cron { "removeExpiredPendingUsers":
+    command => "php -q /srv/www/camptocamp.org/batch/removeExpiredPendingUsers.php",
+    minute  => 59,
+    hour    => 0,
+  }
 
-  #TODO: enable at migration
-  #cron { "pushOutings":
-  #  command => "php -q /srv/www/camptocamp.org/batch/pushOutings.php",
-  #  minute  => 20,
-  #}
+  cron { "pushOutings":
+    command => "php -q /srv/www/camptocamp.org/batch/pushOutings.php",
+    minute  => 20,
+  }
 
 }
 

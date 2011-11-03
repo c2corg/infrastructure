@@ -11,7 +11,7 @@ class c2corg::varnish::instance {
     hn1: {
 
       host { "symfony-backend.c2corg":
-        ip => '192.168.192.3',
+        ip => '192.168.192.4',
       }
 
       varnish::instance { $hostname:

@@ -14,6 +14,12 @@ iface eth0 inet static
   post-up /sbin/ip ro add default via 128.179.66.1 table 66
   post-up /sbin/ip rule add from 128.179.66.7 table 66
 
+auto eth0:vip
+iface eth0:vip inet static
+  address 128.179.66.23
+  netmask 255.255.255.0
+  post-up /sbin/ip rule add from 128.179.66.23 table 66
+
 # internal network/vlan
 auto eth0.192
 iface eth0.192 inet static
