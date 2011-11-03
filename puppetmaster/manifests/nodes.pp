@@ -178,7 +178,8 @@ node 'hn3' inherits 'base-node' {
   realize C2corg::Account::User['c2corg']
 
   $haproxy_vip_address = "128.179.66.7"
-  $haproxy_varnish_address = "192.168.192.2"
+  #$haproxy_varnish_address = "192.168.192.2"
+  $haproxy_varnish_address = "192.168.192.4" # bypass varnish during migration tests
   $haproxy_apache_address = "192.168.192.4"
 
   include c2corg::hn::hn3
