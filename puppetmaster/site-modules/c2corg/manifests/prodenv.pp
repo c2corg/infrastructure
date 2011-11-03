@@ -1,21 +1,10 @@
 class c2corg::prodenv::symfony {
 
 #TODO:
-# - server-status
 # - db-backend dans fichier hosts + .psqlrc
 # - apache tuning, disable .htaccess
 # - php + xcache tuning
-# - prod metrics
-# - HAProxy + keepalived
-
-#postgres:
-# 8 5 * * 1 cd /var/www/camptocamp.org/batch && sh buildC2cShapefiles.sh
-
-#c2corg:
-#20 * * * * /usr/bin/php -q /var/www/camptocamp.org/batch/pushOutings.php
-#45 * * * * cd /var/www/camptocamp.org/batch && sh latest_docs_rss.sh
-#59 0 * * * /usr/bin/php -q /var/www/camptocamp.org/batch/removeExpiredPendingUsers.php
-#59 2 * * * cd /var/www/camptocamp.org/batch && sh removeOldTempImages.sh
+# - keepalived
 
   file { "/srv/www":
     ensure => directory,
@@ -182,6 +171,41 @@ all:
     line    => ". ~/c2corg-envvars.sh",
     require => User["c2corg"],
   }
+
+  package { "postgis": ensure => present }
+
+  Cron { environment => 'MAILTO="dev@camptocamp.org"', user => "c2corg" }
+
+  cron { "buildC2cShapefiles":
+    command => "sh /srv/www/camptocamp.org/batch/buildC2cShapefiles.sh",
+    hour    => 5,
+    minute  => 8,
+    require => Package["postgis"],
+  }
+
+  cron { "latest_docs_rss":
+    command => "sh /srv/www/camptocamp.org/batch/latest_docs_rss.sh",
+    minute  => [15,45],
+  }
+
+  cron { "removeOldTempImages":
+    command => "sh /srv/www/camptocamp.org/batch/removeOldTempImages.sh",
+    minute  => 59,
+    hour    => 2,
+  }
+
+  #TODO: enable at migration
+  #cron { "removeExpiredPendingUsers":
+  #  command => "php -q /srv/www/camptocamp.org/batch/removeExpiredPendingUsers.php",
+  #  minute  => 59,
+  #  hour    => 0,
+  #}
+
+  #TODO: enable at migration
+  #cron { "pushOutings":
+  #  command => "php -q /srv/www/camptocamp.org/batch/pushOutings.php",
+  #  minute  => 20,
+  #}
 
 }
 
