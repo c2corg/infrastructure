@@ -172,6 +172,14 @@ all:
     require => User["c2corg"],
   }
 
+  sudoers { 'reformat-volatile.sh script':
+    users => 'c2corg',
+    type  => "user_spec",
+    commands => [
+      '(root) /srv/www/camptocamp.org/scripts/reformat-volatile.sh',
+    ],
+  }
+
   package { "postgis": ensure => present }
 
   Cron { environment => 'MAILTO="dev@camptocamp.org"', user => "c2corg" }
