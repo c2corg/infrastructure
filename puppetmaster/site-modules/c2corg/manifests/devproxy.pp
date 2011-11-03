@@ -60,13 +60,13 @@ class c2corg::devproxy::https {
 
   apache::proxypass { "haproxy stats":
     location => "/dashboard/haproxy-stats",
-    url      => "http://hn2.psea.infra.camptocamp.org:8008/stats",
+    url      => "http://hn3.psea.infra.camptocamp.org:8008/stats",
     vhost    => "dev.camptocamp.org",
   }
 
   apache::proxypass { "apache server-status":
-    location => "/dashboard/hn2-apache-server-status",
-    url      => "http://hn2.psea.infra.camptocamp.org/server-status",
+    location => "/dashboard/hn3-apache-server-status",
+    url      => "http://hn3.psea.infra.camptocamp.org/server-status",
     vhost    => "dev.camptocamp.org",
   }
 
