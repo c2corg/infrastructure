@@ -39,7 +39,8 @@ class c2corg::webserver::symfony {
   package { ["php5-pgsql", "php5-gd", "php-pear"]: }
   package { ["gettext", "msmtp"]: }
 
-  package { "postgresql-client-common": } # psql should be available for diagnostics
+  #TODO: fix postgresql module to include a ::client class
+  #package { "postgresql-client-common": } # psql should be available for diagnostics
 
   # installed via an svn external from now on.
   package{ "php-symfony": ensure => absent }
@@ -73,6 +74,9 @@ class c2corg::webserver::carto {
   include c2corg::mapserver
 
   package { "gpsbabel": }
+
+  #TODO: fix postgis module to include a ::client class
+  #package { "postgis": ensure => present }
 }
 
 class c2corg::webserver::svg {
