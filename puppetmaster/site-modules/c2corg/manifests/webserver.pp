@@ -39,6 +39,8 @@ class c2corg::webserver::symfony {
   package { ["php5-pgsql", "php5-gd", "php-pear"]: }
   package { ["gettext", "msmtp"]: }
 
+  package { "postgresql-client-common": } # psql should be available for diagnostics
+
   # installed via an svn external from now on.
   package{ "php-symfony": ensure => absent }
 
@@ -55,6 +57,7 @@ class c2corg::webserver::symfony {
 
   # workaround while http://code.google.com/p/paver/issues/detail?id=53
   # prevents from building a debian package of python-jstools.
+  # TODO: package this with fpm
   package { "python-setuptools": }
   exec { "easy_install jstools":
     creates => "/usr/local/bin/jsbuild",
