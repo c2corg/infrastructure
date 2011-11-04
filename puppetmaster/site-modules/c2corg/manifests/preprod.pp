@@ -32,7 +32,7 @@ class c2corg::preprod::autoupdate {
 
   c2corg_vars = {
     'DB_USER'               => '${c2corg::password::www_db_user}',
-    'DB_PASS'               => '${c2corg::password::prod_db_pass}',
+    'DB_PASS'               => '${c2corg::password::preprod_db_pass}',
     'SERVER_NAME'           => 'www.${sitename}',
     'MOBILE_VERSION_HOST'   => 'm.${sitename}',
     'CLASSIC_VERSION_HOST'  => 'www.${sitename}',

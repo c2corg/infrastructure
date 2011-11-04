@@ -214,7 +214,7 @@ node 'pre-prod' inherits 'base-node' {
 
   realize C2corg::Account::User['c2corg']
 
-  include c2corg::database::prod
+  include c2corg::database::preprod
 
   include c2corg::webserver::symfony
   include c2corg::webserver::carto
