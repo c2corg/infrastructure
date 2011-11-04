@@ -61,4 +61,19 @@ class c2corg::preprod::autoupdate {
     logoutput   => true,
     refreshonly => true,
   }
+
+  # user c2corg should be able to update and refresh wite manually
+  file { "/home/c2corg/c2corg-envvars.sh":
+    owner   => "c2corg",
+    group   => "c2corg",
+    content => "export C2CORG_VARS='${c2corg_vars}'",
+  }
+
+  line { "import c2corg_vars in environment":
+    ensure  => present,
+    file    => "/home/c2corg/.bashrc",
+    line    => ". ~/c2corg-envvars.sh",
+    require => User["c2corg"],
+  }
+
 }
