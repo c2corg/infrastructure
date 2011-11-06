@@ -5,7 +5,7 @@ node 'base-node' {
   include puppet::client
   include c2corg::account
   include c2corg::mta
-  include c2corg::sshd
+  include c2corg::ssh::sshd
   include "c2corg::apt::$lsbdistcodename"
   include c2corg::common::packages
   include c2corg::common::services
@@ -175,8 +175,8 @@ node 'hn3' inherits 'base-node' {
   include c2corg::apacheconf::prod
   include c2corg::xcache
 
-  include c2corg::prod::filesystems::symfony
-  include c2corg::prodenv::symfony
+  include c2corg::prod::fs::symfony
+  include c2corg::prod::env::symfony
 
   include haproxy
   include haproxy::collectd
@@ -193,8 +193,8 @@ node 'hn4' inherits 'base-node' {
   include c2corg::hn::hn4
 
   include c2corg::database::prod
-  include c2corg::prod::filesystems::postgres
-  include c2corg::prodenv::postgres
+  include c2corg::prod::fs::postgres
+  include c2corg::prod::env::postgres
 
   include c2corg::collectd::client
 

@@ -1,19 +1,4 @@
-define c2corg::sshuserkey ($user, $account, $type, $key, $opts='') {
-
-  $comment = "$user on $account"
-  $sshopts = $opts ? {
-    '' => '',
-    default => "$opts ", # note ending whitespace
-  }
-
-  common::concatfilepart { "sshkey-for-${user}-on-${account}":
-    file    => "/etc/ssh/authorized_keys/${account}.keys",
-    content => "${sshopts}ssh-${type} ${key} ${comment}\n",
-    manage  => true,
-  }
-}
-
-class c2corg::sshd {
+class c2corg::ssh::sshd {
 
   file { "/etc/ssh/authorized_keys":
     ensure  => directory,

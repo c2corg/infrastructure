@@ -1,4 +1,4 @@
-class c2corg::prodenv::symfony {
+class c2corg::prod::env::symfony {
 
 #TODO:
 # - db-backend dans fichier hosts + .psqlrc
@@ -211,24 +211,6 @@ all:
   cron { "pushOutings":
     command => "php -q /srv/www/camptocamp.org/batch/pushOutings.php",
     minute  => 20,
-  }
-
-}
-
-class c2corg::prodenv::postgres {
-
-  Sysctl::Set_value { before => Service["postgresql"] }
-
-  file { "/etc/postgresql/8.4/main/postgresql.conf":
-    ensure => present,
-    source => "puppet:///c2corg/pgsql/postgresql.conf.hn4",
-    mode   => 0644,
-    notify => Service["postgresql"],
-  }
-
-  sysctl::set_value {
-    "kernel.shmmax": value => "4127514624";
-    "kernel.shmall": value => "2097152";
   }
 
 }

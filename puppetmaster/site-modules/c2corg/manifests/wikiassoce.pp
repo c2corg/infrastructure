@@ -1,6 +1,6 @@
 class c2corg::wikiassoce {
 
-  include c2corg::webserver::base
+  include c2corg::webserver
 
   package { "dokuwiki": ensure => present }
 
