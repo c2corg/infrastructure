@@ -240,21 +240,10 @@ node 'content-factory' inherits 'base-node' {
   include c2corg::webserver::carto
   include c2corg::webserver::svg
 
-  include c2corg::apacheconf::dev
+  include c2corg::apacheconf::content-factory
 
   include postgresql::backup
   c2corg::backup::dir { "/var/backups/pgsql": }
-
-  apache::auth::htpasswd { "c2corg@camptocamp.org":
-    vhost    => "camptocamp.org",
-    username => "c2corg",
-    cryptPassword => "UxYkCOe3sNVJc",
-  }
-
-  apache::auth::basic::file::user { "require password for website access":
-    location => "/",
-    vhost    => "camptocamp.org",
-  }
 
   include c2corg::collectd::client
 

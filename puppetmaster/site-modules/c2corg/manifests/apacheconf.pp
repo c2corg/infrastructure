@@ -78,6 +78,32 @@ class c2corg::apacheconf::dev inherits c2corg::apacheconf::common {
   }
 }
 
+class c2corg::apacheconf::content-factory inherits c2corg::apacheconf::common {
+
+  include c2corg::password
+
+  Apache::Vhost["camptocamp.org"] {
+    enable_default => false,
+    aliases +> [$hostname, $fqdn, "${hostname}.dev.camptocamp.org"],
+  }
+
+  Apache::Vhost["meta.camptocamp.org"] {
+    enable_default => false,
+  }
+
+  apache::auth::htpasswd { "c2corg@camptocamp.org":
+    vhost    => "camptocamp.org",
+    username => "c2corg",
+    cryptPassword => $c2corg::password::shared_crypt_pass,
+  }
+
+  apache::auth::basic::file::user { "require password for website access":
+    location => "/",
+    vhost    => "camptocamp.org",
+  }
+
+}
+
 
 class c2corg::apacheconf::redirections {
 
