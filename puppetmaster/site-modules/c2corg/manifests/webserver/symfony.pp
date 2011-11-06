@@ -1,5 +1,7 @@
 class c2corg::webserver::symfony {
 
+  realize C2corg::Account::User['c2corg']
+
   include c2corg::webserver
   include php
 
@@ -65,5 +67,50 @@ class c2corg::webserver::symfony {
   postfix::hash {
     "${sender_relay_map}":  before => Postfix::Config["sender_dependent_relayhost_maps"];
     "${sasl_pw_map}":       before => Postfix::Config["smtp_sasl_password_maps"];
+  }
+
+
+  file { "/srv/www":
+    ensure => directory,
+    owner  => "c2corg",
+    group  => "c2corg",
+  }
+
+  vcsrepo { "camptocamp.org":
+    name     => "/srv/www/camptocamp.org",
+    ensure   => "present",
+    provider => "svn",
+    source   => "https://dev.camptocamp.org/svn/c2corg/trunk/camptocamp.org/",
+    owner    => "c2corg",
+    group    => "c2corg",
+    require  => File["/srv/www"],
+  }
+
+  vcsrepo { "meta.camptocamp.org":
+    name     => "/srv/www/meta.camptocamp.org",
+    ensure   => "present",
+    provider => "svn",
+    source   => "https://dev.camptocamp.org/svn/c2corg/trunk/meta.camptocamp.org/",
+    owner    => "c2corg",
+    group    => "c2corg",
+    require  => File["/srv/www"],
+  }
+
+  file { "c2corg conf.ini":
+    source  => "file:///srv/www/camptocamp.org/deployment/conf.ini-dist",
+    require => Vcsrepo["/srv/www/camptocamp.org"],
+  }
+
+  file { "/home/c2corg/c2corg-envvars.sh":
+    ensure => present,
+    owner  => "c2corg",
+    group  => "c2corg",
+  }
+
+  line { "import c2corg_vars in environment":
+    ensure  => present,
+    file    => "/home/c2corg/.bashrc",
+    line    => ". ~/c2corg-envvars.sh",
+    require => User["c2corg"],
   }
 }

@@ -160,15 +160,13 @@ node 'hn3' inherits 'base-node' {
   realize C2corg::Account::User['gottferdom']
   realize C2corg::Account::User['gerbaux']
 
-  realize C2corg::Account::User['c2corg']
-
   $haproxy_vip_address = "128.179.66.23"
   $haproxy_varnish_address = "192.168.192.2"
   $haproxy_apache_address = "192.168.192.4"
 
   include c2corg::hn::hn3
 
-  include c2corg::webserver::symfony
+  include c2corg::webserver::symfony::prod
   include c2corg::webserver::carto
   include c2corg::webserver::svg
 
@@ -212,11 +210,9 @@ node 'pre-prod' inherits 'base-node' {
   realize C2corg::Account::User['gottferdom']
   realize C2corg::Account::User['gerbaux']
 
-  realize C2corg::Account::User['c2corg']
-
   include c2corg::database::preprod
 
-  include c2corg::webserver::symfony
+  include c2corg::webserver::symfony::preprod
   include c2corg::webserver::carto
   include c2corg::webserver::svg
 
@@ -224,8 +220,6 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::xcache
 
   include c2corg::varnish::instance
-
-  include c2corg::preprod::autoupdate
 
   include c2corg::collectd::client
 
@@ -236,7 +230,7 @@ node 'content-factory' inherits 'base-node' {
 
   include c2corg::database::dev
 
-  include c2corg::webserver::symfony
+  include c2corg::webserver::symfony::content-factory
   include c2corg::webserver::carto
   include c2corg::webserver::svg
 
@@ -262,7 +256,7 @@ node 'test-alex' inherits 'base-node' {
 
   include c2corg::database::dev
 
-  include c2corg::webserver::symfony
+  include c2corg::webserver::symfony::dev
   include c2corg::webserver::carto
   include c2corg::webserver::svg
 
@@ -278,7 +272,7 @@ node 'test-xbrrr' inherits 'base-node' {
 
   include c2corg::database::dev
 
-  include c2corg::webserver::symfony
+  include c2corg::webserver::symfony::dev
   include c2corg::webserver::carto
   include c2corg::webserver::svg
 
