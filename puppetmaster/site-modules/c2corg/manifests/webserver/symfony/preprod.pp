@@ -15,7 +15,7 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
 
   File["c2corg conf.ini"] {
     path   => "/srv/www/camptocamp.org/deployment/preprod.ini",
-    user   => "c2corg",
+    owner  => "c2corg",
     group  => "c2corg",
     notify => [Exec["c2corg refresh"], Exec["c2corg install"]],
   }
