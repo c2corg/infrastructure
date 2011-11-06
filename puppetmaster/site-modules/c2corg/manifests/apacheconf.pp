@@ -69,12 +69,7 @@ class c2corg::apacheconf::preprod inherits c2corg::apacheconf::common {
 class c2corg::apacheconf::dev inherits c2corg::apacheconf::common {
 
   Apache::Vhost["camptocamp.org"] {
-    enable_default => false,
     aliases +> [$hostname, $fqdn, "${hostname}.dev.camptocamp.org"],
-  }
-
-  Apache::Vhost["meta.camptocamp.org"] {
-    enable_default => false,
   }
 }
 
@@ -83,12 +78,7 @@ class c2corg::apacheconf::content-factory inherits c2corg::apacheconf::common {
   include c2corg::password
 
   Apache::Vhost["camptocamp.org"] {
-    enable_default => false,
     aliases +> [$hostname, $fqdn, "${hostname}.dev.camptocamp.org"],
-  }
-
-  Apache::Vhost["meta.camptocamp.org"] {
-    enable_default => false,
   }
 
   apache::auth::htpasswd { "c2corg@camptocamp.org":
