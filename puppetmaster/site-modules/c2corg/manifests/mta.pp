@@ -7,5 +7,9 @@ class c2corg::mta {
     include postfix::satellite
   }
 
+  postfix::config { "smtp_tls_CAfile":
+    value   => "/etc/ssl/certs/ca-certificates.crt",
+    require => File["ca-certificates.crt"],
+  }
 
 }

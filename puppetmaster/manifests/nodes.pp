@@ -2,6 +2,7 @@
 node 'base-node' {
 
   include apt
+  include openssl
   include puppet::client
   include c2corg::account
   include c2corg::mta
