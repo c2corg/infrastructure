@@ -4,13 +4,11 @@ class c2corg::webserver::symfony {
 
   include c2corg::webserver
   include php
+  include postgresql::client
 
   apache::module { ["headers", "expires"]: }
   package { ["php5-pgsql", "php5-gd", "php-pear"]: }
   package { "gettext": }
-
-  #TODO: fix postgresql module to include a ::client class
-  #package { "postgresql-client-common": } # psql should be available for diagnostics
 
   # stuff no longer required on this system class
   package{ ["php-symfony", "msmtp"]: ensure => absent }

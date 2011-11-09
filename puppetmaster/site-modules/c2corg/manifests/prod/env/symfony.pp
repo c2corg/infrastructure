@@ -74,15 +74,13 @@ class c2corg::prod::env::symfony {
     require => Vcsrepo["/srv/www/meta.camptocamp.org"],
   }
 
-  package { "postgis": ensure => present }
-
   Cron { environment => 'MAILTO="dev@camptocamp.org"', user => "c2corg" }
 
   cron { "buildC2cShapefiles":
     command => "sh /srv/www/camptocamp.org/batch/buildC2cShapefiles.sh",
     hour    => 5,
     minute  => 8,
-    require => Package["postgis"],
+    require => Class["postgis::client"],
   }
 
   cron { "latest_docs_rss":
