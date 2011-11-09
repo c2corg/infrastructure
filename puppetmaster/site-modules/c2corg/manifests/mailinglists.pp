@@ -93,6 +93,8 @@ true()                     smtp,smime,md5   -> reject
     before => Cron["bulletin nivo"],
   }
 
+  package { "w3m": before => File["/usr/local/bin/bulletins-2005.sh"] }
+
   cron { "bulletin nivo":
     command => "/usr/local/bin/bulletins-2005.sh",
     user    => "nobody",
