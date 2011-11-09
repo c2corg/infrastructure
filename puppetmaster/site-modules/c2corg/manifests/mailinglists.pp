@@ -18,9 +18,8 @@ class c2corg::mailinglists {
   include sympa
   include sympa::mta
 
-  #TODO: remove this test
   sympa::scenari { "marc":
-    ensure  => absent,
+    ensure  => absent, # enable for tests
     content => "
 match([sender],/^marc.fournier@camptocamp.org$/)     smtp              -> do_it
 true()                                               smtp,smime,md5    -> reject
@@ -46,15 +45,6 @@ true()                                          smtp,smime,md5    -> reject
 match([sender],/^.*$/)     smtp             -> do_it
 true()                     smtp,smime,md5   -> reject
 ",
-  }
-
-  #TODO: remove this test
-  sympa::list { "foo-bar-123":
-    send_from => "marc",
-    subject   => "this is the subject",
-    anon_name => "Anonymous Name",
-    footer    => template("c2corg/sympa/slf.fr.footer"),
-    ensure    => absent,
   }
 
   sympa::list { "avalanche":
