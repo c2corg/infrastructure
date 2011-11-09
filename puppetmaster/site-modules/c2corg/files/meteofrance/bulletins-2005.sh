@@ -25,6 +25,7 @@ for DPT in $LIST; do
 
     URL="http://france.meteofrance.com/france/MONTAGNE?MONTAGNE_PORTLET.path=montagne$TYPE%2F$DPT"
     FILE=$WORKDIR/$DPT-$TYPE
+    HOME=$WORKDIR
 
     # test if server is up && file exists
     if w3m -dump_head -no-cookie $URL | egrep --quiet '200 OK$'; then
@@ -34,8 +35,12 @@ for DPT in $LIST; do
 # debug
 #        cp $FILE.txt $WORKDIR/debug/$DPT-$TYPE.$NOW.curl.txt
 
-        echo -e "\n\n\n" >> $FILE.txt
-        sed -i ':a;N;$!ba;s/\n\{2,\}/\n\n/g' $FILE.txt
+        cat << EOF >> $FILE.txt
+
+
+
+EOF
+        sed -i ':a;N;$!ba;s/\n\{2,\}/\n\n/g' $FILE.txt # normalize EOP, sometimes there are more NL than others...
 # debug
 #        cp $FILE.txt $WORKDIR/debug/$DPT-$TYPE.$NOW.sed.txt
 
