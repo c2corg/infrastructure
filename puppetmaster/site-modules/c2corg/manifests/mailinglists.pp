@@ -3,6 +3,8 @@ class c2corg::mailinglists {
   include c2corg::password
   include c2corg::mta # just import attributes
 
+  include c2corg::collectd::plugin::postfix
+
   $dbhost = '192.168.192.5' #TODO: factorize
   $dbport = '5432'
   $dbtype = 'Pg'
