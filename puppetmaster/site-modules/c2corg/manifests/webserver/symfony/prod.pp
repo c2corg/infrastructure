@@ -7,6 +7,8 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
   $db_host = "192.168.192.5" # TODO: factorize
   $advertising_rw_dir = "/srv/www/camptocamp.org/www-data/persistent/advertising"
 
+  include c2corg::collectd::plugin::svninfo
+
 
   File["c2corg conf.ini"] {
     path => "/srv/www/camptocamp.org/deployment/prod.ini",
