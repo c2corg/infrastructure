@@ -76,7 +76,7 @@ class c2corg::vz {
 
     "hn2": {
 
-      #vz::ve { "101": hname => "pm.psea.infra.camptocamp.org" }
+      vz::ve { "101": hname => "pm.psea.infra.camptocamp.org" }
       vz::ve { "102": hname => "lists.psea.infra.camptocamp.org" }
       vz::ve { "103": hname => "dev.psea.infra.camptocamp.org" }
       vz::ve { "125": hname => "pkg.psea.infra.camptocamp.org" }
