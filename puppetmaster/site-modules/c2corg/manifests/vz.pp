@@ -76,23 +76,13 @@ class c2corg::vz {
 
     "hn2": {
 
-      #/* puppetmaster */
       #vz::ve { "101": hname => "pm.psea.infra.camptocamp.org" }
-
-      #/* mailing-lists */
       vz::ve { "102": hname => "lists.psea.infra.camptocamp.org" }
-
-      #/* dev.camptocamp.org */
       vz::ve { "103": hname => "dev.psea.infra.camptocamp.org" }
-
-      #/* package repo */
       vz::ve { "125": hname => "pkg.psea.infra.camptocamp.org" }
-
       vz::ve { "126": hname => "monit.psea.infra.camptocamp.org" }
-
-      #vz::ve { "140": hname => "content-factory.psea.infra.camptocamp.org" }
-
-      #vz::ve { "141": hname => "pre-prod.psea.infra.camptocamp.org" }
+      vz::ve { "140": hname => "content-factory.psea.infra.camptocamp.org" }
+      vz::ve { "141": hname => "pre-prod.psea.infra.camptocamp.org" }
 
     }
   }
