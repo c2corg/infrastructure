@@ -1,6 +1,6 @@
 class c2corg::syslog::client {
 
-  $syslog_server = "192.168.191.126"
+  $syslog_server = "192.168.192.126"
 
   if $lsbdistcodename == "lenny" {
     apt::preferences { "rsyslog_from_backports.org":

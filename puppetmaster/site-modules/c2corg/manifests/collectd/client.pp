@@ -17,7 +17,7 @@ class c2corg::collectd::client {
 
   if $datacenter =~ /c2corg|epnet/ {
     collectd::network { 'network':
-      server      => '192.168.191.126',
+      server      => '192.168.192.126',
       cache_flush => 86400,
     }
   }

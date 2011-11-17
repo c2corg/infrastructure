@@ -88,7 +88,7 @@ class c2corg::vz {
       #/* package repo */
       #vz::ve { "125": hname => "pkg.psea.infra.camptocamp.org" }
 
-      #vz::ve { "126": hname => "monit.psea.infra.camptocamp.org" }
+      vz::ve { "126": hname => "monit.psea.infra.camptocamp.org" }
 
       #vz::ve { "140": hname => "content-factory.psea.infra.camptocamp.org" }
 
