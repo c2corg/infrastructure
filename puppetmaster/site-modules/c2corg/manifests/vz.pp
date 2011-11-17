@@ -80,7 +80,7 @@ class c2corg::vz {
       #vz::ve { "101": hname => "pm.psea.infra.camptocamp.org" }
 
       #/* mailing-lists */
-      #vz::ve { "102": hname => "lists.psea.infra.camptocamp.org" }
+      vz::ve { "102": hname => "lists.psea.infra.camptocamp.org" }
 
       #/* dev.camptocamp.org */
       #vz::ve { "103": hname => "dev.psea.infra.camptocamp.org" }
