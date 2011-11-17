@@ -11,16 +11,6 @@ class c2corg::hn::hn0 inherits c2corg::hn {
     require  => Sysctl::Set_value["net.ipv4.ip_forward"],
   }
 
-  iptables { "setup nat for VZ nodes":
-    table    => "nat",
-    proto    => "all",
-    chain    => "POSTROUTING",
-    outiface => "eth2",
-    source   => "192.168.191.0/24",
-    jump     => "MASQUERADE",
-    require  => Sysctl::Set_value["net.ipv4.ip_forward"],
-  }
-
   vz::fwd { "forward hn1 ssh port":
     net  => "192.168.192",
     ve   => "2",

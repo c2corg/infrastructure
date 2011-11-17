@@ -10,7 +10,10 @@ class vz {
 
   sysctl::set_value {
     "net.ipv4.ip_forward":                  value => "1";
-    "net.ipv4.conf.default.proxy_arp":      value => "0";
+    "net.ipv4.conf.default.forwarding":     value => "1";
+    "net.ipv4.conf.all.forwarding":         value => "1";
+    "net.ipv4.conf.default.proxy_arp":      value => "1";
+    "net.ipv4.conf.all.proxy_arp":          value => "1";
     "net.ipv4.conf.all.rp_filter":          value => "1";
     "net.ipv4.conf.default.send_redirects": value => "1";
     "net.ipv4.conf.all.send_redirects":     value => "0";
@@ -66,21 +69,41 @@ class vz {
 
 }
 
-define vz::ve ($ensure="running", $hname, $template="debian-5.0-amd64-with-puppet", $config="vps.unlimited", $net="192.168.191") {
+define vz::ve ($ensure="running", $hname, $template="debian-squeeze-amd64-with-puppet", $config="vps.unlimited", $net="192.168.192") {
+
+  $eth     = "eth0"
+  $netmask = "255.255.255.0"
+  $vethip  = "${net}.${name}"
+  $gateway = "${net}.1"
+  $dnssrv  = "8.8.8.8"
+  $vethdev = "veth${name}.0"
 
   case $ensure {
     present,stopped,running: {
 
       exec { "vzctl create $name":
         command => "vzctl create $name --ostemplate $template --config $config --hostname $hname",
-        creates => ["/etc/vz/conf/${name}.conf", "/var/lib/vz/private/${name}/"],
+        creates => "/var/lib/vz/private/${name}/",
         require => Package["vzctl"],
       }
 
       exec { "configure VE $name":
-        command => "vzctl set $name --name $hname --hostname $hname --ipadd ${net}.${name} --nameserver 8.8.8.8 --save",
-        unless  => "egrep -q 'IP_ADDRESS=.?${net}.${name}.?' /etc/vz/names/${hname}",
-        require => Exec["vzctl create $name"],
+        command  => "vzctl set $name --name $hname --hostname $hname -netif_add $eth --nameserver $dnssrv --save",
+        creates  => "/etc/vz/names/${hname}",
+        require  => Exec["vzctl create $name"],
+      }
+
+      file { "/etc/vz/conf/${name}.mount":
+        mode    => 0755,
+        content => template("vz/mount.erb"),
+        before  => Exec["start VE $name"],
+        require => Package["vzctl"],
+      }
+
+      file { "/var/lib/vz/private/${name}/etc/network/interfaces":
+        content => template("vz/network.erb"),
+        before  => Exec["start VE $name"],
+        require => Package["vzctl"],
       }
 
       # start/stop VE
