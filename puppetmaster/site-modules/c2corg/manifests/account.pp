@@ -18,6 +18,12 @@ class c2corg::account {
     "gerbaux": user => "gerbaux", account => "gerbaux",
       groups => ["adm", "www-data"];
 
+    "jose": user => "jose", account => "jose",
+      groups => ["adm", "www-data"];
+
+    "bubu": user => "bubu", account => "bubu",
+      groups => ["adm", "www-data"];
+
     "c2corg": user => "c2corg", account => "c2corg",
       groups => ["adm", "www-data"];
   }

@@ -60,6 +60,26 @@ define c2corg::account::user ($ensure=present, $user, $account, $groups=[]) {
       }
     }
 
+    "jose": {
+      c2corg::ssh::userkey { "$name on $account":
+        account => $account,
+        user    => $user,
+        type    => "rsa",
+        key     => "AAAAB3NzaC1yc2EAAAABJQAAAIBduuUshyg6t8vBXxvz+/fHiKQX/IBfRSwIPKoh+c5xEMMujz3p2deUZ0+qDE9yfFpkYx+I3oAtC/dKQmEOdahCd/IoddJqdN0Df4GGgh501MnWggT2NvadXXsl94BUM0TfgNMyQ+sk8YQocLFuK51A2qff3MpIdJJuq9ujspJXLQ==",
+        require => User[$account],
+      }
+    }
+
+    "bubu": {
+      c2corg::ssh::userkey { "$name on $account":
+        account => $account,
+        user    => $user,
+        type    => "TODO",
+        key     => "TODO",
+        require => User[$account],
+      }
+    }
+
     "c2corg": {
       # no one should login directly to this account, but anyone should be
       # able to "sudo -iu" to it.
