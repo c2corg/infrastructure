@@ -21,9 +21,9 @@ class c2corg::vz {
     "hn0": {
 
       /* test nodes instanciation */
-      vz::ve { "201": hname => "test-alex.psea.infra.camptocamp.org" }
-      vz::ve { "202": hname => "test-xbrrr.psea.infra.camptocamp.org" }
-      vz::ve { "203": hname => "test-marc.psea.infra.camptocamp.org" }
+      vz::ve { "201": hname => "test-alex.pse.infra.camptocamp.org" }
+      vz::ve { "202": hname => "test-xbrrr.pse.infra.camptocamp.org" }
+      vz::ve { "203": hname => "test-marc.pse.infra.camptocamp.org" }
 
       /*
        * port-forwards setup
@@ -76,13 +76,13 @@ class c2corg::vz {
 
     "hn2": {
 
-      vz::ve { "101": hname => "pm.psea.infra.camptocamp.org" }
-      vz::ve { "102": hname => "lists.psea.infra.camptocamp.org" }
-      vz::ve { "103": hname => "dev.psea.infra.camptocamp.org" }
-      vz::ve { "125": hname => "pkg.psea.infra.camptocamp.org" }
-      vz::ve { "126": hname => "monit.psea.infra.camptocamp.org" }
-      vz::ve { "140": hname => "content-factory.psea.infra.camptocamp.org" }
-      vz::ve { "141": hname => "pre-prod.psea.infra.camptocamp.org" }
+      vz::ve { "101": hname => "pm.pse.infra.camptocamp.org" }
+      vz::ve { "102": hname => "lists.pse.infra.camptocamp.org" }
+      vz::ve { "103": hname => "dev.pse.infra.camptocamp.org" }
+      vz::ve { "125": hname => "pkg.pse.infra.camptocamp.org" }
+      vz::ve { "126": hname => "monit.pse.infra.camptocamp.org" }
+      vz::ve { "140": hname => "content-factory.pse.infra.camptocamp.org" }
+      vz::ve { "141": hname => "pre-prod.pse.infra.camptocamp.org" }
 
     }
   }

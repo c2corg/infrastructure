@@ -6,7 +6,7 @@ class c2corg::hosts {
 
   $subnet = $hostname ? {
     'backup' => 'ghst',
-    default  => 'psea',
+    default  => 'pse',
   }
 
   host { "${hostname}.${subnet}.infra.camptocamp.org":

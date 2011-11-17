@@ -14,31 +14,31 @@ class c2corg::devproxy::https {
 
   apache::proxypass { "pgfouine reports":
     location => "/dashboard/pgfouine/",
-    url      => "http://monit.psea.infra.camptocamp.org/pgfouine/",
+    url      => "http://monit.pse.infra.camptocamp.org/pgfouine/",
     vhost    => "dev.camptocamp.org",
   }
 
   apache::proxypass { "haproxy logs":
     location => "/dashboard/haproxy-logs/",
-    url      => "http://monit.psea.infra.camptocamp.org/haproxy-logs/",
+    url      => "http://monit.pse.infra.camptocamp.org/haproxy-logs/",
     vhost    => "dev.camptocamp.org",
   }
 
   apache::proxypass { "haproxy stats":
     location => "/dashboard/haproxy-stats",
-    url      => "http://hn3.psea.infra.camptocamp.org:8008/stats",
+    url      => "http://hn3.pse.infra.camptocamp.org:8008/stats",
     vhost    => "dev.camptocamp.org",
   }
 
   apache::proxypass { "apache server-status":
     location => "/dashboard/hn3-apache-server-status",
-    url      => "http://hn3.psea.infra.camptocamp.org/server-status",
+    url      => "http://hn3.pse.infra.camptocamp.org/server-status",
     vhost    => "dev.camptocamp.org",
   }
 
   apache::proxypass { "drraw rrd viewer":
     location => "/dashboard/drraw.cgi",
-    url      => "http://monit.psea.infra.camptocamp.org/cgi-bin/drraw.cgi",
+    url      => "http://monit.pse.infra.camptocamp.org/cgi-bin/drraw.cgi",
     vhost    => "dev.camptocamp.org",
   }
 
@@ -59,7 +59,7 @@ class c2corg::devproxy::https {
     directive => "
 <Location /dashboard/drraw.cgi>
   SetOutputFilter proxy-html
-  ProxyHTMLURLMap http://monit.psea.infra.camptocamp.org/cgi-bin/drraw.cgi /dashboard/drraw.cgi
+  ProxyHTMLURLMap http://monit.pse.infra.camptocamp.org/cgi-bin/drraw.cgi /dashboard/drraw.cgi
 </Location>
 ",
     require   => Apache::Module["proxy_html"],
