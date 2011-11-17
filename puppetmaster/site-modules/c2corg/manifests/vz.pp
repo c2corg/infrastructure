@@ -21,9 +21,9 @@ class c2corg::vz {
     "hn0": {
 
       /* test nodes instanciation */
-      #vz::ve { "201": hname => "test-alex.psea.infra.camptocamp.org" }
-      #vz::ve { "202": hname => "test-xbrrr.psea.infra.camptocamp.org" }
-      #vz::ve { "203": hname => "test-marc.psea.infra.camptocamp.org" }
+      vz::ve { "201": hname => "test-alex.psea.infra.camptocamp.org" }
+      vz::ve { "202": hname => "test-xbrrr.psea.infra.camptocamp.org" }
+      vz::ve { "203": hname => "test-marc.psea.infra.camptocamp.org" }
 
       /*
        * port-forwards setup
