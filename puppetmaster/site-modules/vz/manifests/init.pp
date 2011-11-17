@@ -83,13 +83,13 @@ define vz::ve ($ensure="running", $hname, $template="debian-squeeze-amd64-with-p
 
       exec { "vzctl create $name":
         command => "vzctl create $name --ostemplate $template --config $config --hostname $hname",
-        creates => "/var/lib/vz/private/${name}/",
+        creates => ["/etc/vz/names/${hname}", "/var/lib/vz/private/${name}/"],
         require => Package["vzctl"],
       }
 
       exec { "configure VE $name":
-        command  => "vzctl set $name --name $hname --hostname $hname -netif_add $eth --nameserver $dnssrv --save",
-        creates  => "/etc/vz/names/${hname}",
+        command  => "vzctl set $name --name $hname --hostname $hname --netif_add $eth --nameserver $dnssrv --save",
+        unless   => "egrep -q 'host_ifname=veth${name}' /etc/vz/names/${hname}",
         require  => Exec["vzctl create $name"],
       }
 
@@ -150,7 +150,7 @@ define vz::ve ($ensure="running", $hname, $template="debian-squeeze-amd64-with-p
   }
 }
 
-define vz::fwd ($net="192.168.191", $ve, $from, $to, $iface="eth2") {
+define vz::fwd ($net="192.168.192", $ve, $from, $to, $iface="eth2") {
 
   iptables { "forward from ${from} to ${net}.${ve}:${to}":
     chain       => "PREROUTING",
