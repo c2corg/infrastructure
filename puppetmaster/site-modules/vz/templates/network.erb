@@ -1,0 +1,13 @@
+# file managed by puppet
+
+# Auto generated lo interface
+auto lo
+iface lo inet loopback
+
+# veth network interface
+auto <%= eth %>
+iface <%= eth %> inet static
+  address <%= vethip %>
+  netmask <%= netmask %>
+  gateway <%= gateway %>
+
