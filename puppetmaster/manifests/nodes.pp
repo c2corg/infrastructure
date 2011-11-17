@@ -111,6 +111,8 @@ node 'hn0' inherits 'base-node' {
   include vz
   include c2corg::vz
 
+  include c2corg::prod::fs::openvz
+
   include c2corg::collectd::client
   # c2corg::backup::dir { "/var/lib/vz/template/cache/": }
 }
@@ -132,6 +134,8 @@ node 'hn2' inherits 'base-node' {
 
   include vz
   include c2corg::vz
+
+  include c2corg::prod::fs::openvz
 
   include c2corg::collectd::client
 

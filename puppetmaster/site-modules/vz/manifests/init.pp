@@ -23,30 +23,11 @@ class vz {
     ensure    => running,
     enable    => true,
     hasstatus => true,
-    require   => [Package["vzctl"], Mount["/var/lib/vz"]],
-  }
-
-  logical_volume { "vz":
-    ensure       => present,
-    volume_group => "vg0",
-    initial_size => "10G",
-  }
-
-  filesystem { "/dev/vg0/vz":
-    ensure  => present,
-    fs_type => "ext3",
-    require => Logical_volume["vz"],
-  }
-
-  mount { "/var/lib/vz":
-    ensure  => mounted,
-    options => "auto",
-    fstype  => "ext3",
-    device  => "/dev/vg0/vz",
-    require => [Filesystem["/dev/vg0/vz"], Package["vzctl"]],
+    require   => Package["vzctl"],
   }
 
   file { [
+    "/var/lib/vz",
     "/var/lib/vz/lock",
     "/var/lib/vz/private",
     "/var/lib/vz/template",
@@ -54,7 +35,6 @@ class vz {
     "/var/lib/vz/dump",
     "/var/lib/vz/root"]:
     ensure  => directory,
-    require => Mount["/var/lib/vz"],
   }
 
   file { "/etc/vz/conf/ve-vps.unlimited.conf-sample":
