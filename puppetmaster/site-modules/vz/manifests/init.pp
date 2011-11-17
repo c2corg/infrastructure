@@ -103,7 +103,7 @@ define vz::ve ($ensure="running", $hname, $template="debian-squeeze-amd64-with-p
       file { "/var/lib/vz/private/${name}/etc/network/interfaces":
         content => template("vz/network.erb"),
         before  => Exec["start VE $name"],
-        require => Package["vzctl"],
+        require => Exec["vzctl create $name"],
       }
 
       # start/stop VE
