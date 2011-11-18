@@ -38,4 +38,10 @@ deb http://volatile.debian.org/debian-volatile ${lsbdistcodename}/volatile main
     priority => "1010",
   }
 
+  apt::preferences { "git_from_backports":
+    package  => "git git-core git-svn",
+    pin      => "release a=${lsbdistcodename}-backports",
+    priority => "1010",
+  }
+
 }
