@@ -41,16 +41,31 @@ class puppet::client {
   augeas { "set puppet server":
     context => "/files/etc/puppet/puppet.conf/main",
     changes => "set server pm",
+    notify  => Service["puppet"],
+  }
+
+  augeas { "set puppet report_server":
+    context => "/files/etc/puppet/puppet.conf/main",
+    changes => "set report_server pm",
+    notify  => Service["puppet"],
+  }
+
+  augeas { "enable puppet reporting":
+    context => "/files/etc/puppet/puppet.conf/main",
+    changes => "set report true",
+    notify  => Service["puppet"],
   }
 
   augeas { "set puppet pluginsync":
     context => "/files/etc/puppet/puppet.conf/main",
     changes => "set pluginsync true",
+    notify  => Service["puppet"],
   }
 
   augeas { "set puppet certname":
     context => "/files/etc/puppet/puppet.conf/puppetd",
     changes => "set certname $hostname",
+    notify  => Service["puppet"],
   }
 
   # if datacenter fact is set, then pluginsync has successfully run at least
@@ -94,6 +109,7 @@ class puppet::server {
   augeas { "set puppetmaster certname":
     context => "/files/etc/puppet/puppet.conf/puppetmasterd",
     changes => "set certname pm",
+    notify  => Service["puppetmaster"],
   }
 
   augeas { "puppetmaster paths":
