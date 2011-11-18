@@ -107,6 +107,11 @@ class c2corg::webserver::symfony {
     group  => "c2corg",
   }
 
+  file { "psql-env.sh":
+    ensure => present,
+    path   => "/etc/profile.d/psql-env.sh",
+  }
+
   common::line { "import c2corg_vars in environment":
     ensure  => present,
     file    => "/home/c2corg/.bashrc",

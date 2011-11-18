@@ -42,6 +42,16 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
 "),
   }
 
+  File["psql-env.sh"] {
+    content => "# file managed by puppet
+if [ \"\$PS1\" ]; then
+  export PGHOST='${db_host}'
+  export PGUSER='${c2corg::password::www_db_user}'
+  export PGPASSWORD='${c2corg::password::prod_db_pass}'
+fi
+",
+  }
+
   file { "metaengine databases.yml":
     path    => "/srv/www/meta.camptocamp.org/config/databases.yml",
     content => "# file managed by puppet

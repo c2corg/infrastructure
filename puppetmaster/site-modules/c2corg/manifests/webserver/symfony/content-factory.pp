@@ -24,4 +24,13 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
 "),
   }
 
+  File["psql-env.sh"] {
+    content => "# file managed by puppet
+if [ \"\$PS1\" ]; then
+  export PGUSER='${c2corg::password::www_db_user}'
+  export PGPASSWORD='${c2corg::password::dev_db_pass}'
+fi
+",
+  }
+
 }

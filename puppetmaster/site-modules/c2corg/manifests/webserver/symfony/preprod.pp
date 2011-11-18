@@ -39,6 +39,15 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
 "),
   }
 
+  File["psql-env.sh"] {
+    content => "# file managed by puppet
+if [ \"\$PS1\" ]; then
+  export PGUSER='${c2corg::password::www_db_user}'
+  export PGPASSWORD='${c2corg::password::preprod_db_pass}'
+fi
+",
+  }
+
   exec { "c2corg install":
     command => ". /home/c2corg/c2corg-envvars.sh && php c2corg --install --conf preprod",
     cwd     => "/srv/www/camptocamp.org/",
