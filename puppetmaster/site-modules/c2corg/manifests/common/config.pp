@@ -89,6 +89,34 @@ set pastetoggle=<F2>
 ',
   }
 
+  file { "/etc/tmux.conf":
+    ensure => present,
+    content => '# file managed by puppet
+set-option -g prefix C-a
+unbind-key C-b
+bind-key a send-prefix  # C-a a sends literal C-a
+bind-key C-right next-window
+bind-key C-left previous-window
+bind-key / command-prompt "find-window %1"
+set -g history-limit 5000
+',
+  }
+
+  common::line { "screen: no startup message":
+    file => "/etc/screenrc",
+    line => 'startup_message off',
+  }
+
+  common::line { "screen: always login shell":
+    file => "/etc/screenrc",
+    line => 'defshell -$SHELL',
+  }
+
+  common::line { "screen: default scrollback":
+    file => "/etc/screenrc",
+    line => 'defscrollback 5000',
+  }
+
   file { "/etc/profile.d/": ensure => directory }
 
   file { "/etc/profile":
