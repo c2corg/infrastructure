@@ -40,7 +40,7 @@ git://github.com/camptocamp/puppet-buildenv.git buildenv ad97a3b
     git clone "$url" "$module"
   else
     echo -e "\n\n@@@ Updating module $module (commit $commit)\n"
-    (cd "$module" && git remote update && git checkout "$commit")
+    (cd "$module" && git remote update origin && git checkout "$commit")
   fi
 
 done
