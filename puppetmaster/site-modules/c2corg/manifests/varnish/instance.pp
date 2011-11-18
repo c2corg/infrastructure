@@ -15,7 +15,7 @@ class c2corg::varnish::instance {
       }
 
       varnish::instance { $hostname:
-        storage => "malloc,64G", # malloc on a huge swap partition
+        storage => ["malloc,64G"], # malloc on a huge swap partition
         corelimit => "unlimited",
         params  => [ "ban_lurker_sleep=3",
                      "ping_interval=6",
@@ -30,8 +30,8 @@ class c2corg::varnish::instance {
       }
 
       varnish::instance { $hostname:
-        address      => ["*:8080"],
-        storage_size => "512M",
+        address => ["*:8080"],
+        storage => ["file,/var/lib/varnish/${hostname}/varnish_storage.bin,512M"],
       }
     }
   }
