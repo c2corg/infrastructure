@@ -1,5 +1,4 @@
 import "nodes.pp"
-import "common"
 
 filebucket { main: server => $puppet_server }
 
