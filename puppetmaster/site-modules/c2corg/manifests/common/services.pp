@@ -11,10 +11,8 @@ class c2corg::common::services {
     require => Package["at"],
   }
 
-  service { "nscd":
-    ensure => running, enable => true, hasstatus => true,
-    require => Package["nscd"],
-  }
+  package { "nscd": ensure => absent }
+  service { "nscd": ensure => stopped }
 
   service { "ntp":
     ensure => $is_virtual ? {

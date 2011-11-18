@@ -1,12 +1,21 @@
 class c2corg::common::config {
 
   file { "/etc/resolv.conf":
-    content => "# file managed by puppet
-search camptocamp.org
+    content => $datacenter ? {
+      /c2corg|epnet/ => "# file managed by puppet
+search camptocamp.org infra.camptocamp.org
+nameserver 192.168.192.50
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+options timeout:2 edns0
+",
+      default => "# file managed by puppet
+search camptocamp.org infra.camptocamp.org
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 options rotate edns0
 ",
+    },
   }
 
   file { "/etc/timezone":

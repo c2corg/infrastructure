@@ -12,7 +12,7 @@ class c2corg::common::packages {
     "htop",
     "less", "locales-all", "lsb-release",
     "m4", "make", "mtr-tiny",
-    "netcat", "nmap", "nscd", "ntp",
+    "netcat", "nmap", "ntp",
     "patch", "pwgen",
     "rsync",
     "screen", "sudo", "subversion", "subversion-tools", "sysstat",
