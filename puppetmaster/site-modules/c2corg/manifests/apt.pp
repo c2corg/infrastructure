@@ -34,6 +34,12 @@ deb http://pkg.dev.camptocamp.org/prod/ $lsbdistcodename main
 ",
   }
 
+  apt::sources_list { "debian-backports":
+    content => "# file managed by puppet
+deb http://backports.debian.org/debian-backports ${lsbdistcodename}-backports main contrib non-free
+",
+  }
+
   apt::key { "c2corg":
     source => "http://pkg.dev.camptocamp.org/pubkey.txt",
   }
