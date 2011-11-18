@@ -43,7 +43,7 @@ class c2corg::collectd::server inherits c2corg::collectd::client {
 
   package { 'drraw': require => Package['thttpd'] }
 
-  line { "configure drraw rrd path":
+  common::line { "configure drraw rrd path":
     line    => "%datadirs = ( \"${datadir}\"  => \"[c2corg]\" );",
     file    => "/etc/drraw/drraw.conf",
     require => Package["drraw"],

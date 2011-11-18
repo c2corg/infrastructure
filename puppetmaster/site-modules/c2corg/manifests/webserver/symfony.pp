@@ -47,7 +47,7 @@ class c2corg::webserver::symfony {
     "smtp_use_tls":                         value => "yes";
   }
 
-  line { "noreply@camptocamp.org sender relay":
+  common::line { "noreply@camptocamp.org sender relay":
     file    => "${sender_relay_map}",
     line    => "noreply@camptocamp.org    [smtp.gmail.com]:587",
     notify  => Postfix::Hash["${sender_relay_map}"],
@@ -56,7 +56,7 @@ class c2corg::webserver::symfony {
 
   package{ "libsasl2-modules": notify => Service["postfix"] }
 
-  line { "smtp.gmail.com submission credentials":
+  common::line { "smtp.gmail.com submission credentials":
     file    => "${sasl_pw_map}",
     line    => "smtp.gmail.com    noreply@camptocamp.org:${c2corg::password::noreply_pass}",
     notify  => Postfix::Hash["${sasl_pw_map}"],
@@ -106,7 +106,7 @@ class c2corg::webserver::symfony {
     group  => "c2corg",
   }
 
-  line { "import c2corg_vars in environment":
+  common::line { "import c2corg_vars in environment":
     ensure  => present,
     file    => "/home/c2corg/.bashrc",
     line    => ". ~/c2corg-envvars.sh",
