@@ -58,6 +58,7 @@ class c2corg::vz {
       }
 
       vz::fwd {
+        "forward dnscache ssh port":        ve => "50",  from => "1050",  to => "22";
         "forward puppetmaster ssh port":    ve => "101", from => "10101", to => "22";
         "forward lists ssh port":           ve => "102", from => "10102", to => "22";
         "forward dev ssh port":             ve => "103", from => "10103", to => "22";
@@ -75,6 +76,7 @@ class c2corg::vz {
 
     "hn2": {
 
+      vz::ve { "50":  hname => "dnscache.pse.infra.camptocamp.org" }
       vz::ve { "101": hname => "pm.pse.infra.camptocamp.org" }
       vz::ve { "102": hname => "lists.pse.infra.camptocamp.org" }
       vz::ve { "103": hname => "dev.pse.infra.camptocamp.org" }

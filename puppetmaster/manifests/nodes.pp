@@ -40,6 +40,11 @@ node 'pm' inherits 'base-node' {
 
 }
 
+# VM - RFC1918 subnet DNS cache
+node 'dnscache' inherits 'base-node' {
+  include unbound
+}
+
 # VM - mailinglists
 node 'lists' inherits 'base-node' {
 
