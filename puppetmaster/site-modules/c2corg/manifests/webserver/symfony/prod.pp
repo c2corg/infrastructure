@@ -3,7 +3,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
   include c2corg::password
 
   $sitename = "camptocamp.org"
-  $smtp_server = "psemail.epfl.ch"
+  $smtp_server = "127.0.0.1"
   $db_host = "192.168.192.5" # TODO: factorize
   $advertising_rw_dir = "/srv/www/camptocamp.org/www-data/persistent/advertising"
 
