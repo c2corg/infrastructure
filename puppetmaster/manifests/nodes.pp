@@ -164,6 +164,7 @@ node 'hn3' inherits 'base-node' {
 
   include c2corg::prod::fs::symfony
   include c2corg::prod::env::symfony
+  include c2corg::prod::collectd::webserver
 
   include haproxy
   include haproxy::collectd
@@ -171,20 +172,6 @@ node 'hn3' inherits 'base-node' {
   include c2corg::collectd::client
 
   c2corg::backup::dir { "/srv/www/camptocamp.org/www-data/persistent": }
-
-#  collectd::plugin { "processes":
-#    content => '# Avoid LoadPlugin as processes is already loaded elsewhere
-#<Plugin processes>
-#  Process "apache2"
-#</Plugin>
-#',
-#  }
-
-  # Solution transitoire. Il faudrait trouver une solution qui s'intègre plus
-  # intelligemment dans l'infra, peut-être au niveau de haproxy ou varnish.
-#  collectd::plugin { "httplogsc2corg":
-#    source => "puppet:///c2corg/collectd/httplogsc2corg.conf",
-#  }
 
   # preventive workaround, while trac#745 isn't properly fixed
   #host { "meta.camptocamp.org": ip => "127.0.0.2" }
