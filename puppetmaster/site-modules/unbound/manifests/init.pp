@@ -25,6 +25,12 @@ class unbound {
     require   => Package["unbound"],
   }
 
+  augeas { "enable unbound":
+    changes => "set /files/etc/default/unbound/UNBOUND_ENABLE true",
+    require => Package["unbound"],
+    before  => Service["unbound"],
+  }
+
   file { "/etc/unbound/unbound.conf":
     content => '# file managed by puppet
 server:
