@@ -100,8 +100,10 @@ class c2corg::webserver::symfony {
     require => Vcsrepo["/srv/www/camptocamp.org"],
   }
 
-  file { "/home/c2corg/c2corg-envvars.sh":
+  file { "c2corg-envvars.sh":
     ensure => present,
+    mode   => 0755,
+    path   => "/home/c2corg/c2corg-envvars.sh",
     owner  => "c2corg",
     group  => "c2corg",
   }
@@ -110,6 +112,6 @@ class c2corg::webserver::symfony {
     ensure  => present,
     file    => "/home/c2corg/.bashrc",
     line    => ". ~/c2corg-envvars.sh",
-    require => User["c2corg"],
+    require => [User["c2corg"], File["c2corg-envvars.sh"]],
   }
 }

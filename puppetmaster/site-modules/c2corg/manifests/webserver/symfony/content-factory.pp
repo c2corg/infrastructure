@@ -9,7 +9,7 @@ class c2corg::webserver::symfony::content-factory inherits c2corg::webserver::sy
     group  => "c2corg",
   }
 
-  File["/home/c2corg/c2corg-envvars.sh"] {
+  File["c2corg-envvars.sh"] {
     content => inline_template("# file managed by puppet
 <%
   c2corg_vars = {

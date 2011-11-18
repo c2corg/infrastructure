@@ -257,6 +257,8 @@ node 'test-marc' inherits 'base-node' {
 # VM
 node 'test-alex' inherits 'base-node' {
 
+  $developer = "alex"
+
   realize C2corg::Account::User['alex']
   c2corg::account::user { "alex@root": user => "alex", account => "root" }
 
@@ -272,6 +274,8 @@ node 'test-alex' inherits 'base-node' {
 
 # VM
 node 'test-xbrrr' inherits 'base-node' {
+
+  $developer = "xbrrr"
 
   realize C2corg::Account::User['xbrrr']
   c2corg::account::user { "xbrrr@root": user => "xbrrr", account => "root" }
@@ -289,12 +293,14 @@ node 'test-xbrrr' inherits 'base-node' {
 # VM
 node 'test-jose' inherits 'base-node' {
 
+  $developer = "jose"
+
   realize C2corg::Account::User['jose']
   c2corg::account::user { "jose@root": user => "jose", account => "root" }
 
   include c2corg::database::dev
 
-  #include c2corg::webserver::symfony::dev
+  include c2corg::webserver::symfony::dev
   include c2corg::webserver::carto
   include c2corg::webserver::svg
 
@@ -304,6 +310,8 @@ node 'test-jose' inherits 'base-node' {
 
 # VM
 node 'test-bubu' inherits 'base-node' {
+
+  #$developer = "bubu"
 
   #realize C2corg::Account::User['bubu']
   #c2corg::account::user { "bubu@root": user => "bubu", account => "root" }

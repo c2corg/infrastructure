@@ -14,7 +14,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
     path => "/srv/www/camptocamp.org/deployment/prod.ini",
   }
 
-  File["/home/c2corg/c2corg-envvars.sh"] {
+  File["c2corg-envvars.sh"] {
     content => inline_template("# file managed by puppet
 <%
   c2corg_vars = {

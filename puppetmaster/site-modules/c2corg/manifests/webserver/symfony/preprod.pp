@@ -20,7 +20,7 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
     notify => [Exec["c2corg refresh"], Exec["c2corg install"]],
   }
 
-  File["/home/c2corg/c2corg-envvars.sh"] {
+  File["c2corg-envvars.sh"] {
     before  => [Exec["c2corg install"], Exec["c2corg refresh"]],
     content => inline_template("# file managed by puppet
 <%
