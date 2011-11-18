@@ -21,7 +21,7 @@ class c2corg::syslog::client {
     require => Package["syslog"],
   }
 
-  if $datacenter =~ /c2corg|epnet/ {
+  if $datacenter =~ /c2corg|epnet|pse/ {
     file { "local syslog config":
       path    => "/etc/rsyslog.d/remotelogs.conf",
       ensure  => present,

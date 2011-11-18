@@ -74,7 +74,7 @@ class puppet::client {
     host { "pm.pse.infra.camptocamp.org":
       host_aliases => ["pm"],
       ip => $datacenter ? {
-        /c2corg|epnet/ => '192.168.192.101',
+        /c2corg|epnet|pse/ => '192.168.192.101',
         default        => '128.179.66.13',
       },
     }

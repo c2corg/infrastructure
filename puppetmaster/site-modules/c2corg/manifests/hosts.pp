@@ -32,7 +32,7 @@ class c2corg::hosts {
   }
 
   case $datacenter {
-    /c2corg|epnet/ : { Host <<| tag == 'internal-hosts' |>> }
+    /c2corg|epnet|pse/ : { Host <<| tag == 'internal-hosts' |>> }
     'gandi'        : { Host <<| tag == 'external-hosts' |>> }
   }
 

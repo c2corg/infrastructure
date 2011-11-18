@@ -2,7 +2,7 @@ class c2corg::common::config {
 
   file { "/etc/resolv.conf":
     content => $datacenter ? {
-      /c2corg|epnet/ => "# file managed by puppet
+      /c2corg|epnet|pse/ => "# file managed by puppet
 search camptocamp.org infra.camptocamp.org
 nameserver 192.168.192.50
 nameserver 8.8.8.8
@@ -33,7 +33,7 @@ options rotate edns0
       if $is_virtual != true {
         # kernel must reboot if panic occurs
         sysctl::set_value { "kernel.panic": value => "60" }
-        if $datacenter =~ /c2corg|epnet/ {
+        if $datacenter =~ /c2corg|epnet|pse/ {
           # disable tcp_sack due to Cisco bug in epnet routers
           sysctl::set_value { "net.ipv4.tcp_sack": value => "0" }
         }
