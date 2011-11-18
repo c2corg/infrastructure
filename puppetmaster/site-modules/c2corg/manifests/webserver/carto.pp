@@ -4,7 +4,7 @@ class c2corg::webserver::carto {
   include postgis::client
 
   $epsg_file = "minimal"
-  include c2corg::mapserver
+  include mapserver
 
   package { "gpsbabel": }
 
