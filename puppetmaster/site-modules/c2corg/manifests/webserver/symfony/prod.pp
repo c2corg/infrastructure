@@ -8,6 +8,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
   $advertising_rw_dir = "/srv/www/camptocamp.org/www-data/persistent/advertising"
 
   include c2corg::collectd::plugin::svninfo
+  include c2corg::collectd::plugin::postfix
 
 
   File["c2corg conf.ini"] {

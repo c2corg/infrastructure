@@ -5,7 +5,6 @@ class c2corg::webserver::symfony {
   include c2corg::webserver
   include php
   include postgresql::client
-  include c2corg::collectd::plugin::postfix
 
   apache::module { ["headers", "expires"]: }
   package { ["php5-pgsql", "php5-gd", "php-pear"]: }
