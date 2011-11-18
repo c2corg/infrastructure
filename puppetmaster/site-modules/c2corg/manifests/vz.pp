@@ -17,6 +17,19 @@ class c2corg::vz {
 ',
   }
 
+  sudoers { 'openvz admin':
+    users => '%adm',
+    type  => "user_spec",
+    commands => [
+      '(root) /usr/sbin/vzlist',
+      '(root) /usr/sbin/vzctl',
+      '(root) /usr/sbin/vzmemcheck',
+      '(root) /usr/sbin/vzcpucheck',
+      '(root) /usr/sbin/vzdqcheck',
+      '(root) /usr/sbin/vzubc',
+    ],
+  }
+
   case $hostname {
     "hn0": {
 
