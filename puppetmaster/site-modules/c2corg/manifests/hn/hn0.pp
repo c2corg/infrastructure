@@ -1,6 +1,8 @@
 /* ProLiant DL360 G4p */
 class c2corg::hn::hn0 inherits c2corg::hn {
 
+  include hardware::raid::smartarray
+
   iptables { "setup nat for private LAN":
     table    => "nat",
     proto    => "all",

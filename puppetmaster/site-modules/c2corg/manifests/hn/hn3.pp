@@ -1,6 +1,8 @@
 /* System x3550 M3 */
 class c2corg::hn::hn3 inherits c2corg::hn {
 
+  include hardware::raid::mega
+
   augeas { "enable console on serial port":
     context => "/files/etc/inittab/T0/",
     changes => [
