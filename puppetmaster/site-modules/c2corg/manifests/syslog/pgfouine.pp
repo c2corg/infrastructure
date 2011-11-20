@@ -46,8 +46,8 @@ class c2corg::syslog::pgfouine {
   cron { "rotate and process postgresql logs":
     command => "/srv/syslog/postgresql/processlog",
     user    => "root",
-    hour    => [0,6,12,18], # avoid overlap with haproxy
-    minute  => "0",
+    hour    => 6, # avoid overlap with haproxy
+    minute  => 0,
     require => File["/srv/syslog/postgresql/processlog"],
   }
 

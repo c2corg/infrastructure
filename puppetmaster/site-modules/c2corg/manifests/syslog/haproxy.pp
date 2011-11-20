@@ -33,8 +33,8 @@ class c2corg::syslog::haproxy {
   cron { "rotate and process haproxy logs":
     command => "/srv/syslog/haproxy/processlog",
     user    => "root",
-    hour    => [3,9,15,21], # avoid overlap with pgfouine
-    minute  => "0",
+    hour    => 0, # avoid overlap with pgfouine
+    minute  => 0,
     require => File["/srv/syslog/haproxy/processlog"],
   }
 
