@@ -4,7 +4,7 @@ class c2corg::common::packages {
 
   package { [
     "arping", "at",
-    "bash-completion",
+    "bash-completion", "bzr",
     "curl", "cron", "cvs",
     "dnsutils",
     "elinks",
