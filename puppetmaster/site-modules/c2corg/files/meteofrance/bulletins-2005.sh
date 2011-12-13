@@ -47,7 +47,7 @@ EOF
 
 
         # files differ: send it by email
-        if ! cmp --quiet $FILE.mail $FILE.txt; then
+        if ( ! cmp --quiet $FILE.mail $FILE.txt) && ( [ $(wc -l $FILE.mail | cut -f1 -d' ') -ge 15 ] ) ; then
 # debug
 #            touch $WORKDIR/debug/$DPT-$TYPE.$NOW.mailsent
 
