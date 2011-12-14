@@ -9,6 +9,7 @@ class c2corg::webserver::symfony {
   apache::module { ["headers", "expires"]: }
   package { ["php5-pgsql", "php5-gd", "php-pear"]: }
   package { "gettext": }
+  package { "imagemagick": }
 
   # stuff no longer required on this system class
   package{ ["php-symfony", "msmtp"]: ensure => absent }
