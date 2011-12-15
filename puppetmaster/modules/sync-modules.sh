@@ -15,7 +15,7 @@ git://github.com/camptocamp/puppet-sysctl.git sysctl bf068e0
 git://github.com/camptocamp/puppet-reprepro.git reprepro 1f70375
 git://github.com/kbarber/puppet-iptables.git iptables 9deddbbd
 git://github.com/bodepd/puppet-sudo.git sudo 9202f636
-git://github.com/puppetlabs/puppet-vcsrepo.git vcsrepo 7d03bfc
+git://github.com/puppetlabs/puppet-vcsrepo.git vcsrepo 33cca512
 git://github.com/puppetlabs/puppet-lvm.git lvm 75ea7be
 
 git://github.com/camptocamp/puppet-varnish.git varnish de4e21a
