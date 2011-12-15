@@ -50,7 +50,6 @@ node 'lists' inherits 'base-node' {
 
   #TODO: graph/monitor postfix & sympa
   #TODO: SPF headers
-  #TODO: script meteofrance
 
   include c2corg::mailinglists
   include c2corg::collectd::client
@@ -315,5 +314,27 @@ node 'test-bubu' inherits 'base-node' {
   #include c2corg::webserver::svg
 
   #include c2corg::apacheconf::dev
+
+}
+
+# VM
+node 'dev-cda' inherits 'base-node' {
+
+  $developer = "easi"
+
+  user { "easi":
+    ensure     => present,
+    shell      => "/bin/bash",
+    managehome => true,
+    groups     => ["adm", "www-data"],
+  }
+
+  include c2corg::database::dev
+
+  include c2corg::webserver::symfony::dev
+  include c2corg::webserver::carto
+  include c2corg::webserver::svg
+
+  include c2corg::apacheconf::dev
 
 }

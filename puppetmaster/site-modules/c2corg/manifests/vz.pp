@@ -39,6 +39,7 @@ class c2corg::vz {
       vz::ve { "203": hname => "test-marc.pse.infra.camptocamp.org" }
       vz::ve { "204": hname => "test-jose.pse.infra.camptocamp.org" }
       vz::ve { "205": hname => "test-bubu.pse.infra.camptocamp.org" }
+      vz::ve { "221": hname => "dev-cda.pse.infra.camptocamp.org" }
 
       /*
        * port-forwards setup
@@ -71,6 +72,7 @@ class c2corg::vz {
         "forward test-marc ssh port":       ve => "203", from => "10203", to => "22";
         "forward test-jose ssh port":       ve => "204", from => "10204", to => "22";
         "forward test-bubu ssh port":       ve => "205", from => "10205", to => "22";
+        "forward dev-cda ssh port":         ve => "221", from => "10221", to => "22";
       }
     }
 
