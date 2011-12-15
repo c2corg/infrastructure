@@ -23,7 +23,7 @@ import urllib2
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.Utils import formatdate
+from email.utils import formatdate
 
 from lxml import html
 from lxml.html.clean import Cleaner
@@ -69,13 +69,20 @@ HTML_TPL = u"""
 
 
 class Mail():
+    """
+    This class allows to
+    - create a multipart email template,
+    - add text and html content,
+    - attach other parts (e.g. images)
+    - send the email
+    """
     def __init__(self, recipient, text_content, html_content, add_subject='',
                  encoding='iso-8859-1'):
-        "Create message container and add text and html content"
+        "Create the message container and add text and html content"
 
         self.recipient = recipient
 
-        self.msg = MIMEMultipart('related') # MIMEMultipart('alternative')
+        self.msg = MIMEMultipart('related')
         self.msg['From'] = SENDER
         self.msg['To'] = recipient
         self.msg['Date'] = formatdate(localtime=True)
@@ -87,18 +94,19 @@ class Mail():
             self.msg['Subject'] = "Bulletin neige et avalanche"
 
         # Encapsulate the plain and HTML versions of the message body in an
-        # 'alternative' part, so message agents can decide which they want to display.
-        msgAlternative = MIMEMultipart('alternative')
-        self.msg.attach(msgAlternative)
+        # 'alternative' part, so message agents can decide which they want to
+        # display.
+        msg_alternative = MIMEMultipart('alternative')
+        self.msg.attach(msg_alternative)
 
         # Record the MIME types of both parts - text/plain and text/html.
-        msgText = MIMEText(text_content, 'plain', encoding)
-        msgAlternative.attach(msgText)
+        msg_text = MIMEText(text_content, 'plain', encoding)
+        msg_alternative.attach(msg_text)
 
         # According to RFC 2046, the last part of a multipart message, in this
         # case the HTML message, is best and preferred.
-        msgText = MIMEText(html_content, 'html', encoding)
-        msgAlternative.attach(msgText)
+        msg_text = MIMEText(html_content, 'html', encoding)
+        msg_alternative.attach(msg_text)
 
     def attach(self, part):
         self.msg.attach(part)
@@ -107,8 +115,8 @@ class Mail():
         "Send the message via a SMTP server."
 
         if method == 'smtp':
-            # sendmail function takes 3 arguments: sender's address, recipient's address
-            # and message to send - here it is sent as one string.
+            # sendmail function takes 3 arguments: sender's address,
+            # recipient's address and message to send
             s = smtplib.SMTP('localhost')
             s.sendmail(SENDER, self.recipient, self.msg.as_string())
             s.quit()
@@ -119,6 +127,10 @@ class Mail():
 
 
 class MFBot():
+    """
+    This bot parses Meteofrance's snow bulletin and send an email with the
+    extracted content.
+    """
     def __init__(self, dept):
         cj = cookielib.CookieJar()
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
@@ -128,13 +140,11 @@ class MFBot():
         self.url = BASE_URL + dept
         self.get_content()
 
-    def get_page(self):
-        return self.opener.open(self.url)
-
     def get_content(self):
         resp = self.opener.open(self.url)
         content = resp.read().decode('iso-8859-1', 'replace')#.encode('utf-8')
-        page = html.fromstring(content, base_url='http://france.meteofrance.com/')
+        page = html.fromstring(content,
+                               base_url='http://france.meteofrance.com/')
         self.content = page.get_element_by_id("bulletinNeigeMontagne")
 
     def send_full_html(self, recipient, method='smtp'):
@@ -144,10 +154,13 @@ class MFBot():
         """
 
         self.content.make_links_absolute()
-        bulletin_html = html.tostring(self.content, encoding='iso-8859-1').decode('utf-8')
-        bulletin_txt = html.tostring(self.content, method='text', encoding='iso-8859-1').decode('utf-8')
+        bulletin_html = html.tostring(self.content,
+                                      encoding='iso-8859-1').decode('utf-8')
+        bulletin_txt = html.tostring(self.content, method='text',
+                                     encoding='iso-8859-1').decode('utf-8')
 
-        cleaner = Cleaner(style=True, safe_attrs_only=True, remove_tags=['area', 'map'])
+        cleaner = Cleaner(style=True, safe_attrs_only=True,
+                          remove_tags=['area', 'map'])
         bulletin_html = cleaner.clean_html(bulletin_html)
 
         m = Mail(recipient, bulletin_txt, bulletin_html, add_subject=self.dept)
@@ -159,8 +172,9 @@ class MFBot():
         """
 
         img_list = self.content.cssselect('img')
-        img_code = '<img src="cid:image{id}"><br>'
 
+        # generate the <img> codes for each image
+        img_code = '<img src="cid:image{id}"><br>'
         html_content = ""
         for i in range(len(img_list)):
             html_content += img_code.format(id=i+1)
@@ -173,13 +187,13 @@ class MFBot():
             im.make_links_absolute()
             resp = self.opener.open(im.get('src'))
 
-            # Open the files in binary mode. Let the MIMEImage class automatically
-            # guess the specific image type.
-            msgImage = MIMEImage(resp.read())
+            # Open the files in binary mode. Let the MIMEImage class
+            # automatically guess the specific image type.
+            msg_image = MIMEImage(resp.read())
 
             # Define the image's ID as referenced above
-            msgImage.add_header('Content-ID', '<image{id}>'.format(id=i+1))
-            m.attach(msgImage)
+            msg_image.add_header('Content-ID', '<image{id}>'.format(id=i+1))
+            m.attach(msg_image)
 
         m.send(method=method)
 
@@ -188,8 +202,9 @@ def main():
     "Main function with arguments parsing."
 
     parser = argparse.ArgumentParser(description="Send Meteofrance's snow bulletins.")
-    parser.add_argument('-m', '--smtp-method', action='store', dest='smtp_method',
-                        default='smtp', help='Method to send mail: `smtp` or `msmtp`.')
+    parser.add_argument('-m', '--smtp-method', action='store',
+                        dest='smtp_method', default='smtp',
+                        help='Method to send mail: `smtp` or `msmtp`.')
     parser.add_argument('-t', '--to', action='store', dest='recipient',
                         help='Recipient of the mail (useful for tests).')
     args = parser.parse_args()
