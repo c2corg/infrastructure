@@ -1,4 +1,4 @@
 # file managed by puppet
-if [ "$PS1" ] && [ $(id -u) -eq 0 ]; then
+if [ "$PS1" ] && [ $(id -u) -gt 0 ]; then
 <%= pgvars.map { |v| "  export #{v}" }.join("\n") %>
 fi
