@@ -38,4 +38,8 @@ class c2corg::devproxy::http {
     host => "test-bubu.pse.infra.camptocamp.org",
   }
 
+  c2corg::devproxy::proxy { "dev-cda.dev.camptocamp.org":
+    host => "dev-cda.pse.infra.camptocamp.org",
+  }
+
 }

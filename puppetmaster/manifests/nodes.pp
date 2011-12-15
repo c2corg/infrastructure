@@ -320,6 +320,8 @@ node 'test-bubu' inherits 'base-node' {
 # VM
 node 'dev-cda' inherits 'base-node' {
 
+  #TODO: clés ssh, backups, sample data
+
   $developer = "easi"
 
   user { "easi":
@@ -331,7 +333,7 @@ node 'dev-cda' inherits 'base-node' {
 
   include c2corg::database::dev
 
-  include c2corg::webserver::symfony::dev
+  include c2corg::webserver::symfony::easi
   include c2corg::webserver::carto
   include c2corg::webserver::svg
 
