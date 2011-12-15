@@ -101,7 +101,7 @@ true()                     smtp,smime,md5   -> reject
     command => "/usr/local/bin/bulletins-2005.sh",
     user    => "nobody",
     minute  => 00,
-    hour    => [09,10,16,17,18,19,20],
+    hour    => 18,
     month   => [11,12,01,02,03,04,05], # TODO: pas sûr exactement quand ça se termine.
   }
 
