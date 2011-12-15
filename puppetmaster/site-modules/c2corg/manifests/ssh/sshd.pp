@@ -41,7 +41,12 @@ class c2corg::ssh::sshd {
     @@sshkey { "$fqdn":
       type => rsa,
       key  => $sshrsakey,
-      host_aliases => [$hostname, $ipaddress],
+      host_aliases => [
+        $hostname,
+        regsubst($fqdn, '.infra.camptocamp.org$', ''),
+        regsubst($fqdn, '.camptocamp.org$', ''),
+        $ipaddress,
+      ],
     }
   }
 
