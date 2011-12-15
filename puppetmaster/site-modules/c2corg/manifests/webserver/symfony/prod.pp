@@ -42,15 +42,16 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
 "),
   }
 
+  $pgvars = [
+    "PGUSER='${c2corg::password::www_db_user}'",
+    "PGPASSWORD='${c2corg::password::prod_db_pass}'",
+    "PGHOST='${db_host}'",
+  ]
+
   File["psql-env.sh"] {
-    content => "# file managed by puppet
-if [ \"\$PS1\" ]; then
-  export PGHOST='${db_host}'
-  export PGUSER='${c2corg::password::www_db_user}'
-  export PGPASSWORD='${c2corg::password::prod_db_pass}'
-fi
-",
+    content => template("c2corg/symfony/psql-env.sh.erb"),
   }
+
 
   file { "metaengine databases.yml":
     path    => "/srv/www/meta.camptocamp.org/config/databases.yml",

@@ -1,0 +1,4 @@
+# file managed by puppet
+if [ "$PS1" ]; then
+<%= pgvars.map { |v| "  export #{v}" }.join("\n") %>
+fi
