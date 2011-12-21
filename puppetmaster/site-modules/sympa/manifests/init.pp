@@ -52,7 +52,7 @@ class sympa::mta inherits postfix {
 
 }
 
-define sympa::list ($ensure='present', $subject, $anon_name, $send_from, $footer) {
+define sympa::list ($ensure='present', $subject, $anon_name, $send_from, $footer='absent') {
 
   File {
     ensure => $ensure,
@@ -83,6 +83,10 @@ define sympa::list ($ensure='present', $subject, $anon_name, $send_from, $footer
   }
 
   file { "/var/lib/sympa/expl/${name}/message.footer":
+    ensure  => $footer ? {
+      'absent' => 'absent',
+      default  => $ensure,
+    },
     content => "\n-- \n${footer}",
   }
 

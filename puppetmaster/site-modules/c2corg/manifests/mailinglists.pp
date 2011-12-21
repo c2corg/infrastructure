@@ -89,16 +89,23 @@ true()                     smtp,smime,md5   -> reject
   }
 
   file { "/usr/local/bin/bulletins-2005.sh":
+    ensure => absent,
+  }
+
+  file { "/usr/local/bin/meteofrance.py":
     ensure => present,
     mode   => 755,
-    source => "puppet:///c2corg/meteofrance/bulletins-2005.sh",
+    source => "puppet:///c2corg/meteofrance/meteofrance.py",
     before => Cron["bulletin nivo"],
   }
 
-  package { "w3m": before => File["/usr/local/bin/bulletins-2005.sh"] }
+  package { ["python-lxml", "python-argparse"]:
+    ensure => present,
+    before => File["/usr/local/bin/meteofrance.py"],
+  }
 
   cron { "bulletin nivo":
-    command => "/usr/local/bin/bulletins-2005.sh",
+    command => "python2.6 /usr/local/bin/meteofrance.py -m smtp",
     user    => "nobody",
     minute  => 00,
     hour    => 18,
