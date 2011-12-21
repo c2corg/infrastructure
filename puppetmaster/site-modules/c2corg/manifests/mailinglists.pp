@@ -37,7 +37,7 @@ true()                              smtp,smime,md5    -> reject
 
   sympa::scenari { "meteofrance":
     content => "
-match([sender],/@lists.*\.camptocamp\.org$/)    smtp              -> do_it
+match([sender],/nobody@lists.*\.camptocamp\.org$/)    smtp              -> do_it
 true()                                          smtp,smime,md5    -> reject
 ",
   }

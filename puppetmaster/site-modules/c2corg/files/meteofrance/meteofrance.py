@@ -35,7 +35,7 @@ DEPT_LIST = ["DEPT74", "DEPT73", "DEPT38", "DEPT04", "DEPT05", "DEPT06",
              "DEPT2A", "DEPT2B", "DEPT66", "DEPT31", "DEPT09", "ANDORRE",
              "DEPT64", "DEPT65"]
 
-SENDER = "noreply@camptocamp.org"
+SENDER = "nobody@lists.camptocamp.org"
 
 TXT_TPL = u"""
 Le bulletin neige et avalanche est constitué d'images, celles-ci sont en pièce
