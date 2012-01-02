@@ -12,12 +12,14 @@ class c2corg::trac {
     require => Package["ca-certificates"],
   }
 
-  package { ["trac", "trac-accountmanager", "trac-email2trac"]:
+  package { ["trac", "trac-accountmanager", "trac-email2trac", "trac-mastertickets", "trac-wikirename"]:
     ensure  => present,
     require => Package["sqlite3"],
   }
 
-  package { ["libapache2-svn", "sqlite3"]: ensure => present }
+  package { ["libapache2-svn", "sqlite3", "graphviz", "libjs-jquery"]:
+    ensure => present,
+  }
 
   apache::module { "dav_svn":
     require => Package["libapache2-svn"],
