@@ -60,6 +60,60 @@ ScriptAlias /trac/c2corg /var/www/dev.camptocamp.org/cgi-bin/trac.cgi
 ",
   }
 
+  file { "/srv/svn/repos/c2corg/hooks/post-commit":
+    owner   => "root",
+    group   => "root",
+    mode    => 0755,
+    require => Package["trac"],
+    content => '#!/bin/sh
+# file managed by puppet
+
+REPOS="$1"
+REV="$2"
+
+TRAC_ENV="/srv/trac/projects/c2corg/"
+
+/usr/bin/python /usr/share/doc/trac/contrib/trac-post-commit-hook -p "$TRAC_ENV" -r "$REV"
+',
+  }
+
+  file { "/srv/svn/repos/c2corg/hooks/pre-commit":
+    owner   => "root",
+    group   => "root",
+    mode    => 0755,
+    require => Package["php5-cli"],
+    content => '#!/bin/bash
+# file managed by puppet
+
+# copied from http://blueparabola.com/blog/subversion-commit-hooks-php
+
+REPOS="$1"
+TXN="$2"
+
+PHP="/usr/bin/php"
+SVNLOOK="/usr/bin/svnlook"
+AWK="/usr/bin/awk"
+GREP="/bin/egrep"
+SED="/bin/sed"
+
+CHANGED=`$SVNLOOK changed -t "$TXN" "$REPOS" | $GREP "^[U|A]" | $AWK \'{print $2}\' | $GREP \\.php$`
+
+for FILE in $CHANGED
+do
+    MESSAGE=`$SVNLOOK cat -t "$TXN" "$REPOS" "$FILE" | $PHP -l`
+    if [ $? -ne 0 ]
+    then
+        echo 1>&2
+        echo "***********************************" 1>&2
+        echo "PHP error in: $FILE:" 1>&2
+        echo `echo "$MESSAGE" | $SED "s| -| $FILE|g"` 1>&2
+        echo "***********************************" 1>&2
+        exit 1
+    fi
+done
+',
+  }
+
 # trac upgrade notes:
 # trac-admin . upgrade
 # trac-admin . wiki upgrade
