@@ -8,6 +8,7 @@ class c2corg::common::packages {
     "curl", "cron", "cvs",
     "dnsutils",
     "elinks",
+    "emacs23-nox",
     "git-core", "git-svn",
     "htop",
     "less", "locales-all", "lsb-release",
