@@ -162,6 +162,7 @@ node 'hn3' inherits 'base-node' {
   include c2corg::webserver::symfony::prod
   include c2corg::webserver::carto
   include c2corg::webserver::svg
+  include c2corg::webserver::metaskirando
 
   include c2corg::apacheconf::prod
   include c2corg::xcache

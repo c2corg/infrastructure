@@ -27,4 +27,9 @@ class c2corg::apacheconf {
     require => Apache::Vhost["meta.camptocamp.org"],
   }
 
+  apache::vhost { "metaskirando.camptocamp.org":
+    cgibin  => false,
+    docroot => "/srv/www/metaskirando.camptocamp.org",
+  }
+
 }
