@@ -16,6 +16,8 @@ Dependencies:
 
 import argparse
 import cookielib
+import datetime
+import json
 import os
 import smtplib
 import urllib2
@@ -31,9 +33,12 @@ from lxml.html.clean import Cleaner
 # config
 
 BASE_URL = "http://france.meteofrance.com/france/MONTAGNE?MONTAGNE_PORTLET.path=montagnebulletinneige/"
+
 DEPT_LIST = ["DEPT74", "DEPT73", "DEPT38", "DEPT04", "DEPT05", "DEPT06",
              "DEPT2A", "DEPT2B", "DEPT66", "DEPT31", "DEPT09", "ANDORRE",
              "DEPT64", "DEPT65"]
+
+STORE = 'meteofrance.json'
 
 SENDER = "nobody@lists.camptocamp.org"
 
@@ -183,9 +188,13 @@ class MFBot():
 
         m = Mail(recipient, TXT_TPL, bulletin_html, add_subject=self.dept)
 
+        img_src = []
+
         for i, im in enumerate(img_list):
             im.make_links_absolute()
-            resp = self.opener.open(im.get('src'))
+            src = im.get('src')
+            img_src.append(os.path.basename(src))
+            resp = self.opener.open(src)
 
             # Open the files in binary mode. Let the MIMEImage class
             # automatically guess the specific image type.
@@ -195,7 +204,27 @@ class MFBot():
             msg_image.add_header('Content-ID', '<image{id}>'.format(id=i+1))
             m.attach(msg_image)
 
-        m.send(method=method)
+        try:
+            with open(STORE, 'r') as f:
+                img_ref = json.load(f)
+        except IOError:
+            img_ref = {}
+
+        if (not img_ref.has_key(self.dept) or
+            (len(img_ref[self.dept]) != len(img_src)) or
+            (img_ref[self.dept] != img_src)):
+
+            # images changed -> send the mail and store new image names
+            print "Sending mail for %s " % self.dept
+            m.send(method=method)
+
+            img_ref[self.dept] = img_src
+            img_ref[self.dept + '_date'] = datetime.datetime.now().isoformat()
+
+            with open(STORE, 'w') as f:
+                json.dump(img_ref, f)
+        else:
+            print "Nothing to do for %s " % self.dept
 
 
 def main():
