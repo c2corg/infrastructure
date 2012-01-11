@@ -141,11 +141,21 @@ class MFBot():
 
         self.dept = dept
         self.url = BASE_URL + dept
+        self.status = 1
         self.get_content()
 
     def get_content(self):
+        """
+        Download page and extract the interesting part with the
+        div #bulletinNeigeMontagne.
+        """
         resp = self.opener.open(self.url)
-        content = resp.read().decode('iso-8859-1', 'replace')#.encode('utf-8')
+        if resp.getcode() != 200:
+            self.status = 0
+            logging.error('%s - page not available', self.dept)
+            return
+
+        content = resp.read().decode('iso-8859-1', 'replace')
         page = html.fromstring(content,
                                base_url='http://france.meteofrance.com/')
         self.content = page.get_element_by_id("bulletinNeigeMontagne")
@@ -194,6 +204,10 @@ class MFBot():
             img_src.append(os.path.basename(src))
             resp = self.opener.open(src)
 
+            if resp.getcode() != 200:
+                logging.error('%s - cannot retrieve %s', self.dept, src)
+                continue
+
             # Open the files in binary mode. Let the MIMEImage class
             # automatically guess the specific image type.
             msg_image = MIMEImage(resp.read())
@@ -237,14 +251,15 @@ def main():
                         format='%(asctime)s - %(levelname)s - %(message)s')
 
     for dept in DEPT_LIST:
-        bot = MFBot(dept)
-
         if args.recipient:
             recipient = args.recipient
         else:
             recipient = "meteofrance-%s@lists.camptocamp.org" % dept.replace('DEPT', '')
 
-        bot.send_images(recipient, method=args.smtp_method)
+        bot = MFBot(dept)
+
+        if bot.status:
+            bot.send_images(recipient, method=args.smtp_method)
 
 
 if __name__ == '__main__':
