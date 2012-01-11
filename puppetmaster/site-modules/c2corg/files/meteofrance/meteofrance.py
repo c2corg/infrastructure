@@ -59,7 +59,8 @@ HTML_TPL = u"""
   <h1>Bulletin neige et avalanche - {dept}</h1>
   <p>{content}</p>
   <div>
-  <p>Ce bulletin d'avalanche est rédigé par <a href="http://www.meteo.fr/">MétéoFrance</a>.<br>
+  <p>Ce bulletin d'avalanche est rédigé par
+  <a href="http://www.meteo.fr/">MétéoFrance</a>.<br>
   La liste de diffusion est gérée par
   <a href="http://www.camptocamp.org/">Camptocamp-association</a>.</p>
   <p>Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse suivante:
@@ -190,7 +191,7 @@ class MFBot():
         img_code = '<img src="cid:image{id}"><br>'
         html_content = ""
         for i in range(len(img_list)):
-            html_content += img_code.format(id=i+1)
+            html_content += img_code.format(id=i + 1)
 
         bulletin_html = HTML_TPL.format(content=html_content, dept=self.dept)
 
@@ -213,7 +214,7 @@ class MFBot():
             msg_image = MIMEImage(resp.read())
 
             # Define the image's ID as referenced above
-            msg_image.add_header('Content-ID', '<image{id}>'.format(id=i+1))
+            msg_image.add_header('Content-ID', '<image{id}>'.format(id=i + 1))
             m.attach(msg_image)
 
         try:
@@ -222,7 +223,7 @@ class MFBot():
         except IOError:
             img_ref = {}
 
-        if (img_ref.has_key(self.dept) and
+        if (self.dept in img_ref and
             len(img_ref[self.dept]) == len(img_src) and
             img_ref[self.dept] == img_src):
             logging.info('%s - Nothing to do', self.dept)
