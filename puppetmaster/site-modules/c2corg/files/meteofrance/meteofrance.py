@@ -16,8 +16,8 @@ Dependencies:
 
 import argparse
 import cookielib
-import datetime
 import json
+import logging
 import os
 import smtplib
 import urllib2
@@ -33,14 +33,12 @@ from lxml.html.clean import Cleaner
 # config
 
 BASE_URL = "http://france.meteofrance.com/france/MONTAGNE?MONTAGNE_PORTLET.path=montagnebulletinneige/"
-
+LOGFILE = 'meteofrance.log'
+SENDER = 'nobody@lists.camptocamp.org'
+STORE = 'meteofrance.json'
 DEPT_LIST = ["DEPT74", "DEPT73", "DEPT38", "DEPT04", "DEPT05", "DEPT06",
              "DEPT2A", "DEPT2B", "DEPT66", "DEPT31", "DEPT09", "ANDORRE",
              "DEPT64", "DEPT65"]
-
-STORE = 'meteofrance.json'
-
-SENDER = "nobody@lists.camptocamp.org"
 
 TXT_TPL = u"""
 Le bulletin neige et avalanche est constitué d'images, celles-ci sont en pièce
@@ -210,21 +208,18 @@ class MFBot():
         except IOError:
             img_ref = {}
 
-        if (not img_ref.has_key(self.dept) or
-            (len(img_ref[self.dept]) != len(img_src)) or
-            (img_ref[self.dept] != img_src)):
-
+        if (img_ref.has_key(self.dept) and
+            len(img_ref[self.dept]) == len(img_src) and
+            img_ref[self.dept] == img_src):
+            logging.info('%s - Nothing to do', self.dept)
+        else:
             # images changed -> send the mail and store new image names
-            print "Sending mail for %s " % self.dept
+            logging.info('%s - Sending mail', self.dept)
             m.send(method=method)
 
             img_ref[self.dept] = img_src
-            img_ref[self.dept + '_date'] = datetime.datetime.now().isoformat()
-
             with open(STORE, 'w') as f:
                 json.dump(img_ref, f)
-        else:
-            print "Nothing to do for %s " % self.dept
 
 
 def main():
@@ -237,6 +232,9 @@ def main():
     parser.add_argument('-t', '--to', action='store', dest='recipient',
                         help='Recipient of the mail (useful for tests).')
     args = parser.parse_args()
+
+    logging.basicConfig(filename=LOGFILE, level=logging.DEBUG,
+                        format='%(asctime)s - %(levelname)s - %(message)s')
 
     for dept in DEPT_LIST:
         bot = MFBot(dept)
