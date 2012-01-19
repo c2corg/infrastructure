@@ -33,9 +33,10 @@ from lxml.html.clean import Cleaner
 # config
 
 BASE_URL = "http://france.meteofrance.com/france/MONTAGNE?MONTAGNE_PORTLET.path=montagnebulletinneige/"
-LOGFILE = 'meteofrance.log'
+WORK_DIR = "/var/cache/meteofrance/"
+LOGFILE = WORK_DIR + 'meteofrance.log'
 SENDER = 'nobody@lists.camptocamp.org'
-STORE = 'meteofrance.json'
+STORE = WORK_DIR + 'meteofrance.json'
 DEPT_LIST = ["DEPT74", "DEPT73", "DEPT38", "DEPT04", "DEPT05", "DEPT06",
              "DEPT2A", "DEPT2B", "DEPT66", "DEPT31", "DEPT09", "ANDORRE",
              "DEPT64", "DEPT65"]
