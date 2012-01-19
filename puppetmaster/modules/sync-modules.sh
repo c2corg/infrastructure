@@ -35,6 +35,8 @@ git://github.com/camptocamp/puppet-buildenv.git buildenv ad97a3b
 
 " | egrep -v '^$|^#' | while read url module commit; do
 
+  export GIT_WORK_TREE="$(pwd)/${module}"
+
   if ! [ -e "$module" ]; then
     echo -e "\n\n@@@ Cloning module $module\n"
     git clone "$url" "$module"
