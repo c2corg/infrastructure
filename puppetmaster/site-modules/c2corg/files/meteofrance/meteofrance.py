@@ -18,6 +18,7 @@ import argparse
 import cookielib
 import json
 import logging
+from logging.handlers import SysLogHandler
 import os
 import smtplib
 import urllib2
@@ -34,7 +35,6 @@ from lxml.html.clean import Cleaner
 
 BASE_URL = "http://france.meteofrance.com/france/MONTAGNE?MONTAGNE_PORTLET.path=montagnebulletinneige/"
 WORK_DIR = "/var/cache/meteofrance/"
-LOGFILE = WORK_DIR + 'meteofrance.log'
 SENDER = 'nobody@lists.camptocamp.org'
 STORE = WORK_DIR + 'meteofrance.json'
 DEPT_LIST = ["DEPT74", "DEPT73", "DEPT38", "DEPT04", "DEPT05", "DEPT06",
@@ -141,6 +141,15 @@ class MFBot():
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
         self.opener.addheaders = [('User-agent', 'MFBot/1.0')]
 
+        self.log = logging.getLogger('MFBot')
+
+        handler = logging.handlers.SysLogHandler(address = '/dev/log')
+        formatter = logging.Formatter('%(name)25s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+
+        self.log.setLevel(logging.DEBUG)
+        self.log.addHandler(handler)
+
         self.dept = dept
         self.url = BASE_URL + dept
         self.status = 1
@@ -154,7 +163,7 @@ class MFBot():
         resp = self.opener.open(self.url)
         if resp.getcode() != 200:
             self.status = 0
-            logging.error('%s - page not available', self.dept)
+            self.log.error('%s - page not available', self.dept)
             return
 
         content = resp.read().decode('iso-8859-1', 'replace')
@@ -207,7 +216,7 @@ class MFBot():
             resp = self.opener.open(src)
 
             if resp.getcode() != 200:
-                logging.error('%s - cannot retrieve %s', self.dept, src)
+                self.log.error('%s - cannot retrieve %s', self.dept, src)
                 continue
 
             # Open the files in binary mode. Let the MIMEImage class
@@ -227,10 +236,10 @@ class MFBot():
         if (self.dept in img_ref and
             len(img_ref[self.dept]) == len(img_src) and
             img_ref[self.dept] == img_src):
-            logging.info('%s - Nothing to do', self.dept)
+            self.log.info('%s - Nothing to do', self.dept)
         else:
             # images changed -> send the mail and store new image names
-            logging.info('%s - Sending mail', self.dept)
+            self.log.info('%s - Sending mail', self.dept)
             m.send(method=method)
 
             img_ref[self.dept] = img_src
@@ -248,9 +257,6 @@ def main():
     parser.add_argument('-t', '--to', action='store', dest='recipient',
                         help='Recipient of the mail (useful for tests).')
     args = parser.parse_args()
-
-    logging.basicConfig(filename=LOGFILE, level=logging.DEBUG,
-                        format='%(asctime)s - %(levelname)s - %(message)s')
 
     for dept in DEPT_LIST:
         if args.recipient:
