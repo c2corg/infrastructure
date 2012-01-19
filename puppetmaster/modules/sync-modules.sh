@@ -20,16 +20,16 @@ git://github.com/puppetlabs/puppet-lvm.git lvm 75ea7be
 
 git://github.com/camptocamp/puppet-varnish.git varnish de4e21a
 
-git://github.com/camptocamp/puppet-apache.git apache 9eb3327
+git://github.com/camptocamp/puppet-apache.git apache 787f0946
 git://github.com/camptocamp/puppet-nginx.git nginx 729303b
-git://github.com/camptocamp/puppet-postgresql.git postgresql f7dd6a2
+git://github.com/camptocamp/puppet-postgresql.git postgresql f8c5895
 git://github.com/camptocamp/puppet-postgis.git postgis be6a90d
 git://github.com/camptocamp/puppet-mapserver.git mapserver e603dbf
 
 git://github.com/camptocamp/puppet-collectd.git collectd cff9312
 
 git://github.com/camptocamp/puppet-python.git python 04eed22
-git://github.com/camptocamp/puppet-ruby.git ruby 72e62f1
+git://github.com/camptocamp/puppet-ruby.git ruby d7debdf
 git://github.com/camptocamp/puppet-php.git php 470a229
 git://github.com/camptocamp/puppet-buildenv.git buildenv ad97a3b
 
