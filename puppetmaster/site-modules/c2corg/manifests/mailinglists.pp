@@ -108,7 +108,7 @@ true()                     smtp,smime,md5   -> reject
     command => "python2.6 /usr/local/bin/meteofrance.py -m smtp",
     user    => "nobody",
     minute  => 00,
-    hour    => 18,
+    hour    => [8,10,12,16,17,18,19],
     month   => [11,12,01,02,03,04,05], # TODO: pas sûr exactement quand ça se termine.
   }
 
