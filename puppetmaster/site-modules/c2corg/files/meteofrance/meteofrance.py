@@ -29,6 +29,8 @@ from email.mime.text import MIMEText
 from email.utils import formatdate
 
 from lxml import html
+from lxml.etree import tostring
+from lxml.etree import fromstring
 from lxml.html.clean import Cleaner
 
 # config
@@ -36,20 +38,29 @@ from lxml.html.clean import Cleaner
 BASE_URL = "http://france.meteofrance.com/france/MONTAGNE?MONTAGNE_PORTLET.path=montagnebulletinneige/"
 WORK_DIR = "/var/cache/meteofrance/"
 SENDER = 'nobody@lists.camptocamp.org'
-STORE = WORK_DIR + 'meteofrance.json'
+STORE_NIVO = WORK_DIR + 'meteofrance.json'
+STORE_SYNTH = WORK_DIR + 'meteofrance_synth.json'
 DEPT_LIST = ["DEPT74", "DEPT73", "DEPT38", "DEPT04", "DEPT05", "DEPT06",
              "DEPT2A", "DEPT2B", "DEPT66", "DEPT31", "DEPT09", "ANDORRE",
              "DEPT64", "DEPT65"]
+TITLE_NIVO = u"neige et avalanches"
+TITLE_SYNTH = u"de synthèse hebdomadaire"
+CONTENT_NIVO = u"""Le bulletin neige et avalanches est constitué d'images,
+celles-ci sont en pièce jointe ou dans la version html de ce mail."""
+
+SUBJECT_TPL = u"Bulletin {bulletin_type} - {dept}"
 
 TXT_TPL = u"""
-Le bulletin neige et avalanche est constitué d'images, celles-ci sont en pièce
-jointe ou dans la version html de ce mail.
+Bulletin {bulletin_type} - {dept}
+=====================================
 
---
-Ce bulletin d'avalanche est rédigé par MétéoFrance (http://www.meteo.fr/).
+{content}
+
+----
+Ce bulletin {bulletin_type} est rédigé par MétéoFrance ({full_url}).
 La liste de diffusion est gérée par Camptocamp-association (http://www.camptocamp.org).
 
-Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse suivante:
+Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse suivante :
 http://www.camptocamp.org/users/mailinglists
 """
 
@@ -57,14 +68,14 @@ HTML_TPL = u"""
 <html>
 <head></head>
 <body>
-  <h1>Bulletin neige et avalanche - {dept}</h1>
+  <h1>Bulletin {bulletin_type} - {dept}</h1>
   <p>{content}</p>
   <div>
-  <p>Ce bulletin d'avalanche est rédigé par
-  <a href="http://www.meteo.fr/">MétéoFrance</a>.<br>
+  <p>Ce bulletin {bulletin_type} est rédigé par
+  <a href="{full_url}">MétéoFrance</a>.<br>
   La liste de diffusion est gérée par
   <a href="http://www.camptocamp.org/">Camptocamp-association</a>.</p>
-  <p>Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse suivante:
+  <p>Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse suivante&nbsp;:
   <a href="http://www.camptocamp.org/users/mailinglists">
   http://www.camptocamp.org/users/mailinglists</a></p>
   </div>
@@ -81,7 +92,7 @@ class Mail():
     - attach other parts (e.g. images)
     - send the email
     """
-    def __init__(self, recipient, text_content, html_content, add_subject='',
+    def __init__(self, recipient, text_content, html_content, subject,
                  encoding='iso-8859-1'):
         "Create the message container and add text and html content"
 
@@ -91,12 +102,8 @@ class Mail():
         self.msg['From'] = SENDER
         self.msg['To'] = recipient
         self.msg['Date'] = formatdate(localtime=True)
+        self.msg['Subject'] = subject
         self.msg.preamble = 'This is a multi-part message in MIME format.'
-
-        if add_subject:
-            self.msg['Subject'] = "Bulletin neige et avalanche - " + add_subject
-        else:
-            self.msg['Subject'] = "Bulletin neige et avalanche"
 
         # Encapsulate the plain and HTML versions of the message body in an
         # 'alternative' part, so message agents can decide which they want to
@@ -169,33 +176,35 @@ class MFBot():
         content = resp.read().decode('iso-8859-1', 'replace')
         page = html.fromstring(content,
                                base_url='http://france.meteofrance.com/')
-        self.content = page.get_element_by_id("bulletinNeigeMontagne")
+        self.nivo_content = page.get_element_by_id("bulletinNeigeMontagne")
+        self.synth_content = page.cssselect("#bulletinSyntheseMontagne .bulletinText")
 
-    def send_full_html(self, recipient, method='smtp'):
+    def send_nivo_full_html(self, recipient, method='smtp'):
         """
         Send the full html code after fixing relative urls and cleaning up
         useless html code for area & maps.
         """
 
-        self.content.make_links_absolute()
-        bulletin_html = html.tostring(self.content,
+        self.nivo_content.make_links_absolute()
+        bulletin_html = html.tostring(self.nivo_content,
                                       encoding='iso-8859-1').decode('utf-8')
-        bulletin_txt = html.tostring(self.content, method='text',
+        bulletin_txt = html.tostring(self.nivo_content, method='text',
                                      encoding='iso-8859-1').decode('utf-8')
 
         cleaner = Cleaner(style=True, safe_attrs_only=True,
                           remove_tags=['area', 'map'])
         bulletin_html = cleaner.clean_html(bulletin_html)
+        subject = SUBJECT_TPL.format(bulletin_type=TITLE_NIVO, dept=self.dept)
 
-        m = Mail(recipient, bulletin_txt, bulletin_html, add_subject=self.dept)
+        m = Mail(recipient, bulletin_txt, bulletin_html, subject)
         m.send(method=method)
 
-    def send_images(self, recipient, method='smtp'):
+    def send_nivo_images(self, recipient, method='smtp'):
         """
         Add images as attachment to the message and reference it in the html part.
         """
 
-        img_list = self.content.cssselect('img')
+        img_list = self.nivo_content.cssselect('img')
 
         # generate the <img> codes for each image
         img_code = '<img src="cid:image{id}"><br>'
@@ -203,9 +212,11 @@ class MFBot():
         for i in range(len(img_list)):
             html_content += img_code.format(id=i + 1)
 
-        bulletin_html = HTML_TPL.format(content=html_content, dept=self.dept)
+        bulletin_html = HTML_TPL.format(content=html_content, bulletin_type=TITLE_NIVO, dept=self.dept, full_url=self.url)
+        bulletin_txt = TXT_TPL.format(content=CONTENT_NIVO, bulletin_type=TITLE_NIVO, dept=self.dept, full_url=self.url)
+        subject = SUBJECT_TPL.format(bulletin_type=TITLE_NIVO, dept=self.dept)
 
-        m = Mail(recipient, TXT_TPL, bulletin_html, add_subject=self.dept)
+        m = Mail(recipient, bulletin_txt, bulletin_html, subject)
 
         img_src = []
 
@@ -228,7 +239,7 @@ class MFBot():
             m.attach(msg_image)
 
         try:
-            with open(STORE, 'r') as f:
+            with open(STORE_NIVO, 'r') as f:
                 img_ref = json.load(f)
         except IOError:
             img_ref = {}
@@ -236,15 +247,59 @@ class MFBot():
         if (self.dept in img_ref and
             len(img_ref[self.dept]) == len(img_src) and
             img_ref[self.dept] == img_src):
-            self.log.info('%s - Nothing to do', self.dept)
+            self.log.info('%s nivo - No change - Nothing to do', self.dept)
         else:
             # images changed -> send the mail and store new image names
-            self.log.info('%s - Sending mail', self.dept)
+            self.log.info('%s nivo - Sending mail', self.dept)
             m.send(method=method)
 
             img_ref[self.dept] = img_src
-            with open(STORE, 'w') as f:
+            with open(STORE_NIVO, 'w') as f:
                 json.dump(img_ref, f)
+
+    def send_synth_text(self, recipient, method='smtp'):
+        """
+        Send weekly synthesis.
+        """
+
+        text_tmp = tostring(self.synth_content[0])
+        text_tmp = text_tmp.replace('><br', '> <br')
+        text_tmp = fromstring(text_tmp)
+        
+        lines = []
+        for line in text_tmp.itertext(tag='br'):
+            lines.append(line.encode('iso-8859-1').decode('utf-8').strip())
+
+        synth_txt = "\n".join(lines[1:])
+        synth_html = "<br />\n".join(lines[1:])
+        
+        if (len(synth_txt) > 300):
+            bulletin_html = HTML_TPL.format(content=synth_html, bulletin_type=TITLE_SYNTH, dept=self.dept, full_url=self.url)
+            bulletin_txt = TXT_TPL.format(content=synth_txt, bulletin_type=TITLE_SYNTH, dept=self.dept, full_url=self.url)
+            subject = SUBJECT_TPL.format(bulletin_type=TITLE_SYNTH, dept=self.dept)
+            
+            m = Mail(recipient, bulletin_txt, bulletin_html, subject)
+            
+            try:
+                with open(STORE_SYNTH, 'r') as f:
+                    synth_ref = json.load(f)
+            except IOError:
+                synth_ref = {}
+
+            if (self.dept in synth_ref and
+                len(synth_ref[self.dept]) == len(synth_txt) and
+                synth_ref[self.dept] == synth_txt):
+                self.log.info('%s synth - No change - Nothing to do', self.dept)
+            else:
+                # text changed -> send the mail and store new text
+                self.log.info('%s synth - Sending mail', self.dept)
+                m.send(method=method)
+
+                synth_ref[self.dept] = synth_txt
+                with open(STORE_SYNTH, 'w') as f:
+                    json.dump(synth_ref, f)
+        else:
+            self.log.info('%s synth - Empty text - Nothing to do', self.dept)
 
 
 def main():
@@ -267,7 +322,8 @@ def main():
         bot = MFBot(dept)
 
         if bot.status:
-            bot.send_images(recipient, method=args.smtp_method)
+            bot.send_nivo_images(recipient, method=args.smtp_method)
+            bot.send_synth_text(recipient, method=args.smtp_method)
 
 
 if __name__ == '__main__':
