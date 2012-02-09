@@ -22,6 +22,7 @@ import logging.handlers
 import os
 import smtplib
 import urllib2
+import sys
 
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
@@ -146,14 +147,6 @@ class MFBot():
         self.opener.addheaders = [('User-agent', 'MFBot/1.0')]
 
         self.log = logging.getLogger('MFBot')
-
-        handler = logging.handlers.SysLogHandler(address='/dev/log')
-        formatter = logging.Formatter('%(name)25s - %(levelname)s - %(message)s')
-        handler.setFormatter(formatter)
-
-        self.log.setLevel(logging.DEBUG)
-        self.log.addHandler(handler)
-
         self.dept = dept
         self.url = BASE_URL + dept
         self.status = 1
@@ -291,7 +284,23 @@ def main():
                         help='Method to send mail: `smtp` or `msmtp`.')
     parser.add_argument('-t', '--to', action='store', dest='recipient',
                         help='Recipient of the mail (useful for tests).')
+    parser.add_argument('-p', '--print-log', action='store_true')
+
     args = parser.parse_args()
+
+    # logging config
+    logger = logging.getLogger('MFBot')
+
+    if args.print_log:
+        handler = logging.StreamHandler(stream=sys.stdout)
+    else:
+        handler = logging.handlers.SysLogHandler(address='/dev/log')
+
+    formatter = logging.Formatter('%(name)25s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(handler)
 
     for dept in DEPT_LIST:
         if args.recipient:
