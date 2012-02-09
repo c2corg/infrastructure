@@ -18,7 +18,7 @@ import argparse
 import cookielib
 import json
 import logging
-from logging.handlers import SysLogHandler
+import logging.handlers
 import os
 import smtplib
 import urllib2
@@ -147,7 +147,7 @@ class MFBot():
 
         self.log = logging.getLogger('MFBot')
 
-        handler = logging.handlers.SysLogHandler(address = '/dev/log')
+        handler = logging.handlers.SysLogHandler(address='/dev/log')
         formatter = logging.Formatter('%(name)25s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
 
@@ -189,8 +189,10 @@ class MFBot():
         for i in range(len(img_list)):
             html_content += img_code.format(id=i + 1)
 
-        bulletin_html = HTML_TPL.format(content=html_content, bulletin_type=TITLE_NIVO, dept=self.dept, full_url=self.url)
-        bulletin_txt = TXT_TPL.format(content=CONTENT_NIVO, bulletin_type=TITLE_NIVO, dept=self.dept, full_url=self.url)
+        bulletin_html = HTML_TPL.format(content=html_content, bulletin_type=TITLE_NIVO,
+                                        dept=self.dept, full_url=self.url)
+        bulletin_txt = TXT_TPL.format(content=CONTENT_NIVO, bulletin_type=TITLE_NIVO,
+                                      dept=self.dept, full_url=self.url)
         subject = SUBJECT_TPL.format(bulletin_type=TITLE_NIVO, dept=self.dept)
 
         m = Mail(recipient, bulletin_txt, bulletin_html, subject)
@@ -245,9 +247,15 @@ class MFBot():
         synth_html = synth_html.replace('</div>', '')
         synth_txt = synth_html.replace('<br>', '\n')
 
-        if (len(synth_txt) > 300):
-            bulletin_html = HTML_TPL.format(content=synth_html, bulletin_type=TITLE_SYNTH, dept=self.dept, full_url=self.url)
-            bulletin_txt = TXT_TPL.format(content=synth_txt, bulletin_type=TITLE_SYNTH, dept=self.dept, full_url=self.url)
+        if len(synth_txt) > 300:
+            bulletin_html = HTML_TPL.format(content=synth_html,
+                                            bulletin_type=TITLE_SYNTH,
+                                            dept=self.dept, full_url=self.url)
+
+            bulletin_txt = TXT_TPL.format(content=synth_txt,
+                                          bulletin_type=TITLE_SYNTH,
+                                          dept=self.dept, full_url=self.url)
+
             subject = SUBJECT_TPL.format(bulletin_type=TITLE_SYNTH, dept=self.dept)
 
             m = Mail(recipient, bulletin_txt, bulletin_html, subject)
