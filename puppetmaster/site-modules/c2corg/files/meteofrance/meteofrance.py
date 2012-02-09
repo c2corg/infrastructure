@@ -29,7 +29,6 @@ from email.mime.text import MIMEText
 from email.utils import formatdate
 
 from lxml import html
-from lxml.html.clean import Cleaner
 
 # config
 
@@ -176,26 +175,6 @@ class MFBot():
                                base_url='http://france.meteofrance.com/')
         self.nivo_content = page.get_element_by_id("bulletinNeigeMontagne")
         self.synth_content = page.cssselect("#bulletinSyntheseMontagne .bulletinText")
-
-    def send_nivo_full_html(self, recipient, method='smtp'):
-        """
-        Send the full html code after fixing relative urls and cleaning up
-        useless html code for area & maps.
-        """
-
-        self.nivo_content.make_links_absolute()
-        bulletin_html = html.tostring(self.nivo_content,
-                                      encoding='iso-8859-1').decode('utf-8')
-        bulletin_txt = html.tostring(self.nivo_content, method='text',
-                                     encoding='iso-8859-1').decode('utf-8')
-
-        cleaner = Cleaner(style=True, safe_attrs_only=True,
-                          remove_tags=['area', 'map'])
-        bulletin_html = cleaner.clean_html(bulletin_html)
-        subject = SUBJECT_TPL.format(bulletin_type=TITLE_NIVO, dept=self.dept)
-
-        m = Mail(recipient, bulletin_txt, bulletin_html, subject)
-        m.send(method=method)
 
     def send_nivo_images(self, recipient, method='smtp'):
         """
