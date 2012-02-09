@@ -29,8 +29,6 @@ from email.mime.text import MIMEText
 from email.utils import formatdate
 
 from lxml import html
-from lxml.etree import tostring
-from lxml.etree import fromstring
 from lxml.html.clean import Cleaner
 
 # config
@@ -262,24 +260,19 @@ class MFBot():
         Send weekly synthesis.
         """
 
-        text_tmp = tostring(self.synth_content[0])
-        text_tmp = text_tmp.replace('><br', '> <br')
-        text_tmp = fromstring(text_tmp)
-        
-        lines = []
-        for line in text_tmp.itertext(tag='br'):
-            lines.append(line.encode('iso-8859-1').decode('utf-8').strip())
+        synth_html = html.tostring(self.synth_content[0],
+                                   encoding='iso-8859-1').decode('utf-8')
+        synth_html = synth_html.replace('<div class="onlyText bulletinText">', '')
+        synth_html = synth_html.replace('</div>', '')
+        synth_txt = synth_html.replace('<br>', '\n')
 
-        synth_txt = "\n".join(lines[1:])
-        synth_html = "<br />\n".join(lines[1:])
-        
         if (len(synth_txt) > 300):
             bulletin_html = HTML_TPL.format(content=synth_html, bulletin_type=TITLE_SYNTH, dept=self.dept, full_url=self.url)
             bulletin_txt = TXT_TPL.format(content=synth_txt, bulletin_type=TITLE_SYNTH, dept=self.dept, full_url=self.url)
             subject = SUBJECT_TPL.format(bulletin_type=TITLE_SYNTH, dept=self.dept)
-            
+
             m = Mail(recipient, bulletin_txt, bulletin_html, subject)
-            
+
             try:
                 with open(STORE_SYNTH, 'r') as f:
                     synth_ref = json.load(f)
