@@ -23,6 +23,7 @@ import os
 import smtplib
 import urllib2
 import sys
+import re
 
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
@@ -238,7 +239,7 @@ class MFBot():
                                    encoding='iso-8859-1').decode('utf-8')
         synth_html = synth_html.replace('<div class="onlyText bulletinText">', '')
         synth_html = synth_html.replace('</div>', '')
-        synth_txt = synth_html.replace('<br>', '\n')
+        synth_txt = re.sub(r'<br\s*/?>', r'\n', synth_html)
 
         if len(synth_txt) > 300:
             bulletin_html = HTML_TPL.format(content=synth_html,
