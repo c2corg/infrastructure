@@ -33,6 +33,7 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
     'STATIC_HOST'           => 's.${sitename}',
     'STATIC_BASE_URL'       => 'http://s.${sitename}',
     'GMAPS_KEY'             => '${c2corg::password::preprod_gmaps_key}',
+    'GEOPORTAIL_KEY'        => '${c2corg::password::preprod_geoportail_key}',
   }
 %>
 export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'

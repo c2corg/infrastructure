@@ -35,7 +35,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
     'MOBILE_GANALYTICS_KEY' => '${c2corg::password::mobile_ganalytics_key}',
     'METAENGINE_KEY'        => '${c2corg::password::metaengine_key}',
     'GMAPS_KEY'             => '${c2corg::password::prod_gmaps_key}',
-    'GEOPORTAIL_KEY'        => '${c2corg::password::geoportail_key}',
+    'GEOPORTAIL_KEY'        => '${c2corg::password::prod_geoportail_key}',
   }
 %>
 export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
