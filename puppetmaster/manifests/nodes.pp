@@ -194,6 +194,7 @@ node 'hn4' inherits 'base-node' {
 
   include c2corg::collectd::client
 
+  $postgresql_backupfmt = "custom"
   include postgresql::backup
   c2corg::backup::dir { "/var/backups/pgsql": }
 
