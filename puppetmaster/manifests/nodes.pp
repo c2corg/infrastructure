@@ -86,6 +86,8 @@ node 'dev' inherits 'base-node' {
 node 'monit' inherits 'base-node' {
 
   include c2corg::collectd::server
+  include graphite::carbon
+  include graphite::collectd
   include c2corg::syslog::server
   include c2corg::syslog::pgfouine
   include c2corg::syslog::haproxy
@@ -93,6 +95,7 @@ node 'monit' inherits 'base-node' {
   c2corg::backup::dir { [
     "/var/lib/drraw",
     "/srv/collectd",
+    "/var/lib/carbon/whisper/",
     "/var/www/pgfouine/",
     "/var/www/haproxy-logs/",
   ]: }
