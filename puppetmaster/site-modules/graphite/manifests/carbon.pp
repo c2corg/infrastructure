@@ -102,7 +102,7 @@ retentions = 60:90d
 
 [default_1min_for_1day]
 pattern = .*
-retentions = 60s:1d
+retentions = 15s:7d,1m:21d,15m:5y
 ",
   }
 
