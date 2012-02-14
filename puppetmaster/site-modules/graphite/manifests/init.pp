@@ -1,6 +1,7 @@
 class graphite {
 
   vcsrepo { "/usr/src/graphite":
+    ensure   => present,
     provider => "bzr",
     source   => "lp:graphite",
   }
