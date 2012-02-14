@@ -4,10 +4,19 @@ class graphite::collectd {
     ensure   => present,
     provider => "git",
     source   => "git://github.com/joemiller/collectd-graphite.git",
+    notify   => Exec["install collectd-graphite"],
+  }
+
+  exec { "install collectd-graphite":
+    command   => "perl Makefile.PL && make && make test && make install",
+    logoutput => true,
+    cwd       => "/usr/src/collectd-graphite/",
+    creates   => "/usr/local/share/perl/5.10.1/Collectd/Plugins/Graphite.pm",
+    notify    => Service["collectd"],
   }
 
   collectd::plugin { "collectd-graphite":
-    require => [Vcsrepo["/usr/src/collectd-graphite/"], Service["carbon"]],
+    require => [Exec["install collectd-graphite"], Service["carbon"]],
     content => '# file managed by puppet
 <LoadPlugin "perl">
   Globals true
