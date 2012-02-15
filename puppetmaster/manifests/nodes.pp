@@ -228,6 +228,8 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::apacheconf::preprod
   include c2corg::xcache
 
+  include memcachedb
+
   include c2corg::varnish::instance
 
   include c2corg::collectd::client

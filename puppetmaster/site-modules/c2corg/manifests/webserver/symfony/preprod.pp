@@ -2,6 +2,9 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
 
   include c2corg::password
   $sitename = "pre-prod.dev.camptocamp.org"
+  $session_host = "127.0.0.1" # TODO: factorize
+
+  include c2corg::memcachedb
 
   /* hackish stuff to autotomatically install and update c2corg codebase */
   Vcsrepo["camptocamp.org"] {
