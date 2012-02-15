@@ -16,7 +16,7 @@ class c2corg::prod::fs::memcachedb {
     ensure  => mounted,
     options => "noatime,nobarrier",
     fstype  => "xfs",
-    device  => "/dev/vg0/vz",
+    device  => "/dev/vg0/memcachedb",
     require => Filesystem["/dev/vg0/memcachedb"],
     before  => File["/var/lib/memcachedb"],
   }
