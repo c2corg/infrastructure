@@ -85,6 +85,10 @@ node 'dev' inherits 'base-node' {
 # VM - logs, stats and graphs
 node 'monit' inherits 'base-node' {
 
+  # TODO:
+  # - fix broken carbon init script (restart/status)
+  # - install graphite webapp with mod_python
+
   include c2corg::collectd::server
   include graphite::carbon
   include graphite::collectd
@@ -194,6 +198,9 @@ node 'hn4' inherits 'base-node' {
   include c2corg::database::prod
   include c2corg::prod::fs::postgres
   include c2corg::prod::env::postgres
+
+  include memcachedb
+  include c2corg::prod::fs::memcachedb
 
   include c2corg::collectd::client
 
