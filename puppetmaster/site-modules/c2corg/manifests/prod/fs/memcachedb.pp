@@ -12,7 +12,7 @@ class c2corg::prod::fs::memcachedb {
     require => [Logical_volume["memcachedb"], Package["xfsprogs"]],
   }
 
-  mount { "/var/lib/memcachedb/":
+  mount { "/var/lib/memcachedb":
     ensure  => mounted,
     options => "noatime,nobarrier",
     fstype  => "xfs",
