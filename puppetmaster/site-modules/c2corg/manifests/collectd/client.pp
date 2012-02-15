@@ -13,7 +13,12 @@ class c2corg::collectd::client {
       };
   }
 
-  collectd::rrdtool { 'rrd': }
+  file { "/var/lib/collectd/rrd/":
+    ensure  => absent,
+    recurse => true,
+    force   => true,
+    notify  => Service["collectd"],
+  }
 
   if $datacenter =~ /c2corg|epnet|pse/ {
     collectd::network { 'network':

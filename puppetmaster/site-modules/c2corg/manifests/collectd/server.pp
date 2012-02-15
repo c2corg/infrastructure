@@ -1,26 +1,6 @@
 class c2corg::collectd::server inherits c2corg::collectd::client {
 
-  $datadir = '/srv/collectd'
-
   resources { collectd_conf: purge => true; }
-
-  file { $datadir:
-    ensure => directory,
-  }
-
-  tidy { "/srv/collectd":
-    age     => "2w",
-    recurse => true,
-    rmdirs  => true,
-  }
-
-  Collectd::Rrdtool['rrd'] {
-    datadir           => "\"${datadir}\"",
-    cache_flush       => 900,
-    cache_timeout     => 60,
-    writes_per_second => 10,
-    require           => File[$datadir],
-  }
 
   Collectd::Network["network"] {
     listen => '"0.0.0.0" "25826"',
@@ -30,11 +10,19 @@ class c2corg::collectd::server inherits c2corg::collectd::client {
   include c2corg::varnish::typesdb
 
 
-  # visualisation stuff
+  # all the stuff below can be removed soon
 
   include thttpd
 
   # thttpd::conf { "nochroot": }
+
+  # keep archive or RRD files in case we are able to read them back in graphite
+  # some day.
+  #tidy { "/srv/collectd":
+  #  age     => "2w",
+  #  recurse => true,
+  #  rmdirs  => true,
+  #}
 
   file { "/var/www/cgi-bin/":
     ensure  => directory,
@@ -43,6 +31,7 @@ class c2corg::collectd::server inherits c2corg::collectd::client {
 
   package { 'drraw': require => Package['thttpd'] }
 
+  $datadir = '/srv/collectd'
   common::line { "configure drraw rrd path":
     line    => "%datadirs = ( \"${datadir}\"  => \"[c2corg]\" );",
     file    => "/etc/drraw/drraw.conf",

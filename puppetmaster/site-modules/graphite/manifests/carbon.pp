@@ -25,12 +25,12 @@ class graphite::carbon {
   file { "/opt/carbon/storage":
     ensure  => link,
     force   => true,
-    target  => "/var/lib/carbon",
+    target  => "/srv/carbon",
     require => Exec["install carbon"],
     before  => Service["carbon"],
   }
 
-  file { ["/var/lib/carbon/", "/var/log/carbon/"]:
+  file { ["/srv/carbon/", "/var/log/carbon/"]:
     ensure => directory,
     owner  => "carbon",
     group  => "carbon",
@@ -52,8 +52,8 @@ USER        = carbon
 
 # values found in carbon.conf.example
 MAX_CACHE_SIZE = inf
-MAX_UPDATES_PER_SECOND = 1000
-MAX_CREATES_PER_MINUTE = 50
+MAX_UPDATES_PER_SECOND = 100
+MAX_CREATES_PER_MINUTE = 25
 LINE_RECEIVER_INTERFACE = 0.0.0.0
 LINE_RECEIVER_PORT = 2003
 ENABLE_UDP_LISTENER = False
