@@ -1,96 +1,77 @@
 class c2corg::devproxy::https {
 
-  Apache::Proxypass {
-    notify => Exec["make dashboard.html"],
-  }
-
-  /* required for ddraw.cgi */
-  package { "libapache2-mod-proxy-html": }
-
-  apache::module { "proxy_html":
-    ensure  => present,
-    require => Package["libapache2-mod-proxy-html"]
-  }
-
-  apache::proxypass { "pgfouine reports":
-    location => "/dashboard/pgfouine/",
+  c2corg::devproxy::dashboard { "pgfouine reports":
+    location => "/pgfouine/",
     url      => "http://monit.pse.infra.camptocamp.org/pgfouine/",
     vhost    => "dev.camptocamp.org",
   }
 
-  apache::proxypass { "haproxy logs":
-    location => "/dashboard/haproxy-logs/",
+  c2corg::devproxy::dashboard { "haproxy logs":
+    location => "/haproxy-logs/",
     url      => "http://monit.pse.infra.camptocamp.org/haproxy-logs/",
     vhost    => "dev.camptocamp.org",
   }
 
-  apache::proxypass { "haproxy stats":
-    location => "/dashboard/haproxy-stats",
+  c2corg::devproxy::dashboard { "haproxy stats":
+    location => "/haproxy-stats",
     url      => "http://hn3.pse.infra.camptocamp.org:8008/stats",
     vhost    => "dev.camptocamp.org",
   }
 
-  apache::proxypass { "apache server-status":
-    location => "/dashboard/hn3-apache-server-status",
+  c2corg::devproxy::dashboard { "apache server-status":
+    location => "/hn3-apache-server-status",
     url      => "http://hn3.pse.infra.camptocamp.org/server-status",
     vhost    => "dev.camptocamp.org",
   }
 
-  apache::proxypass { "drraw rrd viewer":
-    location => "/dashboard/drraw.cgi",
+  c2corg::devproxy::dashboard { "drraw rrd viewer":
+    ensure   => absent,
+    location => "/cgi-bin/drraw.cgi",
     url      => "http://monit.pse.infra.camptocamp.org/cgi-bin/drraw.cgi",
-    vhost    => "dev.camptocamp.org",
+    vhost    => "drraw.dev.camptocamp.org",
   }
 
-  exec { "make dashboard.html":
-    command     => 'egrep -hi "proxypass\s+" *.conf | awk \' { printf "<li><a href=%s>%s</a></li>\n", $2, $2 } \' > ../private/dashboard.html',
-    cwd         => "/var/www/dev.camptocamp.org/conf/",
-    refreshonly => true,
-    require     => Apache::Vhost-ssl["dev.camptocamp.org"],
+  c2corg::devproxy::dashboard { "graphite viewer":
+    location => "/",
+    url      => "http://monit.pse.infra.camptocamp.org:8080/",
+    vhost    => "graphite.dev.camptocamp.org",
   }
 
   apache::directive { "dashboard alias":
     vhost     => "dev.camptocamp.org",
-    directive => "Alias /dashboard /var/www/dev.camptocamp.org/private/dashboard.html",
+    directive => "Alias /dashboard /var/www/dev.camptocamp.org/private/dashboard.html"
   }
 
-  apache::directive { "rewrite drraws hardcoded URLs":
-    vhost     => "dev.camptocamp.org",
-    directive => "
-<Location /dashboard/drraw.cgi>
-  SetOutputFilter proxy-html
-  ProxyHTMLURLMap http://monit.pse.infra.camptocamp.org/cgi-bin/drraw.cgi /dashboard/drraw.cgi
-</Location>
-",
-    require   => Apache::Module["proxy_html"],
+  file { "/var/www/dev.camptocamp.org/private/dashboard-AAA-header.part":
+    content => "<html><body>\n",
+    notify  => Exec["aggregate dashboard snippets"],
   }
 
-  apache::directive { "rewrite haproxy hardcoded URLs":
-    vhost     => "dev.camptocamp.org",
-    directive => "
-<Location /dashboard/haproxy-logs/>
-  SetOutputFilter proxy-html
-  ProxyHTMLURLMap /haproxy-logs/ /dashboard/haproxy-logs/
-</Location>
-",
-    require   => Apache::Module["proxy_html"],
+  file { "/var/www/dev.camptocamp.org/private/dashboard-ZZZ-footer.part":
+    content => "</body></html>\n",
+    notify  => Exec["aggregate dashboard snippets"],
   }
 
-  apache::directive { "rewrite pgfouine hardcoded URLs":
-    vhost     => "dev.camptocamp.org",
-    directive => "
-<Location /dashboard/pgfouine/>
-  SetOutputFilter proxy-html
-  ProxyHTMLURLMap /pgfouine/ /dashboard/pgfouine/
-</Location>
-",
-    require   => Apache::Module["proxy_html"],
+  exec { "aggregate dashboard snippets":
+    command     => "cat /var/www/dev.camptocamp.org/private/dashboard-* > /var/www/dev.camptocamp.org/private/dashboard.html",
+    refreshonly => true,
   }
 
-  apache::auth::basic::file::user { "require password for dashboard access":
-    location => "/dashboard",
-    vhost    => "dev.camptocamp.org",
-    authUserFile => "/srv/trac/projects/c2corg/conf/htpasswd",
+  # legacy stuff
+  apache::directive { [
+    "rewrite pgfouine hardcoded URLs",
+    "rewrite graphite hardcoded URLs",
+    "rewrite haproxy hardcoded URLs",
+    "rewrite drraws hardcoded URLs",
+  ]:
+    vhost  => "dev.camptocamp.org",
+    ensure => absent,
+  }
+
+  package { "libapache2-mod-proxy-html": ensure => absent }
+
+  apache::module { "proxy_html":
+    ensure  => absent,
   }
 
 }

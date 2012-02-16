@@ -8,6 +8,7 @@ class c2corg::trac {
     certcn  => "dev.camptocamp.org",
     sslonly => true,
     cert    => "file:///etc/puppet/dev.camptocamp.org.crt",
+    certkey => "file:///etc/puppet/dev.camptocamp.org.key",
     certchain => "file:///usr/share/ca-certificates/cacert.org/cacert.org.crt",
     require => Package["ca-certificates"],
   }
