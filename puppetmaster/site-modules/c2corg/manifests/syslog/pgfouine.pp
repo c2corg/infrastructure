@@ -4,9 +4,9 @@ class c2corg::syslog::pgfouine {
 
   $pgfouinemem = "2048M"
 
-  file { "/var/www/pgfouine": ensure => directory }
+  file { "/var/www/${fqdn}/htdocs/pgfouine": ensure => directory }
 
-  tidy { "/var/www/pgfouine":
+  tidy { "/var/www/${fqdn}/htdocs/pgfouine":
     age     => "2w",
     type    => "mtime",
     recurse => true,
@@ -29,7 +29,7 @@ class c2corg::syslog::pgfouine {
   delaycompress
   postrotate
     /usr/sbin/invoke-rc.d syslog-ng reload >/dev/null
-    /usr/bin/nice -n 19 /usr/bin/pgfouine -file /srv/syslog/postgresql/prod.log.1 -top 30 -format html -memorylimit ${pgfouinemem} -report /var/www/pgfouine/$(date +%Y%m%d-%Hh%Mm).html=overall,hourly,bytype,slowest,n-mosttime,n-mostfrequent,n-slowestaverage,n-mostfrequenterrors 2>&1 | logger -t pgfouine
+    /usr/bin/nice -n 19 /usr/bin/pgfouine -file /srv/syslog/postgresql/prod.log.1 -top 30 -format html -memorylimit ${pgfouinemem} -report /var/www/${fqdn}/htdocs/pgfouine/$(date +%Y%m%d-%Hh%Mm).html=overall,hourly,bytype,slowest,n-mosttime,n-mostfrequent,n-slowestaverage,n-mostfrequenterrors 2>&1 | logger -t pgfouine
   endscript
 }
 ",

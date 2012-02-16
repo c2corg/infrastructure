@@ -103,10 +103,8 @@ node 'monit' inherits 'base-node' {
 
   c2corg::backup::dir { [
     "/var/lib/drraw",
-    "/srv/collectd",
-    "/var/lib/carbon/whisper/",
-    "/var/www/pgfouine/",
-    "/var/www/haproxy-logs/",
+    "/srv/carbon",
+    "/var/www/",
   ]: }
 
 }
