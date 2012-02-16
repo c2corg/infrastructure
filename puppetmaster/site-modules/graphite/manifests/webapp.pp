@@ -42,6 +42,7 @@ LISTS_DIR = '/var/www/graphite/private/graphite/lists'
 LOG_DIR = '/var/log/graphite/'
 DATABASE_ENGINE = 'sqlite3'
 DATABASE_NAME = '/var/www/graphite/private/graphite/graphite.db'
+USE_REMOTE_USER_AUTHENTICATION = True
 ",
     require => Exec["install graphite webapp"],
     before  => Apache::Directive["configure graphite"],
@@ -85,6 +86,12 @@ DATABASE_NAME = '/var/www/graphite/private/graphite/graphite.db'
     vhost     => 'graphite',
     require   => Package["python-django"],
     directive => '# copied from https://github.com/spikelab/puppet-graphite/blob/master/files/graphite-apache-vhost.conf
+
+        # import REMOTE_USER envvar from headers passed by proxy. This is
+        # obviously completely insecure...
+        RewriteEngine On
+        RewriteCond %{HTTP:ProxyUser} ^(.*)$
+        RewriteRule .* - [E=REMOTE_USER:%1]
 
         # I ve found that an equal number of processes & threads tends
         # to show the best performance for Graphite (ymmv).

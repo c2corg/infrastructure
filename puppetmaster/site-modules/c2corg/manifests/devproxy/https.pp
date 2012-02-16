@@ -37,6 +37,18 @@ class c2corg::devproxy::https {
     vhost    => "graphite.dev.camptocamp.org",
   }
 
+  apache::module { "headers": ensure => present }
+
+  apache::directive { "inject REMOTE_USER in headers":
+    vhost     => "graphite.dev.camptocamp.org",
+    require   => Apache::Module["headers"],
+    directive => "
+RewriteEngine On
+RewriteRule .* - [E=PROXY_USER:%{LA-U:REMOTE_USER}]
+RequestHeader set ProxyUser %{PROXY_USER}e
+",
+  }
+
   apache::directive { "dashboard alias":
     vhost     => "dev.camptocamp.org",
     directive => "Alias /dashboard /var/www/dev.camptocamp.org/private/dashboard.html"
