@@ -204,6 +204,7 @@ node 'hn4' inherits 'base-node' {
 
   include memcachedb
   include c2corg::prod::fs::memcachedb
+  collectd::plugin { "memcached": lines => [] }
 
   include c2corg::collectd::client
 
