@@ -9,7 +9,7 @@ class c2corg::collectd::client {
     'LoadPlugin':
       value => $operatingsystem ? {
         'GNU/kFreeBSD' => ['interface', 'load', 'memory', 'users'],
-        default        => ['interface', 'load', 'memory', 'processes', 'tcpconns', 'users', 'vmem']
+        default        => ['contextswitch', 'interface', 'load', 'memory', 'processes', 'tcpconns', 'users', 'vmem']
       };
   }
 
