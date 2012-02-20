@@ -1,18 +1,15 @@
-class c2corg::xcache {
+class xcache {
 
   package { "php5-xcache":
     ensure => present,
   }
 
-  augeas { "disable php-xcache admin auth":
-    changes => "set /files/etc/php5/conf.d/xcache.ini/xcache.admin/xcache.admin.enable_auth Off",
-    require => Package["php5-xcache"],
-  }
+  xcache::param { "xcache.admin/xcache.admin.enable_auth": value => "Off" }
 
   file { "xcachestats.php":
     ensure => present,
     path   => "/var/www/html/xcachestats.php",
-    source => "puppet:///c2corg/xcache/xcachestats.php",
+    source => "puppet:///xcache/xcachestats.php",
   }
 
   file { "/etc/apache2/conf.d/xcachestats.conf":

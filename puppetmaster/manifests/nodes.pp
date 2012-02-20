@@ -175,7 +175,7 @@ node 'hn3' inherits 'base-node' {
   include c2corg::webserver::metaskirando
 
   include c2corg::apacheconf::prod
-  include c2corg::xcache
+  include xcache
 
   include c2corg::prod::fs::symfony
   include c2corg::prod::env::symfony
@@ -230,7 +230,7 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::webserver::svg
 
   include c2corg::apacheconf::preprod
-  include c2corg::xcache
+  include xcache
 
   include memcachedb
 
