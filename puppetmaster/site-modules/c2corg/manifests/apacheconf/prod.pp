@@ -13,9 +13,12 @@ class c2corg::apacheconf::prod inherits c2corg::apacheconf {
     Apache::Listen["80"] { ensure => absent }
   }
 
-  xcache::param {
-    "xcache/xcache.size":  value => "128M";
-    "xcache/xcache.count": value => "12";
+  if ($hostname !~ /failover/) {
+
+    xcache::param {
+      "xcache/xcache.size":  value => "128M";
+      "xcache/xcache.count": value => "12";
+    }
   }
 
 }

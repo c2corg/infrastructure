@@ -94,15 +94,18 @@ class c2corg::prod::env::symfony {
     hour    => 2,
   }
 
-  cron { "removeExpiredPendingUsers":
-    command => "php -q /srv/www/camptocamp.org/batch/removeExpiredPendingUsers.php",
-    minute  => 59,
-    hour    => 0,
-  }
+  if ($hostname !~ /failover/) {
 
-  cron { "pushOutings":
-    command => "php -q /srv/www/camptocamp.org/batch/pushOutings.php",
-    minute  => 20,
+    cron { "removeExpiredPendingUsers":
+      command => "php -q /srv/www/camptocamp.org/batch/removeExpiredPendingUsers.php",
+      minute  => 59,
+      hour    => 0,
+    }
+
+    cron { "pushOutings":
+      command => "php -q /srv/www/camptocamp.org/batch/pushOutings.php",
+      minute  => 20,
+    }
   }
 
 }
