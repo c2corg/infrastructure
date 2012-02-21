@@ -54,7 +54,7 @@ class c2corg::vz {
       }
 
       vz::fwd {
-        "forward monit collectd port":  ve => "126", from => "514",   to => "514";
+        "forward monit syslog port":    ve => "126", from => "514",   to => "514";
         "forward monit collectd port":  ve => "126", from => "25826", to => "25826", proto => "udp";
       }
 
