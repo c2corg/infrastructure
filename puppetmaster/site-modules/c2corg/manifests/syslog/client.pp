@@ -1,6 +1,9 @@
 class c2corg::syslog::client {
 
-  $syslog_server = "192.168.192.126"
+  $syslog_server = $datacenter ? {
+    /c2corg|epnet|pse/ => "192.168.192.126",
+    default            => "128.179.66.13",
+  }
 
   if $lsbdistcodename == "lenny" {
     apt::preferences { "rsyslog_from_backports.org":
@@ -21,19 +24,17 @@ class c2corg::syslog::client {
     require => Package["syslog"],
   }
 
-  if $datacenter =~ /c2corg|epnet|pse/ {
-    file { "local syslog config":
-      path    => "/etc/rsyslog.d/remotelogs.conf",
-      ensure  => present,
-      content => inline_template('# file managed by puppet
+  file { "local syslog config":
+    path    => "/etc/rsyslog.d/remotelogs.conf",
+    ensure  => present,
+    content => inline_template('# file managed by puppet
 <% if operatingsystem != "lenny" -%>
 $MaxMessageSize 64k
 <% end -%>
 *.*    @@<%= syslog_server %>
 '),
-      require => Package["syslog"],
-      notify  => Service["syslog"],
-    }
+    require => Package["syslog"],
+    notify  => Service["syslog"],
   }
 
 }

@@ -46,16 +46,21 @@ class c2corg::vz {
        */
 
       vz::fwd {
-        "forward puppetmaster port": ve => "101", from => "8140",  to => "8140";
+        "forward puppetmaster port":    ve => "101", from => "8140",  to => "8140";
       }
 
       vz::fwd {
-        "forward lists smtp port": ve => "102", from => "25",    to => "25";
+        "forward lists smtp port":      ve => "102", from => "25",    to => "25";
       }
 
       vz::fwd {
-        "forward dev https port": ve => "103", from => "443",   to => "443";
-        "forward dev http port":  ve => "103", from => "80",    to => "80";
+        "forward monit collectd port":  ve => "126", from => "514",   to => "514";
+        "forward monit collectd port":  ve => "126", from => "25826", to => "25826", proto => "udp";
+      }
+
+      vz::fwd {
+        "forward dev https port":       ve => "103", from => "443",   to => "443";
+        "forward dev http port":        ve => "103", from => "80",    to => "80";
       }
 
       vz::fwd {

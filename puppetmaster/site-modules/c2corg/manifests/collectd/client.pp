@@ -20,11 +20,12 @@ class c2corg::collectd::client {
     notify  => Service["collectd"],
   }
 
-  if $datacenter =~ /c2corg|epnet|pse/ {
-    collectd::network { 'network':
-      server      => '192.168.192.126',
-      cache_flush => 86400,
-    }
+  collectd::network { 'network':
+    server      => $datacenter ? {
+      /c2corg|epnet|pse/ => '192.168.192.126',
+      default            => '128.179.66.13',
+    },
+    cache_flush => 86400,
   }
 
   collectd::syslog { 'info': }
