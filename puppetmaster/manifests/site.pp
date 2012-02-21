@@ -1,4 +1,4 @@
-import "nodes.pp"
+import "nodes/*.pp"
 
 filebucket { main: server => $puppet_server }
 
