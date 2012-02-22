@@ -8,14 +8,13 @@ class c2corg::database::prod inherits c2corg::database::common {
     password => $c2corg::password::prod_db_pass,
   }
 
-  #TODO
-  #postgresql::conf {
-  #  "log_statement": value => "all";
-  #  "log_destination": value => "syslog";
-  #  "syslog_facility": value => $logfacility;
-  #  "log_line_prefix": value => "%t";
-  #  "log_min_duration_statement": value => "0";
-  #}
+  postgresql::conf {
+    "log_statement": value => "all";
+    "log_destination": value => "syslog";
+    "syslog_facility": value => $logfacility;
+    "log_line_prefix": value => "%t";
+    "log_min_duration_statement": value => "0";
+  }
 
   file { "/etc/rsyslog.d/zzz-discard-postgresql-logs.conf":
     ensure  => present,

@@ -5,7 +5,7 @@ class c2corg::database::common inherits c2corg::database {
   Augeas { context => "/files/etc/postgresql/${pgver}/main/" }
 
   Postgresql::Hba { pgver => $pgver }
-  #Postgresql::Conf { pgver => $pgver }
+  Postgresql::Conf { pgver => $pgver }
 
   augeas { "passwd auth for local postgres connections":
     changes   => "set pg_hba.conf/*[type='local'][user='all'][database='all']/method md5",
@@ -41,10 +41,9 @@ class c2corg::database::common inherits c2corg::database {
     method   => 'md5',
   }
 
-  #TODO
-  #postgresql::conf {
-  #  "listen_addresses": value => "*";
-  #}
+  postgresql::conf {
+    "listen_addresses": value => "*";
+  }
 
   package { ["pgtune", "sysbench", "ptop", "check-postgres"]: }
 

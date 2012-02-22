@@ -1,12 +1,23 @@
 class c2corg::prod::env::postgres {
 
   Sysctl::Set_value { before => Service["postgresql"] }
+  Postgresql::Conf { pgver => "8.4" }
 
-  file { "/etc/postgresql/8.4/main/postgresql.conf":
-    ensure => present,
-    source => "puppet:///c2corg/pgsql/postgresql.conf.hn4",
-    mode   => 0644,
-    notify => Service["postgresql"],
+  postgresql::conf {
+    # values suggested by pgtune
+    "maintenance_work_mem":         value => "960MB";
+    "checkpoint_completion_target": value => "0.7";
+    "effective_cache_size":         value => "11GB";
+    "work_mem":                     value => "80MB";
+    "wal_buffers":                  value => "4MB";
+    "checkpoint_segments":          value => "8";
+    "shared_buffers":               value => "3840MB";
+    "max_connections":              value => "200";
+
+    # enable activits statistics
+    "track_activities": value => "on";
+    "track_counts":     value => "on";
+    "track_functions":  value => "none";
   }
 
   sysctl::set_value {
