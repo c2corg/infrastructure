@@ -8,14 +8,6 @@ class c2corg::database::prod inherits c2corg::database::common {
     password => $c2corg::password::prod_db_pass,
   }
 
-  Postgresql::Hba["access for www user to c2corg db"] {
-    address => '192.168.192.0/29',
-  }
-
-  Postgresql::Hba["access for www user to metaengine db"] {
-    address => '192.168.192.0/29',
-  }
-
   #TODO
   #postgresql::conf {
   #  "log_statement": value => "all";

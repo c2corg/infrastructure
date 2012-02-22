@@ -19,7 +19,7 @@ class c2corg::database::common inherits c2corg::database {
     type     => 'hostssl',
     database => 'c2corg',
     user     => "${c2corg::password::ml_db_user}",
-    address  => '192.168.0.0/16',
+    address  => '192.168.192.0/24',
     method   => 'md5',
   }
 
@@ -28,6 +28,7 @@ class c2corg::database::common inherits c2corg::database {
     type     => 'hostssl',
     database => 'c2corg',
     user     => "${c2corg::password::www_db_user}",
+    address  => '192.168.192.0/24',
     method   => 'md5',
   }
 
@@ -36,6 +37,7 @@ class c2corg::database::common inherits c2corg::database {
     type     => 'hostssl',
     database => 'metaengine',
     user     => "${c2corg::password::www_db_user}",
+    address  => '192.168.192.0/24',
     method   => 'md5',
   }
 
