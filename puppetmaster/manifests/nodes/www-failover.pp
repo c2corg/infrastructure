@@ -6,6 +6,8 @@ node 'www-failover' inherits 'base-node' {
   realize C2corg::Account::User['gottferdom']
   realize C2corg::Account::User['gerbaux']
 
+  $haproxy_apache_address = "192.168.192.70"
+
   include c2corg::webserver::symfony::prod
   include c2corg::webserver::carto
   include c2corg::webserver::svg
