@@ -59,7 +59,14 @@ do_stop()
 	#   2 if daemon could not be stopped
 	#   other if a failure occurred
   pgrep -f "$DAEMON" >/dev/null || return 1
-  python2.6 $DAEMON $DAEMON_ARGS stop > /dev/null # this always returns 0...
+  count=0
+  max=12
+  until ! pgrep -f "$DAEMON" >/dev/null || [ $count -gt $max ]; do
+    python2.6 $DAEMON $DAEMON_ARGS stop > /dev/null # this always returns 0...
+    echo -n "."
+    sleep 5
+    count=$((count+1))
+  done
   pgrep -f "$DAEMON" > /dev/null
 	RETVAL="$?"
 
@@ -90,7 +97,7 @@ case "$1" in
 	esac
 	;;
   status)
-       status_of_proc "$DAEMON" "$NAME" && exit 0 || exit $?
+       pgrep -f "$DAEMON" > /dev/null && exit 0 || exit $?
        ;;
   restart|force-reload)
 	log_daemon_msg "Restarting $DESC" "$NAME"
