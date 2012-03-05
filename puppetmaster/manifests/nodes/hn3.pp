@@ -7,8 +7,9 @@ node 'hn3' inherits 'base-node' {
   realize C2corg::Account::User['gerbaux']
 
   $haproxy_vip_address = "128.179.66.23"
-  $haproxy_varnish_address = "192.168.192.2"
-  $haproxy_apache_address = "192.168.192.4"
+  $haproxy_cache_address = "192.168.192.2"
+  $haproxy_main_address = "192.168.192.4"
+  $haproxy_failover_address = "192.168.192.70"
 
   include c2corg::hn::hn3
 
