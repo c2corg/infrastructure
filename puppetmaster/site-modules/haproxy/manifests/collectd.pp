@@ -17,7 +17,8 @@ class haproxy::collectd {
   collectd::plugin { "haproxy":
     content => "# file managed by puppet
 <Plugin exec>
-  Exec \"haproxy:haproxy\" \"${plugin}\" \"-x\" \"c2corg\"
+  Exec \"haproxy:haproxy\" \"${plugin}\" \"-x\" \"website\"
+  Exec \"haproxy:haproxy\" \"${plugin}\" \"-x\" \"storage\"
 </Plugin>
 ",
     require => [
