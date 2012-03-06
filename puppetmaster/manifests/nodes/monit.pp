@@ -1,9 +1,6 @@
 # VM - logs, stats and graphs
 node 'monit' inherits 'base-node' {
 
-  # TODO:
-  # - fix broken carbon init script (restart/status)
-
   include c2corg::collectd::server
   include graphite::carbon
   include graphite::collectd
@@ -11,6 +8,7 @@ node 'monit' inherits 'base-node' {
   include c2corg::syslog::server
   include c2corg::syslog::pgfouine
   include c2corg::syslog::haproxy
+  include c2corg::prod::fs::monit
 
   $mpm_package = 'event'
   include apache

@@ -21,4 +21,13 @@ class c2corg::prod::fs::openvz {
     before  => [File["/var/lib/vz"], Service["vz"]],
   }
 
+  if ($hostname == 'hn2') {
+    # volumes used in VEs
+    logical_volume { "monit":
+      ensure       => present,
+      volume_group => "vg0",
+      initial_size => "10G",
+    }
+  }
+
 }
