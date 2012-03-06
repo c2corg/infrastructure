@@ -23,7 +23,7 @@ class c2corg::prod::fs::openvz {
 
   if ($hostname == 'hn2') {
     # volumes used in VEs
-    logical_volume { "monit":
+    logical_volume { ["photos", "monit"]:
       ensure       => present,
       volume_group => "vg0",
       initial_size => "10G",
