@@ -25,7 +25,7 @@ class memcachedb {
   }
 
   cron { "db_archive":
-    command => 'echo -e "db_archive\r\nquit" | nc -q 2 localhost 11211 | logger -t "memcachedb db_archive" 2>&1',
+    command => '/bin/echo -e "db_archive\nquit" | nc -q 2 localhost 11211 | logger -t "memcachedb db_archive" 2>&1',
     user    => "memcachedb",
     minute  => "34",
     hour    => "*/4",
