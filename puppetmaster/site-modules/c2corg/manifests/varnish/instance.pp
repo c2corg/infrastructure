@@ -3,7 +3,7 @@ class c2corg::varnish::instance {
   include varnish
 
   Varnish::Instance {
-    vcl_file   => "puppet:///c2corg/ha/c2corg.vcl",
+    vcl_file   => "puppet:///c2corg/varnish/c2corg.vcl",
     varnishlog => false,
   }
 
