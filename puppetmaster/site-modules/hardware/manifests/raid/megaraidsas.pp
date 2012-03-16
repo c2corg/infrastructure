@@ -1,4 +1,4 @@
-class hardware::raid::mega {
+class hardware::raid::megaraidsas {
 
   package { ["megacli", "megactl", "megaclisas-status"]: }
 

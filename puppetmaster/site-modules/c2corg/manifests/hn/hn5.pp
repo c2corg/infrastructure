@@ -1,6 +1,7 @@
 /* PowerEdge 1850 */
 class c2corg::hn::hn5 inherits c2corg::hn {
-  #include hardware::raid::mega
+
+  include hardware::raid::megaraid
 
   augeas { "enable console on serial port":
     context => "/files/etc/inittab/T0/",

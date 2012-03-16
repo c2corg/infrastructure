@@ -1,7 +1,7 @@
 /* PowerEdge 2950 */
 class c2corg::hn::hn2 inherits c2corg::hn {
 
-  include hardware::raid::mega
+  include hardware::raid::megaraidsas
 
   augeas { "enable console on serial port":
     context => "/files/etc/inittab/T0/",
