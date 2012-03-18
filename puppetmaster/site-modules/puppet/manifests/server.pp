@@ -6,9 +6,10 @@ class puppet::server {
   }
 
   service { "puppetmaster":
-    enable  => true,
-    ensure  => running,
-    require => Package["puppetmaster"],
+    enable     => true,
+    ensure     => running,
+    hasstatus  => true,
+    require    => Package["puppetmaster"],
   }
 
   augeas { "set puppetmaster certname":
