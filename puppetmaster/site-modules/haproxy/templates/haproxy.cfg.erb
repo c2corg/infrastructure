@@ -30,7 +30,7 @@ frontend c2corg
 
   # send POST /images/... to storage server
   acl             slash_images  path_beg /images/
-  use_backend     storage       if METH_POST AND slash_images
+  use_backend     storage       if METH_POST slash_images
   default_backend website
 
 backend website
