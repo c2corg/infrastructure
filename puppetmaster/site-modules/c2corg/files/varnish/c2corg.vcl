@@ -39,8 +39,16 @@ sub vcl_recv {
     }
   }
 
-  /* in case apache is down, serve expired content from cache */
-  if (!req.backend.healthy) {
+  /* define default backend */
+  set req.backend = symfony;
+
+  /* in case symfony is dead, use storage backend as failover */
+  if (req.backend == symfony && !req.backend.healthy) {
+    set req.backend = storage;
+  }
+
+  /* in case both backends are down, serve expired content from cache */
+  elsif (req.backend == storage && !req.backend.healthy) {
     remove req.http.Cookie;
     set req.grace = 14d;
     return(lookup);
