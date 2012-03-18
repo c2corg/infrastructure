@@ -60,12 +60,14 @@ options rotate edns0
     notify  => Exec["refresh init"],
   }
 
+  # TODO: investigate this bug, this is silly
   # Gandi VMs have bad filemodes on /
   # This breaks sshd.
-  file { "/":
-    ensure => directory, mode => 0755,
-    owner => "root", group => "root",
-  }
+  #file { "slash":
+  #  path   => '/',
+  #  ensure => directory, mode => 0755,
+  #  owner  => "root", group => "root",
+  #}
 
   file { "/tmp":
     ensure => directory,
