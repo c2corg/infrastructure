@@ -11,6 +11,12 @@ class c2corg::apacheconf::prod inherits c2corg::apacheconf {
 
   if ($hostname !~ /failover/) {
 
+    apache::proxypass { "photo store":
+      location => "/uploads/",
+      url      => "http://storage-backend.c2corg/uploads/",
+      vhost    => "camptocamp.org",
+    }
+
     xcache::param {
       "xcache/xcache.size":  value => "128M";
       "xcache/xcache.count": value => "12";
