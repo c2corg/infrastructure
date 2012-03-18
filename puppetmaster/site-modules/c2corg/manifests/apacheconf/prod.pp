@@ -16,11 +16,13 @@ class c2corg::apacheconf::prod inherits c2corg::apacheconf {
       ip => '192.168.192.70',
     }
 
-    apache::proxypass { "photo store":
-      location => "/uploads/",
-      url      => "http://storage-backend.c2corg/uploads/",
-      vhost    => "camptocamp.org",
-
+    apache::directive { "photo store proxy":
+      vhost     => "camptocamp.org",
+      directive => "
+RewriteCond %{REQUEST_URI} ^/uploads/images.*
+RewriteCond /srv/www/camptocamp.org/web/%{REQUEST_URI} !-f
+RewriteRule ^/(.*) http://storage-backend.c2corg/\$1 [P,L]
+",
     }
 
     xcache::param {

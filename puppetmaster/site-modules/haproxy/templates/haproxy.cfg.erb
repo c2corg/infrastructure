@@ -21,6 +21,7 @@ defaults
 
 frontend c2corg
   bind    <%= haproxy_vip_address %>:80
+  default_backend website
   #option  httpclose # prevent client-side keepalive
   timeout client 5000 # keep-alive on client-side
   option  forwardfor header X-Origin-IP # avoid messing around with X-Forwarded-For #678
@@ -28,23 +29,11 @@ frontend c2corg
   capture response header Content-Type len 15
   capture response header X-Cache len 4
 
-  # send POST /images/... to storage server
-  acl             image_add     path_beg /images/addpltempimage
-  acl             image_upload  path_beg /images/jsupload
-  use_backend     storage       if image_add OR image_upload
-  default_backend website
-
 backend website
   balance roundrobin
-  server  cache <%= haproxy_cache_address %>:80 check inter 5000 downinter 500    # active node
-  server  main  <%= haproxy_main_address %>:80 check inter 5000 backup           # passive node
-  option  httpchk HEAD /probe.txt HTTP/1.1\r\nHost:\ www.camptocamp.org
-  option  http-server-close # no keep-alive on server-side
-
-backend storage
-  balance roundrobin
-  server  failover <%= haproxy_failover_address %>:80 check inter 5000 downinter 500    # active node
+  server  cache    <%= haproxy_cache_address %>:80 check inter 5000 downinter 500    # active node
   server  main     <%= haproxy_main_address %>:80 check inter 5000 backup            # passive node
+  server  failover <%= haproxy_failover_address %>:80 check inter 5000 backup        # active node
   option  httpchk HEAD /probe.txt HTTP/1.1\r\nHost:\ www.camptocamp.org
   option  http-server-close # no keep-alive on server-side
 
