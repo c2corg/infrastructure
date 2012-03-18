@@ -29,8 +29,9 @@ frontend c2corg
   capture response header X-Cache len 4
 
   # send POST /images/... to storage server
-  acl             slash_images  path_beg /images/
-  use_backend     storage       if METH_POST slash_images
+  acl             image_add     path_beg /images/addpltempimage
+  acl             image_upload  path_beg /images/jsupload
+  use_backend     storage       if image_add OR image_upload
   default_backend website
 
 backend website
