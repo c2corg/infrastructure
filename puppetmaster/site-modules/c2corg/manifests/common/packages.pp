@@ -8,7 +8,6 @@ class c2corg::common::packages {
     "curl", "cron", "cvs",
     "dnsutils",
     "elinks",
-    "emacs23-nox",
     "git-core", "git-svn",
     "htop",
     "less", "locales-all", "lsb-release",
@@ -37,7 +36,7 @@ class c2corg::common::packages {
 
   case $lsbdistcodename {
     "squeeze": {
-      package { ["tmux"]: ensure => installed }
+      package { ["tmux", "emacs23-nox"]: ensure => installed }
     }
   }
 
