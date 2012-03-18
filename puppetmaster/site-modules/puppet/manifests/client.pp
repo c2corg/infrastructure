@@ -9,7 +9,7 @@ class puppet::client {
   }
 
   apt::preferences { "puppet-packages_from_c2corg_repo":
-    package  => "puppet puppetmaster puppet-common vim-puppet",
+    package  => "puppet puppetmaster puppetmaster-common puppet-common vim-puppet",
     pin      => "release l=C2corg, a=${lsbdistcodename}",
     priority => "1010",
     before   => [Package["puppet"], Package["augeas-lenses"]],
@@ -63,8 +63,20 @@ class puppet::client {
   }
 
   augeas { "set puppet certname":
-    context => "/files/etc/puppet/puppet.conf/puppetd",
+    context => $puppetversion ? {
+      /^0\.2/ => "/files/etc/puppet/puppet.conf/puppetd",
+      /^2\./  => "/files/etc/puppet/puppet.conf/agent",
+    },
     changes => "set certname $hostname",
+    notify  => Service["puppet"],
+  }
+
+  augeas { "rm other puppet conf target":
+    context => "/files/etc/puppet/puppet.conf/",
+    changes => $puppetversion ? {
+      /^0\.2/ => "rm agent",
+      /^2\./  => "rm puppetd",
+    },
     notify  => Service["puppet"],
   }
 
