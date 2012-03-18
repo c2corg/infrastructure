@@ -11,10 +11,16 @@ class c2corg::apacheconf::prod inherits c2corg::apacheconf {
 
   if ($hostname !~ /failover/) {
 
+    # TODO: deduplicate this
+    host { "storage-backend.c2corg":
+      ip => '192.168.192.70',
+    }
+
     apache::proxypass { "photo store":
       location => "/uploads/",
       url      => "http://storage-backend.c2corg/uploads/",
       vhost    => "camptocamp.org",
+
     }
 
     xcache::param {
