@@ -12,13 +12,13 @@ class puppet::server {
   }
 
   augeas { "set puppetmaster certname":
-    context => "/files/etc/puppet/puppet.conf/puppetmasterd",
+    context => "/files/etc/puppet/puppet.conf/master",
     changes => "set certname pm",
     notify  => Service["puppetmaster"],
   }
 
   augeas { "puppetmaster paths":
-    context => "/files/etc/puppet/puppet.conf/puppetmasterd",
+    context => "/files/etc/puppet/puppet.conf/master",
     changes => [
       "set modulepath /srv/puppetmaster/modules:/srv/puppetmaster/site-modules",
       "set manifestdir /srv/puppetmaster/manifests",
@@ -30,7 +30,7 @@ class puppet::server {
   augeas { "puppetmaster environments":
     context => "/files/etc/puppet/puppet.conf",
     changes => [
-      "set puppetmasterd/environments marc",
+      "set master/environments marc",
       "set marc/modulepath /home/marc/puppetmaster/modules:/home/marc/puppetmaster/site-modules",
       "set marc/manifestdir /home/marc/puppetmaster/manifests",
       "set marc/manifest /home/marc/puppetmaster/manifests/site.pp",
@@ -39,7 +39,7 @@ class puppet::server {
   }
 
   augeas { "enable collected resources":
-    context => "/files/etc/puppet/puppet.conf/puppetmasterd",
+    context => "/files/etc/puppet/puppet.conf/master",
     changes => [
       "set storeconfigs true",
       "set dbadapter sqlite3",
@@ -61,6 +61,12 @@ class puppet::server {
       '(root) /etc/init.d/puppetmaster',
       '(root) /usr/sbin/invoke-rc.d puppetmaster *',
     ],
+  }
+
+  augeas { "rm puppetmasterd":
+    context => "/files/etc/puppet/puppet.conf",
+    changes => "rm puppetmasterd",
+    notify  => Service["puppetmaster"],
   }
 
   # puppetmaster leaks open FDs with sqlite :-(
