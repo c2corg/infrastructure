@@ -17,6 +17,8 @@ git://github.com/kbarber/puppet-iptables.git iptables 9deddbbd
 git://github.com/bodepd/puppet-sudo.git sudo 9834ac93
 git://github.com/puppetlabs/puppet-vcsrepo.git vcsrepo d97e19ff9
 git://github.com/puppetlabs/puppet-lvm.git lvm 75ea7be
+git://github.com/puppetlabs/puppetlabs-stdlib.git stdlib 033eddad
+git://github.com/ripienaar/puppet-concat.git concat 30c96286c
 
 git://github.com/camptocamp/puppet-varnish.git varnish 8cdc0130
 
