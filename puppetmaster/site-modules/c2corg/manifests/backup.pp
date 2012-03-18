@@ -6,6 +6,14 @@ class c2corg::backup {
   }
 
   if $backupkey {
+    include concat::setup
+
+    concat { "/root/.backups.include":
+      owner => "root",
+      group => "root",
+      mode  => "0644",
+    }
+
     @@c2corg::ssh::userkey { "backup key for $hostname":
       user    => "backup-${hostname}",
       account => "root",
@@ -25,5 +33,13 @@ class c2corg::backup {
   # ssh host keys should be managed in /etc/ssh/ssh_known_hosts or it's a bug.
   file { "/root/.ssh/known_hosts":
     ensure => absent,
+  }
+
+  # legacy common::concatfilepart dir
+  file { "/root/.backups.include.d":
+    ensure  => absent,
+    purge   => true,
+    force   => true,
+    recurse => true,
   }
 }

@@ -5,10 +5,9 @@ define c2corg::backup::dir {
   $fname = regsubst($name, '\/', '_', 'G')
 
   if $backupkey {
-    common::concatfilepart { "include $fname in backups":
-      file    => "/root/.backups.include",
+    concat::fragment { "include_${fname}_in_backups":
+      target  => "/root/.backups.include",
       content => "${name}\n",
-      manage  => true,
       before  => Cron["rsync important stuff to backup server"],
     }
   }
