@@ -31,7 +31,7 @@ sub vcl_recv {
   }
 
   /* allow pictures and static content to get served directly from cache */
-  if (req.url ~ "\.(gif|png|jpg|jpeg)$" || req.http.host ~ "^s\..*camptocamp\.org") {
+  if (req.url ~ "\.(gif|png|jpg|jpeg|svg)$" || req.http.host ~ "^s\..*camptocamp\.org") {
     remove req.http.Cookie;
   } else {
     if (!req.http.Cookie) {
