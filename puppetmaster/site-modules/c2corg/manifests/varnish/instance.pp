@@ -14,6 +14,10 @@ class c2corg::varnish::instance {
         ip => '192.168.192.4',
       }
 
+      host { "storage-backend.c2corg":
+        ip => '192.168.192.70',
+      }
+
       varnish::instance { $hostname:
         storage => ["malloc,64G"], # malloc on a huge swap partition
         corelimit => "unlimited",
@@ -25,7 +29,7 @@ class c2corg::varnish::instance {
 
     pre-prod: {
 
-      host { "symfony-backend.c2corg":
+      host { ["symfony-backend.c2corg", "storage-backend.c2corg"]:
         ip => '127.0.0.1',
       }
 

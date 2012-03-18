@@ -5,7 +5,9 @@ class c2corg::apacheconf {
       "www.camptocamp.org",
       "s.camptocamp.org",
       "m.camptocamp.org",
-      "symfony-backend.c2corg"],
+      "symfony-backend.c2corg",
+      "storage-backend.c2corg",
+    ],
     docroot => "/srv/www/camptocamp.org/web",
     cgibin  => false,
   }

@@ -1,5 +1,17 @@
-backend apache {
+backend symfony {
   .host = "symfony-backend.c2corg"; # configure this in /etc/hosts
+  .port = "80";
+  .probe = {
+    .url = "/probe.txt";
+    .timeout = 1 s;
+    .interval = 5 s;
+    .window = 5;
+    .threshold = 2;
+  }
+}
+
+backend storage {
+  .host = "storage-backend.c2corg"; # configure this in /etc/hosts
   .port = "80";
   .probe = {
     .url = "/probe.txt";
