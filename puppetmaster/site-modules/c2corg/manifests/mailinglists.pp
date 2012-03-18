@@ -22,31 +22,31 @@ class c2corg::mailinglists {
 
   sympa::scenari { "marc":
     ensure  => absent, # enable for tests
-    content => "
+    content => '
 match([sender],/^marc.fournier@camptocamp.org$/)     smtp              -> do_it
 true()                                               smtp,smime,md5    -> reject
-",
+',
   }
 
   sympa::scenari { "slf":
-    content => "
+    content => '
 match([sender],/@slf\.ch$/)         smtp              -> do_it
 true()                              smtp,smime,md5    -> reject
-",
+',
   }
 
   sympa::scenari { "meteofrance":
-    content => "
+    content => '
 match([sender],/nobody@lists.*\.camptocamp\.org$/)    smtp              -> do_it
 true()                                          smtp,smime,md5    -> reject
-",
+',
   }
 
   sympa::scenari { "everybody":
-    content => "
+    content => '
 match([sender],/^.*$/)     smtp             -> do_it
 true()                     smtp,smime,md5   -> reject
-",
+',
   }
 
   sympa::list { "avalanche":
@@ -95,7 +95,7 @@ true()                     smtp,smime,md5   -> reject
   file { "/usr/local/bin/meteofrance.py":
     ensure => present,
     mode   => 755,
-    source => "puppet:///c2corg/meteofrance/meteofrance.py",
+    source => "puppet:///modules/c2corg/meteofrance/meteofrance.py",
     before => Cron["bulletin nivo"],
   }
 

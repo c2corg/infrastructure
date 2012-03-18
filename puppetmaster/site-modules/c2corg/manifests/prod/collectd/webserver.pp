@@ -11,7 +11,7 @@ class c2corg::prod::collectd::webserver {
   # Solution transitoire. Il faudrait trouver une solution qui s'intègre plus
   # intelligemment dans l'infra, peut-être au niveau de haproxy ou varnish.
 #  collectd::plugin { "httplogsc2corg":
-#    source => "puppet:///c2corg/collectd/httplogsc2corg.conf",
+#    source => "puppet:///modules/c2corg/collectd/httplogsc2corg.conf",
 #  }
 
 }

@@ -2,7 +2,7 @@ class c2corg::hn {
 
   file { "/etc/network/interfaces":
     ensure => present,
-    source => "puppet:///c2corg/network/${hostname}",
+    source => "puppet:///modules/c2corg/network/${hostname}",
   }
 
   $collectdplugins = $operatingsystem ? {

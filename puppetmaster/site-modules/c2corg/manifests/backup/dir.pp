@@ -2,7 +2,7 @@ define c2corg::backup::dir {
 
   include c2corg::backup
 
-  $fname = regsubst($name, "\/", "_", "G")
+  $fname = regsubst($name, '\/', '_', 'G')
 
   if $backupkey {
     common::concatfilepart { "include $fname in backups":

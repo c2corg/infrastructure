@@ -130,7 +130,7 @@ set -g history-limit 5000
 
   file { "/etc/profile":
     ensure => present,
-    source => "puppet:///c2corg/profile",
+    source => "puppet:///modules/c2corg/profile",
   }
 
   file { "/etc/profile.d/path.sh":

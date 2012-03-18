@@ -27,7 +27,7 @@ RewriteRule /(.*)   http://www.camptocamp.org/$1 [R=301,L]
 
   file { "/var/www/redirect-v4v5/private/v4v5map.txt":
     ensure  => present,
-    source  => "puppet:///c2corg/apache/v4v5map.txt",
+    source  => "puppet:///modules/c2corg/apache/v4v5map.txt",
     notify  => Exec["make v4v5map"],
     require => Apache::Vhost["redirect-v4v5"],
   }

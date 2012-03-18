@@ -9,7 +9,7 @@ class xcache {
   file { "xcachestats.php":
     ensure => present,
     path   => "/var/www/html/xcachestats.php",
-    source => "puppet:///xcache/xcachestats.php",
+    source => "puppet:///modules/xcache/xcachestats.php",
   }
 
   file { "/etc/apache2/conf.d/xcachestats.conf":

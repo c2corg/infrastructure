@@ -19,7 +19,7 @@ class memcachedb {
 
   file { "/etc/memcachedb.conf":
     ensure  => present,
-    source  => "puppet:///memcachedb/memcachedb.conf",
+    source  => "puppet:///modules/memcachedb/memcachedb.conf",
     notify  => Service["memcachedb"],
     require => Package["memcachedb"],
   }

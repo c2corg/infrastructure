@@ -38,7 +38,7 @@ class vz {
   }
 
   file { "/etc/vz/conf/ve-vps.unlimited.conf-sample":
-    source  => "puppet:///vz/ve-vps.unlimited.conf-sample",
+    source  => "puppet:///modules/vz/ve-vps.unlimited.conf-sample",
     require => Package["vzctl"],
   }
 

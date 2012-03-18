@@ -95,7 +95,7 @@ MAX_AGGREGATION_INTERVALS = 5
   file { "/etc/carbon/storage-schemas.conf":
     ensure  => present,
     notify  => Service["carbon"],
-    content => "# file managed by puppet
+    content => '# file managed by puppet
 [carbon]
 pattern = ^carbon\.
 retentions = 60:90d
@@ -103,11 +103,11 @@ retentions = 60:90d
 [default_1min_for_1day]
 pattern = .*
 retentions = 15s:7d,1m:21d,15m:5y
-",
+',
   }
 
   file { "/etc/init.d/carbon":
-    source => "puppet:///graphite/carbon.init",
+    source => "puppet:///modules/graphite/carbon.init",
     mode   => 0755,
     before => Service["carbon"],
   }

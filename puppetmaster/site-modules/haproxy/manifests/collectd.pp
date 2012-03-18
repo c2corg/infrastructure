@@ -8,7 +8,7 @@ class haproxy::collectd {
 
   file { "haproxy collectd plugin":
     path    => $plugin,
-    source  => "puppet:///haproxy/haproxy-stat.sh",
+    source  => "puppet:///modules/haproxy/haproxy-stat.sh",
     mode    => 0755,
     require => Package["socat"],
     notify  => Service["collectd"],
