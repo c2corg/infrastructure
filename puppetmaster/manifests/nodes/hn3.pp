@@ -30,7 +30,11 @@ node 'hn3' inherits 'base-node' {
 
   include c2corg::collectd::client
 
-  c2corg::backup::dir { "/srv/www/camptocamp.org/www-data/persistent": }
+  c2corg::backup::dir { [
+    "/srv/www/camptocamp.org/www-data/persistent/advertising",
+    "/srv/www/camptocamp.org/www-data/persistent/avatars",
+    "/srv/www/camptocamp.org/www-data/persistent/uploads/images",
+  ]: }
 
   # preventive workaround, while trac#745 isn't properly fixed
   #host { "meta.camptocamp.org": ip => "127.0.0.2" }
