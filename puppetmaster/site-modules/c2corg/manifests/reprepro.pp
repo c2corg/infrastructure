@@ -38,8 +38,7 @@ class c2corg::reprepro {
 
   /* configure the repository managment tool */
 
-  reprepro::repository { "test": incoming_allow => "lenny squeeze" }
-  reprepro::repository { "prod": } # no incoming, just feed on test repo
+  reprepro::repository { "c2corg": incoming_allow => "lenny squeeze" }
 
   Reprepro::Distribution {
     origin        => "C2corg",
@@ -49,39 +48,18 @@ class c2corg::reprepro {
     sign_with     => "pkgs@c2corg",
   }
 
-  reprepro::distribution { "squeeze-test":
-    repository  => "test",
+  reprepro::distribution { "squeeze-c2corg":
+    repository  => "c2corg",
     codename    => "squeeze",
     suite       => "squeeze",
-    description => "c2corg squeeze test repository",
+    description => "c2corg squeeze repository",
   }
 
-  reprepro::distribution { "lenny-test":
-    repository  => "test",
+  reprepro::distribution { "lenny-c2corg":
+    repository  => "c2corg",
     codename    => "lenny",
     suite       => "lenny",
-    description => "c2corg lenny test repository",
-  }
-
-
-  reprepro::update { ["test2prod-squeeze", "test2prod-lenny"]:
-    repository  => "prod", url => "http://localhost/test",
-  }
-
-  reprepro::distribution { "squeeze-prod":
-    repository  => "prod",
-    codename    => "squeeze",
-    suite       => "squeeze",
-    description => "c2corg squeeze production repository",
-    update      => "test2prod-squeeze",
-  }
-
-  reprepro::distribution { "lenny-prod":
-    repository  => "prod",
-    codename    => "lenny",
-    suite       => "lenny",
-    description => "c2corg lenny production repository",
-    update      => "test2prod-lenny",
+    description => "c2corg lenny repository",
   }
 
   /* setup a mini-webserver to publish all this stuff. */

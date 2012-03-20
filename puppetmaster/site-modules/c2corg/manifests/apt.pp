@@ -29,8 +29,7 @@ deb <%= debmirror %>/debian/ sid main contrib non-free
 
   apt::sources_list { "c2corg":
     content => "# file managed by puppet
-deb http://pkg.dev.camptocamp.org/test/ $lsbdistcodename main
-deb http://pkg.dev.camptocamp.org/prod/ $lsbdistcodename main
+deb http://pkg.dev.camptocamp.org/c2corg/ $lsbdistcodename main
 ",
   }
 
