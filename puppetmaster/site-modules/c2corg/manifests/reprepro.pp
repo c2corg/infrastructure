@@ -38,7 +38,7 @@ class c2corg::reprepro {
 
   /* configure the repository managment tool */
 
-  reprepro::repository { "c2corg": incoming_allow => "lenny squeeze" }
+  reprepro::repository { "c2corg": incoming_allow => "lenny squeeze wheezy" }
 
   Reprepro::Distribution {
     origin        => "C2corg",
@@ -46,6 +46,13 @@ class c2corg::reprepro {
     architectures => "i386 amd64 kfreebsd-amd64 source",
     components    => "main",
     sign_with     => "pkgs@c2corg",
+  }
+
+  reprepro::distribution { "wheezy-c2corg":
+    repository  => "c2corg",
+    codename    => "wheezy",
+    suite       => "wheezy",
+    description => "c2corg wheezy repository",
   }
 
   reprepro::distribution { "squeeze-c2corg":

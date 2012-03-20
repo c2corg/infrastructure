@@ -16,6 +16,14 @@ class c2corg::apt::lenny inherits c2corg::apt {
     priority => "50",
   }
 
+  Apt::Preferences["wheezy"] {
+    priority => "40",
+  }
+
+  Apt::Preferences["wheezy-proposed-updates"] {
+    priority => "40",
+  }
+
   Apt::Conf["01default-release"] {
     content => 'APT::Default-Release "oldstable";', # warning: changing this can break the system !
   }

@@ -20,6 +20,10 @@ deb <%= debmirror %>/debian/ squeeze main contrib non-free
 deb http://security.debian.org/ squeeze/updates main contrib non-free
 deb <%= debmirror %>/debian/ squeeze-proposed-updates main contrib non-free
 
+deb <%= debmirror %>/debian/ wheezy main contrib non-free
+deb http://security.debian.org/ wheezy/updates main contrib non-free
+deb <%= debmirror %>/debian/ wheezy-proposed-updates main contrib non-free
+
 <% if lsbdistcodename != 'lenny' -%>
 # sid disabled on Lenny because of bug debbug#400768
 deb <%= debmirror %>/debian/ sid main contrib non-free
@@ -33,10 +37,12 @@ deb http://pkg.dev.camptocamp.org/c2corg/ $lsbdistcodename main
 ",
   }
 
-  apt::sources_list { "debian-backports":
-    content => "# file managed by puppet
-deb http://backports.debian.org/debian-backports ${lsbdistcodename}-backports main contrib non-free
-",
+  if ($lsbdistcodename != 'wheezy') { # no backports available for wheezy yet
+    apt::sources_list { "debian-backports":
+      content => "# file managed by puppet
+  deb http://backports.debian.org/debian-backports ${lsbdistcodename}-backports main contrib non-free
+  ",
+    }
   }
 
   apt::key { "c2corg":
@@ -64,6 +70,18 @@ deb http://backports.debian.org/debian-backports ${lsbdistcodename}-backports ma
   apt::preferences { "squeeze-proposed-updates":
     package  => "*",
     pin      => "release n=squeeze-proposed-updates",
+    priority => undef,
+  }
+
+  apt::preferences { "wheezy":
+    package  => "*",
+    pin      => "release n=wheezy",
+    priority => undef,
+  }
+
+  apt::preferences { "wheezy-proposed-updates":
+    package  => "*",
+    pin      => "release n=wheezy-proposed-updates",
     priority => undef,
   }
 
