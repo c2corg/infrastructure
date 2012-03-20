@@ -14,11 +14,6 @@ class c2corg::webserver::symfony {
   # stuff no longer required on this system class
   package{ ["php-symfony", "msmtp"]: ensure => absent }
 
-  # fileinfo is included in recent PHPs
-  if ($lsbdistcodename == 'lenny') {
-    package { "php5-fileinfo": }
-  }
-
   # short_open_tag conflicts with <?xml ... headers
   augeas { "disable php short open tags":
     changes => "set /files/etc/php5/apache2/php.ini/PHP/short_open_tag Off",
