@@ -40,8 +40,8 @@ deb http://pkg.dev.camptocamp.org/c2corg/ $lsbdistcodename main
   if ($lsbdistcodename != 'wheezy') { # no backports available for wheezy yet
     apt::sources_list { "debian-backports":
       content => "# file managed by puppet
-  deb http://backports.debian.org/debian-backports ${lsbdistcodename}-backports main contrib non-free
-  ",
+deb http://backports.debian.org/debian-backports ${lsbdistcodename}-backports main contrib non-free
+",
     }
   }
 
