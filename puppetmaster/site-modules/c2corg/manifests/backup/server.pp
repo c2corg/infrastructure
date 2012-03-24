@@ -27,22 +27,22 @@ class c2corg::backup::server {
     require => Package["btrfs-tools"],
     content => '#!/bin/sh
 
-BASE="/srv/backups/"
+BASE="/srv/backups"
 DATEFMT="%d"
-RETENSION=$(date -d "now - 10 days" +$DATEFMT)
+RETENSION=$(/bin/date -d "now - 10 days" +$DATEFMT)
 
 NEWINCR="$BASE/SNAPSHOTS/$(date +$DATEFMT)"
 OLDINCR="$BASE/SNAPSHOTS/$RETENSION"
 
 if [ -d $OLDINCR ]; then
-  btrfs subvolume delete $OLDINCR
+  /sbin/btrfs subvolume delete $OLDINCR
 fi
 
 if ! [ -d $NEWINCR ]; then
-  btrfs subvolume snapshot $BASE $NEWINCR || exit 1
-  date > $NEWINCR/snapshot.date
+  /sbin/btrfs subvolume snapshot $BASE $NEWINCR || exit 1
+  /bin/date > $NEWINCR/snapshot.date
 else
-  echo "snapshot failed: $NEWINCR already present"
+  /bin/echo "snapshot failed: $NEWINCR already present"
   exit 1
 fi
 ',
