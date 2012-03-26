@@ -23,4 +23,10 @@ class c2corg::sudo {
     type => 'default',
   }
 
+  sudoers { 'root all':
+    users    => 'root',
+    type     => 'user_spec',
+    commands => '(ALL) ALL',
+  }
+
 }
