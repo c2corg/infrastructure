@@ -1,13 +1,5 @@
 class c2corg::apt::wheezy inherits c2corg::apt {
 
-  Apt::Preferences["lenny"] {
-    priority => "40",
-  }
-
-  Apt::Preferences["lenny-proposed-updates"] {
-    priority => "40",
-  }
-
   Apt::Preferences["squeeze"] {
     priority => "50",
   }

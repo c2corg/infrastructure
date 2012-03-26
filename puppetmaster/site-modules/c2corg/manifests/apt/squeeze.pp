@@ -1,13 +1,5 @@
 class c2corg::apt::squeeze inherits c2corg::apt {
 
-  Apt::Preferences["lenny"] {
-    priority => "40",
-  }
-
-  Apt::Preferences["lenny-proposed-updates"] {
-    priority => "40",
-  }
-
   Apt::Preferences["squeeze"] {
     priority => "99",
   }

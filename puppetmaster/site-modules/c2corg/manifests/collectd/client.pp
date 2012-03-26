@@ -30,13 +30,6 @@ class c2corg::collectd::client {
 
   collectd::syslog { 'info': }
 
-  if $lsbdistcodename == 'lenny' {
-    apt::preferences { ['collectd', 'collectd-utils']:
-      pin      => 'release a=lenny-backports',
-      priority => '1010',
-    }
-  }
-
   if $operatingsystem != 'GNU/kFreeBSD' {
     package { 'udev': } # else collectd installation fails on VZs.
   }

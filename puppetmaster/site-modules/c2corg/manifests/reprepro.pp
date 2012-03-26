@@ -38,7 +38,7 @@ class c2corg::reprepro {
 
   /* configure the repository managment tool */
 
-  reprepro::repository { "c2corg": incoming_allow => "lenny squeeze wheezy" }
+  reprepro::repository { "c2corg": incoming_allow => "squeeze wheezy" }
 
   Reprepro::Distribution {
     origin        => "C2corg",
@@ -60,13 +60,6 @@ class c2corg::reprepro {
     codename    => "squeeze",
     suite       => "squeeze",
     description => "c2corg squeeze repository",
-  }
-
-  reprepro::distribution { "lenny-c2corg":
-    repository  => "c2corg",
-    codename    => "lenny",
-    suite       => "lenny",
-    description => "c2corg lenny repository",
   }
 
   /* setup a mini-webserver to publish all this stuff. */

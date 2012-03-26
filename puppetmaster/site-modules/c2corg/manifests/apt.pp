@@ -10,12 +10,6 @@ class c2corg::apt {
 
   apt::sources_list { "debian":
     content => inline_template("# file managed by puppet
-<% if operatingsystem != 'GNU/kFreeBSD' -%>
-deb <%= debmirror %>/debian/ lenny main contrib non-free
-deb http://security.debian.org/ lenny/updates main contrib non-free
-deb <%= debmirror %>/debian/ lenny-proposed-updates main contrib non-free
-<% end -%>
-
 deb <%= debmirror %>/debian/ squeeze main contrib non-free
 deb http://security.debian.org/ squeeze/updates main contrib non-free
 deb <%= debmirror %>/debian/ squeeze-proposed-updates main contrib non-free
@@ -23,11 +17,6 @@ deb <%= debmirror %>/debian/ squeeze-proposed-updates main contrib non-free
 deb <%= debmirror %>/debian/ wheezy main contrib non-free
 deb http://security.debian.org/ wheezy/updates main contrib non-free
 deb <%= debmirror %>/debian/ wheezy-proposed-updates main contrib non-free
-
-<% if lsbdistcodename != 'lenny' -%>
-# sid disabled on Lenny because of bug debbug#400768
-deb <%= debmirror %>/debian/ sid main contrib non-free
-<% end -%>
 "),
   }
 
@@ -47,18 +36,6 @@ deb http://backports.debian.org/debian-backports ${lsbdistcodename}-backports ma
 
   apt::key { "c2corg":
     source => "http://pkg.dev.camptocamp.org/pubkey.txt",
-  }
-
-  apt::preferences { "lenny":
-    package  => "*",
-    pin      => "release n=lenny",
-    priority => undef,
-  }
-
-  apt::preferences { "lenny-proposed-updates":
-    package  => "*",
-    pin      => "release n=lenny-proposed-updates",
-    priority => undef,
   }
 
   apt::preferences { "squeeze":
