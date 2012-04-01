@@ -6,4 +6,15 @@ class c2corg::mcollective {
     priority => "1010",
   }
 
+  package {
+    [
+      'mcollective-plugins-filemgr',
+      'mcollective-plugins-package',
+      'mcollective-plugins-process',
+      'mcollective-plugins-puppetd',
+      'mcollective-plugins-stomputil',
+      'mcollective-plugins-service',
+    ]: ensure => present,
+  }
+
 }
