@@ -1,5 +1,7 @@
 class c2corg::mcollective {
 
+  $broker = "192.168.192.55" #TODO: factorize this
+
   apt::preferences { "mcollective_from_c2corg_repo":
     package  => "mcollective mcollective-client mcollective-common",
     pin      => "release l=C2corg, a=${lsbdistcodename}",

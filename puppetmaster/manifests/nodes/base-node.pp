@@ -4,6 +4,7 @@ node 'base-node' {
   include apt
   include openssl
   include puppet::client
+  include c2corg::mcollective::node
   include c2corg::account
   include c2corg::mta
   include c2corg::ssh::sshd
@@ -19,5 +20,4 @@ node 'base-node' {
   # manually run puppet.
   realize C2corg::Account::User['marc']
 
-  # TODO: install mcollective
 }
