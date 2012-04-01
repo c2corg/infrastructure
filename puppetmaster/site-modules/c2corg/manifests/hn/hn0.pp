@@ -13,37 +13,37 @@ class c2corg::hn::hn0 inherits c2corg::hn {
     require  => Sysctl::Set_value["net.ipv4.ip_forward"],
   }
 
-  vz::fwd { "forward hn1 ssh port":
+  nat::fwd { "forward hn1 ssh port":
     net  => "192.168.192",
-    ve   => "2",
+    host => "2",
     from => "20022",
     to   => "22",
   }
 
-  vz::fwd { "forward hn2 ssh port":
+  nat::fwd { "forward hn2 ssh port":
     net  => "192.168.192",
-    ve   => "3",
+    host => "3",
     from => "20023",
     to   => "22",
   }
 
-  vz::fwd { "forward hn3 ssh port":
+  nat::fwd { "forward hn3 ssh port":
     net  => "192.168.192",
-    ve   => "4",
+    host => "4",
     from => "20024",
     to   => "22",
   }
 
-  vz::fwd { "forward hn4 ssh port":
+  nat::fwd { "forward hn4 ssh port":
     net  => "192.168.192",
-    ve   => "5",
+    host => "5",
     from => "20025",
     to   => "22",
   }
 
-  vz::fwd { "forward hn5 ssh port":
+  nat::fwd { "forward hn5 ssh port":
     net  => "192.168.192",
-    ve   => "6",
+    host => "6",
     from => "20026",
     to   => "22",
   }
