@@ -19,7 +19,7 @@ git://github.com/puppetlabs/puppet-vcsrepo.git vcsrepo d97e19ff9
 git://github.com/puppetlabs/puppet-lvm.git lvm 75ea7be
 git://github.com/puppetlabs/puppetlabs-stdlib.git stdlib 033eddad
 git://github.com/ripienaar/puppet-concat.git concat 30c96286c
-git://github.com/puppetlabs/puppetlabs-rabbitmq.git 126dbdbb01
+https://github.com/gergnz/puppetlabs-rabbitmq.git 7f7c1cf91
 
 git://github.com/camptocamp/puppet-varnish.git varnish 8cdc0130
 
