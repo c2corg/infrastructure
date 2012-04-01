@@ -77,4 +77,14 @@ define vz::ve ($ensure="running", $hname, $template="debian-squeeze-amd64-with-p
     }
 
   }
+
+  @@file { "/etc/facter/facts.d/openvz-${name}.txt":
+    ensure  => $ensure ? {
+      'absent' => absent,
+      default  => present,
+    },
+    content => "openvzhn=${hostname}\nopenvzveid=${name}\n",
+    tag     => "openvzfacts-${hname}",
+  }
+
 }

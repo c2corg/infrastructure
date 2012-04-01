@@ -16,6 +16,7 @@ node 'base-node' {
   include c2corg::hosts
   include c2corg::syslog::client
   include c2corg::sudo # TODO: only if package sudo is installed
+  include vz::facts
 
   # Marc doesn't need to use root's account every time he must
   # manually run puppet.
