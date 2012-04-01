@@ -8,6 +8,12 @@ class c2corg::mcollective::node {
     require => Package["ruby-stomp"],
   }
 
+  augeas { "enable mcollective at boot":
+    context => "/files/etc/default/mcollective",
+    changes => "set RUN yes",
+    before  => Service["mcollective"],
+  }
+
   service { "mcollective":
     ensure    => running,
     enable    => true,

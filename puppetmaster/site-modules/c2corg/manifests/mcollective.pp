@@ -2,9 +2,9 @@ class c2corg::mcollective {
 
   $broker = "192.168.192.55" #TODO: factorize this
 
-  apt::preferences { "mcollective_from_c2corg_repo":
+  apt::preferences { "mcollective_from_wheezy_repo":
     package  => "mcollective mcollective-client mcollective-common",
-    pin      => "release l=C2corg, a=${::lsbdistcodename}",
+    pin      => "release n=wheezy",
     priority => "1010",
   }
 
