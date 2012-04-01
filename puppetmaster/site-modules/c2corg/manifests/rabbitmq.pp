@@ -9,13 +9,20 @@ class c2corg::rabbitmq {
   }
 
   class { "rabbitmq::server":
-    delete_guest_user => false,
+    delete_guest_user => true,
   }
 
-  rabbitmq_user { $c2corg::password::mco_rabbitmq_uname:
+  rabbitmq_user { $c2corg::password::mco_user:
     ensure   => present,
     admin    => false,
-    password => $c2corg::password::mco_rabbitmq_passwd,
+    password => $c2corg::password::mco_pass,
+  }
+
+  rabbitmq_user_permissions { "${c2corg::password::mco_user}@/":
+    ensure               => present,
+    configure_permission => "^amq.gen-.*",
+    write_permission     => "^amq.(gen-.*|topic)",
+    read_permission      => "^amq.(gen-.*|topic)",
   }
 
   rabbitmq_plugin { "rabbitmq_stomp":
