@@ -5,6 +5,7 @@ class c2corg::mcollective::node {
 
   package { "mcollective":
     ensure  => present,
+    require => Package["ruby-stomp"],
   }
 
   service { "mcollective":

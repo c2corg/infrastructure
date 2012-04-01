@@ -8,6 +8,8 @@ class c2corg::mcollective {
     priority => "1010",
   }
 
+  package { "ruby-stomp": ensure => present }
+
   package {
     [
       'mcollective-plugins-filemgr',
