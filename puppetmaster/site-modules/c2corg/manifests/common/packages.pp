@@ -23,7 +23,7 @@ class c2corg::common::packages {
     ]: ensure => installed
   }
 
-  case $operatingsystem {
+  case $::operatingsystem {
     "Debian": {
       package { [
         "ethtool", "iotop", "iptraf", "lsof", "strace", "traceroute", "vlan",
@@ -34,7 +34,7 @@ class c2corg::common::packages {
     }
   }
 
-  case $lsbdistcodename {
+  case $::lsbdistcodename {
     "squeeze": {
       package { ["tmux", "emacs23-nox"]: ensure => installed }
     }

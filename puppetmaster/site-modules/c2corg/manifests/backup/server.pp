@@ -8,9 +8,9 @@ class c2corg::backup::server {
 
   C2corg::Ssh::Userkey <<| tag == 'backups' |>>
 
-  @@sshkey { $ipaddress:
+  @@sshkey { $::ipaddress:
     type => rsa,
-    key  => $sshrsakey,
+    key  => $::sshrsakey,
     ensure => absent,
   }
 

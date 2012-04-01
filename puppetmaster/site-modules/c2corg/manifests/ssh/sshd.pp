@@ -28,24 +28,24 @@ class c2corg::ssh::sshd {
 
   # if datacenter fact is set, then pluginsync has successfully run at least
   # once.
-  if $datacenter {
+  if $::datacenter {
     # export and collect ssh host keys
     Sshkey { require => Package["openssh-server"] }
   }
 
-  if ($fqdn != "" and $hostname != "") {
+  if ($::fqdn != "" and $::hostname != "") {
 
     resources { "sshkey": purge => true }
     Sshkey <<| |>>
 
-    @@sshkey { "$fqdn":
+    @@sshkey { $::fqdn:
       type => rsa,
-      key  => $sshrsakey,
+      key  => $::sshrsakey,
       host_aliases => [
-        $hostname,
-        regsubst($fqdn, '.infra.camptocamp.org$', ''),
-        regsubst($fqdn, '.camptocamp.org$', ''),
-        $ipaddress,
+        $::hostname,
+        regsubst($::fqdn, '.infra.camptocamp.org$', ''),
+        regsubst($::fqdn, '.camptocamp.org$', ''),
+        $::ipaddress,
       ],
     }
   }

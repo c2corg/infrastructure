@@ -10,14 +10,14 @@ class puppet::client {
 
   apt::preferences { "puppet-packages_from_c2corg_repo":
     package  => "puppet puppetmaster puppetmaster-common puppet-common vim-puppet",
-    pin      => "release l=C2corg, a=${lsbdistcodename}",
+    pin      => "release l=C2corg, a=${::lsbdistcodename}",
     priority => "1010",
     before   => [Package["puppet"], Package["augeas-lenses"]],
   }
 
   apt::preferences { "facter_from_c2corg_repo":
     package  => "facter",
-    pin      => "release l=C2corg, a=${lsbdistcodename}",
+    pin      => "release l=C2corg, a=${::lsbdistcodename}",
     priority => "1010",
     before   => Package["puppet"],
   }
@@ -63,17 +63,17 @@ class puppet::client {
   }
 
   augeas { "set puppet certname":
-    context => $puppetversion ? {
+    context => $::puppetversion ? {
       /^0\.2/ => "/files/etc/puppet/puppet.conf/puppetd",
       /^2\./  => "/files/etc/puppet/puppet.conf/agent",
     },
-    changes => "set certname $hostname",
+    changes => "set certname $::hostname",
     notify  => Service["puppet"],
   }
 
   augeas { "rm other puppet conf target":
     context => "/files/etc/puppet/puppet.conf/",
-    changes => $puppetversion ? {
+    changes => $::puppetversion ? {
       /^0\.2/ => "rm agent",
       /^2\./  => "rm puppetd",
     },
@@ -92,10 +92,10 @@ class puppet::client {
 
   # if datacenter fact is set, then pluginsync has successfully run at least
   # once.
-  if ($datacenter and $hostname != "pm") {
+  if ($::datacenter and $::hostname != "pm") {
     host { "pm.pse.infra.camptocamp.org":
       host_aliases => ["pm"],
-      ip => $datacenter ? {
+      ip => $::datacenter ? {
         /c2corg|epnet|pse/ => '192.168.192.101',
         default        => '128.179.66.13',
       },

@@ -21,7 +21,7 @@ class c2corg::prod::fs::openvz {
     before  => [File["/var/lib/vz"], Service["vz"]],
   }
 
-  if ($hostname == 'hn2') {
+  if ($::hostname == 'hn2') {
     # volumes used in VEs
     logical_volume { ["photos", "monit"]:
       ensure       => present,

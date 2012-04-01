@@ -9,7 +9,7 @@ class c2corg::apacheconf::prod inherits c2corg::apacheconf {
   apache::listen { "${haproxy_main_address}:80": ensure => present } # TODO: this is crap
   apache::listen { "127.0.0.1:80": ensure => present } # needed by collectd
 
-  if ($hostname !~ /failover/) {
+  if ($::hostname !~ /failover/) {
 
     # TODO: deduplicate this
     host { "storage-backend.c2corg":

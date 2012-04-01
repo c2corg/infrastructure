@@ -4,21 +4,21 @@ class c2corg::hosts {
     purge => true,
   }
 
-  $subnet = $hostname ? {
+  $subnet = $::hostname ? {
     'backup' => 'ghst',
     default  => 'pse',
   }
 
-  host { "${hostname}.${subnet}.infra.camptocamp.org":
-    ip => $hostname ? {
+  host { "${::hostname}.${subnet}.infra.camptocamp.org":
+    ip => $::hostname ? {
       "hn0"   => "192.168.192.1",
       "hn1"   => "192.168.192.2",
       "hn2"   => "192.168.192.3",
       "hn3"   => "192.168.192.4",
       "hn4"   => "192.168.192.5",
-      default => $ipaddress,
+      default => $::ipaddress,
     },
-    host_aliases => $hostname,
+    host_aliases => $::hostname,
   }
 
   host { "localhost.localdomain":
@@ -31,7 +31,7 @@ class c2corg::hosts {
     host_aliases => "ip6-loopback",
   }
 
-  case $datacenter {
+  case $::datacenter {
     /c2corg|epnet|pse/ : { Host <<| tag == 'internal-hosts' |>> }
     'gandi'        : { Host <<| tag == 'external-hosts' |>> }
   }

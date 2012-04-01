@@ -79,7 +79,7 @@ port=80
   }
 
   @@host { "pkg.dev.camptocamp.org":
-    ip => $ipaddress,
+    ip => $::ipaddress,
     tag => "internal-hosts",
   }
 

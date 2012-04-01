@@ -3,7 +3,7 @@ class c2corg::apacheconf::content-factory inherits c2corg::apacheconf {
   include c2corg::password
 
   Apache::Vhost["camptocamp.org"] {
-    aliases +> [$hostname, $fqdn, "${hostname}.dev.camptocamp.org"],
+    aliases +> [$::hostname, $::fqdn, "${::hostname}.dev.camptocamp.org"],
   }
 
   apache::auth::htpasswd { "c2corg@camptocamp.org":

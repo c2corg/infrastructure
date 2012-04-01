@@ -4,7 +4,7 @@ define c2corg::backup::dir {
 
   $fname = regsubst($name, '\/', '_', 'G')
 
-  if $backupkey {
+  if $::backupkey {
     concat::fragment { "include_${fname}_in_backups":
       target  => "/root/.backups.include",
       content => "${name}\n",

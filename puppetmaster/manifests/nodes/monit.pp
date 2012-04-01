@@ -13,7 +13,7 @@ node 'monit' inherits 'base-node' {
   $mpm_package = 'event'
   include apache
 
-  apache::vhost { $fqdn: }
+  apache::vhost { $::fqdn : }
 
   c2corg::backup::dir { [
     "/var/lib/drraw",

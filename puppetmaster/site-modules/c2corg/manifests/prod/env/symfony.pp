@@ -94,7 +94,7 @@ class c2corg::prod::env::symfony {
     hour    => 2,
   }
 
-  if ($hostname !~ /failover/) {
+  if ($::hostname !~ /failover/) {
 
     cron { "removeExpiredPendingUsers":
       command => "php -q /srv/www/camptocamp.org/batch/removeExpiredPendingUsers.php",

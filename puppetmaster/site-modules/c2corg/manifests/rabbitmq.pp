@@ -6,7 +6,7 @@ class c2corg::rabbitmq {
 
   apt::preferences { "rabbitmq_from_c2corg_repo":
     package  => "rabbitmq-server",
-    pin      => "release l=C2corg, a=${lsbdistcodename}",
+    pin      => "release l=C2corg, a=${::lsbdistcodename}",
     priority => "1010",
   }
 

@@ -7,7 +7,7 @@ class c2corg::varnish::instance {
     varnishlog => false,
   }
 
-  case $hostname {
+  case $::hostname {
     hn1: {
 
       host { "symfony-backend.c2corg":
@@ -18,7 +18,7 @@ class c2corg::varnish::instance {
         ip => '192.168.192.70',
       }
 
-      varnish::instance { $hostname:
+      varnish::instance { $::hostname:
         storage => ["malloc,64G"], # malloc on a huge swap partition
         corelimit => "unlimited",
         params  => [ "ban_lurker_sleep=3",
@@ -33,15 +33,15 @@ class c2corg::varnish::instance {
         ip => '127.0.0.1',
       }
 
-      varnish::instance { $hostname:
+      varnish::instance { $::hostname:
         address => ["*:8080"],
-        storage => ["file,/var/lib/varnish/${hostname}/varnish_storage.bin,512M"],
+        storage => ["file,/var/lib/varnish/${::hostname}/varnish_storage.bin,512M"],
       }
     }
   }
 
   # varnish plugin only backported for kFreeBSD instance
-  if ($operatingsystem == "GNU/kFreeBSD") {
+  if ($::operatingsystem == "GNU/kFreeBSD") {
 
     include c2corg::varnish::typesdb
 

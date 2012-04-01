@@ -17,7 +17,7 @@ Package {
 }
 
 Sudoers {
-  hosts   => $hostname,
+  hosts   => $::hostname,
   target  => "/etc/sudoers",
   require => Package["sudo"],
 }

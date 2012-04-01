@@ -9,7 +9,7 @@ node 'base-node' {
   include c2corg::account
   include c2corg::mta
   include c2corg::ssh::sshd
-  include "c2corg::apt::$lsbdistcodename"
+  include "c2corg::apt::${::lsbdistcodename}"
   include c2corg::common::packages
   include c2corg::common::services
   include c2corg::common::config

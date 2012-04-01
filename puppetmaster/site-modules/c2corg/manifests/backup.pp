@@ -5,10 +5,10 @@ class c2corg::backup {
     creates => ["/root/.backupkey.pub", "/root/.backupkey"],
   }
 
-  if $backupkey {
+  if $::backupkey {
     include concat::setup
 
-    $destdir = "/srv/backups/${hostname}/"
+    $destdir = "/srv/backups/${::hostname}/"
     $destsrv = "backup.ghst.infra.camptocamp.org"
 
     concat { "/root/.backups.include":
@@ -17,11 +17,11 @@ class c2corg::backup {
       mode  => "0644",
     }
 
-    @@c2corg::ssh::userkey { "backup key for $hostname":
-      user    => "backup-${hostname}",
+    @@c2corg::ssh::userkey { "backup key for $::hostname":
+      user    => "backup-${::hostname}",
       account => "root",
       type    => "rsa",
-      key     => $backupkey,
+      key     => $::backupkey,
       opts    => "command=\"rsync --server -logDtprRe.iLsf --delete --numeric-ids . ${destdir}\",no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc,no-pty",
       tag     => "backups",
     }

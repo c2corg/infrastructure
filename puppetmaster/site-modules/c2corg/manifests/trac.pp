@@ -48,7 +48,7 @@ class c2corg::trac {
   }
 
   @@host { "dev.camptocamp.org":
-    ip  => $ipaddress,
+    ip  => $::ipaddress,
     tag => "internal-hosts",
   }
 

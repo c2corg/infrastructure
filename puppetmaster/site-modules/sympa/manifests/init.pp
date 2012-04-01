@@ -2,7 +2,7 @@ class sympa {
 
   apt::preferences { "sympa_from_c2corg_repo":
     package  => "sympa",
-    pin      => "release l=C2corg, a=${lsbdistcodename}",
+    pin      => "release l=C2corg, a=${::lsbdistcodename}",
     priority => "1010",
     before   => Package["sympa"],
   }

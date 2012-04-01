@@ -15,11 +15,11 @@ class c2corg::common::services {
   service { "nscd": ensure => stopped }
 
   service { "ntp":
-    ensure => $is_virtual ? {
+    ensure => $::is_virtual ? {
       'true'  => stopped,
       'false' => running,
     },
-    enable => $is_virtual ? {
+    enable => $::is_virtual ? {
       'true'  => false,
       'false' => true,
     },

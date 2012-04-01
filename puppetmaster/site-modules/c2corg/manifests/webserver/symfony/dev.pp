@@ -1,7 +1,7 @@
 class c2corg::webserver::symfony::dev inherits c2corg::webserver::symfony {
 
   include c2corg::password
-  $sitename = "${hostname}.dev.camptocamp.org"
+  $sitename = "${::hostname}.dev.camptocamp.org"
 
   File["c2corg conf.ini"] {
     path => "/srv/www/camptocamp.org/deployment/${developer}.ini",

@@ -1,6 +1,6 @@
 class c2corg::apt {
 
-  $debmirror = $datacenter ? {
+  $debmirror = $::datacenter ? {
     /c2corg|epnet|pse/ => 'http://mirror.switch.ch/ftp/mirror',
     'gandi'        => 'http://mirrors.gandi.net',
     default        => 'http://cdn.debian.net',
@@ -22,14 +22,14 @@ deb <%= debmirror %>/debian/ wheezy-proposed-updates main contrib non-free
 
   apt::sources_list { "c2corg":
     content => "# file managed by puppet
-deb http://pkg.dev.camptocamp.org/c2corg/ $lsbdistcodename main
+deb http://pkg.dev.camptocamp.org/c2corg/ $::lsbdistcodename main
 ",
   }
 
-  if ($lsbdistcodename != 'wheezy') { # no backports available for wheezy yet
+  if ($::lsbdistcodename != 'wheezy') { # no backports available for wheezy yet
     apt::sources_list { "debian-backports":
       content => "# file managed by puppet
-deb http://backports.debian.org/debian-backports ${lsbdistcodename}-backports main contrib non-free
+deb http://backports.debian.org/debian-backports ${::lsbdistcodename}-backports main contrib non-free
 ",
     }
   }
@@ -76,13 +76,13 @@ deb http://backports.debian.org/debian-backports ${lsbdistcodename}-backports ma
 
   apt::preferences { "backports":
     package  => "*",
-    pin      => "release a=${lsbdistcodename}-backports",
+    pin      => "release a=${::lsbdistcodename}-backports",
     priority => "50",
   }
 
   apt::preferences { "c2corg":
     package  => "*",
-    pin      => "release l=C2corg, a=${lsbdistcodename}",
+    pin      => "release l=C2corg, a=${::lsbdistcodename}",
     priority => "110",
   }
 

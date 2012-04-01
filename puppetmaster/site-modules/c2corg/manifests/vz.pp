@@ -30,7 +30,7 @@ class c2corg::vz {
     ],
   }
 
-  case $hostname {
+  case $::hostname {
     "hn0": {
 
       /* test nodes instanciation */

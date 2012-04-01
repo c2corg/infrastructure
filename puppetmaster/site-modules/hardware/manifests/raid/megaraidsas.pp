@@ -14,7 +14,7 @@ class hardware::raid::megaraidsas {
   # See: http://hwraid.le-vert.net/ticket/12
 
   #apt::sources_list { "megaraid":
-  #  content => "deb http://hwraid.le-vert.net/debian/ ${lsbdistcodename} main",
+  #  content => "deb http://hwraid.le-vert.net/debian/ ${::lsbdistcodename} main",
   #}
 
   #apt::preferences { "megaraid":

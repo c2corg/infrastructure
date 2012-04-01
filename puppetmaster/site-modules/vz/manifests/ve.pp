@@ -83,7 +83,7 @@ define vz::ve ($ensure="running", $hname, $template="debian-squeeze-amd64-with-p
       'absent' => absent,
       default  => present,
     },
-    content => "openvzhn=${hostname}\nopenvzveid=${name}\n",
+    content => "openvzhn=${::hostname}\nopenvzveid=${name}\n",
     tag     => "openvzfacts-${hname}",
   }
 
