@@ -89,8 +89,6 @@ class puppet::client {
     force   => true,
   }
 
-  package { "ruby-json": ensure => present }
-
   # if datacenter fact is set, then pluginsync has successfully run at least
   # once.
   if ($::datacenter and $::hostname != "pm") {
