@@ -3,14 +3,9 @@ class c2corg::hn::hn0 inherits c2corg::hn {
 
   include hardware::raid::smartarray
 
-  iptables { "setup nat for private LAN":
-    table    => "nat",
-    proto    => "all",
-    chain    => "POSTROUTING",
-    outiface => "eth2",
-    source   => "192.168.192.0/24",
-    jump     => "MASQUERADE",
-    require  => Sysctl::Set_value["net.ipv4.ip_forward"],
+  nat::setup { "setup nat for private LAN":
+    iface => "eth2",
+    lan   => "192.168.192.0/24",
   }
 
   nat::fwd { "forward hn1 ssh port":
@@ -59,7 +54,5 @@ if [ -e /etc/iptables.rules ]; then
 fi
 ",
   }
-
-  package { "netstat-nat": }
 
 }

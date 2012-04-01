@@ -1,5 +1,7 @@
 class vz {
 
+  include nat
+
   package { ["vzctl", "vzquota", "vzdump", "bridge-utils", "debootstrap"]:
     ensure => present,
   }
@@ -9,7 +11,6 @@ class vz {
   }
 
   sysctl::set_value {
-    "net.ipv4.ip_forward":                  value => "1";
     "net.ipv4.conf.default.forwarding":     value => "1";
     "net.ipv4.conf.all.forwarding":         value => "1";
     "net.ipv4.conf.default.proxy_arp":      value => "1";
