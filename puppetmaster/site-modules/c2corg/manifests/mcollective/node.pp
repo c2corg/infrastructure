@@ -18,6 +18,7 @@ class c2corg::mcollective::node {
     ensure  => present,
     mode    => 0600,
     owner   => "root",
+    require => Package["mcollective"],
     notify  => Service["mcollective"],
     content => "# file managed by puppet
 topicprefix = /topic/

@@ -10,6 +10,7 @@ class c2corg::mcollective::client {
 
   file { "/etc/mcollective/client.cfg":
     mode    => 0644,
+    require => Package["mcollective-client"],
     content => "# file managed by puppet
 topicprefix = /topic/
 main_collective = mcollective
