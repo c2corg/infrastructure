@@ -80,6 +80,16 @@ class puppet::client {
     notify  => Service["puppet"],
   }
 
+  file { ["/etc/facter", "/etc/facter/facts.d"]:
+    ensure  => directory,
+    source  => "puppet:///c2corg/empty",
+    recurse => true,
+    purge   => true,
+    force   => true,
+  }
+
+  package { "ruby-json": ensure => present }
+
   # if datacenter fact is set, then pluginsync has successfully run at least
   # once.
   if ($datacenter and $hostname != "pm") {
