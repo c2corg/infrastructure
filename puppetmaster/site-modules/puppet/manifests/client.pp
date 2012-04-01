@@ -36,6 +36,7 @@ class puppet::client {
   augeas { "enable puppetd at boot":
     context => "/files/etc/default/puppet",
     changes => "set START yes",
+    before  => Service["puppet"],
   }
 
   augeas { "set puppet server":
