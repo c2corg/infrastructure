@@ -2,6 +2,8 @@ class c2corg::rabbitmq {
 
   include c2corg::password
 
+  #TODO: configure SSL
+
   apt::preferences { "rabbitmq_from_c2corg_repo":
     package  => "rabbitmq-server",
     pin      => "release l=C2corg, a=${lsbdistcodename}",
