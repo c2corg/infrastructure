@@ -29,6 +29,7 @@ libdir = /usr/share/mcollective/plugins
 logger_type = syslog
 logfile = /var/log/mcollective.log
 loglevel = info
+identity = ${::hostname}
 daemonize = 1
 
 # Plugins
