@@ -13,16 +13,18 @@ git://github.com/camptocamp/puppet-rsyncd.git rsyncd 3784b6cc
 git://github.com/camptocamp/puppet-postfix.git postfix eac3705
 git://github.com/camptocamp/puppet-sysctl.git sysctl bf068e0
 git://github.com/camptocamp/puppet-reprepro.git reprepro 1f70375
+
 git://github.com/kbarber/puppet-iptables.git iptables 9deddbbd
 git://github.com/bodepd/puppet-sudo.git sudo 9834ac93
+git://github.com/gergnz/puppetlabs-rabbitmq.git rabbitmq 7f7c1cf91
 git://github.com/puppetlabs/puppet-vcsrepo.git vcsrepo d97e19ff9
 git://github.com/puppetlabs/puppet-lvm.git lvm 75ea7be
 git://github.com/puppetlabs/puppetlabs-stdlib.git stdlib 033eddad
 git://github.com/ripienaar/puppet-concat.git concat 30c96286c
-git://github.com/gergnz/puppetlabs-rabbitmq.git rabbitmq 7f7c1cf91
+git://github.com/puppetlabs/hiera.git hiera b2ae058e9
+git://github.com/puppetlabs/hiera-puppet.git hiera-puppet 54be04bb99
 
 git://github.com/camptocamp/puppet-varnish.git varnish 8cdc0130
-
 git://github.com/camptocamp/puppet-apache.git apache 787f0946
 git://github.com/camptocamp/puppet-nginx.git nginx 38767a43
 git://github.com/camptocamp/puppet-postgresql.git postgresql 0a8a6856
