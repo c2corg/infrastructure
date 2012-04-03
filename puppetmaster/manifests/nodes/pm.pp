@@ -2,6 +2,7 @@
 node 'pm' inherits 'base-node' {
 
   include puppet::server
+  include c2corg::mcollective::client
   include c2corg::collectd::client
 
   # TODO: mv this stuff to a decent backend system
