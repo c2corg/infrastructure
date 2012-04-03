@@ -1,6 +1,6 @@
 class puppet::server {
 
-  package { ["puppetmaster", "vim-puppet"]:
+  package { ["puppetmaster", "vim-puppet", "puppet-lint"]:
     ensure  => present,
     require => Apt::Preferences["puppet-packages_from_c2corg_repo"],
   }
