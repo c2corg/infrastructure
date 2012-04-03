@@ -12,6 +12,6 @@ node 'content-factory' inherits 'base-node' {
   include postgresql::backup
   c2corg::backup::dir { "/var/backups/pgsql": }
 
-  include c2corg::collectd::client
+  include c2corg::collectd::node
 
 }

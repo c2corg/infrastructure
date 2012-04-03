@@ -1,4 +1,4 @@
-class c2corg::collectd::client {
+class c2corg::collectd::node {
   include collectd
 
   collectd::conf {

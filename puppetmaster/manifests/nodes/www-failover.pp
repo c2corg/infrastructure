@@ -21,7 +21,7 @@ node 'www-failover' inherits 'base-node' {
 
   include c2corg::prod::fs::photos
 
-  include c2corg::collectd::client
+  include c2corg::collectd::node
 
   c2corg::backup::dir { "/srv/www/camptocamp.org/www-data/persistent": }
 

@@ -28,7 +28,7 @@ node 'hn3' inherits 'base-node' {
   include haproxy
   include haproxy::collectd
 
-  include c2corg::collectd::client
+  include c2corg::collectd::node
 
   c2corg::backup::dir { [
     "/srv/www/camptocamp.org/www-data/persistent/advertising",

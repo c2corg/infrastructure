@@ -8,7 +8,7 @@ node 'hn2' inherits 'base-node' {
 
   include c2corg::prod::fs::openvz
 
-  include c2corg::collectd::client
+  include c2corg::collectd::node
 
   c2corg::backup::dir { "/etc/vz/conf/": }
 }

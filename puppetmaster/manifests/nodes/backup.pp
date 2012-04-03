@@ -4,7 +4,7 @@ node 'backup' inherits 'base-node' {
   include c2corg::prod::fs::backup
   include c2corg::backup::server
   include c2corg::webserver::ipv6gw
-  include c2corg::collectd::client
+  include c2corg::collectd::node
 
   collectd::plugin { ['cpu', 'df', 'disk', 'swap']: lines => [] }
 

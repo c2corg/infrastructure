@@ -5,6 +5,6 @@ node 'lists' inherits 'base-node' {
   #TODO: SPF headers
 
   include c2corg::mailinglists
-  include c2corg::collectd::client
+  include c2corg::collectd::node
 
 }
