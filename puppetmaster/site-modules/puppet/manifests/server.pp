@@ -70,12 +70,6 @@ class puppet::server {
     notify  => Service["puppetmaster"],
   }
 
-  # puppetmaster leaks open FDs with sqlite :-(
-  # TODO: remove this nonsense after upgrading puppet
-  cron { "restart puppetmaster":
-    command => "/etc/init.d/puppetmaster restart",
-    minute  => ip_to_cron(),
-    hour    => 4,
-  }
+  cron { "restart puppetmaster": ensure => absent }
 
 }
