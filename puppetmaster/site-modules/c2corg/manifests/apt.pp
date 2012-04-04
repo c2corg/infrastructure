@@ -6,6 +6,8 @@ class c2corg::apt {
     default        => 'http://cdn.debian.net',
   }
 
+  $pkgrepo = hiera('pkgrepo')
+
   include apt::unattended-upgrade::automatic
 
   apt::sources_list { "debian":
@@ -22,7 +24,7 @@ deb <%= debmirror %>/debian/ wheezy-proposed-updates main contrib non-free
 
   apt::sources_list { "c2corg":
     content => "# file managed by puppet
-deb http://pkg.dev.camptocamp.org/c2corg/ $::lsbdistcodename main
+deb http://${pkgrepo}/c2corg/ ${::lsbdistcodename} main
 ",
   }
 
@@ -35,7 +37,7 @@ deb http://backports.debian.org/debian-backports ${::lsbdistcodename}-backports 
   }
 
   apt::key { "c2corg":
-    source => "http://pkg.dev.camptocamp.org/pubkey.txt",
+    source => "http://${pkgrepo}/pubkey.txt",
   }
 
   apt::preferences { "squeeze":
