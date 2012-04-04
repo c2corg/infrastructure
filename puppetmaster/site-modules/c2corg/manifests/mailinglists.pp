@@ -5,8 +5,8 @@ class c2corg::mailinglists {
 
   include c2corg::collectd::plugin::postfix
 
-  $dbhost = '192.168.192.5' #TODO: factorize
-  $dbport = '5432'
+  $dbhost = hiera('db_host')
+  $dbport = hiera('db_port')
   $dbtype = 'Pg'
   $dbname = 'c2corg'
   $dbuser = $c2corg::password::ml_db_user

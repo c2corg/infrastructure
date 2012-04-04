@@ -4,8 +4,9 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
 
   $sitename = "camptocamp.org"
   $smtp_server = "127.0.0.1"
-  $db_host = "192.168.192.5" # TODO: factorize
-  $session_host = "192.168.192.5" # TODO: factorize
+  $db_host = hiera('db_host')
+  $db_port = hiera('db_port')
+  $session_host = hiera('session_host')
   $advertising_rw_dir = "/srv/www/camptocamp.org/www-data/persistent/advertising"
 
   include c2corg::memcachedb
@@ -26,6 +27,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
     'DB_USER'               => '${c2corg::password::www_db_user}',
     'DB_PASS'               => '${c2corg::password::prod_db_pass}',
     'DB_HOST'               => '${db_host}',
+    'DB_PORT'               => '${db_port}',
     'SERVER_NAME'           => 'www.${sitename}',
     'MOBILE_VERSION_HOST'   => 'm.${sitename}',
     'CLASSIC_VERSION_HOST'  => 'www.${sitename}',
@@ -49,6 +51,7 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
     "PGUSER='${c2corg::password::www_db_user}'",
     "PGPASSWORD='${c2corg::password::prod_db_pass}'",
     "PGHOST='${db_host}'",
+    "PGPORT='${db_port}'",
   ]
 
   File["psql-env.sh"] {
@@ -64,7 +67,7 @@ all:
   myConnection:
     class: sfDoctrineDatabase
     param:
-      dsn: pgsql://${c2corg::password::www_db_user}:${c2corg::password::prod_db_pass}@${db_host}:5432/metaengine
+      dsn: pgsql://${c2corg::password::www_db_user}:${c2corg::password::prod_db_pass}@${db_host}:${db_port}/metaengine
 ",
     require => Vcsrepo["/srv/www/meta.camptocamp.org"],
   }
