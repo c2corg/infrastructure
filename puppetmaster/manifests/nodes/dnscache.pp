@@ -1,4 +1,8 @@
-# VM - RFC1918 subnet DNS cache
+# VM
 node 'dnscache' inherits 'base-node' {
+
   include unbound
+
+  fact::register { 'role': 'cache DNS subnet privé' }
+
 }

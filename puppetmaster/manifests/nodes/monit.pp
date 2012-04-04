@@ -1,4 +1,4 @@
-# VM - logs, stats and graphs
+# VM
 node 'monit' inherits 'base-node' {
 
   include c2corg::collectd::server
@@ -14,6 +14,8 @@ node 'monit' inherits 'base-node' {
   include apache
 
   apache::vhost { $::fqdn : }
+
+  fact::register { 'role': value => ['collectd', 'graphite', 'syslog'] }
 
   c2corg::backup::dir { [
     "/var/lib/drraw",

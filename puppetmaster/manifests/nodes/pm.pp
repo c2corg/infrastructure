@@ -1,4 +1,4 @@
-# VM - configuration management
+# VM
 node 'pm' inherits 'base-node' {
 
   include puppet::server
@@ -10,6 +10,8 @@ node 'pm' inherits 'base-node' {
     ensure => directory,
     owner  => "marc",
   }
+
+  fact::register { 'role': value => 'config management' }
 
   c2corg::backup::dir {
     ["/srv/puppetmaster", "/var/lib/puppet/ssl", "/home", "/etc/c2corg"]:

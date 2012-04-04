@@ -1,4 +1,4 @@
-# X3550 M3 - prod database
+# X3550 M3
 node 'hn4' inherits 'base-node' {
 
   include c2corg::hn::hn4
@@ -12,6 +12,8 @@ node 'hn4' inherits 'base-node' {
   collectd::plugin { "memcached": lines => [] }
 
   include c2corg::collectd::node
+
+  fact::register { 'role': value => 'postgresql principal' }
 
   $postgresql_backupfmt = "custom"
   include postgresql::backup

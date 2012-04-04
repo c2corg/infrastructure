@@ -1,4 +1,4 @@
-# VM - pre-prod database + webserver
+# VM
 node 'pre-prod' inherits 'base-node' {
 
   realize C2corg::Account::User['alex']
@@ -20,5 +20,7 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::varnish::instance
 
   include c2corg::collectd::node
+
+  fact::register { 'role': value => 'pré-production' }
 
 }

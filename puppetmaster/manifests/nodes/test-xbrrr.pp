@@ -14,4 +14,6 @@ node 'test-xbrrr' inherits 'base-node' {
 
   include c2corg::apacheconf::dev
 
+  fact::register { 'role': value => 'dev' }
+
 }

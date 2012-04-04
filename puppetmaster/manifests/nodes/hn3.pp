@@ -1,4 +1,4 @@
-# X3550 M3 - prod webserver
+# X3550 M3
 node 'hn3' inherits 'base-node' {
 
   realize C2corg::Account::User['alex']
@@ -29,6 +29,8 @@ node 'hn3' inherits 'base-node' {
   include haproxy::collectd
 
   include c2corg::collectd::node
+
+  fact::register { 'role': value => 'serveur web principal' }
 
   c2corg::backup::dir { [
     "/srv/www/camptocamp.org/www-data/persistent/advertising",

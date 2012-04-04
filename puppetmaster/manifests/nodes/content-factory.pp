@@ -1,4 +1,4 @@
-# VM - content-factory database + webserver
+# VM
 node 'content-factory' inherits 'base-node' {
 
   include c2corg::database::dev
@@ -9,9 +9,12 @@ node 'content-factory' inherits 'base-node' {
 
   include c2corg::apacheconf::content-factory
 
-  include postgresql::backup
-  c2corg::backup::dir { "/var/backups/pgsql": }
-
   include c2corg::collectd::node
+
+  include postgresql::backup
+
+  fact::register { 'role': value => 'pré-publication articles' }
+
+  c2corg::backup::dir { "/var/backups/pgsql": }
 
 }

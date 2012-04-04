@@ -1,4 +1,4 @@
-# VM - mailinglists
+# VM
 node 'lists' inherits 'base-node' {
 
   #TODO: graph/monitor postfix & sympa
@@ -7,4 +7,5 @@ node 'lists' inherits 'base-node' {
   include c2corg::mailinglists
   include c2corg::collectd::node
 
+  fact::register { 'role': value => 'distribution BRAs' }
 }
