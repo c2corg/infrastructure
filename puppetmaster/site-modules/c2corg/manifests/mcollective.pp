@@ -1,6 +1,6 @@
 class c2corg::mcollective {
 
-  $broker = "192.168.192.55" #TODO: factorize this
+  $broker = hiera('broker')
 
   apt::preferences { "mcollective_from_wheezy_repo":
     package  => "mcollective mcollective-client mcollective-common",

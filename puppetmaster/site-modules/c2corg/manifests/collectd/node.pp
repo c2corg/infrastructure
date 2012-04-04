@@ -21,10 +21,7 @@ class c2corg::collectd::node {
   }
 
   collectd::network { 'network':
-    server      => $::datacenter ? {
-      /c2corg|epnet|pse/ => '192.168.192.126',
-      default            => '128.179.66.13',
-    },
+    server      => hiera('collectd'),
     cache_flush => 86400,
   }
 

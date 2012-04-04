@@ -5,4 +5,10 @@ class data::common {
 
   $pkgrepo = 'pkg.dev.camptocamp.org'
 
+  $collectd = '192.168.192.126'
+  $syslog   = '192.168.192.126'
+  $broker   = '192.168.192.55'
+
+  $puppetmaster = '192.168.192.126'
+
 }

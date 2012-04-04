@@ -1,9 +1,6 @@
 class c2corg::syslog::client {
 
-  $syslog_server = $::datacenter ? {
-    /c2corg|epnet|pse/ => "192.168.192.126",
-    default            => "128.179.66.13",
-  }
+  $syslog_server = hiera('syslog')
 
   package { "syslog":
     name   => "rsyslog",
