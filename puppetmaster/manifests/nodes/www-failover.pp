@@ -23,7 +23,10 @@ node 'www-failover' inherits 'base-node' {
 
   include c2corg::collectd::node
 
-  fact::register { 'role': value => ['failover', 'archivage photos'] }
+  fact::register {
+    'role': value => ['failover', 'archivage photos'];
+    'duty': value => 'prod';
+  }
 
   c2corg::backup::dir { "/srv/www/camptocamp.org/www-data/persistent": }
 

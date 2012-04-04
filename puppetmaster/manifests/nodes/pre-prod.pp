@@ -21,6 +21,9 @@ node 'pre-prod' inherits 'base-node' {
 
   include c2corg::collectd::node
 
-  fact::register { 'role': value => 'pré-production' }
+  fact::register {
+    'role': value => 'pré-production';
+    'duty': value => 'dev';
+  }
 
 }

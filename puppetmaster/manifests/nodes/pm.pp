@@ -11,7 +11,10 @@ node 'pm' inherits 'base-node' {
     owner  => "marc",
   }
 
-  fact::register { 'role': value => 'config management' }
+  fact::register {
+    'role': value => 'config management';
+    'duty': value => 'prod';
+  }
 
   c2corg::backup::dir {
     ["/srv/puppetmaster", "/var/lib/puppet/ssl", "/home", "/etc/c2corg"]:

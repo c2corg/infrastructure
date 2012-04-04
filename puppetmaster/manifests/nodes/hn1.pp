@@ -7,5 +7,8 @@ node 'hn1' inherits 'base-node' {
 
   include c2corg::collectd::node
 
-  fact::register { 'role': value => 'cache varnish' }
+  fact::register {
+    'role': value => 'cache varnish';
+    'duty': value => 'prod';
+  }
 }

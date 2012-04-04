@@ -13,7 +13,10 @@ node 'content-factory' inherits 'base-node' {
 
   include postgresql::backup
 
-  fact::register { 'role': value => 'pré-publication articles' }
+  fact::register {
+    'role': value => 'pré-publication articles';
+    'duty': value => 'dev';
+  }
 
   c2corg::backup::dir { "/var/backups/pgsql": }
 

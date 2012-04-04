@@ -7,5 +7,8 @@ node 'lists' inherits 'base-node' {
   include c2corg::mailinglists
   include c2corg::collectd::node
 
-  fact::register { 'role': value => 'distribution BRAs' }
+  fact::register {
+    'role': value => 'distribution BRAs';
+    'duty': value => 'prod';
+  }
 }

@@ -30,7 +30,10 @@ node 'hn3' inherits 'base-node' {
 
   include c2corg::collectd::node
 
-  fact::register { 'role': value => 'serveur web principal' }
+  fact::register {
+    'role': value => 'serveur web principal';
+    'duty': value => 'prod';
+  }
 
   c2corg::backup::dir { [
     "/srv/www/camptocamp.org/www-data/persistent/advertising",

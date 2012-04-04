@@ -10,7 +10,10 @@ node 'hn2' inherits 'base-node' {
 
   include c2corg::collectd::node
 
-  fact::register { 'role': 'HN openvz' }
+  fact::register {
+    'role': value => 'HN openvz';
+    'duty': value => 'prod';
+  }
 
   c2corg::backup::dir { "/etc/vz/conf/": }
 }

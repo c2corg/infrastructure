@@ -13,7 +13,10 @@ node 'hn4' inherits 'base-node' {
 
   include c2corg::collectd::node
 
-  fact::register { 'role': value => 'postgresql principal' }
+  fact::register {
+    'role': value => 'postgresql principal';
+    'duty': value => 'prod';
+  }
 
   $postgresql_backupfmt = "custom"
   include postgresql::backup

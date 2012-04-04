@@ -15,7 +15,10 @@ node 'monit' inherits 'base-node' {
 
   apache::vhost { $::fqdn : }
 
-  fact::register { 'role': value => ['collectd', 'graphite', 'syslog'] }
+  fact::register {
+    'role': value => ['collectd', 'graphite', 'syslog'];
+    'duty': value => 'prod';
+  }
 
   c2corg::backup::dir { [
     "/var/lib/drraw",

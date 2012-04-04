@@ -14,6 +14,9 @@ node 'test-alex' inherits 'base-node' {
 
   include c2corg::apacheconf::dev
 
-  fact::register { 'role': value => 'dev' }
+  fact::register {
+    'role': value => 'dev';
+    'duty': value => 'dev';
+  }
 
 }

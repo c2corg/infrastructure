@@ -27,7 +27,10 @@ node 'dev-cda' inherits 'base-node' {
 
   realize C2corg::Account::User['gottferdom']
 
-  fact::register { 'role': value => 'mandat dev CDA' }
+  fact::register {
+    'role': value => 'mandat dev CDA';
+    'duty': value => 'dev';
+  }
 
   c2corg::backup::dir {
     ["/srv/www/camptocamp.org/"]:
