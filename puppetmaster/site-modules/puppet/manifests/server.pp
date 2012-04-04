@@ -70,6 +70,25 @@ class puppet::server {
     notify  => Service["puppetmaster"],
   }
 
+  file { '/etc/puppet/hiera.yaml':
+    ensure  => present,
+    content => '---
+:backends: - yaml
+           - puppet
+:hierarchy: - %{hostname}
+            - %{duty}
+            - %{datacenter}
+            - common
+:yaml:
+    :datadir: /etc/puppet/hiera
+
+:puppet:
+    :datasource: data
+',
+  }
+
+  file { '/etc/puppet/hiera': ensure => directory }
+
   cron { "restart puppetmaster": ensure => absent }
 
 }
