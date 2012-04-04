@@ -9,6 +9,6 @@ class data::common {
   $syslog   = '192.168.192.126'
   $broker   = '192.168.192.55'
 
-  $puppetmaster = '192.168.192.126'
+  $puppetmaster = '192.168.192.101'
 
 }
