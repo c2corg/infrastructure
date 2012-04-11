@@ -1,9 +1,16 @@
 class c2corg::backup::server {
 
-  package { "btrfs-tools": ensure => present }
+  package { 'zfs-fuse': ensure => present }
 
-  file { ["/srv/backups", "/srv/backups/SNAPSHOTS"]:
-    ensure => directory,
+  augeas { 'enable zfs at boot':
+    changes => 'set /files/etc/default/zfs-fuse/ENABLE_ZFS yes',
+    require => Package['zfs-fuse'],
+    before  => Service['zfs-fuse'],
+  }
+
+  service { 'zfs-fuse':
+    ensure    => running,
+    hasstatus => false,
   }
 
   C2corg::Ssh::Userkey <<| tag == 'backups' |>>
@@ -24,27 +31,24 @@ class c2corg::backup::server {
     mode    => 0755,
     owner   => "root",
     before  => Cron["daily backup increment"],
-    require => Package["btrfs-tools"],
+    require => Package["zfs-fuse"],
     content => '#!/bin/sh
 
-BASE="/srv/backups"
+export PATH="/bin:/sbin"
+BASE="srv/backups"
 DATEFMT="%d"
-RETENSION=$(/bin/date -d "now - 10 days" +$DATEFMT)
 
-NEWINCR="$BASE/SNAPSHOTS/$(date +$DATEFMT)"
-OLDINCR="$BASE/SNAPSHOTS/$RETENSION"
+NEWINCR=$(date +$DATEFMT)
+OLDINCR=$(date -d "now - 10 days" +$DATEFMT)
 
-if [ -d $OLDINCR ]; then
-  /sbin/btrfs subvolume delete $OLDINCR
-fi
+for node in $(ls /$BASE); do
+  if zfs list -t snapshot | egrep -q "^$BASE/$node@$OLDINCR"; then
+    zfs destroy $BASE/$node@$OLDINCR
+  fi
 
-if ! [ -d $NEWINCR ]; then
-  /sbin/btrfs subvolume snapshot $BASE $NEWINCR || exit 1
-  /bin/date > $NEWINCR/snapshot.date
-else
-  /bin/echo "snapshot failed: $NEWINCR already present"
-  exit 1
-fi
+  zfs snapshot $BASE/$node@$NEWINCR || exit 1
+done
+
 ',
   }
 
