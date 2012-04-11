@@ -1,0 +1,25 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          blockdev
+# Required-Start:    mountall
+# Required-Stop:
+# Default-Start:     S
+# Default-Stop:
+# Short-Description: Set blockdevice options
+# Description:
+### END INIT INFO
+
+BLOCKDEV="/sbin/blockdev"
+
+$BLOCKDEV --set<%= readpolicy %> <%= device %>
+<% if blocksize != false -%>
+$BLOCKDEV --setbsz <%= blocksize %> <%= device %>
+<% end -%>
+<% if readahead != false -%>
+$BLOCKDEV --setra <%= readahead %> <%= device %>
+<% end -%>
+<% if fsreadahead != false -%>
+$BLOCKDEV --setfra <%= fsreadahead %> <%= device %>
+<% end -%>
+
+exit 0
