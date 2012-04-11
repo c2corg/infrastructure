@@ -46,7 +46,7 @@ for node in $(ls /$BASE); do
     zfs destroy $BASE/$node@$OLDINCR
   fi
 
-  zfs snapshot $BASE/$node@$NEWINCR || exit 1
+  zfs snapshot $BASE/$node@$NEWINCR
 done
 
 ',
