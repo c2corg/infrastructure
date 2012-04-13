@@ -26,6 +26,14 @@ class c2corg::backup {
       tag     => "backups",
     }
 
+    @@zfs { "srv/backups/$::hostname":
+      ensure      => present,
+      atime       => 'off',
+      compression => 'gzip-1',
+      dedup       => 'on',
+      tag         => "backups",
+    }
+
     cron { "rsync important stuff to backup server":
       command => "test ! -f /var/run/backup.lock && (touch /var/run/backup.lock && rsync --rsh='ssh -i /root/.backupkey' --archive --numeric-ids --delete --relative --quiet $(cat /root/.backups.include) root@${destsrv}:${destdir} || echo 'backup failed'; rm -f /var/run/backup.lock)",
       hour    => ip_to_cron(1, 6),

@@ -14,6 +14,7 @@ class c2corg::backup::server {
   }
 
   C2corg::Ssh::Userkey <<| tag == 'backups' |>>
+  Zfs <<| tag == 'backups' |>>
 
   @@sshkey { $::ipaddress:
     type => rsa,
