@@ -3,7 +3,7 @@ class c2corg::common::packages {
   include gnupg
 
   package { [
-    "arping", "at",
+    "ack-grep", "arping", "at",
     "bash-completion", "bzr",
     "curl", "cron", "cvs",
     "dnsutils",
