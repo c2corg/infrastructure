@@ -3,6 +3,7 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
   include c2corg::password
   $sitename = "pre-prod.dev.camptocamp.org"
   $session_host = hiera('session_host')
+  $statsd_host = hiera('statsd')
 
   include c2corg::memcachedb
 
@@ -30,6 +31,7 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
   c2corg_vars = {
     'DB_USER'               => '${c2corg::password::www_db_user}',
     'DB_PASS'               => '${c2corg::password::preprod_db_pass}',
+    'STATSD_HOST'           => '${statsd_host}',
     'SERVER_NAME'           => 'www.${sitename}',
     'MOBILE_VERSION_HOST'   => 'm.${sitename}',
     'CLASSIC_VERSION_HOST'  => 'www.${sitename}',
