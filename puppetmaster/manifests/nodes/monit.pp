@@ -5,6 +5,7 @@ node 'monit' inherits 'base-node' {
   include graphite::carbon
   include graphite::collectd
   include graphite::webapp
+  include statsd::server
   include c2corg::syslog::server
   include c2corg::syslog::pgfouine
   include c2corg::syslog::haproxy
