@@ -21,7 +21,7 @@ class c2corg::collectd::node {
   }
 
   collectd::network { 'network':
-    server      => hiera('collectd'),
+    server      => hiera('collectd_host'),
     cache_flush => 86400,
   }
 

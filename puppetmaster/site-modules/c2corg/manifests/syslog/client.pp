@@ -1,6 +1,6 @@
 class c2corg::syslog::client {
 
-  $syslog_server = hiera('syslog')
+  $syslog_server = hiera('syslog_host')
 
   package { "syslog":
     name   => "rsyslog",

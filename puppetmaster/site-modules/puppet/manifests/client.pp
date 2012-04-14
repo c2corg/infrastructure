@@ -93,7 +93,7 @@ class puppet::client {
   # once.
   if ($::datacenter and $::hostname != "pm") {
     host { "pm.pse.infra.camptocamp.org":
-      ip           => hiera('puppetmaster'),
+      ip           => hiera('puppetmaster_host'),
       host_aliases => ["pm"],
     }
   }

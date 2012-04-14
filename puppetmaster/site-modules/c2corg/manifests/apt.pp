@@ -6,7 +6,7 @@ class c2corg::apt {
     default        => 'http://cdn.debian.net',
   }
 
-  $pkgrepo = hiera('pkgrepo')
+  $pkgrepo = hiera('pkgrepo_host')
 
   include apt::unattended-upgrade::automatic
 

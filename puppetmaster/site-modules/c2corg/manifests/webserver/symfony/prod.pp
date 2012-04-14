@@ -7,7 +7,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
   $db_host = hiera('db_host')
   $db_port = hiera('db_port')
   $session_host = hiera('session_host')
-  $statsd_host = hiera('statsd')
+  $statsd_host = hiera('statsd_host')
   $advertising_rw_dir = "/srv/www/camptocamp.org/www-data/persistent/advertising"
 
   include c2corg::memcachedb

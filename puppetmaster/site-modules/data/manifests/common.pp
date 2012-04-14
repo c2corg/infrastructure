@@ -3,13 +3,13 @@ class data::common {
 
   $db_port = '5432'
 
-  $pkgrepo = 'pkg.dev.camptocamp.org'
+  $pkgrepo_host = 'pkg.dev.camptocamp.org'
 
-  $collectd = '192.168.192.126'
-  $statsd   = '192.168.192.126'
-  $syslog   = '192.168.192.126'
-  $broker   = '192.168.192.55'
+  $collectd_host = '192.168.192.126'
+  $statsd_host   = '192.168.192.126'
+  $syslog_host   = '192.168.192.126'
+  $broker_host   = '192.168.192.55'
 
-  $puppetmaster = '192.168.192.101'
+  $puppetmaster_host = '192.168.192.101'
 
 }

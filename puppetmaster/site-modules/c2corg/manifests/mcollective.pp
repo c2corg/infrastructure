@@ -1,6 +1,6 @@
 class c2corg::mcollective {
 
-  $broker = hiera('broker')
+  $broker = hiera('broker_host')
 
   apt::preferences { "mcollective_from_wheezy_repo":
     package  => "mcollective mcollective-client mcollective-common",
