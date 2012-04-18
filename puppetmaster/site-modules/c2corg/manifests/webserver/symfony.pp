@@ -10,6 +10,7 @@ class c2corg::webserver::symfony {
   package { ["php5-pgsql", "php5-gd", "php-pear"]: }
   package { "gettext": }
   package { "imagemagick": }
+  package { "ruby-sass": }
 
   # stuff no longer required on this system class
   package{ ["php-symfony", "msmtp"]: ensure => absent }
