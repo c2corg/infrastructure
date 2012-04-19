@@ -37,6 +37,7 @@ logfile = /var/log/mcollective.log
 loglevel = info
 identity = ${::hostname}
 daemonize = 1
+classesfile = /var/lib/puppet/state/classes.txt
 
 # Plugins
 securityprovider = psk
