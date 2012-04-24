@@ -37,6 +37,7 @@ git://github.com/camptocamp/puppet-python.git python 91fe7554
 git://github.com/camptocamp/puppet-ruby.git ruby d7debdf
 git://github.com/camptocamp/puppet-php.git php 470a229
 git://github.com/camptocamp/puppet-buildenv.git buildenv e9ff874
+git://github.com/camptocamp/puppet-kmod.git kmod 743eed562b
 
 " | egrep -v '^$|^#' | while read url module commit; do
 
