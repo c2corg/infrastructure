@@ -2,6 +2,7 @@
 class c2corg::hn::hn5 inherits c2corg::hn {
 
   include hardware::raid::megaraid
+  include ipmi
 
   augeas { "enable console on serial port":
     context => "/files/etc/inittab/T0/",
