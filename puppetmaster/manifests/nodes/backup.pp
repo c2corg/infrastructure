@@ -11,6 +11,19 @@ node 'backup' inherits 'base-node' {
     'duty': value => 'prod';
   }
 
-  collectd::plugin { ['cpu', 'df', 'disk', 'swap']: lines => [] }
+  collectd::plugin { ['cpu', 'disk', 'swap']: lines => [] }
+
+  collectd::plugin { 'df':
+    lines => [
+      'MountPoint "/dev"',
+      'MountPoint "/dev/shm"',
+      'MountPoint "/lib/init/rw"',
+      'IgnoreSelected true',
+      'ReportReserved true',
+      'ReportInodes true',
+    ],
+  }
+
+  }
 
 }

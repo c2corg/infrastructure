@@ -6,10 +6,21 @@ class c2corg::hn {
   }
 
   $collectdplugins = $::operatingsystem ? {
-    'GNU/kFreeBSD' => ['cpu', 'df', 'swap'],
-    default        => ['cpu', 'df', 'disk', 'entropy', 'irq', 'swap'],
+    'GNU/kFreeBSD' => ['cpu', 'swap'],
+    default        => ['cpu', 'disk', 'entropy', 'irq', 'swap'],
   }
   collectd::plugin { $collectdplugins: lines => [] }
+
+  collectd::plugin { 'df':
+    lines => [
+      'MountPoint "/dev"',
+      'MountPoint "/dev/shm"',
+      'MountPoint "/lib/init/rw"',
+      'IgnoreSelected true',
+      'ReportReserved true',
+      'ReportInodes true',
+    ],
+  }
 
   package { "iozone3": }
 
