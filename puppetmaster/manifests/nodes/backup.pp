@@ -24,6 +24,4 @@ node 'backup' inherits 'base-node' {
     ],
   }
 
-  }
-
 }
