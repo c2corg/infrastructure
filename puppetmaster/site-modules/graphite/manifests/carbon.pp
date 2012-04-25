@@ -106,6 +106,16 @@ retentions = 15s:7d,1m:21d,15m:5y
 ',
   }
 
+  file { "/etc/carbon/rewrite-rules.conf":
+    ensure  => present,
+    notify  => Service["carbon-aggregator"],
+    content => '# file managed by puppet
+[pre]
+(\d)\.(\d) = \1_\2
+camptocamp.org = camptocamp_org
+',
+  }
+
   file { "/etc/init.d/carbon-cache":
     source => "puppet:///modules/graphite/carbon-cache.init",
     mode   => 0755,
