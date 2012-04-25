@@ -27,21 +27,21 @@ class graphite::carbon {
     force   => true,
     target  => "/srv/carbon",
     require => Exec["install carbon"],
-    before  => Service["carbon"],
+    before  => Service["carbon-cache"],
   }
 
   file { ["/srv/carbon/", "/var/log/carbon/"]:
     ensure => directory,
     owner  => "carbon",
     group  => "carbon",
-    before => Service["carbon"],
+    before => Service["carbon-cache"],
   }
 
   file { "/etc/carbon/": ensure => directory }
 
   file { "/etc/carbon/carbon.conf":
     ensure  => present,
-    notify  => Service["carbon"],
+    notify  => [Service["carbon-cache"], Service["carbon-aggregator"]],
     content => "# file managed by puppet
 [cache]
 STORAGE_DIR = /var/lib/carbon/
@@ -94,7 +94,7 @@ MAX_AGGREGATION_INTERVALS = 5
 
   file { "/etc/carbon/storage-schemas.conf":
     ensure  => present,
-    notify  => Service["carbon"],
+    notify  => Service["carbon-cache"],
     content => '# file managed by puppet
 [carbon]
 pattern = ^carbon\.
@@ -106,13 +106,19 @@ retentions = 15s:7d,1m:21d,15m:5y
 ',
   }
 
-  file { "/etc/init.d/carbon":
-    source => "puppet:///modules/graphite/carbon.init",
+  file { "/etc/init.d/carbon-cache":
+    source => "puppet:///modules/graphite/carbon-cache.init",
     mode   => 0755,
-    before => Service["carbon"],
+    before => Service["carbon-cache"],
   }
 
-  service { "carbon":
+  file { "/etc/init.d/carbon-aggregator":
+    source => "puppet:///modules/graphite/carbon-aggregator.init",
+    mode   => 0755,
+    before => Service["carbon-aggregator"],
+  }
+
+  service { "carbon-cache":
     ensure    => running,
     hasstatus => true,
     enable    => true,
@@ -121,6 +127,16 @@ retentions = 15s:7d,1m:21d,15m:5y
       User["carbon"],
       Exec["install carbon"],
       Exec["install whisper"],
+    ],
+  }
+
+  service { "carbon-aggregator":
+    ensure    => running,
+    hasstatus => true,
+    enable    => true,
+    require   => [
+      File["/etc/carbon/carbon.conf"],
+      Service["carbon-cache"],
     ],
   }
 

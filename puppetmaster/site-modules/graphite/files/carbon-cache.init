@@ -1,6 +1,6 @@
 #! /bin/sh
 ### BEGIN INIT INFO
-# Provides:          carbon
+# Provides:          carbon-cache
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
@@ -13,7 +13,7 @@
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Carbon storage service"
-NAME=carbon
+NAME=carbon-cache
 DAEMON=/opt/carbon/bin/carbon-cache.py
 DAEMON_ARGS="--config /etc/carbon/carbon.conf"
 #PIDFILE=/var/run/$NAME.pid

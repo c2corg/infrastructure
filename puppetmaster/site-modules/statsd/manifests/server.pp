@@ -20,8 +20,9 @@ class statsd::server {
   }
 
   service { 'pystatsd-server':
-    ensure  => running,
-    enable  => true,
-    pattern => '^/usr/bin/python /usr/bin/pystatsd-server',
+    ensure    => running,
+    enable    => true,
+    hasstatus => true,
+    subscribe => Service['carbon-aggregator'],
   }
 }

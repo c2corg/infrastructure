@@ -16,7 +16,7 @@ class graphite::collectd {
   }
 
   collectd::plugin { "collectd-graphite":
-    require => [Exec["install collectd-graphite"], Service["carbon"]],
+    require => [Exec["install collectd-graphite"], Service["carbon-aggregator"]],
     content => '# file managed by puppet
 <LoadPlugin "perl">
   Globals true
@@ -30,7 +30,7 @@ class graphite::collectd {
       Buffer "256000"
       Prefix "collectd"
       Host   "localhost"
-      Port   "2003"
+      Port   "2023"
     </Plugin>
 </Plugin>
 ',
