@@ -43,6 +43,8 @@ LOG_DIR = '/var/log/graphite/'
 DATABASE_ENGINE = 'sqlite3'
 DATABASE_NAME = '/var/www/graphite/private/graphite/graphite.db'
 USE_REMOTE_USER_AUTHENTICATION = True
+TIME_ZONE = 'Europe/Zurich'
+LANGUAGE_CODE = 'fr-fr'
 ",
     require => Exec["install graphite webapp"],
     before  => Apache::Directive["configure graphite"],
