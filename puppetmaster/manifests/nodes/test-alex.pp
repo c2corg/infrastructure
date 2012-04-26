@@ -14,6 +14,12 @@ node 'test-alex' inherits 'base-node' {
 
   include c2corg::apacheconf::dev
 
+  sudoers { "root access for ${developer}":
+    users    => $developer,
+    type     => 'user_spec',
+    commands => '(ALL) ALL',
+  }
+
   fact::register {
     'role': value => 'dev';
     'duty': value => 'dev';
