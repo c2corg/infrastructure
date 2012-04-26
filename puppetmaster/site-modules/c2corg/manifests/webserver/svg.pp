@@ -6,7 +6,7 @@ class c2corg::webserver::svg {
 
   /* Fonts used by SVG routines */
   package { [
-    "msttcorefonts", "gsfonts", "texlive-fonts-extra",
+    "ttf-mscorefonts-installer", "gsfonts", "texlive-fonts-extra",
     "texlive-fonts-recommended", "gsfonts-x11",
     "ttf-bitstream-vera", "ttf-dejavu"]:
   }
