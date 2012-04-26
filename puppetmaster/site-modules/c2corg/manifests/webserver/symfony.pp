@@ -18,6 +18,7 @@ class c2corg::webserver::symfony {
   # short_open_tag conflicts with <?xml ... headers
   augeas { "disable php short open tags":
     changes => "set /files/etc/php5/apache2/php.ini/PHP/short_open_tag Off",
+    require => Package['libapache2-mod-php5'],
     notify  => Service["apache"],
   }
 
