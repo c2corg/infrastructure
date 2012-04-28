@@ -84,7 +84,6 @@ options rotate edns0
   file { "/etc/vim/vimrc.local":
     ensure  => present,
     content => '" file managed by puppet
-syntax on
 set visualbell
 set tabstop=2
 set shiftwidth=2
@@ -97,6 +96,9 @@ set showmatch
 set ignorecase
 set incsearch
 set pastetoggle=<F2>
+
+syntax on
+au BufNewFile,BufRead *.scss set filetype=css
 ',
   }
 
