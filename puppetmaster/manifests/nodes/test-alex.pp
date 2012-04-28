@@ -3,8 +3,8 @@ node 'test-alex' inherits 'base-node' {
 
   $developer = "alex"
 
-  realize C2corg::Account::User['alex']
-  c2corg::account::user { "alex@root": user => "alex", account => "root" }
+  realize C2corg::Account::User[$developer]
+  c2corg::account::user { "${developer}@root": user => $developer, account => "root" }
 
   include c2corg::database::dev
 
