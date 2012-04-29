@@ -292,7 +292,12 @@ class MFBot():
         Send weekly synthesis.
         """
 
-        synth_html = html.tostring(self.synth_content[0],
+        if (len(self.synth_content)):
+            synth_html = self.synth_content[0]
+        else:
+            synth_html = ''
+        
+        synth_html = html.tostring(synth_html,
                                    encoding='iso-8859-1').decode('utf-8')
         synth_html = synth_html.replace('<div class="onlyText bulletinText">', '')
         synth_html = synth_html.replace('</div>', '')
