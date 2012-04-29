@@ -38,6 +38,7 @@ BASE_URL = "http://france.meteofrance.com/france/MONTAGNE?MONTAGNE_PORTLET.path=
 WORK_DIR = "/var/cache/meteofrance/"
 SENDER = 'nobody@lists.camptocamp.org'
 STORE_NIVO = WORK_DIR + 'meteofrance.json'
+STORE_NIVO_TEXT = WORK_DIR + 'meteofrance_text.json'
 STORE_SYNTH = WORK_DIR + 'meteofrance_synth.json'
 DEPT_LIST = ["DEPT74", "DEPT73", "DEPT38", "DEPT04", "DEPT05", "DEPT06",
              "DEPT2A", "DEPT2B", "DEPT66", "DEPT31", "DEPT09", "ANDORRE",
@@ -220,15 +221,71 @@ class MFBot():
         if (self.dept in img_ref and
             len(img_ref[self.dept]) == len(img_src) and
             img_ref[self.dept] == img_src):
-            self.log.info('%s nivo - No change - Nothing to do', self.dept)
+            self.log.info('%s nivo images - No change - Nothing to do', self.dept)
         else:
-            # images changed -> send the mail and store new image names
-            self.log.info('%s nivo - Sending mail', self.dept)
-            m.send(method=method)
+            if (len(img_list) > 0):
+                # images changed -> send the mail and store new image names
+                self.log.info('%s nivo images - Sending mail', self.dept)
+                m.send(method=method)
 
-            img_ref[self.dept] = img_src
-            with open(STORE_NIVO, 'w') as f:
-                json.dump(img_ref, f)
+                img_ref[self.dept] = img_src
+                with open(STORE_NIVO, 'w') as f:
+                    json.dump(img_ref, f)
+            else:
+                self.log.info('%s nivo images - No images - Nothing to do', self.dept)
+
+    def send_nivo_text(self, recipient, method='smtp'):
+        """
+        Send text bulletin when it replaces image bulletin
+        """
+
+        nivo_html = html.tostring(self.nivo_content,
+                                   encoding='iso-8859-1').decode('utf-8')
+        nivo_html = nivo_html.replace('<div id="bulletinNeigeMontagne">', '')
+        nivo_html = re.sub(r'<a.*?</a>', r'', nivo_html)
+        nivo_html = re.sub(r'<h3.*?</h3>', r'', nivo_html)
+        nivo_html = re.sub(r'<div.*?</div>', r'', nivo_html)
+        nivo_html = nivo_html.replace('</div>', '')
+        nivo_html = re.sub(r'<t.*?>', r'', nivo_html)
+        nivo_html = re.sub(r'</t.*?>', r'', nivo_html)
+        nivo_html = re.sub(r'<!--', r'', nivo_html)
+        nivo_html = re.sub(r'-->', r'', nivo_html)
+        nivo_html = re.sub(r'(<br\s*/?>\s*){3,}', r'<br>', nivo_html)
+        nivo_txt = re.sub(r'<br\s*/?>', r'\n', nivo_html)
+
+        if len(nivo_txt) > 300:
+            bulletin_html = HTML_TPL.format(content=nivo_html,
+                                            bulletin_type=TITLE_NIVO,
+                                            dept=self.dept, full_url=self.url)
+
+            bulletin_txt = TXT_TPL.format(content=nivo_txt,
+                                          bulletin_type=TITLE_NIVO,
+                                          dept=self.dept, full_url=self.url)
+
+            subject = SUBJECT_TPL.format(bulletin_type=TITLE_NIVO, dept=self.dept)
+
+            m = Mail(recipient, bulletin_txt, bulletin_html, subject)
+
+            try:
+                with open(STORE_NIVO_TEXT, 'r') as f:
+                    nivo_ref = json.load(f)
+            except IOError:
+                nivo_ref = {}
+
+            if (self.dept in nivo_ref and
+                len(nivo_ref[self.dept]) == len(nivo_txt) and
+                nivo_ref[self.dept] == nivo_txt):
+                self.log.info('%s nivo text - No change - Nothing to do', self.dept)
+            else:
+                # text changed -> send the mail and store new text
+                self.log.info('%s nivo text - Sending mail', self.dept)
+                m.send(method=method)
+
+                nivo_ref[self.dept] = nivo_txt
+                with open(STORE_NIVO_TEXT, 'w') as f:
+                    json.dump(nivo_ref, f)
+        else:
+            self.log.info('%s nivo text - Empty text - Nothing to do', self.dept)
 
     def send_synth_text(self, recipient, method='smtp'):
         """
@@ -313,6 +370,7 @@ def main():
 
         if bot.status:
             bot.send_nivo_images(recipient, method=args.smtp_method)
+            bot.send_nivo_text(recipient, method=args.smtp_method)
             bot.send_synth_text(recipient, method=args.smtp_method)
 
 
