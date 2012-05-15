@@ -31,6 +31,7 @@ from email.mime.text import MIMEText
 from email.utils import formatdate
 
 from lxml import html
+from lxml.html import fromstring, tostring
 
 # config
 
@@ -166,19 +167,29 @@ class MFBot():
             return
 
         content = resp.read().decode('iso-8859-1', 'replace')
-        page = html.fromstring(content,
-                               base_url='http://france.meteofrance.com/')
+        page = fromstring(content, base_url='http://france.meteofrance.com/')
         self.nivo_content = page.get_element_by_id("bulletinNeigeMontagne")
         self.synth_content = page.cssselect("#bulletinSyntheseMontagne .bulletinText")
 
+    def prepare_mail(self, recipient, html_content, txt_content, **kwargs):
+        """
+        Do the string substitutions in the templates and return a Mail object
+        """
+        bulletin_html = HTML_TPL.format(content=html_content, **kwargs)
+        bulletin_txt = TXT_TPL.format(content=CONTENT_NIVO, **kwargs)
+        subject = SUBJECT_TPL.format(**kwargs)
+
+        return Mail(recipient, bulletin_txt, bulletin_html, subject)
+
     def send_nivo_images(self, recipient, method='smtp'):
         """
-        Add images as attachment to the message and reference it in the html part.
+        Add images as attachment to the message and reference it in the html
+        part.
         """
 
         img_list = self.nivo_content.cssselect('img')
         if not img_list:
-            self.log.debug("%s nivo images - pas d'images", self.dept)
+            self.log.info('%s nivo images - No images', self.dept)
             return
 
         # generate the <img> codes for each image
@@ -187,13 +198,11 @@ class MFBot():
         for i in range(len(img_list)):
             html_content += img_code.format(id=i + 1)
 
-        bulletin_html = HTML_TPL.format(content=html_content, bulletin_type=TITLE_NIVO,
-                                        dept=self.dept, full_url=self.url)
-        bulletin_txt = TXT_TPL.format(content=CONTENT_NIVO, bulletin_type=TITLE_NIVO,
-                                      dept=self.dept, full_url=self.url)
-        subject = SUBJECT_TPL.format(bulletin_type=TITLE_NIVO, dept=self.dept)
+        ctx = {'bulletin_type': TITLE_NIVO,
+               'dept': self.dept,
+               'full_url': self.url}
 
-        m = Mail(recipient, bulletin_txt, bulletin_html, subject)
+        m = self.prepare_mail(recipient, html_content, CONTENT_NIVO, **ctx)
 
         img_src = []
 
@@ -226,27 +235,24 @@ class MFBot():
             img_ref[self.dept] == img_src):
             self.log.info('%s nivo images - No change - Nothing to do', self.dept)
         else:
-            if (len(img_list) > 0):
-                # images changed -> send the mail and store new image names
-                self.log.info('%s nivo images - Sending mail', self.dept)
-                m.send(method=method)
+            # images changed -> send the mail and store new image names
+            self.log.info('%s nivo images - Sending mail', self.dept)
+            m.send(method=method)
 
-                img_ref[self.dept] = img_src
-                with open(STORE_NIVO, 'w') as f:
-                    json.dump(img_ref, f)
-            else:
-                self.log.info('%s nivo images - No images - Nothing to do', self.dept)
+            img_ref[self.dept] = img_src
+            with open(STORE_NIVO, 'w') as f:
+                json.dump(img_ref, f)
 
     def send_nivo_text(self, recipient, method='smtp'):
         """
         Send text bulletin when it replaces image bulletin
         """
 
-        nivo_html = html.tostring(self.nivo_content,
-                                   encoding='iso-8859-1').decode('utf-8')
+        nivo_html = tostring(self.nivo_content,
+                             encoding='iso-8859-1').decode('utf-8')
 
         if re.match('.*Pas de bulletin disponible pour ce lieu.*', nivo_html):
-            self.log.debug('%s nivo text - pas de bulletin', self.dept)
+            self.log.info('%s nivo text - No bulletin', self.dept)
             return
 
         nivo_html = nivo_html.replace('<div id="bulletinNeigeMontagne">', '')
@@ -262,17 +268,11 @@ class MFBot():
         nivo_txt = re.sub(r'<br\s*/?>', r'\n', nivo_html)
 
         if len(nivo_txt) > 300:
-            bulletin_html = HTML_TPL.format(content=nivo_html,
-                                            bulletin_type=TITLE_NIVO,
-                                            dept=self.dept, full_url=self.url)
+            ctx = {'bulletin_type': TITLE_NIVO,
+                   'dept': self.dept,
+                   'full_url': self.url}
 
-            bulletin_txt = TXT_TPL.format(content=nivo_txt,
-                                          bulletin_type=TITLE_NIVO,
-                                          dept=self.dept, full_url=self.url)
-
-            subject = SUBJECT_TPL.format(bulletin_type=TITLE_NIVO, dept=self.dept)
-
-            m = Mail(recipient, bulletin_txt, bulletin_html, subject)
+            m = self.prepare_mail(recipient, nivo_html, nivo_txt, **ctx)
 
             try:
                 with open(STORE_NIVO_TEXT, 'r') as f:
@@ -301,27 +301,21 @@ class MFBot():
         """
 
         if not self.synth_content:
-            self.log.debug('%s synth - No content', self.dept)
+            self.log.info('%s synth - No content', self.dept)
             return
 
-        synth_html = html.tostring(self.synth_content[0],
-                                   encoding='iso-8859-1').decode('utf-8')
+        synth_html = tostring(self.synth_content[0],
+                              encoding='iso-8859-1').decode('utf-8')
         synth_html = synth_html.replace('<div class="onlyText bulletinText">', '')
         synth_html = synth_html.replace('</div>', '')
         synth_txt = re.sub(r'<br\s*/?>', r'\n', synth_html)
 
         if len(synth_txt) > 300:
-            bulletin_html = HTML_TPL.format(content=synth_html,
-                                            bulletin_type=TITLE_SYNTH,
-                                            dept=self.dept, full_url=self.url)
+            ctx = {'bulletin_type': TITLE_SYNTH,
+                   'dept': self.dept,
+                   'full_url': self.url}
 
-            bulletin_txt = TXT_TPL.format(content=synth_txt,
-                                          bulletin_type=TITLE_SYNTH,
-                                          dept=self.dept, full_url=self.url)
-
-            subject = SUBJECT_TPL.format(bulletin_type=TITLE_SYNTH, dept=self.dept)
-
-            m = Mail(recipient, bulletin_txt, bulletin_html, subject)
+            m = self.prepare_mail(recipient, synth_html, synth_txt, **ctx)
 
             try:
                 with open(STORE_SYNTH, 'r') as f:
