@@ -378,13 +378,15 @@ def main():
         else:
             recipient = "meteofrance-%s@lists.camptocamp.org" % dept.replace('DEPT', '')
 
-        bot = MFBot(dept)
+        try:
+            bot = MFBot(dept)
 
-        if bot.status:
-            bot.send_nivo_images(recipient, method=args.smtp_method)
-            bot.send_nivo_text(recipient, method=args.smtp_method)
-            bot.send_synth_text(recipient, method=args.smtp_method)
-
+            if bot.status:
+                bot.send_nivo_images(recipient, method=args.smtp_method)
+                bot.send_nivo_text(recipient, method=args.smtp_method)
+                bot.send_synth_text(recipient, method=args.smtp_method)
+        except:
+            logger.error("Unexpected error: %s" % sys.exc_info()[1])
 
 if __name__ == '__main__':
     main()
