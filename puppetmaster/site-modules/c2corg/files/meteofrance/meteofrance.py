@@ -177,6 +177,9 @@ class MFBot():
         """
 
         img_list = self.nivo_content.cssselect('img')
+        if not img_list:
+            self.log.debug("%s nivo images - pas d'images", self.dept)
+            return
 
         # generate the <img> codes for each image
         img_code = '<img src="cid:image{id}"><br>'
@@ -241,6 +244,11 @@ class MFBot():
 
         nivo_html = html.tostring(self.nivo_content,
                                    encoding='iso-8859-1').decode('utf-8')
+
+        if re.match('.*Pas de bulletin disponible pour ce lieu.*', nivo_html):
+            self.log.debug('%s nivo text - pas de bulletin', self.dept)
+            return
+
         nivo_html = nivo_html.replace('<div id="bulletinNeigeMontagne">', '')
         nivo_html = re.sub(r'<a.*?</a>', r'', nivo_html)
         nivo_html = re.sub(r'<h3.*?</h3>', r'', nivo_html)
@@ -292,12 +300,11 @@ class MFBot():
         Send weekly synthesis.
         """
 
-        if (len(self.synth_content)):
-            synth_html = self.synth_content[0]
-        else:
-            synth_html = ''
-        
-        synth_html = html.tostring(synth_html,
+        if not self.synth_content:
+            self.log.debug('%s synth - No content', self.dept)
+            return
+
+        synth_html = html.tostring(self.synth_content[0],
                                    encoding='iso-8859-1').decode('utf-8')
         synth_html = synth_html.replace('<div class="onlyText bulletinText">', '')
         synth_html = synth_html.replace('</div>', '')
