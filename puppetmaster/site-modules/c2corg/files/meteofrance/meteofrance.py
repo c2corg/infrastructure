@@ -143,7 +143,7 @@ class MFBot():
     This bot parses Meteofrance's snow bulletin and send an email with the
     extracted content.
     """
-    def __init__(self, dept):
+    def __init__(self, dept=None):
         cj = cookielib.CookieJar()
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
         self.opener.addheaders = [('User-agent', 'MFBot/1.0')]
@@ -152,7 +152,8 @@ class MFBot():
         self.dept = dept
         self.url = BASE_URL + dept
         self.status = 1
-        self.get_content()
+        if dept:
+            self.get_content()
 
     def get_content(self):
         """
@@ -166,9 +167,7 @@ class MFBot():
             return
 
         content = resp.read().decode('iso-8859-1', 'replace')
-        page = fromstring(content, base_url='http://france.meteofrance.com/')
-        self.nivo_content = page.get_element_by_id("bulletinNeigeMontagne")
-        self.synth_content = page.cssselect("#bulletinSyntheseMontagne .bulletinText")
+        self.page = fromstring(content, base_url='http://france.meteofrance.com/')
 
     def prepare_mail(self, recipient, html_content, txt_content, **kwargs):
         """
@@ -186,7 +185,8 @@ class MFBot():
         part.
         """
 
-        img_list = self.nivo_content.cssselect('img')
+        nivo_content = self.page.get_element_by_id("bulletinNeigeMontagne")
+        img_list = nivo_content.cssselect('img')
         if not img_list:
             self.log.info('%s nivo images - No images', self.dept)
             return
@@ -247,7 +247,8 @@ class MFBot():
         Send text bulletin when it replaces image bulletin
         """
 
-        nivo_html = tostring(self.nivo_content,
+        nivo_content = self.page.get_element_by_id("bulletinNeigeMontagne")
+        nivo_html = tostring(nivo_content,
                              encoding='iso-8859-1').decode('utf-8')
 
         if re.match('.*Pas de bulletin disponible pour ce lieu.*', nivo_html):
@@ -299,11 +300,12 @@ class MFBot():
         Send weekly synthesis.
         """
 
-        if not self.synth_content:
+        synth_content = self.page.cssselect("#bulletinSyntheseMontagne .bulletinText")
+        if not synth_content:
             self.log.info('%s synth - No content', self.dept)
             return
 
-        synth_html = tostring(self.synth_content[0],
+        synth_html = tostring(synth_content[0],
                               encoding='iso-8859-1').decode('utf-8')
         synth_html = synth_html.replace('<div class="onlyText bulletinText">', '')
         synth_html = synth_html.replace('</div>', '')
@@ -366,13 +368,11 @@ def main():
     logger.addHandler(handler)
 
     for dept in DEPT_LIST:
-        if args.recipient:
-            recipient = args.recipient
-        else:
-            recipient = "meteofrance-%s@lists.camptocamp.org" % dept.replace('DEPT', '')
+        recipient = args.recipient or \
+            "meteofrance-%s@lists.camptocamp.org" % dept.replace('DEPT', '')
 
         try:
-            bot = MFBot(dept)
+            bot = MFBot(dept=dept)
 
             if bot.status:
                 bot.send_nivo_images(recipient, method=args.smtp_method)
