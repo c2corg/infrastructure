@@ -30,7 +30,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formatdate
 
-from lxml import html
 from lxml.html import fromstring, tostring
 
 # config
@@ -379,6 +378,8 @@ def main():
                 bot.send_nivo_images(recipient, method=args.smtp_method)
                 bot.send_nivo_text(recipient, method=args.smtp_method)
                 bot.send_synth_text(recipient, method=args.smtp_method)
+        except KeyboardInterrupt:
+            sys.exit('Ctrl-C pressed, aborting.')
         except:
             logger.error("Unexpected error: %s" % sys.exc_info()[1])
 
