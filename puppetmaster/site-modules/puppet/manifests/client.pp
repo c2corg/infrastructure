@@ -9,7 +9,7 @@ class puppet::client {
   }
 
   apt::preferences { "puppet-packages_from_c2corg_repo":
-    package  => "puppet puppetmaster puppetmaster-common puppet-common vim-puppet",
+    package  => "puppet puppetmaster puppetmaster-common puppet-common vim-puppet puppetdb puppetdb-terminus",
     pin      => "release l=C2corg, a=${::lsbdistcodename}",
     priority => "1010",
     before   => [Package["puppet"], Package["augeas-lenses"]],

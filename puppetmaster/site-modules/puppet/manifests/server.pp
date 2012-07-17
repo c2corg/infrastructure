@@ -1,6 +1,6 @@
 class puppet::server {
 
-  package { ["puppetmaster", "vim-puppet", "puppet-lint"]:
+  package { ["puppetmaster", "vim-puppet", "puppet-lint", "puppetdb", "puppetdb-terminus"]:
     ensure  => present,
     require => Apt::Preferences["puppet-packages_from_c2corg_repo"],
   }
@@ -10,6 +10,13 @@ class puppet::server {
     ensure     => running,
     hasstatus  => true,
     require    => Package["puppetmaster"],
+  }
+
+  service { "puppetdb":
+    enable     => true,
+    ensure     => running,
+    hasstatus  => true,
+    require    => Package["puppetdb"],
   }
 
   augeas { "set puppetmaster certname":
@@ -43,15 +50,22 @@ class puppet::server {
     context => "/files/etc/puppet/puppet.conf/master",
     changes => [
       "set storeconfigs true",
-      "set dbadapter sqlite3",
-      "set thin_storeconfigs true",
+      "rm dbadapter",
+      "set thin_storeconfigs false",
+      "set storeconfigs_backend puppetdb",
     ],
-    notify => Service["puppetmaster"],
+    notify  => Service["puppetmaster"],
+    require => Service['puppetdb'],
   }
 
-  package { ["sqlite3", "libsqlite3-ruby"]:
-    ensure => present,
-    before => Augeas["enable collected resources"],
+  file { '/etc/puppet/puppetdb.conf':
+    content => '[main]
+server = pm
+port = 8081
+',
+    notify  => Service['puppetdb'],
+    require => Package['puppetmaster'],
+    before  => Service['puppetmaster'],
   }
 
   sudoers { 'puppet server':
@@ -60,7 +74,9 @@ class puppet::server {
     commands => [
       '(root) /usr/sbin/puppetca',
       '(root) /etc/init.d/puppetmaster',
+      '(root) /etc/init.d/puppetdb',
       '(root) /usr/sbin/invoke-rc.d puppetmaster *',
+      '(root) /usr/sbin/invoke-rc.d puppetdb *',
     ],
   }
 
