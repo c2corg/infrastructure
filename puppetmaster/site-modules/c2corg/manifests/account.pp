@@ -24,6 +24,9 @@ class c2corg::account {
     "bubu": user => "bubu", account => "bubu",
       groups => ["adm", "www-data"];
 
+    "saimon": user => "saimon", account => "saimon",
+      groups => ["adm", "www-data"];
+
     "c2corg": user => "c2corg", account => "c2corg",
       groups => ["adm", "www-data"];
   }

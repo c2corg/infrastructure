@@ -80,6 +80,16 @@ define c2corg::account::user ($ensure=present, $user, $account, $groups=[]) {
       }
     }
 
+    "saimon": {
+      c2corg::ssh::userkey { "$name on $account":
+        account => $account,
+        user    => $user,
+        type    => "rsa",
+        key     => "AAAAB3NzaC1yc2EAAAABIwAAAQEAo3jxCbExq7zhlFswHyIynochZglSjSSDVrnYzU//y78pzaSwHGlkufwXfU2nEFLdzcziaBp7jiSaqWe00GUhBVZcOYZyvmMneldFDrQlDtrm1aRKf3j/I6pno49Gz727+/8UQCqZv1/BE72WmjjpRwfrjqUVQkRj1UMf41kG1H1Mn2Sx4+faWrbWKWeZG+wnyJACtl0VUwU6iXCsICqPnsSFe+1ZdopQLjRA8aMkmmwfI2MaVHzkX4qgVBd4MQVR1lp11OBnCd6SysNnJYpram3ZRaJY1gLOI3UnHWUWi0RCfS1jdglXLTlgLcz9nZQQVwtH4i+l351skc/UExHiRQ==",
+        require => User[$account],
+      }
+    }
+
     "c2corg": {
       # no one should login directly to this account, but anyone should be
       # able to "sudo -iu" to it.
