@@ -57,7 +57,6 @@ class c2corg::vz {
       #}
 
       nat::fwd {
-        "forward db-sos ssh port":          host => "42",  from => "1042",  to => "22";
         "forward dnscache ssh port":        host => "50",  from => "1050",  to => "22";
         "forward msgbroker ssh port":       host => "55",  from => "1055",  to => "22";
         "forward www-failover ssh port":    host => "70",  from => "1070",  to => "22";
@@ -80,7 +79,6 @@ class c2corg::vz {
 
     "hn2": {
 
-      vz::ve { "42": hname => "db-sos.pse.infra.camptocamp.org" }
       vz::ve { "50":  hname => "dnscache.pse.infra.camptocamp.org" }
       vz::ve { "55":  hname => "msgbroker.pse.infra.camptocamp.org" }
       vz::ve { "70":  hname => "www-failover.pse.infra.camptocamp.org" }
