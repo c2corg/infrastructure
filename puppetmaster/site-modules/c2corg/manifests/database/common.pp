@@ -1,17 +1,13 @@
 class c2corg::database::common inherits c2corg::database {
 
-  $pgver = "8.4"
-
-  Augeas { context => "/files/etc/postgresql/${pgver}/main/" }
-
-  Postgresql::Hba { pgver => $pgver }
-  Postgresql::Conf { pgver => $pgver }
+  include postgresql::params
 
   augeas { "passwd auth for local postgres connections":
     changes   => "set pg_hba.conf/*[type='local'][user='all'][database='all']/method md5",
     load_path => "/usr/share/augeas/lenses/contrib/",
     notify    => Service["postgresql"],
     require   => Package["postgresql"],
+    context   => "/files/etc/postgresql/${postgresql::params::version}/main/",
   }
 
   postgresql::hba { "access for ml user to c2corg db":

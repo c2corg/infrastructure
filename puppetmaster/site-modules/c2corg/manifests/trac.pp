@@ -4,7 +4,7 @@ class c2corg::trac {
 
   $sslcert_country = "CH"
   $sslcert_organisation = "Camptocamp.org"
-  apache::vhost-ssl { "dev.camptocamp.org":
+  apache::vhost::ssl { "dev.camptocamp.org":
     certcn  => "dev.camptocamp.org",
     sslonly => true,
     cert    => "file:///etc/puppet/dev.camptocamp.org.crt",

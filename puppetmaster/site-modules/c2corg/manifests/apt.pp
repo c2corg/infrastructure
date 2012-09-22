@@ -88,10 +88,6 @@ deb http://backports.debian.org/debian-backports ${::lsbdistcodename}-backports 
     priority => "110",
   }
 
-  package { "debian-archive-keyring":
-    ensure => latest,
-  }
-
   apt::conf { "10apt-cache-limit":
     ensure  => present,
     content => 'APT::Cache-Limit 50000000;',

@@ -1,7 +1,6 @@
 class c2corg::prod::env::postgres {
 
   Sysctl::Set_value { before => Service["postgresql"] }
-  Postgresql::Conf { pgver => "8.4" }
 
   postgresql::conf {
     # values suggested by pgtune

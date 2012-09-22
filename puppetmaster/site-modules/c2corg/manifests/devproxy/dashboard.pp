@@ -28,7 +28,7 @@ define c2corg::devproxy::dashboard ($ensure='present', $vhost, $url, $location) 
 
   } else {
 
-    apache::vhost-ssl { $vhost:
+    apache::vhost::ssl { $vhost:
       ensure    => $ensure,
       sslonly   => true,
       cert      => "file:///etc/puppet/dev.camptocamp.org.crt",
