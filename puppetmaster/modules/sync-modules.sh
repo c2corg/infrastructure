@@ -16,7 +16,7 @@ git://github.com/camptocamp/puppet-reprepro.git reprepro 9b77b8bc4
 
 git://github.com/kbarber/puppet-iptables.git iptables 9deddbbd
 git://github.com/bodepd/puppet-sudo.git sudo 9834ac93
-git://github.com/gergnz/puppetlabs-rabbitmq.git rabbitmq 6471580ef7
+git://github.com/puppetlabs/puppetlabs-rabbitmq.git rabbitmq 6471580ef7
 git://github.com/puppetlabs/puppetlabs-vcsrepo.git vcsrepo 44291fc
 git://github.com/puppetlabs/puppetlabs-lvm.git lvm 3b1f783
 git://github.com/puppetlabs/puppetlabs-stdlib.git stdlib 44e99a7c
