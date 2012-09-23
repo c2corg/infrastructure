@@ -12,14 +12,20 @@ class puppet::client {
     package  => "puppet puppetmaster puppetmaster-common puppet-common vim-puppet puppetdb puppetdb-terminus",
     pin      => "release l=C2corg, a=${::lsbdistcodename}",
     priority => "1010",
-    before   => [Package["puppet"], Package["augeas-lenses"]],
   }
 
   apt::preferences { "facter_from_c2corg_repo":
     package  => "facter",
     pin      => "release l=C2corg, a=${::lsbdistcodename}",
     priority => "1010",
-    before   => Package["puppet"],
+  }
+
+  if $::lsbdistcodename == 'squeeze' {
+    apt::preferences { "augeas_from_bpo":
+      package  => "libaugeas0 augeas-lenses augeas-tools",
+      pin      => "release a=${::lsbdistcodename}-backports",
+      priority => "1010",
+    }
   }
 
   package { ["puppet", "facter"]:
