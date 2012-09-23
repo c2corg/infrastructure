@@ -3,30 +3,30 @@ class c2corg::mcollective::node {
   include c2corg::mcollective
   include c2corg::password
 
-  package { "mcollective":
-    ensure  => present,
+  package { ["mcollective", "mcollective-common"]:
+    ensure  => absent,
     require => Package["ruby-stomp"],
   }
 
   augeas { "enable mcollective at boot":
     context => "/files/etc/default/mcollective",
     changes => "set RUN yes",
-    before  => Service["mcollective"],
+    #before  => Service["mcollective"],
   }
 
-  service { "mcollective":
-    ensure    => running,
-    enable    => true,
-    hasstatus => true,
-    require   => Package["mcollective"],
-  }
+  #service { "mcollective":
+  #  ensure    => running,
+  #  enable    => true,
+  #  hasstatus => true,
+  #  require   => Package["mcollective"],
+  #}
 
   file { "/etc/mcollective/server.cfg":
     ensure  => present,
     mode    => 0600,
     owner   => "root",
-    require => Package["mcollective"],
-    notify  => Service["mcollective"],
+    #require => Package["mcollective"],
+    #notify  => Service["mcollective"],
     content => "# file managed by puppet
 topicprefix = /topic/
 main_collective = mcollective

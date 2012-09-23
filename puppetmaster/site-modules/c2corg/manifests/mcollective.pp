@@ -18,7 +18,7 @@ class c2corg::mcollective {
       'mcollective-plugins-puppetd',
       'mcollective-plugins-stomputil',
       'mcollective-plugins-service',
-    ]: ensure => present,
+    ]: ensure => absent,
   }
 
 }

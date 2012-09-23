@@ -4,7 +4,7 @@ class c2corg::mcollective::client {
   include c2corg::password
 
   package { "mcollective-client":
-    ensure  => present,
+    ensure  => absent,
     require => Package["ruby-stomp"],
     before  => File["/etc/mcollective/client.cfg"],
   }
