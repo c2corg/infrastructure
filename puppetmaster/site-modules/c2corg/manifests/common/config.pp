@@ -112,6 +112,13 @@ bind-key C-right next-window
 bind-key C-left previous-window
 bind-key / command-prompt "find-window %1"
 set -g history-limit 5000
+setw -g mode-keys vi
+unbind [
+bind Escape copy-mode
+bind p paste-buffer
+bind -t vi-copy \'v\' begin-selection
+bind -t vi-copy \'y\' copy-selection
+set -sg escape-time 1
 ',
   }
 
