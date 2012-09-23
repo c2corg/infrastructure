@@ -38,7 +38,7 @@ class c2corg::common::packages {
     "squeeze": {
       package { ["tmux", "emacs23-nox"]: ensure => installed }
 
-      apt::preferences { "misc pkgs from bpo":
+      apt::preferences { "misc_pkgs_from_bpo":
         package  => "mosh",
         pin      => "release a=${::lsbdistcodename}-backports",
         priority => "1010",
