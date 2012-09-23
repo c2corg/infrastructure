@@ -11,7 +11,7 @@ class c2corg::common::packages {
     "git-core", "git-svn",
     "htop",
     "less", "locales-all", "lsb-release",
-    "m4", "make", "mtr-tiny",
+    "m4", "make", "mosh", "mtr-tiny",
     "netcat", "nmap", "ntp",
     "patch", "pwgen",
     "rsync",
@@ -37,6 +37,13 @@ class c2corg::common::packages {
   case $::lsbdistcodename {
     "squeeze": {
       package { ["tmux", "emacs23-nox"]: ensure => installed }
+
+      apt::preferences { "misc pkgs from bpo":
+        package  => "mosh",
+        pin      => "release a=${::lsbdistcodename}-backports",
+        priority => "1010",
+      }
+
     }
   }
 

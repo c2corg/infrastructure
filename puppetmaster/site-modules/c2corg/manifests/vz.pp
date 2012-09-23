@@ -57,23 +57,43 @@ class c2corg::vz {
       #}
 
       nat::fwd {
-        "forward dnscache ssh port":        host => "50",  from => "1050",  to => "22";
-        "forward msgbroker ssh port":       host => "55",  from => "1055",  to => "22";
-        "forward www-failover ssh port":    host => "70",  from => "1070",  to => "22";
-        "forward puppetmaster ssh port":    host => "101", from => "10101", to => "22";
-        "forward lists ssh port":           host => "102", from => "10102", to => "22";
-        "forward dev ssh port":             host => "103", from => "10103", to => "22";
-        "forward pkg ssh port":             host => "125", from => "10125", to => "22";
-        "forward monit ssh port":           host => "126", from => "10126", to => "22";
-        "forward content-factory ssh port": host => "140", from => "10140", to => "22";
-        "forward pre-prod ssh port":        host => "141", from => "10141", to => "22";
-        "forward test-alex ssh port":       host => "201", from => "10201", to => "22";
-        "forward test-xbrrr ssh port":      host => "202", from => "10202", to => "22";
-        "forward test-marc ssh port":       host => "203", from => "10203", to => "22";
-        "forward test-jose ssh port":       host => "204", from => "10204", to => "22";
-        "forward test-bubu ssh port":       host => "205", from => "10205", to => "22";
-        "forward test-saimon ssh port":     host => "206", from => "10206", to => "22";
-        "forward dev-cda ssh port":         host => "221", from => "10221", to => "22";
+        "fwd dnscache ssh port":        host => "50",  from => "1050", to => "22";
+        "fwd msgbroker ssh port":       host => "55",  from => "1055", to => "22";
+        "fwd www-failover ssh port":    host => "70",  from => "1070", to => "22";
+        "fwd puppetmaster ssh port":    host => "101", from => "10101", to => "22";
+        "fwd lists ssh port":           host => "102", from => "10102", to => "22";
+        "fwd dev ssh port":             host => "103", from => "10103", to => "22";
+        "fwd pkg ssh port":             host => "125", from => "10125", to => "22";
+        "fwd monit ssh port":           host => "126", from => "10126", to => "22";
+        "fwd content-factory ssh port": host => "140", from => "10140", to => "22";
+        "fwd pre-prod ssh port":        host => "141", from => "10141", to => "22";
+        "fwd test-alex ssh port":       host => "201", from => "10201", to => "22";
+        "fwd test-xbrrr ssh port":      host => "202", from => "10202", to => "22";
+        "fwd test-marc ssh port":       host => "203", from => "10203", to => "22";
+        "fwd test-jose ssh port":       host => "204", from => "10204", to => "22";
+        "fwd test-bubu ssh port":       host => "205", from => "10205", to => "22";
+        "fwd test-saimon ssh port":     host => "206", from => "10206", to => "22";
+        "fwd dev-cda ssh port":         host => "221", from => "10221", to => "22";
+      }
+
+      nat::fwd {
+        "fwd dnscache mosh port":         proto => 'udp', host => "50",  from => "6050", to => "6050";
+        "fwd msgbroker mosh port":        proto => 'udp', host => "55",  from => "6055", to => "6055";
+        "fwd www-failover mosh port":     proto => 'udp', host => "70",  from => "6070", to => "6070";
+        "fwd puppetmaster mosh port":     proto => 'udp', host => "101", from => "60101", to => "60101";
+        "fwd lists mosh port":            proto => 'udp', host => "102", from => "60102", to => "60102";
+        "fwd dev mosh port":              proto => 'udp', host => "103", from => "60103", to => "60103";
+        "fwd pkg mosh port":              proto => 'udp', host => "125", from => "60125", to => "60125";
+        "fwd monit mosh port":            proto => 'udp', host => "126", from => "60126", to => "60126";
+        "fwd content-factory mosh port":  proto => 'udp', host => "140", from => "60140", to => "60140";
+        "fwd pre-prod mosh port":         proto => 'udp', host => "141", from => "60141", to => "60141";
+        "fwd test-alex mosh port":        proto => 'udp', host => "201", from => "60201", to => "60201";
+        "fwd test-xbrrr mosh port":       proto => 'udp', host => "202", from => "60202", to => "60202";
+        "fwd test-marc mosh port":        proto => 'udp', host => "203", from => "60203", to => "60203";
+        "fwd test-jose mosh port":        proto => 'udp', host => "204", from => "60204", to => "60204";
+        "fwd test-bubu mosh port":        proto => 'udp', host => "205", from => "60205", to => "60205";
+        "fwd test-saimon mosh port":      proto => 'udp', host => "206", from => "60206", to => "60206";
+        "fwd dev-cda mosh port":          proto => 'udp', host => "221", from => "60221", to => "60221";
       }
     }
 
