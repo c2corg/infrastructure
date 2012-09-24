@@ -8,8 +8,6 @@ class c2corg::apt {
 
   $pkgrepo = hiera('pkgrepo_host')
 
-  include apt::unattended-upgrade::automatic
-
   apt::sources_list { "debian":
     content => inline_template("# file managed by puppet
 deb <%= debmirror %>/debian/ squeeze main contrib non-free
@@ -103,6 +101,14 @@ deb http://backports.debian.org/debian-backports ${::lsbdistcodename}-backports 
     content => "# file managed by puppet\n",
     before => Exec["apt-get_update"],
     notify => Exec["apt-get_update"],
+  }
+
+  package { 'unattended-upgrades': ensure => latest }
+
+  apt::preferences { "upgrade-unattended-upgrades":
+    package  => "unattended-upgrades",
+    pin      => "release l=C2corg, a=squeeze",
+    priority => "1100",
   }
 
 }
