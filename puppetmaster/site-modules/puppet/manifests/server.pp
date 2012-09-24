@@ -58,6 +58,11 @@ class puppet::server {
     require => Service['puppetdb'],
   }
 
+  augeas { 'puppetdb java opts':
+    changes => 'set /files/etc/default/puppetdb/JAVA_ARGS "-Xmx256m"',
+    notify  => Service['puppetdb'],
+  }
+
   file { '/etc/puppet/puppetdb.conf':
     content => '[main]
 server = pm
