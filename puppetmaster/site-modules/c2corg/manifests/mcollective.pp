@@ -2,9 +2,9 @@ class c2corg::mcollective {
 
   $broker = hiera('broker_host')
 
-  apt::preferences { "mcollective_from_wheezy_repo":
-    package  => "mcollective mcollective-client mcollective-common",
-    pin      => "release n=wheezy",
+  apt::preferences { "mcollective_from_c2corg_repo":
+    package  => "mcollective mcollective-client mcollective-common ruby-stomp",
+    pin      => "release l=C2corg",
     priority => "1010",
   }
 
