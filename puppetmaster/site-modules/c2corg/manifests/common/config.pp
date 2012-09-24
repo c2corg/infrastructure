@@ -111,7 +111,13 @@ bind-key a send-prefix  # C-a a sends literal C-a
 bind-key C-right next-window
 bind-key C-left previous-window
 bind-key / command-prompt "find-window %1"
+
+# toggle last window like screen
+unbind-key C-a
+bind-key C-a last-window
+
 set -g history-limit 5000
+
 setw -g mode-keys vi
 unbind [
 bind Escape copy-mode
