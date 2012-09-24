@@ -10,15 +10,15 @@ class c2corg::mcollective {
 
   package { "ruby-stomp": ensure => present }
 
-  package {
-    [
-      'mcollective-plugins-filemgr',
-      'mcollective-plugins-package',
-      'mcollective-plugins-process',
-      'mcollective-plugins-puppetd',
-      'mcollective-plugins-stomputil',
-      'mcollective-plugins-service',
-    ]: ensure => present,
-  }
+  #package {
+  #  [
+  #    'mcollective-plugins-filemgr',
+  #    'mcollective-plugins-package',
+  #    'mcollective-plugins-process',
+  #    'mcollective-plugins-puppetd',
+  #    'mcollective-plugins-stomputil',
+  #    'mcollective-plugins-service',
+  #  ]: ensure => present,
+  #}
 
 }
