@@ -3,7 +3,7 @@ class c2corg::apt {
   $debmirror = $::datacenter ? {
     /c2corg|epnet|pse/ => 'http://mirror.switch.ch/ftp/mirror',
     'gandi'        => 'http://mirrors.gandi.net',
-    default        => 'http://cdn.debian.net',
+    default        => 'http://http.debian.net',
   }
 
   $pkgrepo = hiera('pkgrepo_host')
