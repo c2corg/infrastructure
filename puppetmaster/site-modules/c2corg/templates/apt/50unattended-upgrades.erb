@@ -1,0 +1,20 @@
+Unattended-Upgrade::Origins-Pattern {
+  "o=Debian,<%= pattern %>";
+  "o=Debian,<%= pattern %>-updates";
+  "o=Debian,<%= pattern %>-proposed-updates";
+<% unless extra.empty? -%>
+  "<%= extra %>";
+<% end -%>
+
+  "o=Debian,n=<%= @lsbdistcodename %>,l=Debian-Security";
+  "o=Debian,a=testing,l=Debian-Security";
+
+  "l=C2corg,n=<%= @lsbdistcodename %>";
+};
+
+Dpkg::Options { "--force-confold"; }
+
+APT::Periodic::Unattended-Upgrade "1";
+
+Unattended-Upgrade::AutoFixInterruptedDpkg "false";
+Unattended-Upgrade::MinimalSteps "true";

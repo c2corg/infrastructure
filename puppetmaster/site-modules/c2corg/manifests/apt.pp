@@ -105,12 +105,31 @@ deb http://backports.debian.org/debian-backports ${::lsbdistcodename}-backports 
     notify => Exec["apt-get_update"],
   }
 
-  package { 'unattended-upgrades': ensure => latest }
+  package { 'unattended-upgrades': ensure => present }
 
-  apt::preferences { "upgrade-unattended-upgrades":
-    package  => "unattended-upgrades",
-    pin      => "release l=C2corg, a=squeeze",
-    priority => "1100",
+  if ($::lsbdistrelease == 'squeeze') {
+    apt::preferences { "upgrade-unattended-upgrades":
+      package  => "unattended-upgrades",
+      pin      => "release l=C2corg, a=squeeze",
+      priority => "1100",
+    }
+  }
+
+  if ($::lsbdistrelease == 'testing') {
+    $pattern = 'a=testing'
+    $extra = ''
+  } else {
+    $pattern = "n=${::lsbdistcodename}"
+    $extra = "o=Debian Backports,n=${::lsbdistcodename}-backports"
+  }
+
+  apt::conf { '50unattended-upgrades':
+    ensure  => present,
+    content => template('c2corg/apt/50unattended-upgrades.erb'),
+  }
+
+  file { '/etc/apt/apt.conf.d/99unattended-upgrade':
+    ensure => absent,
   }
 
 }
