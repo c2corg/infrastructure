@@ -77,6 +77,14 @@ true()                     smtp,smime,md5   -> reject
     footer    => template("c2corg/sympa/slf.it.footer"),
   }
 
+  sympa::list { "aran":
+    send_from => "everybody",
+    subject   => "Title TBD",
+    anon_name => "Sender TBD",
+    footer    => template("c2corg/sympa/aran.footer"),
+  }
+
+
   c2corg::mailinglists::meteofrance {[
     '04','05','06','09','2a','2b','31','38','64','65','66','73','74','andorre',
   ]: }
