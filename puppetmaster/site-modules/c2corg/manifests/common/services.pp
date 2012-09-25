@@ -12,7 +12,6 @@ class c2corg::common::services {
   }
 
   package { "nscd": ensure => absent }
-  service { "nscd": ensure => stopped }
 
   service { "ntp":
     ensure => $::is_virtual ? {
