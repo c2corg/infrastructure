@@ -7,7 +7,7 @@ IFS=' ' echo -e "
 
 git://github.com/camptocamp/puppet-common.git common bd0572dd9
 git://github.com/camptocamp/puppet-augeas.git augeas 1afd076a1
-git://github.com/camptocamp/puppet-apt.git apt 44439b45c
+git://github.com/camptocamp/puppet-apt.git apt b3da98203
 git://github.com/camptocamp/puppet-openssl.git openssl 9c76d53
 git://github.com/camptocamp/puppet-rsyncd.git rsyncd 6b9902e4
 git://github.com/camptocamp/puppet-postfix.git postfix db1e5b5ea
