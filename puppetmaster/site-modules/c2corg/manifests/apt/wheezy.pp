@@ -9,11 +9,11 @@ class c2corg::apt::wheezy inherits c2corg::apt {
   }
 
   Apt::Preferences["wheezy"] {
-    priority => "99",
+    priority => "990",
   }
 
   Apt::Preferences["wheezy-proposed-updates"] {
-    priority => "99",
+    priority => "990",
   }
 
   Apt::Conf["01default-release"] {

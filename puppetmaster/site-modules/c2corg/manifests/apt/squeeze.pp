@@ -1,11 +1,11 @@
 class c2corg::apt::squeeze inherits c2corg::apt {
 
   Apt::Preferences["squeeze"] {
-    priority => "99",
+    priority => "990",
   }
 
   Apt::Preferences["squeeze-proposed-updates"] {
-    priority => "99",
+    priority => "990",
   }
 
   Apt::Preferences["wheezy"] {
