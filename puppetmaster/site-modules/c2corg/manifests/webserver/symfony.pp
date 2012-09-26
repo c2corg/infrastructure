@@ -44,27 +44,17 @@ class c2corg::webserver::symfony {
     "smtp_use_tls":                         value => "yes";
   }
 
-  common::line { "noreply@camptocamp.org sender relay":
-    file    => "${sender_relay_map}",
-    line    => "noreply@camptocamp.org    [smtp.gmail.com]:587",
-    notify  => Postfix::Hash["${sender_relay_map}"],
-    require => Package["postfix"],
+  package { "libsasl2-modules": notify => Service["postfix"] }
+
+  postfix::hash { $sender_relay_map:
+    content => "noreply@camptocamp.org    [smtp.gmail.com]:587\n",
+    before  => Postfix::Config["sender_dependent_relayhost_maps"],
   }
 
-  package{ "libsasl2-modules": notify => Service["postfix"] }
-
-  common::line { "smtp.gmail.com submission credentials":
-    file    => "${sasl_pw_map}",
-    line    => "smtp.gmail.com    noreply@camptocamp.org:${c2corg::password::noreply_pass}",
-    notify  => Postfix::Hash["${sasl_pw_map}"],
-    require => Package["postfix"],
+  postfix::hash { $sasl_pw_map:
+    content => "smtp.gmail.com    noreply@camptocamp.org:${c2corg::password::noreply_pass}\n",
+    before  => Postfix::Config["smtp_sasl_password_maps"],
   }
-
-  postfix::hash {
-    "${sender_relay_map}":  before => Postfix::Config["sender_dependent_relayhost_maps"];
-    "${sasl_pw_map}":       before => Postfix::Config["smtp_sasl_password_maps"];
-  }
-
 
   file { "/srv/www":
     ensure => directory,
@@ -110,10 +100,19 @@ class c2corg::webserver::symfony {
     path   => "/etc/profile.d/psql-env.sh",
   }
 
-  common::line { "import c2corg_vars in environment":
+  file { "/etc/profile.d/c2corg-env.sh":
     ensure  => present,
-    file    => "/home/c2corg/.bashrc",
-    line    => ". ~/c2corg-envvars.sh",
-    require => [User["c2corg"], File["c2corg-envvars.sh"]],
+    require => File["c2corg-envvars.sh"],
+    content => "# file managed by puppet
+if [ -e ~/c2corg-envvars.sh ]; then
+  . ~/c2corg-envvars.sh
+fi
+",
+  }
+
+  file_line { "import c2corg_vars in environment":
+    ensure => absent,
+    path   => "/home/c2corg/.bashrc",
+    line   => ". ~/c2corg-envvars.sh",
   }
 }

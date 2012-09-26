@@ -5,12 +5,11 @@ IFS=' ' echo -e "
 # format:
 # URL<one space>modulename<one space>commit<newline>
 
-git://github.com/camptocamp/puppet-common.git common bd0572dd9
 git://github.com/camptocamp/puppet-augeas.git augeas 1afd076a1
 git://github.com/camptocamp/puppet-apt.git apt b3da98203
 git://github.com/camptocamp/puppet-openssl.git openssl 9c76d53
 git://github.com/camptocamp/puppet-rsyncd.git rsyncd 6b9902e4
-git://github.com/camptocamp/puppet-postfix.git postfix db1e5b5ea
+git://github.com/camptocamp/puppet-postfix.git postfix eec3c07dd
 git://github.com/camptocamp/puppet-sysctl.git sysctl bf068e0
 git://github.com/camptocamp/puppet-reprepro.git reprepro 9b77b8bc4
 

@@ -70,8 +70,8 @@ log {
     changes => "set /files/etc/default/syslog-ng/SYSLOGNG_OPTS --no-caps",
   }
 
-  common::line { "include local syslog config":
-    file    => "/etc/syslog-ng/syslog-ng.conf",
+  file_line { "include local syslog config":
+    path    => "/etc/syslog-ng/syslog-ng.conf",
     line    => 'include "/etc/syslog-ng/local.conf";',
     require => Package["syslog"],
     notify  => Service["syslog"],

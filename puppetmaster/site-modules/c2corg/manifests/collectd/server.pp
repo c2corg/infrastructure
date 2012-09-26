@@ -9,31 +9,8 @@ class c2corg::collectd::server inherits c2corg::collectd::node {
   include haproxy::collectd::typesdb
   include c2corg::varnish::typesdb
 
-  package { "thttpd":
-    ensure => absent,
-    before => Package["apache"],
-  }
+  package { 'drraw': ensure => absent }
 
-  file { "/var/www/cgi-bin/":
-    ensure  => absent,
-    recurse => true,
-    force   => true,
-  }
-
-  package { 'drraw': require => Package['thttpd'] }
-
-  $datadir = '/srv/carbon/rrd'
-  common::line { "configure drraw rrd path":
-    line    => "%datadirs = ( \"${datadir}\"  => \"[c2corg]\" );",
-    file    => "/etc/drraw/drraw.conf",
-    require => Package["drraw"],
-  }
-
-  file { "/var/www/${fqdn}/cgi-bin/drraw.cgi":
-    mode    => 0755,
-    ensure  => directory,
-    source  => "file:///usr/lib/cgi-bin/drraw/drraw.cgi",
-    require => Package["drraw"],
-  }
+  file { "/var/www/${fqdn}/cgi-bin/drraw.cgi": ensure  => absent }
 
 }

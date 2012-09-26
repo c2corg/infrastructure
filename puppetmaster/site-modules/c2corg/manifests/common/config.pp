@@ -128,18 +128,18 @@ set -sg escape-time 1
 ',
   }
 
-  common::line { "screen: no startup message":
-    file => "/etc/screenrc",
+  file_line { "screen: no startup message":
+    path => "/etc/screenrc",
     line => 'startup_message off',
   }
 
-  common::line { "screen: always login shell":
-    file => "/etc/screenrc",
+  file_line { "screen: always login shell":
+    path => "/etc/screenrc",
     line => 'defshell -$SHELL',
   }
 
-  common::line { "screen: default scrollback":
-    file => "/etc/screenrc",
+  file_line { "screen: default scrollback":
+    path => "/etc/screenrc",
     line => 'defscrollback 5000',
   }
 
