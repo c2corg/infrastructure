@@ -9,7 +9,7 @@ git://github.com/camptocamp/puppet-augeas.git augeas 1afd076a1
 git://github.com/camptocamp/puppet-apt.git apt b3da98203
 git://github.com/camptocamp/puppet-openssl.git openssl 9c76d53
 git://github.com/camptocamp/puppet-rsyncd.git rsyncd 6b9902e4
-git://github.com/camptocamp/puppet-postfix.git postfix eec3c07dd
+git://github.com/camptocamp/puppet-postfix.git postfix 9cfd68455
 git://github.com/camptocamp/puppet-sysctl.git sysctl bf068e0
 git://github.com/camptocamp/puppet-reprepro.git reprepro 9b77b8bc4
 
@@ -30,7 +30,7 @@ git://github.com/camptocamp/puppet-postgresql.git postgresql db3ced1
 git://github.com/camptocamp/puppet-postgis.git postgis d82fab5
 git://github.com/camptocamp/puppet-mapserver.git mapserver 2eb908fa1d
 
-git://github.com/camptocamp/puppet-collectd.git collectd 5e5f1040
+git://github.com/camptocamp/puppet-collectd.git collectd 8d369096
 
 git://github.com/camptocamp/puppet-python.git python 91fe7554
 git://github.com/camptocamp/puppet-ruby.git ruby d7debdf
