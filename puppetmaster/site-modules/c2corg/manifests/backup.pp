@@ -36,8 +36,8 @@ class c2corg::backup {
 
     cron { "rsync important stuff to backup server":
       command => "test ! -f /var/run/backup.lock && (touch /var/run/backup.lock && rsync --rsh='ssh -i /root/.backupkey' --archive --numeric-ids --delete --relative --quiet $(cat /root/.backups.include) root@${destsrv}:${destdir} || echo 'backup failed'; rm -f /var/run/backup.lock)",
-      hour    => ip_to_cron(1, 6),
-      minute  => ip_to_cron(),
+      hour    => fqdn_rand(6),
+      minute  => fqdn_rand(59),
     }
   }
 
