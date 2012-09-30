@@ -4,6 +4,7 @@ node 'pm' inherits 'base-node' {
   include puppet::server
   include c2corg::mcollective::client
   include c2corg::collectd::node
+  include buildenv::deb
 
   # TODO: mv this stuff to a decent backend system
   file { "/etc/c2corg":
