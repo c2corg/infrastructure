@@ -52,6 +52,10 @@ plugin.stomp.password = ${c2corg::password::mco_pass}
 # Facts
 factsource = yaml
 plugin.yaml = /etc/mcollective/facts.yaml
+
+# Registration to keep rabbitmq awake
+registerinterval = 300
+registration = Agentlist
 ",
   }
 
