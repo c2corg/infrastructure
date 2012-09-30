@@ -9,6 +9,14 @@ class c2corg::mcollective::client {
     before  => File["/etc/mcollective/client.cfg"],
   }
 
+  package { [
+    'mcollective-filemgr-client',
+    'mcollective-package-client',
+    'mcollective-puppetd-client',
+    'mcollective-service-client',
+    ]: ensure => present,
+  }
+
   file { "/etc/mcollective/client.cfg":
     mode    => 0644,
     require => Package["mcollective-client"],
