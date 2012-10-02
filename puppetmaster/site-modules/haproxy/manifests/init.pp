@@ -13,10 +13,11 @@ class haproxy {
     require   => Package["haproxy"],
   }
 
-  augeas { "enable haproxy" :
-    context => "/files/etc/default/haproxy",
-    changes => "set ENABLED 1",
-    notify  => Service["haproxy"],
+  etcdefault { 'start haproxy at boot':
+    key    => 'ENABLED',
+    file   => 'haproxy',
+    value  => '1',
+    notify => Service['haproxy'],
   }
 
   file { "/etc/haproxy/haproxy.cfg":

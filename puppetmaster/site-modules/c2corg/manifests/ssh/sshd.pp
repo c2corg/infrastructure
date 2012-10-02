@@ -9,11 +9,12 @@ class c2corg::ssh::sshd {
     source  => "puppet:///modules/c2corg/empty/",
   }
 
-  augeas { "sshd/AuthorizedKeysFile":
-    context => "/files/etc/ssh/sshd_config/",
-    changes => "set AuthorizedKeysFile /etc/ssh/authorized_keys/%u.keys",
-    notify  => Service["ssh"],
-    require => File["/etc/ssh/authorized_keys"],
+  augeas { 'sshd/AuthorizedKeysFile':
+    incl    => '/etc/ssh/sshd_config',
+    lens    => 'Sshd.lns',
+    changes => 'set AuthorizedKeysFile /etc/ssh/authorized_keys/%u.keys',
+    notify  => Service['ssh'],
+    require => File['/etc/ssh/authorized_keys'],
   }
 
   package { "openssh-server":

@@ -4,13 +4,14 @@ class c2corg::memcachedb {
     ensure => present,
   }
 
-  augeas { "enable memcache session storage":
-    context => "/files/etc/php5/apache2/php.ini/Session/",
+  augeas { 'enable memcache session storage':
     changes => [
-      "set session.save_handler memcache",
-      "set session.save_path tcp://${session_host}:11211",
+      'set Session/session.save_handler memcache',
+      "set Session/session.save_path tcp://${session_host}:11211",
     ],
-    require => Package["php5-memcache"],
-    notify  => Service["apache"],
+    incl    => '/etc/php5/apache2/php.ini',
+    lens    => 'PHP.lns',
+    require => Package['php5-memcache'],
+    notify  => Service['apache'],
   }
 }

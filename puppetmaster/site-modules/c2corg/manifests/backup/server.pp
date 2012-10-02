@@ -2,8 +2,10 @@ class c2corg::backup::server {
 
   package { 'zfs-fuse': ensure => present }
 
-  augeas { 'enable zfs at boot':
-    changes => 'set /files/etc/default/zfs-fuse/ENABLE_ZFS yes',
+  etcdefault { 'enable zfs at boot':
+    key     => 'ENABLE_ZFS',
+    file    => 'zfs-fuse',
+    value   => 'yes',
     require => Package['zfs-fuse'],
     before  => Service['zfs-fuse'],
   }

@@ -3,14 +3,15 @@ class c2corg::mcollective::node {
   include c2corg::mcollective
   include c2corg::password
 
-  package { "mcollective":
+  package { 'mcollective':
     ensure  => present,
   }
 
-  augeas { "enable mcollective at boot":
-    context => "/files/etc/default/mcollective",
-    changes => "set RUN yes",
-    before  => Service["mcollective"],
+  etcdefault { 'enable mcollective at boot':
+    file   => 'mcollective',
+    key    => 'RUN',
+    value  => 'yes',
+    before => Service['mcollective'],
   }
 
   service { "mcollective":

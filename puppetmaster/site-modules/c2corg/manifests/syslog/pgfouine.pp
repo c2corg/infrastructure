@@ -35,12 +35,16 @@ class c2corg::syslog::pgfouine {
 ",
   }
 
-  augeas { "increase php-cli memory limit for pgfouine":
-    changes => "set /files/etc/php5/cli/php.ini/PHP/memory_limit ${pgfouinemem}",
+  augeas { 'increase php-cli memory limit for pgfouine':
+    changes => "set PHP/memory_limit ${pgfouinemem}",
+    incl    => '/etc/php5/cli/php.ini',
+    lens    => 'PHP.lns',
   }
 
-  augeas { "prevent suhosin from loading":
-    changes => "rm /files/etc/php5/conf.d/suhosin.ini/.anon/extension",
+  augeas { 'prevent suhosin from loading':
+    changes => 'rm .anon/extension',
+    incl    => '/etc/php5/conf.d/suhosin.ini',
+    lens    => 'PHP.lns',
   }
 
   cron { "rotate and process postgresql logs":

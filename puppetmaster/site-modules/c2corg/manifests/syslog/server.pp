@@ -66,8 +66,10 @@ log {
 ",
   }
 
-  augeas { "disable syslog-ng capabilies since they are unavailable inside vz nodes":
-    changes => "set /files/etc/default/syslog-ng/SYSLOGNG_OPTS --no-caps",
+  etcdefault { 'disable syslog-ng capabilies since they are unavailable inside vz nodes':
+    key   => 'SYSLOGNG_OPTS',
+    file  => 'syslog-ng',
+    value => '--no-caps',
   }
 
   file_line { "include local syslog config":
@@ -80,14 +82,15 @@ log {
   file { ["/srv/syslog", "/srv/syslog/postgresql", "/srv/syslog/haproxy"]: ensure => directory }
 
   augeas { "logrotate syslog-ng files":
-    context => "/files/etc/logrotate.d/srv-syslog/rule",
+    incl    => '/etc/logrotate.d/srv-syslog',
+    lens    => 'Logrotate.lns',
     changes => [
-      "set file /srv/syslog/logs/*/*.log",
-      "set schedule weekly",
-      "set rotate 52",
-      "set compress compress",
-      "set missingok missingok",
-      "set postrotate '/usr/sbin/invoke-rc.d syslog-ng reload >/dev/null'",
+      "set rule/file /srv/syslog/logs/*/*.log",
+      "set rule/schedule weekly",
+      "set rule/rotate 52",
+      "set rule/compress compress",
+      "set rule/missingok missingok",
+      "set rule/postrotate '/usr/sbin/invoke-rc.d syslog-ng reload >/dev/null'",
     ],
   }
 

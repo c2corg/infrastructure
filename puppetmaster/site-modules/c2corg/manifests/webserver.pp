@@ -3,10 +3,12 @@ class c2corg::webserver {
   include apache
   include php::apache
 
-  augeas { "dont expose PHP version":
-    changes => "set /files/etc/php5/apache2/php.ini/PHP/expose_php Off",
+  augeas { 'dont expose PHP version':
+    changes => 'set PHP/expose_php Off',
+    lens    => 'PHP.lns',
+    incl    => '/etc/php5/apache2/php.ini'
     require => Package['libapache2-mod-php5'],
-    notify  => Service["apache"],
+    notify  => Service['apache'],
   }
 
   package { "apachetop": }

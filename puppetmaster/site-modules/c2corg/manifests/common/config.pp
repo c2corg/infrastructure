@@ -45,19 +45,25 @@ options rotate edns0
     }
   }
 
-  augeas { "sysstat history":
-    context => "/files/etc/default/sysstat",
-    changes => ["set HISTORY 30", "set ENABLED true"],
-    notify  => Service["sysstat"],
+  Etcdefault {
+    notify => Service["sysstat"],
+    file   => 'sysstat',
+  }
+
+  etcdefault {
+    'enable sysstat':  key => 'ENABLED', value => 'true';
+    'sysstat history': key => 'HISTORY', value => '30';
   }
 
   augeas { "disable ctrl-alt-delete":
+    incl    => '/etc/inittab',
+    lens    => 'Inittab.lns',
     context => "/files/etc/inittab/*[action='ctrlaltdel']/",
     changes => [
-      "set runlevels 12345",
+      'set runlevels 12345',
       "set process '/bin/echo ctrlaltdel disabled'"
     ],
-    notify  => Exec["refresh init"],
+    notify  => Exec['refresh init'],
   }
 
   # TODO: investigate this bug, this is silly

@@ -4,10 +4,10 @@ class c2corg::database::common inherits c2corg::database {
 
   augeas { "passwd auth for local postgres connections":
     changes   => "set pg_hba.conf/*[type='local'][user='all'][database='all']/method md5",
-    load_path => "/usr/share/augeas/lenses/contrib/",
     notify    => Service["postgresql"],
     require   => Package["postgresql"],
-    context   => "/files/etc/postgresql/${postgresql::params::version}/main/",
+    incl      => "/etc/postgresql/${postgresql::params::version}/main/pg_hba.conf",
+    lens      => 'Pg_Hba.lns',
   }
 
   postgresql::hba { "access for ml user to c2corg db":

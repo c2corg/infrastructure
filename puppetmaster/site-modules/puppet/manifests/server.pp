@@ -42,9 +42,11 @@ class puppet::server {
     'master/dbadapter':             value => '', ensure => absent;
   }
 
-  augeas { 'puppetdb java opts':
-    changes => 'set /files/etc/default/puppetdb/JAVA_ARGS "-Xmx256m"',
-    notify  => Service['puppetdb'],
+  etcdefault { 'puppetdb java params':
+    file   => 'puppetdb',
+    key    => 'JAVA_ARGS',
+    value  => '"-Xmx256m"',
+    notify => Service['puppetdb'],
   }
 
   file { '/etc/puppet/puppetdb.conf':

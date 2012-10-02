@@ -16,10 +16,12 @@ class c2corg::webserver::symfony {
   package{ ["php-symfony", "msmtp"]: ensure => absent }
 
   # short_open_tag conflicts with <?xml ... headers
-  augeas { "disable php short open tags":
-    changes => "set /files/etc/php5/apache2/php.ini/PHP/short_open_tag Off",
+  augeas { 'disable php short open tags':
+    incl    => '/etc/php5/apache2/php.ini',
+    lens    => 'PHP.lns',
+    changes => 'set PHP/short_open_tag Off',
     require => Package['libapache2-mod-php5'],
-    notify  => Service["apache"],
+    notify  => Service['apache'],
   }
 
   # workaround while http://code.google.com/p/paver/issues/detail?id=53

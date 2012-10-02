@@ -43,9 +43,11 @@ class vz {
     require => Package["vzctl"],
   }
 
-  augeas { "compress vzctl logfiles":
-    changes => "set /files/etc/logrotate.d/vzctl/rule/compress compress",
-    require => Package["vzctl"],
+  augeas { 'compress vzctl logfiles':
+    changes => 'set rule/compress compress',
+    incl    => '/etc/logrotate.d/vzctl',
+    lens    => 'Logrotate.lns',
+    require => Package['vzctl'],
   }
 
 }

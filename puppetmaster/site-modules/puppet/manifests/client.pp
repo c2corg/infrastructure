@@ -30,18 +30,19 @@ class puppet::client {
     ensure  => present,
   }
 
-  service { "puppet":
+  service { 'puppet':
     ensure    => running,
     enable    => true,
     hasstatus => true,
-    require   => [Package["puppet"], Augeas["enable puppetd at boot"]],
+    require   => [Package['puppet'], Etcdefault['enable puppet at boot']],
   }
 
 
-  augeas { "enable puppetd at boot":
-    context => "/files/etc/default/puppet",
-    changes => "set START yes",
-    before  => Service["puppet"],
+  etcdefault { 'enable puppet at boot':
+    file   => 'puppet',
+    key    => 'START',
+    value  => 'yes',
+    before => Service['puppet'],
   }
 
   Puppet::Config {
