@@ -2,6 +2,7 @@
 node 'base-node' {
 
   include apt
+  include augeas
   include stdlib
   include openssl
   include puppet::client

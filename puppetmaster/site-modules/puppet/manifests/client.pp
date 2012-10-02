@@ -1,7 +1,5 @@
 class puppet::client {
 
-  include augeas
-
   # undo workaround for expired release files in snapshot.debian.org
   apt::conf { "90snapshot-validity":
     ensure  => present,
@@ -39,50 +37,36 @@ class puppet::client {
     require   => [Package["puppet"], Augeas["enable puppetd at boot"]],
   }
 
+
   augeas { "enable puppetd at boot":
     context => "/files/etc/default/puppet",
     changes => "set START yes",
     before  => Service["puppet"],
   }
 
-  augeas { "set puppet server":
-    context => "/files/etc/puppet/puppet.conf/main",
-    changes => "set server pm",
-    notify  => Service["puppet"],
+  Puppet::Config {
+    notify => Service['puppet'],
   }
 
-  augeas { "set puppet report_server":
-    context => "/files/etc/puppet/puppet.conf/main",
-    changes => "set report_server pm",
-    notify  => Service["puppet"],
+  $agent = $::puppetversion ? {
+    /^0\.2/ => 'puppetd',
+    default => 'agent',
   }
 
-  augeas { "enable puppet reporting":
-    context => "/files/etc/puppet/puppet.conf/main",
-    changes => "set report true",
-    notify  => Service["puppet"],
-  }
-
-  augeas { "set puppet pluginsync":
-    context => "/files/etc/puppet/puppet.conf/main",
-    changes => "set pluginsync true",
-    notify  => Service["puppet"],
-  }
-
-  augeas { "set puppet certname":
-    context => $::puppetversion ? {
-      /^0\.2/ => "/files/etc/puppet/puppet.conf/puppetd",
-      /^2\./  => "/files/etc/puppet/puppet.conf/agent",
-    },
-    changes => "set certname $::hostname",
-    notify  => Service["puppet"],
+  puppet::config {
+    'main/server':         value => 'pm';
+    'main/report_server':  value => 'pm';
+    'main/report':         value => 'true';
+    'main/pluginsync':     value => 'true';
+    "${agent}/certname":   value => $::hostname;
   }
 
   augeas { "rm other puppet conf target":
-    context => "/files/etc/puppet/puppet.conf/",
+    lens    => 'Puppet.lns',
+    incl    => '/etc/puppet/puppet.conf',
     changes => $::puppetversion ? {
       /^0\.2/ => "rm agent",
-      /^2\./  => "rm puppetd",
+      default => "rm puppetd",
     },
     notify  => Service["puppet"],
   }

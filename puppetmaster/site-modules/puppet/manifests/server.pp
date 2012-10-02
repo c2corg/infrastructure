@@ -11,50 +11,35 @@ class puppet::server {
     require    => Package["puppetmaster"],
   }
 
-  service { "puppetdb":
-    enable     => true,
-    ensure     => running,
-    hasstatus  => true,
-    require    => Package["puppetdb"],
+  service { 'puppetdb':
+    enable    => true,
+    ensure    => running,
+    hasstatus => true,
+    require   => Package['puppetdb'],
+    before    => Puppet::Config['master/storeconfigs_backend'],
   }
 
-  augeas { "set puppetmaster certname":
-    context => "/files/etc/puppet/puppet.conf/master",
-    changes => "set certname pm",
-    notify  => Service["puppetmaster"],
+  Puppet::Config {
+    notify => Service['puppetmaster'],
   }
 
-  augeas { "puppetmaster paths":
-    context => "/files/etc/puppet/puppet.conf/master",
-    changes => [
-      "set modulepath /srv/puppetmaster/modules:/srv/puppetmaster/site-modules",
-      "set manifestdir /srv/puppetmaster/manifests",
-      "set manifest /srv/puppetmaster/manifests/site.pp",
-    ],
-    notify => Service["puppetmaster"],
-  }
-
-  augeas { "puppetmaster environments":
-    context => "/files/etc/puppet/puppet.conf",
-    changes => [
-      "set master/environments marc",
-      "set marc/modulepath /home/marc/puppetmaster/modules:/home/marc/puppetmaster/site-modules",
-      "set marc/manifestdir /home/marc/puppetmaster/manifests",
-      "set marc/manifest /home/marc/puppetmaster/manifests/site.pp",
-    ],
-    notify => Service["puppetmaster"],
-  }
-
-  augeas { "enable collected resources":
-    context => "/files/etc/puppet/puppet.conf/master",
-    changes => [
-      "set storeconfigs true",
-      "rm dbadapter",
-      "set thin_storeconfigs false",
-      "set storeconfigs_backend puppetdb",
-    ],
-    notify  => Service["puppetmaster"],
-    require => Service['puppetdb'],
+  puppet::config {
+    # certname
+    'master/certname':    value => 'pm';
+    # paths
+    'master/modulepath':  value => '/srv/puppetmaster/modules:/srv/puppetmaster/site-modules';
+    'master/manifestdir': value => '/srv/puppetmaster/manifests';
+    'master/manifest':    value => '/srv/puppetmaster/manifests/site.pp';
+    # environments
+    'master/environments':  value => 'marc';
+    'marc/modulepath':      value => '/home/marc/puppetmaster/modules:/home/marc/puppetmaster/site-modules';
+    'marc/manifestdir':     value => '/home/marc/puppetmaster/manifests';
+    'marc/manifest':        value => '/home/marc/puppetmaster/manifests/site.pp';
+    # collected resources
+    'master/storeconfigs':          value => true;
+    'master/thin_storeconfigs':     value => false;
+    'master/storeconfigs_backend':  value => 'puppetdb';
+    'master/dbadapter':             value => '', ensure => absent;
   }
 
   augeas { 'puppetdb java opts':
@@ -82,12 +67,6 @@ port = 8081
       '(root) /usr/sbin/invoke-rc.d puppetmaster *',
       '(root) /usr/sbin/invoke-rc.d puppetdb *',
     ],
-  }
-
-  augeas { "rm puppetmasterd":
-    context => "/files/etc/puppet/puppet.conf",
-    changes => "rm puppetmasterd",
-    notify  => Service["puppetmaster"],
   }
 
   file { '/etc/puppet/hiera.yaml':
