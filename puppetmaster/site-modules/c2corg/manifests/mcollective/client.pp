@@ -5,7 +5,6 @@ class c2corg::mcollective::client {
 
   package { "mcollective-client":
     ensure  => present,
-    require => Package["ruby-stomp"],
     before  => File["/etc/mcollective/client.cfg"],
   }
 
