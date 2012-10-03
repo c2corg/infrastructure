@@ -60,6 +60,7 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
     user    => "c2corg",
     group   => "c2corg",
     notify  => Service["apache"],
+    provider    => 'shell',
     logoutput   => true,
     refreshonly => true,
   }
@@ -71,6 +72,7 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
     group   => "c2corg",
     require => Exec["c2corg install"],
     notify  => Service["apache"],
+    provider    => 'shell',
     logoutput   => true,
     refreshonly => true,
   }
