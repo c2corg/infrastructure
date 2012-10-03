@@ -3,7 +3,7 @@ class c2corg::database::common inherits c2corg::database {
   include postgresql::params
 
   augeas { "passwd auth for local postgres connections":
-    changes   => "set pg_hba.conf/*[type='local'][user='all'][database='all']/method md5",
+    changes   => "set *[type='local'][user='all'][database='all']/method md5",
     notify    => Service["postgresql"],
     require   => Package["postgresql"],
     incl      => "/etc/postgresql/${postgresql::params::version}/main/pg_hba.conf",
