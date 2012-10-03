@@ -75,6 +75,16 @@ options rotate edns0
   #  owner  => "root", group => "root",
   #}
 
+  if $::lsbdistcodename == 'wheezy' {
+
+    # puppet & mco packages are broken when ruby points to 1.9.1
+    # revert this once packages are fixed.
+    file { '/etc/alternatives/ruby':
+      ensure => link,
+      target => '/usr/bin/ruby1.8',
+    }
+  }
+
   file { "/tmp":
     ensure => directory,
     mode   => 1777,
