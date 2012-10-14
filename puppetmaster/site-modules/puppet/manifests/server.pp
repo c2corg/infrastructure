@@ -41,7 +41,7 @@ class puppet::server {
     'master/storeconfigs_backend':  value => 'puppetdb';
     'master/dbadapter':             value => '', ensure => absent;
     # reporting
-    'master/report':  value => 'store log'
+    'master/reports': value => 'store log'
   }
 
   etcdefault { 'puppetdb java params':
