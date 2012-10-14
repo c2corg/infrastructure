@@ -31,22 +31,22 @@ class puppet::client {
   }
 
   service { 'puppet':
-    ensure    => running,
-    enable    => true,
+    ensure    => stopped,
+    enable    => false,
     hasstatus => true,
     require   => [Package['puppet'], Etcdefault['enable puppet at boot']],
   }
 
-
   etcdefault { 'enable puppet at boot':
     file   => 'puppet',
     key    => 'START',
-    value  => 'yes',
-    before => Service['puppet'],
+    value  => 'no',
   }
 
-  Puppet::Config {
-    notify => Service['puppet'],
+  cron { 'run puppet':
+    command => '/usr/bin/puppet agent --onetime --logdest syslog',
+    user    => 'root',
+    minute  => fqdn_rand(60),
   }
 
   $agent = $::puppetversion ? {
@@ -69,7 +69,6 @@ class puppet::client {
       /^0\.2/ => "rm agent",
       default => "rm puppetd",
     },
-    notify  => Service["puppet"],
   }
 
   file { ["/etc/facter", "/etc/facter/facts.d"]:
