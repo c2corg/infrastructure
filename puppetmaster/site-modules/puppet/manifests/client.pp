@@ -31,7 +31,8 @@ class puppet::client {
   }
 
   service { 'puppet':
-    ensure    => stopped,
+    # don't try to manage the service, to avoid puppet stopping it's own run
+    ensure    => undef,
     enable    => false,
     hasstatus => true,
     require   => [Package['puppet'], Etcdefault['enable puppet at boot']],
