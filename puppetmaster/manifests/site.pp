@@ -12,9 +12,7 @@ File {
   mode   => 0644,
 }
 
-Package {
-  require => Exec["apt-get_update"],
-}
+Exec["apt-get_update"] -> Package <| |>
 
 Sudoers {
   hosts   => $::hostname,
