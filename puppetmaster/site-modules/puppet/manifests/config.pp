@@ -1,7 +1,7 @@
 define puppet::config ($ensure=present, $value) {
 
   $changes = $ensure ? {
-    present => "set ${name} ${value}",
+    present => "set ${name} '${value}'",
     absent  => "rm ${name}",
   }
 
