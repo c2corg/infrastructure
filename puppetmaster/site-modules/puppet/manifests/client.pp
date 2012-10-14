@@ -46,7 +46,7 @@ class puppet::client {
   cron { 'run puppet':
     command => '/usr/bin/puppet agent --onetime --logdest syslog',
     user    => 'root',
-    minute  => fqdn_rand(60),
+    minute  => fqdn_rand(59),
   }
 
   $agent = $::puppetversion ? {
