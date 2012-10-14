@@ -93,6 +93,7 @@ class puppet::client {
     type  => "user_spec",
     commands => [
       '(root) /usr/sbin/puppetd',
+      '(root) /usr/bin/puppet agent *',
       '(root) /etc/init.d/puppet',
       '(root) /usr/sbin/invoke-rc.d puppet *',
     ],
