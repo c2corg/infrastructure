@@ -13,11 +13,11 @@ File {
 }
 
 Exec["apt-get_update"] -> Package <| |>
+Package["sudo"] -> Sudoers <| |>
 
 Sudoers {
   hosts   => $::hostname,
   target  => "/etc/sudoers",
-  require => Package["sudo"],
 }
 
 Apache::Vhost {
