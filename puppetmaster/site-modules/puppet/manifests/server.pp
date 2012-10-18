@@ -23,6 +23,13 @@ class puppet::server {
     notify => Service['puppetmaster'],
   }
 
+  @@nat::fwd { 'forward puppetmaster port':
+    host => '101',
+    from => '8140',
+    to   => '8140',
+    tag  => 'portfwd',
+  }
+
   puppet::config {
     # certname
     'master/certname':    value => 'pm';

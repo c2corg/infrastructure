@@ -6,4 +6,11 @@ class c2corg::hn::hn1 inherits c2corg::hn {
     unless  => "grep 'kFreeBSD.kern.maxswzone' /boot/grub/grub.cfg",
   }
 
+  @@nat::fwd {
+    'forward hn1 ssh port':
+      host => '2', from => '20022', to => '22',   tag => 'portfwd';
+    'forward hn1 mosh port':
+      host => '2', from => '6002',  to => '6002', tag => 'portfwd', proto => 'udp';
+  }
+
 }

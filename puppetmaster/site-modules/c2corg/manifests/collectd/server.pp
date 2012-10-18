@@ -13,4 +13,11 @@ class c2corg::collectd::server inherits c2corg::collectd::node {
 
   file { "/var/www/${fqdn}/cgi-bin/drraw.cgi": ensure  => absent }
 
+  @@nat::fwd { 'forward collectd port':
+    host  => '126',
+    from  => '25826',
+    to    => '25826',
+    proto => 'udp',
+    tag   => 'portfwd',
+  }
 }

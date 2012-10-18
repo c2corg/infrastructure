@@ -20,6 +20,13 @@ class c2corg::mailinglists {
   include sympa
   include sympa::mta
 
+  @@nat::fwd { 'forward smtp port':
+    host => '102',
+    from => '25',
+    to   => '25',
+    tag  => 'portfwd',
+  }
+
   sympa::scenari { "marc":
     ensure  => absent, # enable for tests
     content => '

@@ -2,7 +2,15 @@ class c2corg::rabbitmq {
 
   include c2corg::password
 
-  #TODO: configure SSL
+  #TODO: configure SSL + enable portfwd
+
+  #@@nat::fwd { 'forward stomp port':
+  #  host => '55',
+  #  from => '61613',
+  #  to   => '61613',
+  #  tag  => 'portfwd',
+  #}
+
 
   apt::preferences { "rabbitmq_from_c2corg_repo":
     package  => "rabbitmq-server",

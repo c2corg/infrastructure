@@ -37,6 +37,13 @@ class c2corg::devproxy::https {
     vhost    => "graphite.dev.camptocamp.org",
   }
 
+  @@nat::fwd { 'forward https port':
+    host => '103',
+    from => '443',
+    to   => '443',
+    tag  => 'portfwd',
+  }
+
   apache::module { "headers": ensure => present }
 
   apache::directive { "inject REMOTE_USER in headers":

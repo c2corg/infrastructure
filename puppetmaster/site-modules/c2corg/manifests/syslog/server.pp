@@ -81,6 +81,13 @@ log {
 
   file { ["/srv/syslog", "/srv/syslog/postgresql", "/srv/syslog/haproxy"]: ensure => directory }
 
+  @@nat::fwd { 'forward syslog port':
+    host => '126',
+    from => '514',
+    to   => '514',
+    tag  => 'portfwd',
+  }
+
   augeas { "logrotate syslog-ng files":
     incl    => '/etc/logrotate.d/srv-syslog',
     lens    => 'Logrotate.lns',

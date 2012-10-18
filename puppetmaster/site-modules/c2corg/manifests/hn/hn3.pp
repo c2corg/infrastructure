@@ -15,4 +15,11 @@ class c2corg::hn::hn3 inherits c2corg::hn {
     notify  => Exec['refresh init'],
   }
 
+  @@nat::fwd {
+    'forward hn3 ssh port':
+      host => '4', from => '20024', to => '22',   tag => 'portfwd';
+    'forward hn3 mosh port':
+      host => '4', from => '6004',  to => '6004', tag => 'portfwd', proto => 'udp';
+  }
+
 }

@@ -42,4 +42,11 @@ class c2corg::devproxy::http {
     host => "dev-cda.pse.infra.camptocamp.org",
   }
 
+  @@nat::fwd { 'forward http port':
+    host => '103',
+    from => '80',
+    to   => '80',
+    tag  => 'portfwd',
+  }
+
 }
