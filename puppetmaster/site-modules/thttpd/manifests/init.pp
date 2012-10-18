@@ -2,9 +2,10 @@ class thttpd {
 
   package { "thttpd": ensure => present, }
   service { "thttpd":
-    ensure  => running,
-    enable  => true,
-    require => Package["thttpd"],
+    ensure    => running,
+    enable    => true,
+    hasstatus => false,
+    require   => Package["thttpd"],
   }
 
   etcdefault { 'start thttpd at boot':
