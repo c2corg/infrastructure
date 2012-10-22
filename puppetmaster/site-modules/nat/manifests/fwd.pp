@@ -1,4 +1,4 @@
-define nat::fwd ($net="192.168.192", $host, $from, $to, $iface="eth2", $proto="tcp") {
+define nat::fwd ($net="192.168.192", $host, $from, $to, $proto, $iface="eth2") {
 
   iptables { "forward from ${from} to ${net}.${host}:${to}":
     chain       => "PREROUTING",

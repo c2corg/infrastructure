@@ -43,10 +43,11 @@ class c2corg::devproxy::http {
   }
 
   @@nat::fwd { 'forward http port':
-    host => '103',
-    from => '80',
-    to   => '80',
-    tag  => 'portfwd',
+    host  => '103',
+    from  => '80',
+    to    => '80',
+    proto => 'tcp',
+    tag   => 'portfwd',
   }
 
 }

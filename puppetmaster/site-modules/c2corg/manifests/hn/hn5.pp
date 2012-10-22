@@ -17,7 +17,7 @@ class c2corg::hn::hn5 inherits c2corg::hn {
 
   @@nat::fwd {
     'forward hn5 ssh port':
-      host => '6', from => '20026', to => '22',   tag => 'portfwd';
+      host => '6', from => '20026', to => '22',   tag => 'portfwd', proto => 'tcp';
     'forward hn5 mosh port':
       host => '6', from => '6006',  to => '6006', tag => 'portfwd', proto => 'udp';
   }

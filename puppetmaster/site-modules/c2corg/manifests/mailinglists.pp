@@ -21,10 +21,11 @@ class c2corg::mailinglists {
   include sympa::mta
 
   @@nat::fwd { 'forward smtp port':
-    host => '102',
-    from => '25',
-    to   => '25',
-    tag  => 'portfwd',
+    host  => '102',
+    from  => '25',
+    to    => '25',
+    proto => 'tcp',
+    tag   => 'portfwd',
   }
 
   sympa::scenari { "marc":

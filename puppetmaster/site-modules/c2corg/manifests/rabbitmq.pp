@@ -5,10 +5,11 @@ class c2corg::rabbitmq {
   #TODO: configure SSL + enable portfwd
 
   #@@nat::fwd { 'forward stomp port':
-  #  host => '55',
-  #  from => '61613',
-  #  to   => '61613',
-  #  tag  => 'portfwd',
+  #  host  => '55',
+  #  from  => '61613',
+  #  to    => '61613',
+  #  proto => 'tcp',
+  #  tag   => 'portfwd',
   #}
 
 

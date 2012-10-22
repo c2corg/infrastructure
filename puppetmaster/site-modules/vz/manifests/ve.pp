@@ -91,6 +91,7 @@ define vz::ve ($ensure="running", $hname, $template="debian-squeeze-amd64-with-p
     host    => $name,
     from    => "10${name}",
     to      => 22,
+    proto   => 'tcp',
     tag     => 'portfwd',
   }
 
@@ -98,6 +99,7 @@ define vz::ve ($ensure="running", $hname, $template="debian-squeeze-amd64-with-p
     host    => $name,
     from    => "60${name}",
     to      => "60${name}",
+    proto   => 'udp',
     tag     => 'portfwd',
   }
 

@@ -24,10 +24,11 @@ class puppet::server {
   }
 
   @@nat::fwd { 'forward puppetmaster port':
-    host => '101',
-    from => '8140',
-    to   => '8140',
-    tag  => 'portfwd',
+    host  => '101',
+    from  => '8140',
+    to    => '8140',
+    proto => 'tcp',
+    tag   => 'portfwd',
   }
 
   puppet::config {

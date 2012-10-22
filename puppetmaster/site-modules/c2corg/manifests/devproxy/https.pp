@@ -38,10 +38,11 @@ class c2corg::devproxy::https {
   }
 
   @@nat::fwd { 'forward https port':
-    host => '103',
-    from => '443',
-    to   => '443',
-    tag  => 'portfwd',
+    host  => '103',
+    from  => '443',
+    to    => '443',
+    proto => 'tcp',
+    tag   => 'portfwd',
   }
 
   apache::module { "headers": ensure => present }
