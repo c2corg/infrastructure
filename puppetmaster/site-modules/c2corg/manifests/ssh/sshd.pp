@@ -6,7 +6,6 @@ class c2corg::ssh::sshd {
     recurse => true,
     purge   => true,
     force   => true,
-    source  => "puppet:///modules/c2corg/empty/",
   }
 
   augeas { 'sshd/AuthorizedKeysFile':

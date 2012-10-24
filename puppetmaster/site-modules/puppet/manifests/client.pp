@@ -74,7 +74,6 @@ class puppet::client {
 
   file { ["/etc/facter", "/etc/facter/facts.d"]:
     ensure  => directory,
-    source  => "puppet:///c2corg/empty",
     recurse => true,
     purge   => true,
     force   => true,
