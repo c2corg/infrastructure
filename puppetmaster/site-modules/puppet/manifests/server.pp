@@ -98,6 +98,12 @@ port = 8081
 ',
   }
 
+  tidy { '/var/lib/puppet/reports/':
+    age     => '2w',
+    type    => 'mtime',
+    recurse => true,
+  }
+
   file { '/etc/puppet/hiera': ensure => directory }
 
   cron { "restart puppetmaster": ensure => absent }
