@@ -10,7 +10,7 @@ class vz {
     ensure  => present,
   }
 
-  sysctl::set_value {
+  sysctl::value {
     "net.ipv4.conf.default.forwarding":     value => "1";
     "net.ipv4.conf.all.forwarding":         value => "1";
     "net.ipv4.conf.default.proxy_arp":      value => "1";

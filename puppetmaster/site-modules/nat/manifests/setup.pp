@@ -9,7 +9,7 @@ define nat::setup($iface, $lan) {
     outiface => $iface,
     source   => $lan,
     jump     => "MASQUERADE",
-    require  => Sysctl::Set_value["net.ipv4.ip_forward"],
+    require  => Sysctl::Value["net.ipv4.ip_forward"],
   }
 
 }

@@ -1,6 +1,6 @@
 class c2corg::prod::env::postgres {
 
-  Sysctl::Set_value { before => Service["postgresql"] }
+  Sysctl::Value { before => Service["postgresql"] }
 
   postgresql::conf {
     # values suggested by pgtune
@@ -19,7 +19,7 @@ class c2corg::prod::env::postgres {
     "track_functions":  value => "none";
   }
 
-  sysctl::set_value {
+  sysctl::value {
     "kernel.shmmax": value => "4127514624";
     "kernel.shmall": value => "2097152";
   }
