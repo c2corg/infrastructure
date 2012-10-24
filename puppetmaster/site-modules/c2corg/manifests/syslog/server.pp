@@ -81,11 +81,19 @@ log {
 
   file { ["/srv/syslog", "/srv/syslog/postgresql", "/srv/syslog/haproxy"]: ensure => directory }
 
-  @@nat::fwd { 'forward syslog port':
+  @@nat::fwd { 'forward syslog tcp port':
     host  => '126',
     from  => '514',
     to    => '514',
-    proto => 'all',
+    proto => 'tcp',
+    tag   => 'portfwd',
+  }
+
+  @@nat::fwd { 'forward syslog udp port':
+    host  => '126',
+    from  => '514',
+    to    => '514',
+    proto => 'udp',
     tag   => 'portfwd',
   }
 
