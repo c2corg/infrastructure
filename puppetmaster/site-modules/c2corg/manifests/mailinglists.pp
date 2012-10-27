@@ -50,6 +50,13 @@ true()                                          smtp,smime,md5    -> reject
 ',
   }
 
+  sympa::scenari { "aran":
+    content => '
+match([sender],/@aran\.org$/)       smtp              -> do_it
+true()                              smtp,smime,md5    -> reject
+',
+  }
+
   sympa::scenari { "everybody":
     content => '
 match([sender],/^.*$/)     smtp             -> do_it
@@ -86,7 +93,7 @@ true()                     smtp,smime,md5   -> reject
   }
 
   sympa::list { "aran":
-    send_from => "everybody",
+    send_from => "aran",
     subject   => "Title TBD",
     anon_name => "Sender TBD",
     footer    => template("c2corg/sympa/aran.footer"),
