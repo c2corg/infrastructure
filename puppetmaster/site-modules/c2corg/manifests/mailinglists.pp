@@ -132,7 +132,7 @@ true()                     smtp,smime,md5   -> reject
     user    => "nobody",
     minute  => 00,
     hour    => [8,10,12,16,17,18,19],
-    month   => [11,12,01,02,03,04,05], # TODO: pas sûr exactement quand ça se termine.
+    month   => [10,11,12,01,02,03,04,05,06],
   }
 
 }
