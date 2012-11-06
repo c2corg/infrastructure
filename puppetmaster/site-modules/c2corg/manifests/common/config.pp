@@ -145,18 +145,21 @@ set -sg escape-time 1
   }
 
   file_line { "screen: no startup message":
-    path => "/etc/screenrc",
-    line => 'startup_message off',
+    path    => "/etc/screenrc",
+    line    => 'startup_message off',
+    require => Package['screen'],
   }
 
   file_line { "screen: always login shell":
-    path => "/etc/screenrc",
-    line => 'defshell -$SHELL',
+    path    => "/etc/screenrc",
+    line    => 'defshell -$SHELL',
+    require => Package['screen'],
   }
 
   file_line { "screen: default scrollback":
-    path => "/etc/screenrc",
-    line => 'defscrollback 5000',
+    path    => "/etc/screenrc",
+    line    => 'defscrollback 5000',
+    require => Package['screen'],
   }
 
   file { "/etc/profile.d/": ensure => directory }
