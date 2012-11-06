@@ -29,5 +29,9 @@ class c2corg::account {
 
     "c2corg": user => "c2corg", account => "c2corg",
       groups => ["adm", "www-data"];
+
+    "vagrant": user => "vagrant", account => "vagrant",
+      groups => ["admin"];
+
   }
 }
