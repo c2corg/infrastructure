@@ -17,7 +17,10 @@ node 'base-node' {
   include c2corg::sudo # TODO: only if package sudo is installed
   include vz::facts
 
-  if ! $::vagrant {
+  if $::vagrant {
+    realize C2corg::Account::User['vagrant']
+  }
+  else {
     include puppet::client
     include c2corg::mcollective::node
   }
