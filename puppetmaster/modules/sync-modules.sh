@@ -37,6 +37,10 @@ git://github.com/camptocamp/puppet-kmod.git kmod bea065b60
 
 " | egrep -v '^$|^#' | while read url module commit; do
 
+  if [ $# -gt 0 ]; then
+    [ "$module" = "$1" ] || continue
+  fi
+
   export GIT_WORK_TREE="$(pwd)/${module}"
 
   if ! [ -e "$module" ]; then
