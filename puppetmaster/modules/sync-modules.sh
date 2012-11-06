@@ -29,7 +29,7 @@ git://github.com/camptocamp/puppet-mapserver.git mapserver 2eb908fa1d
 
 git://github.com/camptocamp/puppet-collectd.git collectd 8d369096
 
-git://github.com/camptocamp/puppet-python.git python 91fe7554
+git://github.com/stankevich/puppet-python.git python 94d9ca52b
 git://github.com/camptocamp/puppet-ruby.git ruby d7debdf
 git://github.com/camptocamp/puppet-php.git php da817b136
 git://github.com/camptocamp/puppet-buildenv.git buildenv 6ca5168395
