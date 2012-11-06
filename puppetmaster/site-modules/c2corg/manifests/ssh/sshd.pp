@@ -16,6 +16,13 @@ class c2corg::ssh::sshd {
     require => File['/etc/ssh/authorized_keys'],
   }
 
+  augeas { 'sshd/UseDNS':
+    incl    => '/etc/ssh/sshd_config',
+    lens    => 'Sshd.lns',
+    changes => 'set UseDNS no',
+    notify  => Service['ssh'],
+  }
+
   package { "openssh-server":
     ensure => present,
     before => File["/etc/ssh/authorized_keys"],
