@@ -19,5 +19,6 @@ define c2corg::ssh::userkey ($user, $account, $type, $key, $opts='') {
   concat::fragment { "sshkey-for-${user}-on-${account}":
     target  => "/etc/ssh/authorized_keys/${account}.keys",
     content => "${sshopts}ssh-${type} ${key} ${comment}\n",
+    before  => Augeas['sshd/AuthorizedKeysFile'],
   }
 }
