@@ -42,12 +42,11 @@ git://github.com/camptocamp/puppet-kmod.git kmod bea065b60
   if ! [ -e "$module" ]; then
     echo -e "\n\n@@@ Cloning module $module\n"
     git clone "$url" "$module"
-  else
-    echo -e "\n\n@@@ Updating module $module (commit $commit)\n"
-    (cd "$module" && \
-     git remote update origin && \
-     git checkout "$commit" && \
-     git diff --stat origin/master)
   fi
+  echo -e "\n\n@@@ Updating module $module (commit $commit)\n"
+  (cd "$module" && \
+   git remote update origin && \
+   git checkout "$commit" && \
+   git diff --stat origin/master)
 
 done
