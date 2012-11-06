@@ -1,0 +1,17 @@
+# file managed by puppet
+CONFIG = {
+  'mode': 'wsgi',
+  'user': 'www-data',
+  'group': 'www-data',
+  'python': '<%= virtualenv %>/bin/python',
+  'working_dir': '<%= dir %>',
+  'environment': {
+    'C2CSTATS_SETTINGS': '<%= scope.lookupvar('c2corg::stats::conffile') %>',
+    'PYTHONPATH': '<%= virtualenv %>',
+  },
+  'args': (
+    '--workers=3',
+    '--log-level=info',
+    'c2cstats:app',
+  ),
+}
