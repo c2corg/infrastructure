@@ -41,8 +41,6 @@ git://github.com/camptocamp/puppet-kmod.git kmod bea065b60
     [ "$module" = "$1" ] || continue
   fi
 
-  export GIT_WORK_TREE="$(pwd)/${module}"
-
   if ! [ -e "$module" ]; then
     echo -e "\n\n@@@ Cloning module $module\n"
     git clone "$url" "$module"
