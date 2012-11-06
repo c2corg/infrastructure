@@ -19,8 +19,6 @@ git://github.com/puppetlabs/puppetlabs-vcsrepo.git vcsrepo 109d181b
 git://github.com/puppetlabs/puppetlabs-lvm.git lvm 3b1f783
 git://github.com/puppetlabs/puppetlabs-stdlib.git stdlib 44e99a7c
 git://github.com/ripienaar/puppet-concat.git concat aaf2eeb027
-git://github.com/puppetlabs/hiera.git hiera 2938116ba
-git://github.com/puppetlabs/hiera-puppet.git hiera-puppet bccaddc11f
 
 git://github.com/camptocamp/puppet-varnish.git varnish 89e30831
 git://github.com/camptocamp/puppet-apache.git apache 7a3080ee3

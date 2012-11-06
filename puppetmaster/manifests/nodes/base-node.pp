@@ -5,6 +5,7 @@ node 'base-node' {
   include augeas
   include stdlib
   include openssl
+  include puppet::hiera
   include c2corg::account
   include c2corg::mta
   include c2corg::ssh::sshd
