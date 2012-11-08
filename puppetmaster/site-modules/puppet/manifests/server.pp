@@ -104,7 +104,11 @@ port = 8081
     recurse => true,
   }
 
-  file { '/etc/puppet/hiera': ensure => directory }
+  file { '/etc/puppet/hiera':
+    ensure => directory,
+    group  => 'adm',
+    mode   => 2775,
+  }
 
   cron { "restart puppetmaster": ensure => absent }
 

@@ -6,10 +6,8 @@ node 'pm' inherits 'base-node' {
   include c2corg::collectd::node
   include buildenv::deb
 
-  # TODO: mv this stuff to a decent backend system
-  file { "/etc/c2corg":
-    ensure => directory,
-    owner  => "marc",
+  file { '/etc/c2corg':
+    ensure => absent,
   }
 
   fact::register {
@@ -18,7 +16,7 @@ node 'pm' inherits 'base-node' {
   }
 
   c2corg::backup::dir {
-    ["/srv/puppetmaster", "/var/lib/puppet/ssl", "/home", "/etc/c2corg"]:
+    ["/srv/puppetmaster", "/var/lib/puppet/ssl", "/home", "/etc/puppet/hiera"]:
   }
 
 }

@@ -1,1 +1,0 @@
-/etc/c2corg/password.pp
