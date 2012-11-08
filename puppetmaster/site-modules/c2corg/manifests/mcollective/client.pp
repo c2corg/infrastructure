@@ -1,7 +1,10 @@
 class c2corg::mcollective::client {
 
   include c2corg::mcollective
-  include c2corg::password
+
+  $mco_psk  = hiera('mco_psk')
+  $mco_user = hiera('mco_user')
+  $mco_pass = hiera('mco_pass')
 
   package { "mcollective-client":
     ensure  => present,
@@ -30,13 +33,13 @@ loglevel = info
 
 # Plugins
 securityprovider = psk
-plugin.psk = ${c2corg::password::mco_psk}
+plugin.psk = ${mco_psk}
 
 connector = stomp
 plugin.stomp.host = ${c2corg::mcollective::broker}
 plugin.stomp.port = 61613
-plugin.stomp.user = ${c2corg::password::mco_user}
-plugin.stomp.password = ${c2corg::password::mco_pass}
+plugin.stomp.user = ${mco_user}
+plugin.stomp.password = ${mco_pass}
 ",
   }
 

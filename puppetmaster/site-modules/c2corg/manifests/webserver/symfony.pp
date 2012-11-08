@@ -33,7 +33,6 @@ class c2corg::webserver::symfony {
     require => Package["python-setuptools"],
   }
 
-  include c2corg::password
   $sender_relay_map = "/etc/postfix/sender_relay"
   $sasl_pw_map      = "/etc/postfix/sasl_pw"
 
@@ -53,8 +52,10 @@ class c2corg::webserver::symfony {
     before  => Postfix::Config["sender_dependent_relayhost_maps"],
   }
 
+  $noreply_pass = hiera('noreply_pass')
+
   postfix::hash { $sasl_pw_map:
-    content => "smtp.gmail.com    noreply@camptocamp.org:${c2corg::password::noreply_pass}\n",
+    content => "smtp.gmail.com    noreply@camptocamp.org:${noreply_pass}\n",
     before  => Postfix::Config["smtp_sasl_password_maps"],
   }
 

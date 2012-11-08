@@ -1,6 +1,5 @@
 class c2corg::mailinglists {
 
-  include c2corg::password
   include c2corg::mta # just import attributes
 
   include c2corg::collectd::plugin::postfix
@@ -9,8 +8,8 @@ class c2corg::mailinglists {
   $dbport = hiera('db_port')
   $dbtype = 'Pg'
   $dbname = 'c2corg'
-  $dbuser = $c2corg::password::ml_db_user
-  $dbpwd  = $c2corg::password::ml_db_pass
+  $dbuser = hiera('ml_db_user')
+  $dbpwd  = hiera('ml_db_pass')
   $hname  = 'lists.camptocamp.org'
   $listmaster = 'listmaster@camptocamp.org'
 

@@ -1,13 +1,20 @@
 class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
 
-  include c2corg::password
-
   $sitename = "camptocamp.org"
   $smtp_server = "127.0.0.1"
   $db_host = hiera('db_host')
   $db_port = hiera('db_port')
   $session_host = hiera('session_host')
   $statsd_host = hiera('statsd_host')
+  $www_db_user = hiera('www_db_user')
+  $prod_db_pass = hiera('prod_db_pass')
+  $advertising_admin = hiera('advertising_admin')
+  $ganalytics_key = hiera('ganalytics_key')
+  $mobile_ganalytics_key = hiera('mobile_ganalytics_key')
+  $metaengine_key = hiera('metaengine_key')
+  $prod_gmaps_key = hiera('prod_gmaps_key')
+  $prod_geoportail_key = hiera('prod_geoportail_key')
+
   $advertising_rw_dir = "/srv/www/camptocamp.org/www-data/persistent/advertising"
 
   include c2corg::memcachedb
@@ -25,8 +32,8 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
 <%
   c2corg_vars = {
     'PRODUCTION'            => 'true',
-    'DB_USER'               => '${c2corg::password::www_db_user}',
-    'DB_PASS'               => '${c2corg::password::prod_db_pass}',
+    'DB_USER'               => '${www_db_user}',
+    'DB_PASS'               => '${prod_db_pass}',
     'DB_HOST'               => '${db_host}',
     'DB_PORT'               => '${db_port}',
     'STATSD_HOST'           => '${statsd_host}',
@@ -37,12 +44,12 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
     'STATIC_BASE_URL'       => 'http://s.${sitename}',
     'SMTP'                  => '${smtp_server}',
     'ADVERTISING_RW_DIR'    => '${advertising_rw_dir}',
-    'ADVERTISING_ADMIN'     => '${c2corg::password::advertising_admin}',
-    'GANALYTICS_KEY'        => '${c2corg::password::ganalytics_key}',
-    'MOBILE_GANALYTICS_KEY' => '${c2corg::password::mobile_ganalytics_key}',
-    'METAENGINE_KEY'        => '${c2corg::password::metaengine_key}',
-    'GMAPS_KEY'             => '${c2corg::password::prod_gmaps_key}',
-    'GEOPORTAIL_KEY'        => '${c2corg::password::prod_geoportail_key}',
+    'ADVERTISING_ADMIN'     => '${advertising_admin}',
+    'GANALYTICS_KEY'        => '${ganalytics_key}',
+    'MOBILE_GANALYTICS_KEY' => '${mobile_ganalytics_key}',
+    'METAENGINE_KEY'        => '${metaengine_key}',
+    'GMAPS_KEY'             => '${prod_gmaps_key}',
+    'GEOPORTAIL_KEY'        => '${prod_geoportail_key}',
   }
 %>
 export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
@@ -50,8 +57,8 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
   }
 
   $pgvars = [
-    "PGUSER='${c2corg::password::www_db_user}'",
-    "PGPASSWORD='${c2corg::password::prod_db_pass}'",
+    "PGUSER='${www_db_user}'",
+    "PGPASSWORD='${prod_db_pass}'",
     "PGHOST='${db_host}'",
     "PGPORT='${db_port}'",
   ]
@@ -69,7 +76,7 @@ all:
   myConnection:
     class: sfDoctrineDatabase
     param:
-      dsn: pgsql://${c2corg::password::www_db_user}:${c2corg::password::prod_db_pass}@${db_host}:${db_port}/metaengine
+      dsn: pgsql://${www_db_user}:${prod_db_pass}@${db_host}:${db_port}/metaengine
 ",
     require => Vcsrepo["/srv/www/meta.camptocamp.org"],
   }

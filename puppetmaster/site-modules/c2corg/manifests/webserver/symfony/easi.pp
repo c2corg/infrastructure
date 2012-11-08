@@ -1,5 +1,8 @@
 class c2corg::webserver::symfony::easi inherits c2corg::webserver::symfony {
 
+  $www_db_user = hiera('www_db_user')
+  $www_db_pass = hiera('www_db_pass')
+
   Vcsrepo["camptocamp.org"] {
     ensure   => undef,
     provider => "git",
@@ -22,8 +25,8 @@ class c2corg::webserver::symfony::easi inherits c2corg::webserver::symfony {
   }
 
   $pgvars = [
-    "PGUSER='${c2corg::password::www_db_user}'",
-    "PGPASSWORD='${c2corg::password::dev_db_pass}'",
+    "PGUSER='${www_db_user}'",
+    "PGPASSWORD='${dev_db_pass}'",
   ]
 
   File["psql-env.sh"] {

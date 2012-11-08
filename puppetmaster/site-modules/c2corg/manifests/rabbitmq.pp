@@ -1,7 +1,5 @@
 class c2corg::rabbitmq {
 
-  include c2corg::password
-
   #TODO: configure SSL + enable portfwd
 
   #@@nat::fwd { 'forward stomp port':
@@ -12,6 +10,7 @@ class c2corg::rabbitmq {
   #  tag   => 'portfwd',
   #}
 
+  $mco_user = hiera('mco_user')
 
   apt::preferences { "rabbitmq_from_c2corg_repo":
     package  => "rabbitmq-server",
@@ -23,13 +22,13 @@ class c2corg::rabbitmq {
     delete_guest_user => true,
   }
 
-  rabbitmq_user { $c2corg::password::mco_user:
+  rabbitmq_user { $mco_user:
     ensure   => present,
     admin    => false,
-    password => $c2corg::password::mco_pass,
+    password => hiera('mco_pass'),
   }
 
-  rabbitmq_user_permissions { "${c2corg::password::mco_user}@/":
+  rabbitmq_user_permissions { "${mco_user}@/":
     ensure               => present,
     configure_permission => "^amq.gen-.*",
     write_permission     => "^amq.(gen-.*|topic)",

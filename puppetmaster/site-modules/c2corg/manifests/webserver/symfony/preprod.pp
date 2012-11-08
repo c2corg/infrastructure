@@ -1,9 +1,12 @@
 class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
 
-  include c2corg::password
   $sitename = "pre-prod.dev.camptocamp.org"
   $session_host = hiera('session_host')
   $statsd_host = hiera('statsd_host')
+  $www_db_user = hiera('www_db_user')
+  $preprod_db_pass = hiera('preprod_db_pass')
+  $preprod_gmaps_key = hiera('preprod_gmaps_key')
+  $preprod_geoportail_key = hiera('preprod_geoportail_key')
 
   include c2corg::memcachedb
 
@@ -29,16 +32,16 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
     content => inline_template("# file managed by puppet
 <%
   c2corg_vars = {
-    'DB_USER'               => '${c2corg::password::www_db_user}',
-    'DB_PASS'               => '${c2corg::password::preprod_db_pass}',
+    'DB_USER'               => '${www_db_user}',
+    'DB_PASS'               => '${preprod_db_pass}',
     'STATSD_HOST'           => '${statsd_host}',
     'SERVER_NAME'           => 'www.${sitename}',
     'MOBILE_VERSION_HOST'   => 'm.${sitename}',
     'CLASSIC_VERSION_HOST'  => 'www.${sitename}',
     'STATIC_HOST'           => 's.${sitename}',
     'STATIC_BASE_URL'       => 'http://s.${sitename}',
-    'GMAPS_KEY'             => '${c2corg::password::preprod_gmaps_key}',
-    'GEOPORTAIL_KEY'        => '${c2corg::password::preprod_geoportail_key}',
+    'GMAPS_KEY'             => '${preprod_gmaps_key}',
+    'GEOPORTAIL_KEY'        => '${preprod_geoportail_key}',
   }
 %>
 export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
@@ -46,8 +49,8 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
   }
 
   $pgvars = [
-    "PGUSER='${c2corg::password::www_db_user}'",
-    "PGPASSWORD='${c2corg::password::preprod_db_pass}'",
+    "PGUSER='${www_db_user}'",
+    "PGPASSWORD='${preprod_db_pass}'",
   ]
 
   File["psql-env.sh"] {

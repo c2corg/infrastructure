@@ -1,11 +1,12 @@
 class c2corg::database::prod inherits c2corg::database::common {
 
-  include c2corg::password
-
   $logfacility = "LOCAL0"
 
-  Postgresql::User["${c2corg::password::www_db_user}"] {
-    password => $c2corg::password::prod_db_pass,
+  $www_db_user  = hiera('www_db_user')
+  $prod_db_pass = hiera('prod_db_pass')
+
+  Postgresql::User[$www_db_user] {
+    password => $prod_db_pass,
   }
 
   postgresql::conf {
@@ -32,8 +33,8 @@ LoadPlugin \"postgresql\"
 <Plugin postgresql>
   <Database c2corg>
     Port \"5432\"
-    User \"${c2corg::password::www_db_user}\"
-    Password \"${c2corg::password::prod_db_pass}\"
+    User \"${www_db_user}\"
+    Password \"${prod_db_pass}\"
   </Database>
 </Plugin>
 ",

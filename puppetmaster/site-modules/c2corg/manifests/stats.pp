@@ -1,7 +1,5 @@
 class c2corg::stats {
 
-  include c2corg::password
-
   $libdir   = '/var/lib/c2cstats'
   $conffile = '/etc/c2cstats.conf'
   $cachedir = "${libdir}/cache"
@@ -11,7 +9,7 @@ class c2corg::stats {
 
   $python_version = '2.7'
 
-  $secret_key = $c2corg::password::c2cstats_key
+  $secret_key = hiera('c2cstats_key')
 
   class { 'python':
     version    => $python_version,

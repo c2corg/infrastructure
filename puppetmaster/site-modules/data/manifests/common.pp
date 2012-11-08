@@ -12,4 +12,34 @@ class data::common {
 
   $puppetmaster_host = '192.168.192.101'
 
+  $www_db_user = "www-data"
+  $ml_db_user = "sympa"
+  $mco_user = "mco"
+
+  # All defined keys & passwords. Values used in production are stored on the
+  # puppetmaster in /etc/puppet/hiera/
+  $prod_db_pass = "password"
+  $preprod_db_pass = "password"
+  $dev_db_pass = "password"
+
+  $mco_pass = "password"
+  $mco_psk  = "psk"
+
+  $ml_db_pass = "password"
+
+  $advertising_admin = "password"
+
+  $noreply_pass = "password"
+
+  $shared_crypt_pass = "JryqixNl7088w" # "password"
+
+  $prod_gmaps_key    = "invalid-key"
+  $preprod_gmaps_key = "invalid-key"
+  $prod_geoportail_key = "invalid-key"
+  $preprod_geoportail_key = "invalid-key"
+  $c2cstats_key = "sample-key"
+  $metaengine_key = "sample-key"
+  $ganalytics_key = "invalid-key"
+  $mobile_ganalytics_key = "invalid-key"
+
 }
