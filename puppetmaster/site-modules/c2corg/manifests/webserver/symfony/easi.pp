@@ -1,7 +1,7 @@
 class c2corg::webserver::symfony::easi inherits c2corg::webserver::symfony {
 
   $www_db_user = hiera('www_db_user')
-  $www_db_pass = hiera('www_db_pass')
+  $dev_db_pass = hiera('dev_db_pass')
 
   Vcsrepo["camptocamp.org"] {
     ensure   => undef,

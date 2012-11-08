@@ -3,7 +3,7 @@ class c2corg::webserver::symfony::dev inherits c2corg::webserver::symfony {
   $sitename = "${::hostname}.dev.camptocamp.org"
 
   $www_db_user = hiera('www_db_user')
-  $www_db_pass = hiera('www_db_pass')
+  $dev_db_pass = hiera('dev_db_pass')
 
   File["c2corg conf.ini"] {
     path => "/srv/www/camptocamp.org/deployment/${developer}.ini",
