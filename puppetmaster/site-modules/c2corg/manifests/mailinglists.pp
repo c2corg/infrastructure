@@ -64,6 +64,7 @@ true()                     smtp,smime,md5   -> reject
   }
 
   sympa::list { "avalanche":
+    ensure    => absent,
     send_from => "slf",
     subject   => "bulletin avalanche ENA",
     anon_name => "Bulletin ENA",
@@ -71,6 +72,7 @@ true()                     smtp,smime,md5   -> reject
   }
 
   sympa::list { "avalanche.en":
+    ensure    => absent,
     send_from => "slf",
     subject   => "bulletin avalanche SAR",
     anon_name => "SAR bulletin",
@@ -78,6 +80,7 @@ true()                     smtp,smime,md5   -> reject
   }
 
   sympa::list { "lawinen":
+    ensure    => absent,
     send_from => "slf",
     subject   => "Lawinenbulletin SLF",
     anon_name => "Lawinenbulletin SLF",
@@ -85,6 +88,7 @@ true()                     smtp,smime,md5   -> reject
   }
 
   sympa::list { "valanghe":
+    ensure    => absent,
     send_from => "slf",
     subject   => "bollettino valanghe SNV",
     anon_name => "Bollettino SNV",
