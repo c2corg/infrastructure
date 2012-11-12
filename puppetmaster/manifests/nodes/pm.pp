@@ -8,6 +8,7 @@ node 'pm' inherits 'base-node' {
 
   file { '/etc/c2corg':
     ensure => absent,
+    force  => true,
   }
 
   fact::register {
