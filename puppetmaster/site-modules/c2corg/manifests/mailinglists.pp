@@ -138,4 +138,17 @@ true()                     smtp,smime,md5   -> reject
     month   => [10,11,12,01,02,03,04,05,06],
   }
 
+  Mailalias {
+    recipient => 'marc.fournier+slf@camptocamp.org',
+    notify    => Exec["newaliases"],
+  }
+
+  mailalias {
+    ['avalanche-owner', 'avalanche',
+     'lawinen-owner', 'lawinen',
+     'valanghe-owner', 'valanghe',
+     'avalanche.en-owner', 'avalanche.en',
+    ]: ensure    => present,
+  }
+
 }
