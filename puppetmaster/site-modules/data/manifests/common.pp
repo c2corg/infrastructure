@@ -33,6 +33,8 @@ class data::common {
 
   $shared_crypt_pass = "JryqixNl7088w" # "password"
 
+  $lxc_root_password = "123"
+
   $prod_gmaps_key    = "invalid-key"
   $preprod_gmaps_key = "invalid-key"
   $prod_geoportail_key = "invalid-key"

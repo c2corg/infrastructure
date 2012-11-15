@@ -1,0 +1,67 @@
+## LXC
+
+# copied from /usr/share/doc/lxc/examples/lxc-debian.cfg
+
+# lxc-debconf
+lxc-debconfig lxc-debconfig/debconf-frontend select noninteractive
+lxc-debconfig lxc-debconfig/debconf-priority select critical
+
+lxc-debconfig lxc-debconfig/distribution string <%= suite %>
+#lxc-debconfig lxc-debconfig/architecture select 
+lxc-debconfig lxc-debconfig/architecture string amd64
+lxc-debconfig lxc-debconfig/packages string sudo wget
+
+lxc-debconfig lxc-debconfig/mirror string http://http.debian.net/debian/
+lxc-debconfig lxc-debconfig/mirror-security string http://http.debian.net/debian-security/
+lxc-debconfig lxc-debconfig/mirror-backports string http://http.debian.net/debian-backports/
+
+lxc-debconfig lxc-debconfig/archives multiselect <%= suite %>-security, <%= suite %>-updates
+lxc-debconfig lxc-debconfig/archive-areas multiselect main
+
+lxc-debconfig lxc-debconfig/auto boolean false
+lxc-debconfig lxc-debconfig/capabilities string mac_admin mac_override sys_admin sys_module
+#lxc-debconfig lxc-debconfig/mount0/comment string 
+#lxc-debconfig lxc-debconfig/mount0/entry string 
+#lxc-debconfig lxc-debconfig/late-host-command string 
+
+lxc-debconfig lxc-debconfig/late-command string sh -x /install-puppet.sh <%= suite %>
+
+lxc-debconfig lxc-debconfig/eth0-mac string <%= ctmacaddress %>
+lxc-debconfig lxc-debconfig/eth0-bridge string br0
+lxc-debconfig lxc-debconfig/eth0-veth string veth-debian
+
+# live-debconfig
+live-debconfig live-debconfig/hostname/hostname string <%= ctname %>
+live-debconfig live-debconfig/ifupdown/eth0-comment string The primary network interface
+#live-debconfig live-debconfig/ifupdown/eth0-method select dhcp
+live-debconfig live-debconfig/ifupdown/eth0-address string <%= ctip %>
+#live-debconfig live-debconfig/ifupdown/eth0-broadcast string 
+live-debconfig live-debconfig/ifupdown/eth0-gateway string <%= network %>.1
+live-debconfig live-debconfig/ifupdown/eth0-netmask string 255.255.255.0
+#live-debconfig live-debconfig/ifupdown/eth0-network string 
+#live-debconfig live-debconfig/ifupdown/nameservers string 
+live-debconfig live-debconfig/selinux/enable boolean false
+live-debconfig live-debconfig/sysvinit/lxc-enable boolean true
+live-debconfig live-debconfig/sysvinit/lxc-consoles string 3
+
+## System
+
+# tzdata
+tzdata tzdata/Areas select Europe
+tzdata tzdata/Zones/Etc select UTC
+tzdata tzdata/Zones/Europe select Zurich
+
+# user-setup
+user-setup passwd/make-user boolean false
+#user-setup passwd/user-fullname string System Administration
+#user-setup passwd/username string sysadmin
+#user-setup passwd/user-password password debian
+#user-setup passwd/user-password-again password debian
+#user-setup passwd/user-uid string 1000
+#user-setup passwd/user-default-groups string audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth
+# wheezy
+#user-setup passwd/user-default-groups string audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth debian-tor
+user-setup passwd/root-login boolean true
+user-setup passwd/root-password password <%= rootpasswd %>
+user-setup passwd/root-password-again password <%= rootpasswd %>
+user-setup passwd/shadow boolean true
