@@ -4,22 +4,25 @@ class c2corg::common::packages {
 
   package { [
     "ack-grep", "arping", "at",
-    "bash-completion", "bzr",
+    "bash-completion", "bc", "bind9-host", "bsdmainutils", "bzr",
     "curl", "cron", "cvs",
-    "dnsutils",
-    "elinks",
+    "dc", "dnsutils",
+    "elinks", "emacs23-nox",
+    "ftp",
     "git-core", "git-svn",
     "htop",
-    "less", "locales-all", "lsb-release",
+    "iputils-ping", "iso-codes",
+    "less", "locales-all", "logrotate", "lsb-release",
     "m4", "make", "mosh", "mtr-tiny",
     "netcat", "nmap", "ntp",
-    "patch", "pwgen",
+    "patch", "psmisc", "pwgen",
     "rsync",
     "screen", "sudo", "subversion", "subversion-tools", "sysstat",
-    "tcpdump", "telnet", "time", "tshark",
+    "tcpdump", "telnet", "time", "tmux", "tshark",
     "unzip",
     "vim",
-    "wget"
+    "whois", "wget",
+    "xauth",
     ]: ensure => installed
   }
 
@@ -36,8 +39,6 @@ class c2corg::common::packages {
 
   case $::lsbdistcodename {
     "squeeze": {
-      package { ["tmux", "emacs23-nox"]: ensure => installed }
-
       apt::preferences { "misc_pkgs_from_bpo":
         package  => "mosh",
         pin      => "release a=${::lsbdistcodename}-backports",
