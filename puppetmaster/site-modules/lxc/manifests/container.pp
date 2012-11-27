@@ -43,6 +43,7 @@ define lxc::container (
       command => "lxc-create -n ${ctname} -t debian ${fsopts} -- --preseed-file /var/lib/lxc/${ctname}-preseed.cfg",
       unless  => "test -e /var/lib/lxc/${ctname}",
       require => File["/var/lib/lxc/${ctname}-preseed.cfg"],
+      timeout => 0,
     }
 
     if ($autostart == true) {
