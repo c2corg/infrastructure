@@ -1,7 +1,7 @@
 /* PowerEdge 1850 */
 class c2corg::hn::hn5 inherits c2corg::hn {
 
-  include hardware::raid::megaraid
+  include hardware::raid::md
   include ipmi
 
   augeas { 'enable console on serial port':
