@@ -63,6 +63,38 @@ true()                     smtp,smime,md5   -> reject
 ',
   }
 
+  sympa::list { "avalanche":
+    ensure    => absent,
+    send_from => "slf",
+    subject   => "bulletin avalanche ENA",
+    anon_name => "Bulletin ENA",
+    footer    => template("c2corg/sympa/slf.fr.footer"),
+  }
+
+  sympa::list { "avalanche.en":
+    ensure    => absent,
+    send_from => "slf",
+    subject   => "bulletin avalanche SAR",
+    anon_name => "SAR bulletin",
+    footer    => template("c2corg/sympa/slf.en.footer"),
+  }
+
+  sympa::list { "lawinen":
+    ensure    => absent,
+    send_from => "slf",
+    subject   => "Lawinenbulletin SLF",
+    anon_name => "Lawinenbulletin SLF",
+    footer    => template("c2corg/sympa/slf.de.footer"),
+  }
+
+  sympa::list { "valanghe":
+    ensure    => absent,
+    send_from => "slf",
+    subject   => "bollettino valanghe SNV",
+    anon_name => "Bollettino SNV",
+    footer    => template("c2corg/sympa/slf.it.footer"),
+  }
+
   sympa::list { "aran":
     send_from => "aran",
     subject   => "Title TBD",
