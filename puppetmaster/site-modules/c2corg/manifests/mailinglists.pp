@@ -28,7 +28,7 @@ class c2corg::mailinglists {
   }
 
   sympa::scenari { "marc":
-    ensure  => absent, # enable for tests
+    ensure  => present, # enable for tests
     content => '
 match([sender],/^marc.fournier@camptocamp.org$/)     smtp              -> do_it
 true()                                               smtp,smime,md5    -> reject
@@ -64,28 +64,28 @@ true()                     smtp,smime,md5   -> reject
   }
 
   sympa::list { "avalanche":
-    send_from => "slf",
+    send_from => "marc",
     subject   => "bulletin avalanche ENA",
     anon_name => "Bulletin ENA",
     footer    => template("c2corg/sympa/slf.fr.footer"),
   }
 
   sympa::list { "avalanche.en":
-    send_from => "slf",
+    send_from => "marc",
     subject   => "bulletin avalanche SAR",
     anon_name => "SAR bulletin",
     footer    => template("c2corg/sympa/slf.en.footer"),
   }
 
   sympa::list { "lawinen":
-    send_from => "slf",
+    send_from => "marc",
     subject   => "Lawinenbulletin SLF",
     anon_name => "Lawinenbulletin SLF",
     footer    => template("c2corg/sympa/slf.de.footer"),
   }
 
   sympa::list { "valanghe":
-    send_from => "slf",
+    send_from => "marc",
     subject   => "bollettino valanghe SNV",
     anon_name => "Bollettino SNV",
     footer    => template("c2corg/sympa/slf.it.footer"),
@@ -137,14 +137,6 @@ true()                     smtp,smime,md5   -> reject
   Mailalias {
     recipient => 'marc.fournier+slf@camptocamp.org',
     notify    => Exec["newaliases"],
-  }
-
-  mailalias {
-    ['avalanche-owner', 'avalanche',
-     'lawinen-owner', 'lawinen',
-     'valanghe-owner', 'valanghe',
-     'avalanche.en-owner', 'avalanche.en',
-    ]: ensure    => present,
   }
 
 }
