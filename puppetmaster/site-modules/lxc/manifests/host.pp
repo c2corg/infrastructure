@@ -33,8 +33,14 @@ class lxc::host {
 
   etcdefault { 'start LXC at boot':
     file  => 'lxc',
-    key   => 'RUN',
-    value => 'yes',
+    key   => 'LXC_AUTO',
+    value => 'true',
+  }
+
+  etcdefault { 'use lxc-shutdown when system stops':
+    file  => 'lxc',
+    key   => 'LXC_SHUTDOWN',
+    value => 'shutdown',
   }
 
   # ensure lxc starts at boot
