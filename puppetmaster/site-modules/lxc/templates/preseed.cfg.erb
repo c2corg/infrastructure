@@ -34,6 +34,7 @@ lxc-debconfig lxc-debconfig/eth0-veth string veth-debian
 live-debconfig live-debconfig/hostname/hostname string <%= ctname %>
 live-debconfig live-debconfig/ifupdown/eth0-comment string The primary network interface
 #live-debconfig live-debconfig/ifupdown/eth0-method select dhcp
+live-debconfig live-debconfig/ifupdown/eth0-method string static
 live-debconfig live-debconfig/ifupdown/eth0-address string <%= ctip %>
 #live-debconfig live-debconfig/ifupdown/eth0-broadcast string 
 live-debconfig live-debconfig/ifupdown/eth0-gateway string <%= network %>.1
