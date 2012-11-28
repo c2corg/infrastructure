@@ -73,7 +73,7 @@ port = 8081
     users => '%adm',
     type  => "user_spec",
     commands => [
-      '(root) /usr/sbin/puppetca',
+      '(root) /usr/bin/puppet cert *',
       '(root) /etc/init.d/puppetmaster',
       '(root) /etc/init.d/puppetdb',
       '(root) /usr/sbin/invoke-rc.d puppetmaster *',
