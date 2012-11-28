@@ -1,0 +1,24 @@
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# internal vlan
+auto vlan192
+iface vlan192 inet manual
+  vlan-raw-device eth0
+
+# bridge shared with LXC containers
+auto br0
+iface br0 inet static
+  bridge_ports vlan192
+  bridge_stp off
+  address 192.168.192.7
+  netmask 255.255.255.0
+  gateway 192.168.192.1
+
+# SOS access to hn5
+auto eth1
+iface eth1 inet static
+  address 192.168.10.11
+  netmask 255.255.255.0
+

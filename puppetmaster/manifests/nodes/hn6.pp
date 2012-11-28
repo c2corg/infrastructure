@@ -2,8 +2,10 @@
 node 'hn6' inherits 'base-node' {
 
   include c2corg::hn::hn6
+  include c2corg::collectd::node
 
-  include lxc::host
+  class { 'c2corg::prod::fs::lxc': } ->
+  class { 'lxc::host': }
 
   fact::register {
     'role': value => 'HN lxc';
