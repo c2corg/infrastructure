@@ -55,15 +55,18 @@ options rotate edns0
     'sysstat history': key => 'HISTORY', value => '30';
   }
 
-  augeas { "disable ctrl-alt-delete":
-    incl    => '/etc/inittab',
-    lens    => 'Inittab.lns',
-    context => "/files/etc/inittab/*[action='ctrlaltdel']/",
-    changes => [
-      'set runlevels 12345',
-      "set process '/bin/echo ctrlaltdel disabled'"
-    ],
-    notify  => Exec['refresh init'],
+  #TODO: if $::virtual == 'physical' {
+  if ($::virtual == 'physical' and $::lxc_container == 'false') {
+    augeas { "disable ctrl-alt-delete":
+      incl    => '/etc/inittab',
+      lens    => 'Inittab.lns',
+      context => "/files/etc/inittab/*[action='ctrlaltdel']/",
+      changes => [
+        'set runlevels 12345',
+        "set process '/bin/echo ctrlaltdel disabled'"
+      ],
+      notify  => Exec['refresh init'],
+    }
   }
 
   # TODO: investigate this bug, this is silly
