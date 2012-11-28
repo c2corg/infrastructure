@@ -78,6 +78,11 @@ port=80
     notify  => Service["thttpd"],
   }
 
+  file { "${reprepro_basedir}/install-puppet.sh":
+    ensure => present,
+    source => 'puppet:///install-puppet.sh',
+  }
+
   @@host { "pkg.dev.camptocamp.org":
     ensure => absent,
     ip => $::ipaddress,
