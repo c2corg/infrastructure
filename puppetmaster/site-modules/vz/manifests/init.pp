@@ -50,4 +50,17 @@ class vz {
     require => Package['vzctl'],
   }
 
+  sudoers { 'openvz admin':
+    users => '%adm',
+    type  => "user_spec",
+    commands => [
+      '(root) /usr/sbin/vzlist',
+      '(root) /usr/sbin/vzctl',
+      '(root) /usr/sbin/vzmemcheck',
+      '(root) /usr/sbin/vzcpucheck',
+      '(root) /usr/sbin/vzdqcheck',
+      '(root) /usr/sbin/vzubc',
+    ],
+  }
+
 }

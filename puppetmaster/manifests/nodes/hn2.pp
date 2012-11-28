@@ -4,7 +4,7 @@ node 'hn2' inherits 'base-node' {
   include c2corg::hn::hn2
 
   include vz
-  include c2corg::vz
+  include c2cinfra::containers
 
   include c2corg::prod::fs::openvz
 

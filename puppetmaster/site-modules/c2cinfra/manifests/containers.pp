@@ -1,21 +1,4 @@
-/*
-OpenVZ nodes definition
-
-*/
-class c2corg::vz {
-
-  sudoers { 'openvz admin':
-    users => '%adm',
-    type  => "user_spec",
-    commands => [
-      '(root) /usr/sbin/vzlist',
-      '(root) /usr/sbin/vzctl',
-      '(root) /usr/sbin/vzmemcheck',
-      '(root) /usr/sbin/vzcpucheck',
-      '(root) /usr/sbin/vzdqcheck',
-      '(root) /usr/sbin/vzubc',
-    ],
-  }
+class c2cinfra::containers {
 
   case $::hostname {
     "hn0": {
@@ -44,6 +27,7 @@ class c2corg::vz {
       vz::ve { "141": hname => "pre-prod.pse.infra.camptocamp.org" }
 
     }
+
   }
 
 }
