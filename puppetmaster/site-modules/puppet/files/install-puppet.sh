@@ -3,11 +3,11 @@
 test -z $1 && exit 1
 
 suite=$1
-repo="http://pkg.dev.camptocamp.org/"
+repo="pkg.pse.infra.camptocamp.org"
 
-echo "deb ${repo}/c2corg/ ${suite} main" > /etc/apt/sources.list.d/c2corg.list
+echo "deb http://${repo}/c2corg/ ${suite} main" > /etc/apt/sources.list.d/c2corg.list
 
-wget -O - "${repo}/pubkey.txt" | apt-key add -
+wget -O - "http://${repo}/pubkey.txt" | apt-key add -
 
 cat << EOF > /etc/apt/preferences.d/c2corg
 Package: *
