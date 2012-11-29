@@ -1,19 +1,12 @@
 # PowerEdge 1850
-node 'hn5' {
+node 'hn5' inherits 'base-node' {
 
-  include apt
-  include c2corg::apt::wheezy
-  include c2corg::common::config
-  include c2corg::common::services
-  include c2corg::common::packages
+  include c2corg::hn::hn6
   include c2corg::collectd::node
-  include c2corg::hn::hn5
 
   fact::register {
-    'role': value => 'tests lxc';
-    'duty': value => 'dev';
+    'role': value => 'HN lxc';
+    'duty': value => 'prod';
   }
-
-  include lxc::host
 
 }
