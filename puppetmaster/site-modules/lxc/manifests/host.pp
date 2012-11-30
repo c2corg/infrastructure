@@ -69,8 +69,8 @@ class lxc::host {
   }
 
   file { '/usr/share/lxc/includes/root/.ssh/authorized_keys':
-    ensure  => present,
-    content => 'file:///etc/ssh/authorized_keys/root.keys',
+    ensure => present,
+    source => 'file:///etc/ssh/authorized_keys/root.keys',
   }
 
   # not needed, just to be able to copy it from apt's cache
