@@ -1,6 +1,7 @@
 #!/bin/sh -xe
 
 test -z $1 && exit 1
+test -z $2 && exit 1
 
 suite=$1
 repo="pkg.pse.infra.camptocamp.org"
@@ -19,7 +20,7 @@ apt-get update && apt-get -y install puppet facter ruby-hiera ruby-hiera-puppet 
 
 cat << EOF | augtool
 set /files/etc/resolv.conf/search/domain[1] pse.infra.camptocamp.org
-set /files/etc/puppet/puppet.conf/agent/certname $(hostname -s)
+set /files/etc/puppet/puppet.conf/agent/certname "$2"
 set /files/etc/puppet/puppet.conf/main/server pm
 set /files/etc/puppet/puppet.conf/main/pluginsync true
 save
