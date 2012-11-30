@@ -45,6 +45,7 @@ define lxc::container (
       unless  => "test -e /var/lib/lxc/${ctname}",
       require => File["/var/lib/lxc/${ctname}-preseed.cfg"],
       timeout => 0,
+      logoutput => true,
     }
 
     if ($autostart == true) {
