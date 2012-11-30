@@ -24,7 +24,7 @@ lxc-debconfig lxc-debconfig/capabilities string mac_admin mac_override sys_admin
 #lxc-debconfig lxc-debconfig/mount0/entry string 
 #lxc-debconfig lxc-debconfig/late-host-command string 
 
-lxc-debconfig lxc-debconfig/late-command string sh -x /install-puppet.sh <%= suite %> <%= ctname %>
+lxc-debconfig lxc-debconfig/late-command string /install-puppet.sh <%= suite %> <%= ctname %>
 
 lxc-debconfig lxc-debconfig/eth0-mac string <%= ctmacaddress %>
 lxc-debconfig lxc-debconfig/eth0-bridge string br0
