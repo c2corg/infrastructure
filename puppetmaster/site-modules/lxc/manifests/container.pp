@@ -11,7 +11,8 @@ define lxc::container (
 
   require 'lxc::host'
 
-  $ctname = $name
+  $ctfqdn = $name
+  $ctname = inline_template('<%= name.split(".").first %>')
   $ctip = "${network}.${ctid}"
   $ctmacaddress = inline_template('00:FF:00:00:00:<%= ("%02x" % ctid).upcase %>')
 

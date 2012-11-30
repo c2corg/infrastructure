@@ -28,10 +28,10 @@ lxc-debconfig lxc-debconfig/late-command string sh -x /install-puppet.sh <%= sui
 
 lxc-debconfig lxc-debconfig/eth0-mac string <%= ctmacaddress %>
 lxc-debconfig lxc-debconfig/eth0-bridge string br0
-lxc-debconfig lxc-debconfig/eth0-veth string veth-debian
+lxc-debconfig lxc-debconfig/eth0-veth string veth-<%= ctname %>
 
 # live-debconfig
-live-debconfig live-debconfig/hostname/hostname string <%= ctname %>
+live-debconfig live-debconfig/hostname/hostname string <%= ctfqdn %>
 live-debconfig live-debconfig/ifupdown/eth0-comment string The primary network interface
 #live-debconfig live-debconfig/ifupdown/eth0-method select dhcp
 live-debconfig live-debconfig/ifupdown/eth0-method string static
