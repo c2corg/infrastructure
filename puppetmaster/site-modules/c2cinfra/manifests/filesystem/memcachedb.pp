@@ -1,4 +1,4 @@
-class c2corg::prod::fs::memcachedb {
+class c2cinfra::filesystem::memcachedb {
 
   logical_volume { "memcachedb":
     ensure       => present,

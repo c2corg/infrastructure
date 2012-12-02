@@ -1,4 +1,4 @@
-class c2corg::prod::fs::monit {
+class c2cinfra::filesystem::monit {
 
   # lvm created on openvz HN
 

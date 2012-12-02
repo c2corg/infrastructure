@@ -1,4 +1,4 @@
-class c2corg::prod::fs::openvz {
+class c2cinfra::filesystem::openvz {
 
   logical_volume { "vz":
     ensure       => present,

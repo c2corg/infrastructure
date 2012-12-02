@@ -1,4 +1,4 @@
-class c2corg::prod::fs::photos {
+class c2cinfra::filesystem::photos {
 
   # lvm created on openvz HN
 

@@ -1,4 +1,4 @@
-class c2corg::prod::fs::backup {
+class c2cinfra::filesystem::backup {
 
   zpool { 'srv': disk => 'xvdd' }
 

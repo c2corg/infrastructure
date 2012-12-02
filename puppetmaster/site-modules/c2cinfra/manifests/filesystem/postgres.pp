@@ -1,4 +1,4 @@
-class c2corg::prod::fs::postgres {
+class c2cinfra::filesystem::postgres {
 
   # /tmp
   logical_volume { "tmp":

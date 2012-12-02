@@ -1,4 +1,4 @@
-class c2corg::prod::fs::lxc {
+class c2cinfra::filesystem::lxc {
 
   logical_volume { 'lxc':
     ensure       => present,
