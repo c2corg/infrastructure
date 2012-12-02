@@ -1,7 +1,7 @@
 # ProLiant DL360 G4p
 node 'hn0' inherits 'base-node' {
 
-  include c2corg::hn::hn0
+  include c2cinfra::hn::hn0
 
   include vz
   include c2cinfra::containers

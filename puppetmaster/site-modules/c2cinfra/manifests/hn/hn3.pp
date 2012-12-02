@@ -1,5 +1,5 @@
 /* System x3550 M3 */
-class c2corg::hn::hn3 inherits c2corg::hn {
+class c2cinfra::hn::hn3 inherits c2cinfra::hn {
 
   include hardware::raid::megaraidsas
   include ipmi

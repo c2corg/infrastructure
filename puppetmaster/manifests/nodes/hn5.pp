@@ -1,7 +1,7 @@
 # PowerEdge 1850
 node 'hn5' inherits 'base-node' {
 
-  include c2corg::hn::hn5
+  include c2cinfra::hn::hn5
   include c2cinfra::collectd::node
 
   class { 'c2corg::prod::fs::lxc': } ->

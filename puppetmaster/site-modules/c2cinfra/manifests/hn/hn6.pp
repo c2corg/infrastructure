@@ -1,5 +1,5 @@
 /* PowerEdge 1850 */
-class c2corg::hn::hn6 inherits c2corg::hn {
+class c2cinfra::hn::hn6 inherits c2cinfra::hn {
 
   include hardware::raid::md
   include ipmi

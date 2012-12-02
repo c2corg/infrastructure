@@ -1,4 +1,4 @@
-class c2corg::hn {
+class c2cinfra::hn {
 
   file { "/etc/network/interfaces":
     ensure => present,

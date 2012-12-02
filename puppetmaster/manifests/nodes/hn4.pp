@@ -1,7 +1,7 @@
 # X3550 M3
 node 'hn4' inherits 'base-node' {
 
-  include c2corg::hn::hn4
+  include c2cinfra::hn::hn4
 
   include c2corg::database::prod
   include c2corg::prod::fs::postgres

@@ -11,7 +11,7 @@ node 'hn3' inherits 'base-node' {
   $haproxy_main_address = "192.168.192.4"
   $haproxy_failover_address = "192.168.192.70"
 
-  include c2corg::hn::hn3
+  include c2cinfra::hn::hn3
 
   include c2corg::webserver::symfony::prod
   include c2corg::webserver::carto

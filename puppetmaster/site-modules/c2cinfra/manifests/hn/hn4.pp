@@ -1,5 +1,5 @@
-/* PowerEdge 2950 */
-class c2corg::hn::hn2 inherits c2corg::hn {
+/* System x3550 M3 */
+class c2cinfra::hn::hn4 inherits c2cinfra::hn {
 
   include hardware::raid::megaraidsas
   include ipmi
@@ -16,10 +16,10 @@ class c2corg::hn::hn2 inherits c2corg::hn {
   }
 
   @@nat::fwd {
-    'forward hn2 ssh port':
-      host => '3', from => '20023', to => '22',   tag => 'portfwd', proto => 'tcp';
-    'forward hn2 mosh port':
-      host => '3', from => '6003',  to => '6003', tag => 'portfwd', proto => 'udp';
+    'forward hn4 ssh port':
+      host => '5', from => '20025', to => '22',   tag => 'portfwd', proto => 'tcp';
+    'forward hn4 mosh port':
+      host => '5', from => '6005',  to => '6005', tag => 'portfwd', proto => 'udp';
   }
 
 }
