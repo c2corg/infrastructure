@@ -1,7 +1,7 @@
 # VM
 node 'pkg' inherits 'base-node' {
 
-  include c2corg::reprepro
+  include c2cinfra::reprepro
 
   fact::register {
     'role': value => 'repository de paquets';

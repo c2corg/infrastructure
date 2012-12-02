@@ -1,4 +1,4 @@
-class c2corg::reprepro {
+class c2cinfra::reprepro {
 
   $reprepro_basedir = "/srv/deb-repo"
   include reprepro::debian

@@ -1,4 +1,4 @@
-class c2corg::mcollective {
+class c2cinfra::mcollective {
 
   $broker = hiera('broker_host')
 

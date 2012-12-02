@@ -22,7 +22,7 @@ node 'base-node' {
   }
   else {
     include puppet::client
-    include c2corg::mcollective::node
+    include c2cinfra::mcollective::node
   }
 
   # Marc doesn't need to use root's account every time he must

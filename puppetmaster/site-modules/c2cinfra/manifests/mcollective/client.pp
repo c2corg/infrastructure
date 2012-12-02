@@ -1,6 +1,6 @@
-class c2corg::mcollective::client {
+class c2cinfra::mcollective::client {
 
-  include c2corg::mcollective
+  include c2cinfra::mcollective
 
   $mco_psk  = hiera('mco_psk')
   $mco_user = hiera('mco_user')
@@ -36,7 +36,7 @@ securityprovider = psk
 plugin.psk = ${mco_psk}
 
 connector = stomp
-plugin.stomp.host = ${c2corg::mcollective::broker}
+plugin.stomp.host = ${c2cinfra::mcollective::broker}
 plugin.stomp.port = 61613
 plugin.stomp.user = ${mco_user}
 plugin.stomp.password = ${mco_pass}

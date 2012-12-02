@@ -1,4 +1,4 @@
-class c2corg::rabbitmq {
+class c2cinfra::rabbitmq {
 
   #TODO: configure SSL + enable portfwd
 
