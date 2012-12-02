@@ -124,6 +124,7 @@ deb http://backports.debian.org/debian-backports ${::lsbdistcodename}-backports 
   }
 
   apt::conf { '50avoid-installing-unnecessary-stuff':
+    ensure  => present,
     content => '// file managed by puppet
 APT::Install-Recommends "0";
 APT::Install-Suggests "0";
