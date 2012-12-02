@@ -1,4 +1,4 @@
-class c2corg::apt {
+class c2cinfra::apt {
 
   $debmirror = $::datacenter ? {
     /c2corg|epnet|pse/ => 'http://mirror.switch.ch/ftp/mirror',

@@ -8,7 +8,7 @@ node 'base-node' {
   include c2cinfra::account
   include c2corg::mta
   include c2cinfra::ssh::sshd
-  include "c2corg::apt::${::lsbdistcodename}"
+  include "c2cinfra::apt::${::lsbdistcodename}"
   include c2corg::common::packages
   include c2corg::common::services
   include c2corg::common::config

@@ -1,4 +1,4 @@
-class c2corg::apt::wheezy inherits c2corg::apt {
+class c2cinfra::apt::wheezy inherits c2cinfra::apt {
 
   Apt::Preferences["squeeze"] {
     priority => "50",

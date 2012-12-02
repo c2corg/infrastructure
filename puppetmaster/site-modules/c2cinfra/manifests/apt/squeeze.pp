@@ -1,4 +1,4 @@
-class c2corg::apt::squeeze inherits c2corg::apt {
+class c2cinfra::apt::squeeze inherits c2cinfra::apt {
 
   Apt::Preferences["squeeze"] {
     priority => "990",
