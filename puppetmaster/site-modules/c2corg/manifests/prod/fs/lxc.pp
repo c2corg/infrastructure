@@ -12,6 +12,11 @@ class c2corg::prod::fs::lxc {
     require => Logical_volume['lxc'],
   }
 
+  file { '/var/lib/lxc':
+    ensure => directory,
+    before => Mount['/var/lib/lxc'],
+  }
+
   mount { '/var/lib/lxc':
     ensure  => mounted,
     atboot  => true,
