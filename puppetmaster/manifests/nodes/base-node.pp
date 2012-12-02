@@ -25,6 +25,10 @@ node 'base-node' {
     include c2cinfra::mcollective::node
   }
 
+  if $::lxc_type == 'container' {
+    include lxc::guest
+  }
+
   # Marc doesn't need to use root's account every time he must
   # manually run puppet.
   realize C2cinfra::Account::User['marc']
