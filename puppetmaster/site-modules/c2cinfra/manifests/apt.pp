@@ -123,6 +123,13 @@ deb http://backports.debian.org/debian-backports ${::lsbdistcodename}-backports 
     $extra = "o=Debian Backports,n=${::lsbdistcodename}-backports"
   }
 
+  apt::conf { '50avoid-installing-unnecessary-stuff':
+    content => '// file managed by puppet
+APT::Install-Recommends "0";
+APT::Install-Suggests "0";
+',
+  }
+
   apt::conf { '50unattended-upgrades':
     ensure  => present,
     content => template('c2cinfra/apt/50unattended-upgrades.erb'),
