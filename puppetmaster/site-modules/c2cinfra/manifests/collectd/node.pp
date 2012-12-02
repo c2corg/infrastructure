@@ -1,4 +1,4 @@
-class c2corg::collectd::node {
+class c2cinfra::collectd::node {
   include collectd
 
   collectd::conf {

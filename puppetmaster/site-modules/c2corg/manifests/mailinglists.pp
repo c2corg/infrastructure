@@ -2,7 +2,7 @@ class c2corg::mailinglists {
 
   include c2cinfra::mta # just import attributes
 
-  include c2corg::collectd::plugin::postfix
+  include c2cinfra::collectd::plugin::postfix
 
   $dbhost = hiera('db_host')
   $dbport = hiera('db_port')

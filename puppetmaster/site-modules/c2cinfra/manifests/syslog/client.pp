@@ -1,4 +1,4 @@
-class c2corg::syslog::client {
+class c2cinfra::syslog::client {
 
   $syslog_server = hiera('syslog_host')
 

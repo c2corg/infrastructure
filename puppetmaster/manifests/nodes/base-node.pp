@@ -13,7 +13,7 @@ node 'base-node' {
   include c2cinfra::common::services
   include c2cinfra::common::config
   include c2cinfra::hosts
-  include c2corg::syslog::client
+  include c2cinfra::syslog::client
   include c2cinfra::sudo # TODO: only if package sudo is installed
   include vz::facts
 

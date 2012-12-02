@@ -1,4 +1,4 @@
-class c2corg::syslog::server inherits c2corg::syslog::client {
+class c2cinfra::syslog::server inherits c2cinfra::syslog::client {
 
   Package["syslog"] { name => "syslog-ng" }
   Service["syslog"] { name => "syslog-ng", hasstatus => false }

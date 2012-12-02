@@ -1,10 +1,10 @@
-class c2corg::collectd::plugin::svninfo {
+class c2cinfra::collectd::plugin::svninfo {
 
   $plugin= "/usr/local/sbin/svninfo-stat.sh"
 
   file { "svninfo collectd plugin":
     path    => $plugin,
-    source  => "puppet:///modules/c2corg/collectd/svninfo-stat.sh",
+    source  => "puppet:///modules/c2cinfra/collectd/svninfo-stat.sh",
     mode    => 0755,
     notify  => Service["collectd"],
   }

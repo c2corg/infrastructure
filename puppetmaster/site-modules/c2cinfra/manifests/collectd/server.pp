@@ -1,4 +1,4 @@
-class c2corg::collectd::server inherits c2corg::collectd::node {
+class c2cinfra::collectd::server inherits c2cinfra::collectd::node {
 
   resources { collectd_conf: purge => true; }
 

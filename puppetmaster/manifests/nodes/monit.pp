@@ -1,12 +1,12 @@
 # VM
 node 'monit' inherits 'base-node' {
 
-  include c2corg::collectd::server
+  include c2cinfra::collectd::server
   include graphite::carbon
   include graphite::collectd
   include graphite::webapp
   include statsd::server
-  include c2corg::syslog::server
+  include c2cinfra::syslog::server
   include c2corg::syslog::pgfouine
   include c2corg::syslog::haproxy
   include c2corg::prod::fs::monit

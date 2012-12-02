@@ -9,7 +9,7 @@ node 'content-factory' inherits 'base-node' {
 
   include c2corg::apacheconf::content-factory
 
-  include c2corg::collectd::node
+  include c2cinfra::collectd::node
 
   include postgresql::backup
 

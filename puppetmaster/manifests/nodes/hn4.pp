@@ -11,7 +11,7 @@ node 'hn4' inherits 'base-node' {
   include c2corg::prod::fs::memcachedb
   collectd::plugin { "memcached": lines => [] }
 
-  include c2corg::collectd::node
+  include c2cinfra::collectd::node
 
   fact::register {
     'role': value => 'postgresql principal';

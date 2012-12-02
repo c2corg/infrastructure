@@ -21,7 +21,7 @@ node 'www-failover' inherits 'base-node' {
 
   include c2corg::prod::fs::photos
 
-  include c2corg::collectd::node
+  include c2cinfra::collectd::node
 
   fact::register {
     'role': value => ['failover', 'archivage photos'];

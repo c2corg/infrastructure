@@ -28,7 +28,7 @@ node 'hn3' inherits 'base-node' {
   include haproxy
   include haproxy::collectd
 
-  include c2corg::collectd::node
+  include c2cinfra::collectd::node
 
   fact::register {
     'role': value => 'serveur web principal';
