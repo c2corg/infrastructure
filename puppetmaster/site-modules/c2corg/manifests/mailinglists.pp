@@ -1,6 +1,6 @@
 class c2corg::mailinglists {
 
-  include c2corg::mta # just import attributes
+  include c2cinfra::mta # just import attributes
 
   include c2corg::collectd::plugin::postfix
 
@@ -14,7 +14,7 @@ class c2corg::mailinglists {
   $listmaster = 'listmaster@camptocamp.org'
 
   $postfix_smtp_listen = "0.0.0.0"
-  $root_mail_recipient = $c2corg::mta::root_mail_recipient
+  $root_mail_recipient = $c2cinfra::mta::root_mail_recipient
 
   include sympa
   include sympa::mta

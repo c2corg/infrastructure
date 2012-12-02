@@ -1,4 +1,4 @@
-class c2corg::common::services {
+class c2cinfra::common::services {
 
   /* Base services */
   service { "cron":

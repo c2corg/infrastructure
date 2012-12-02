@@ -1,4 +1,4 @@
-class c2corg::mta {
+class c2cinfra::mta {
 
   $postfix_relayhost = "googlemail.com"
   $root_mail_recipient = "marc.fournier@camptocamp.org"

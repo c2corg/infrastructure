@@ -1,4 +1,4 @@
-class c2corg::sudo {
+class c2cinfra::sudo {
 
   resources { 'sudoers':
     purge => true,

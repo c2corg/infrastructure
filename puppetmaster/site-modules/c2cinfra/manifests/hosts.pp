@@ -1,4 +1,4 @@
-class c2corg::hosts {
+class c2cinfra::hosts {
 
   resources { "host":
     purge => true,

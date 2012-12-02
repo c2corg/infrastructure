@@ -6,15 +6,15 @@ node 'base-node' {
   include openssl
   include puppet::hiera
   include c2cinfra::account
-  include c2corg::mta
+  include c2cinfra::mta
   include c2cinfra::ssh::sshd
   include "c2cinfra::apt::${::lsbdistcodename}"
-  include c2corg::common::packages
-  include c2corg::common::services
-  include c2corg::common::config
-  include c2corg::hosts
+  include c2cinfra::common::packages
+  include c2cinfra::common::services
+  include c2cinfra::common::config
+  include c2cinfra::hosts
   include c2corg::syslog::client
-  include c2corg::sudo # TODO: only if package sudo is installed
+  include c2cinfra::sudo # TODO: only if package sudo is installed
   include vz::facts
 
   if $::vagrant {

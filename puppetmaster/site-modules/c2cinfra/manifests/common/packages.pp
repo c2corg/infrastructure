@@ -1,4 +1,4 @@
-class c2corg::common::packages {
+class c2cinfra::common::packages {
 
   include gnupg
 

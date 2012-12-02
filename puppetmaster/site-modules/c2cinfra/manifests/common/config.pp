@@ -1,4 +1,4 @@
-class c2corg::common::config {
+class c2cinfra::common::config {
 
   file { "/etc/resolv.conf":
     content => $::datacenter ? {
