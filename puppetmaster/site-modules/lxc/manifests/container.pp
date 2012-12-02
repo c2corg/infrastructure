@@ -23,7 +23,7 @@ define lxc::container (
     content => template('lxc/preseed.cfg.erb'),
   }
 
-  file { "/etc/lxc/auto/${name}":
+  file { "/etc/lxc/auto/${ctname}":
     ensure => $ensure ? {
       'present' => $autostart ? {
         true    => link,
@@ -31,7 +31,7 @@ define lxc::container (
       },
       default   => absent,
     },
-    target => "/var/lib/lxc/${name}/config",
+    target => "/var/lib/lxc/${ctname}/config",
   }
 
   if ($ensure == 'present') {
