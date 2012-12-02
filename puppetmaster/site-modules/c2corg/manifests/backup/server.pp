@@ -15,7 +15,7 @@ class c2corg::backup::server {
     hasstatus => false,
   }
 
-  C2corg::Ssh::Userkey <<| tag == 'backups' |>>
+  C2cinfra::Ssh::Userkey <<| tag == 'backups' |>>
   Zfs <<| tag == 'backups' |>>
 
   @@sshkey { $::ipaddress:

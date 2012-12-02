@@ -1,6 +1,6 @@
 class c2corg::webserver::symfony {
 
-  realize C2corg::Account::User['c2corg']
+  realize C2cinfra::Account::User['c2corg']
 
   include c2corg::webserver
   include php

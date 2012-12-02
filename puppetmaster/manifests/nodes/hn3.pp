@@ -1,10 +1,10 @@
 # X3550 M3
 node 'hn3' inherits 'base-node' {
 
-  realize C2corg::Account::User['alex']
-  realize C2corg::Account::User['xbrrr']
-  realize C2corg::Account::User['gottferdom']
-  realize C2corg::Account::User['gerbaux']
+  realize C2cinfra::Account::User['alex']
+  realize C2cinfra::Account::User['xbrrr']
+  realize C2cinfra::Account::User['gottferdom']
+  realize C2cinfra::Account::User['gerbaux']
 
   $haproxy_vip_address = "128.179.66.23"
   $haproxy_cache_address = "192.168.192.2"

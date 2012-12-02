@@ -1,10 +1,10 @@
 # VM
 node 'www-failover' inherits 'base-node' {
 
-  realize C2corg::Account::User['alex']
-  realize C2corg::Account::User['xbrrr']
-  realize C2corg::Account::User['gottferdom']
-  realize C2corg::Account::User['gerbaux']
+  realize C2cinfra::Account::User['alex']
+  realize C2cinfra::Account::User['xbrrr']
+  realize C2cinfra::Account::User['gottferdom']
+  realize C2cinfra::Account::User['gerbaux']
 
   $haproxy_main_address = "192.168.192.70"
 

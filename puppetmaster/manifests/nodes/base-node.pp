@@ -5,9 +5,9 @@ node 'base-node' {
   include augeas
   include openssl
   include puppet::hiera
-  include c2corg::account
+  include c2cinfra::account
   include c2corg::mta
-  include c2corg::ssh::sshd
+  include c2cinfra::ssh::sshd
   include "c2corg::apt::${::lsbdistcodename}"
   include c2corg::common::packages
   include c2corg::common::services
@@ -18,7 +18,7 @@ node 'base-node' {
   include vz::facts
 
   if $::vagrant {
-    realize C2corg::Account::User['vagrant']
+    realize C2cinfra::Account::User['vagrant']
   }
   else {
     include puppet::client
@@ -27,6 +27,6 @@ node 'base-node' {
 
   # Marc doesn't need to use root's account every time he must
   # manually run puppet.
-  realize C2corg::Account::User['marc']
+  realize C2cinfra::Account::User['marc']
 
 }

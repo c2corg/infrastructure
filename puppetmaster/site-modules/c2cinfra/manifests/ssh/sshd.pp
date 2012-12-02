@@ -1,4 +1,4 @@
-class c2corg::ssh::sshd {
+class c2cinfra::ssh::sshd {
 
   file { "/etc/ssh/authorized_keys":
     ensure  => directory,

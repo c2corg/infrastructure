@@ -1,8 +1,8 @@
-class c2corg::account {
+class c2cinfra::account {
 
-  c2corg::account::user { "marc@root": user => "marc", account => "root" }
+  c2cinfra::account::user { "marc@root": user => "marc", account => "root" }
 
-  @c2corg::account::user {
+  @c2cinfra::account::user {
     "marc": user => "marc", account => "marc",
       groups => ["adm", "www-data"];
 

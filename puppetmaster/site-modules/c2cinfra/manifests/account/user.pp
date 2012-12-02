@@ -1,4 +1,4 @@
-define c2corg::account::user ($ensure=present, $user, $account, $groups=[]) {
+define c2cinfra::account::user ($ensure=present, $user, $account, $groups=[]) {
 
   if !defined(User[$account]) {
     user { $account:
@@ -11,7 +11,7 @@ define c2corg::account::user ($ensure=present, $user, $account, $groups=[]) {
 
   case $user {
     "marc": {
-      c2corg::ssh::userkey { "$name on $account":
+      c2cinfra::ssh::userkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "rsa",
@@ -21,7 +21,7 @@ define c2corg::account::user ($ensure=present, $user, $account, $groups=[]) {
     }
 
     "alex": {
-      c2corg::ssh::userkey { "$name on $account":
+      c2cinfra::ssh::userkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "dss",
@@ -31,7 +31,7 @@ define c2corg::account::user ($ensure=present, $user, $account, $groups=[]) {
     }
 
     "gottferdom": {
-      c2corg::ssh::userkey { "$name on $account":
+      c2cinfra::ssh::userkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "dss",
@@ -41,7 +41,7 @@ define c2corg::account::user ($ensure=present, $user, $account, $groups=[]) {
     }
 
     "xbrrr": {
-      c2corg::ssh::userkey { "$name on $account":
+      c2cinfra::ssh::userkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "dss",
@@ -51,7 +51,7 @@ define c2corg::account::user ($ensure=present, $user, $account, $groups=[]) {
     }
 
     "gerbaux": {
-      c2corg::ssh::userkey { "$name on $account":
+      c2cinfra::ssh::userkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "dss",
@@ -61,7 +61,7 @@ define c2corg::account::user ($ensure=present, $user, $account, $groups=[]) {
     }
 
     "jose": {
-      c2corg::ssh::userkey { "$name on $account":
+      c2cinfra::ssh::userkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "rsa",
@@ -71,7 +71,7 @@ define c2corg::account::user ($ensure=present, $user, $account, $groups=[]) {
     }
 
     "bubu": {
-      c2corg::ssh::userkey { "$name on $account":
+      c2cinfra::ssh::userkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "TODO",
@@ -81,7 +81,7 @@ define c2corg::account::user ($ensure=present, $user, $account, $groups=[]) {
     }
 
     "saimon": {
-      c2corg::ssh::userkey { "$name on $account":
+      c2cinfra::ssh::userkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "rsa",
@@ -93,7 +93,7 @@ define c2corg::account::user ($ensure=present, $user, $account, $groups=[]) {
     # the key is vagrant's official unsecure key:
     # https://github.com/mitchellh/vagrant/blob/master/keys/vagrant.pub
     "vagrant": {
-      c2corg::ssh::userkey { "$name on $account":
+      c2cinfra::ssh::userkey { "$name on $account":
         account => $account,
         user    => $user,
         type    => "rsa",

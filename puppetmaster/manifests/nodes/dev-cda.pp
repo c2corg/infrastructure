@@ -10,7 +10,7 @@ node 'dev-cda' inherits 'base-node' {
     groups     => ["adm", "www-data"],
   }
 
-  c2corg::ssh::userkey { "Reynald Coupe on ${developer}":
+  c2cinfra::ssh::userkey { "Reynald Coupe on ${developer}":
     account => $developer,
     user    => "raynald.coupe@easi-services.fr",
     type    => "rsa",
@@ -25,7 +25,7 @@ node 'dev-cda' inherits 'base-node' {
 
   include c2corg::apacheconf::dev
 
-  realize C2corg::Account::User['gottferdom']
+  realize C2cinfra::Account::User['gottferdom']
 
   fact::register {
     'role': value => 'mandat dev CDA';

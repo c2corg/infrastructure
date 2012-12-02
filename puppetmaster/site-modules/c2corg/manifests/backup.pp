@@ -17,7 +17,7 @@ class c2corg::backup {
       mode  => "0644",
     }
 
-    @@c2corg::ssh::userkey { "backup key for $::hostname":
+    @@c2cinfra::ssh::userkey { "backup key for $::hostname":
       user    => "backup-${::hostname}",
       account => "root",
       type    => "rsa",

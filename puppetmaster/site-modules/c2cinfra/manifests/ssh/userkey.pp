@@ -1,4 +1,4 @@
-define c2corg::ssh::userkey ($user, $account, $type, $key, $opts='') {
+define c2cinfra::ssh::userkey ($user, $account, $type, $key, $opts='') {
 
   include concat::setup
 
