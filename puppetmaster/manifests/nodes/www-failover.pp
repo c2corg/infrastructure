@@ -28,6 +28,6 @@ node 'www-failover' inherits 'base-node' {
     'duty': value => 'prod';
   }
 
-  c2corg::backup::dir { "/srv/www/camptocamp.org/www-data/persistent": }
+  c2cinfra::backup::dir { '/srv/www/camptocamp.org/www-data/persistent': }
 
 }

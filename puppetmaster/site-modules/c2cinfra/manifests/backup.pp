@@ -1,4 +1,4 @@
-class c2corg::backup {
+class c2cinfra::backup {
 
   exec { "generate passwordless ssh key":
     command => 'ssh-keygen -f /root/.backupkey -P "" -t rsa',

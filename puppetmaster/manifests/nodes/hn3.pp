@@ -35,10 +35,10 @@ node 'hn3' inherits 'base-node' {
     'duty': value => 'prod';
   }
 
-  c2corg::backup::dir { [
-    "/srv/www/camptocamp.org/www-data/persistent/advertising",
-    "/srv/www/camptocamp.org/www-data/persistent/avatars",
-    "/srv/www/camptocamp.org/www-data/persistent/uploads/images",
+  c2cinfra::backup::dir { [
+    '/srv/www/camptocamp.org/www-data/persistent/advertising',
+    '/srv/www/camptocamp.org/www-data/persistent/avatars',
+    '/srv/www/camptocamp.org/www-data/persistent/uploads/images',
   ]: }
 
   # preventive workaround, while trac#745 isn't properly fixed

@@ -21,10 +21,10 @@ node 'monit' inherits 'base-node' {
     'duty': value => 'prod';
   }
 
-  c2corg::backup::dir { [
-    "/var/lib/drraw",
-    "/srv/carbon",
-    "/var/www/",
+  c2cinfra::backup::dir { [
+    '/var/lib/drraw',
+    '/srv/carbon',
+    '/var/www/',
   ]: }
 
 }

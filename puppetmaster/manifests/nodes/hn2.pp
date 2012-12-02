@@ -15,5 +15,5 @@ node 'hn2' inherits 'base-node' {
     'duty': value => 'prod';
   }
 
-  c2corg::backup::dir { "/etc/vz/conf/": }
+  c2cinfra::backup::dir { '/etc/vz/conf/': }
 }

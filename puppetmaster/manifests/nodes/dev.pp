@@ -12,10 +12,10 @@ node 'dev' inherits 'base-node' {
     'duty': value => 'prod';
   }
 
-  c2corg::backup::dir { [
-    "/srv/trac",
-    "/srv/svn",
-    "/var/lib/dokuwiki/",
+  c2cinfra::backup::dir { [
+    '/srv/trac',
+    '/srv/svn',
+    '/var/lib/dokuwiki/',
   ]: }
 
 }

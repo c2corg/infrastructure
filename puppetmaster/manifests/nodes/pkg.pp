@@ -8,6 +8,6 @@ node 'pkg' inherits 'base-node' {
     'duty': value => 'prod';
   }
 
-  c2corg::backup::dir { "/srv/deb-repo/": }
+  c2cinfra::backup::dir { '/srv/deb-repo/': }
 
 }

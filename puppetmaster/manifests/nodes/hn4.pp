@@ -20,6 +20,6 @@ node 'hn4' inherits 'base-node' {
 
   $postgresql_backupfmt = "custom"
   include postgresql::backup
-  c2corg::backup::dir { "/var/backups/pgsql": }
+  c2cinfra::backup::dir { '/var/backups/pgsql': }
 
 }

@@ -16,8 +16,8 @@ node 'pm' inherits 'base-node' {
     'duty': value => 'prod';
   }
 
-  c2corg::backup::dir {
-    ["/srv/puppetmaster", "/var/lib/puppet/ssl", "/home", "/etc/puppet/hiera"]:
+  c2cinfra::backup::dir {
+    ['/srv/puppetmaster', '/var/lib/puppet/ssl', '/home', '/etc/puppet/hiera']:
   }
 
 }

@@ -32,8 +32,8 @@ node 'dev-cda' inherits 'base-node' {
     'duty': value => 'dev';
   }
 
-  c2corg::backup::dir {
-    ["/srv/www/camptocamp.org/"]:
+  c2cinfra::backup::dir {
+    ['/srv/www/camptocamp.org/']:
   }
 
 }

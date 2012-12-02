@@ -1,6 +1,6 @@
-define c2corg::backup::dir {
+define c2cinfra::backup::dir {
 
-  include c2corg::backup
+  include c2cinfra::backup
 
   $fname = regsubst($name, '\/', '_', 'G')
 

@@ -18,6 +18,6 @@ node 'content-factory' inherits 'base-node' {
     'duty': value => 'dev';
   }
 
-  c2corg::backup::dir { "/var/backups/pgsql": }
+  c2cinfra::backup::dir { '/var/backups/pgsql': }
 
 }

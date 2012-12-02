@@ -1,4 +1,4 @@
-class c2corg::backup::server {
+class c2cinfra::backup::server {
 
   package { 'zfs-fuse': ensure => present }
 
