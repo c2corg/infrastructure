@@ -1,7 +1,6 @@
 class lxc::guest {
 
 # TODO:
-# syslog: disable kernel logging
 # network config
 # root password policy
 # disable hwclock access
@@ -35,4 +34,10 @@ class lxc::guest {
     notify  => Exec['refresh init'],
   }
 
+  # TODO: augeasify this resource
+  exec { 'deactivate klogd in containers':
+    command => 'sed -i -r "s/^(.+imklog.*)/#\1/" /etc/rsyslog.conf',
+    onlyif  => 'grep -Eq \'^\$ModLoad\s+imklog\' /etc/rsyslog.conf',
+    notify  => Service['syslog'],
+  }
 }
