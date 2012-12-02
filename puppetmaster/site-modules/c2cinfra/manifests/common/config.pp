@@ -169,7 +169,7 @@ set -sg escape-time 1
 
   file { "/etc/profile":
     ensure => present,
-    source => "puppet:///modules/c2corg/profile",
+    source => "puppet:///modules/c2cinfra/profile",
   }
 
   file { "/etc/profile.d/path.sh":

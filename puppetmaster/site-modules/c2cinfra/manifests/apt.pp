@@ -125,7 +125,7 @@ deb http://backports.debian.org/debian-backports ${::lsbdistcodename}-backports 
 
   apt::conf { '50unattended-upgrades':
     ensure  => present,
-    content => template('c2corg/apt/50unattended-upgrades.erb'),
+    content => template('c2cinfra/apt/50unattended-upgrades.erb'),
   }
 
   file { '/etc/apt/apt.conf.d/99unattended-upgrade':
