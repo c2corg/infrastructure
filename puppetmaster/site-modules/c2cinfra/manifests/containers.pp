@@ -28,6 +28,15 @@ class c2cinfra::containers {
 
     }
 
+    'hn5': {
+
+      lxc::container { 'rproxy.pse.infra.camptocamp.org':
+        ctid   => 60,
+        suite  => 'wheezy',
+        fssize => '3G',
+      }
+    }
+
     'hn6': {
 
       lxc::container { 'stats.pse.infra.camptocamp.org':

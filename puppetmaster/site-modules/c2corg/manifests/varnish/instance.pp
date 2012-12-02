@@ -38,6 +38,20 @@ class c2corg::varnish::instance {
         storage => ["file,/var/lib/varnish/${::hostname}/varnish_storage.bin,512M"],
       }
     }
+
+    'rproxy': {
+
+      host {
+        'symfony-backend.c2corg': ip => '192.168.192.4';
+        'storage-backend.c2corg': ip => '192.168.192.70';
+      }
+
+      varnish::instance { $::hostname:
+        storage => ["file,/var/lib/varnish/${::hostname}/varnish_storage.bin,512M"],
+      }
+
+    }
+
   }
 
   # varnish plugin only backported for kFreeBSD instance
