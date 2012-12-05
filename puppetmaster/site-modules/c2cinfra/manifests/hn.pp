@@ -28,4 +28,14 @@ class c2cinfra::hn {
     package { ["hdparm", "xfsprogs", "lvm2"]: }
   }
 
+  package { 'lldpd':
+    ensure => present,
+  }
+
+  service { 'lldpd':
+    ensure  => running,
+    enable  => true,
+    require => Package['lldpd'],
+  }
+
 }
