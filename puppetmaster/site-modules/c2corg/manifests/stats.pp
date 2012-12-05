@@ -11,6 +11,8 @@ class c2corg::stats {
 
   $secret_key = hiera('c2cstats_key')
 
+  realize C2cinfra::Account::User['c2corg']
+
   class { 'python':
     version    => $python_version,
     dev        => true,
@@ -20,9 +22,12 @@ class c2corg::stats {
 
   vcsrepo { $coderepo:
     ensure   => present,
+    owner    => 'c2corg',
+    group    => 'c2corg',
     provider => 'git',
-    source   => 'git://github.com/mfournier/c2c-stats.git',
-    revision => 'chgmts-avant-mise-en-prod',
+    source   => 'git://github.com/saimn/c2c-stats.git',
+    #source   => 'git://github.com/mfournier/c2c-stats.git',
+    #revision => 'chgmts-avant-mise-en-prod',
   }
 
   package { ['python-numpy', 'libevent-dev']:
@@ -62,7 +67,8 @@ class c2corg::stats {
 
   file { $conffile:
     ensure  => present,
-    content => "
+    owner   => 'c2corg',
+    content => "# file managed by puppet
 DEBUG = False
 SECRET_KEY = '${secret_key}'
 CACHE_TYPE = 'filesystem'
@@ -76,6 +82,15 @@ CACHE_THRESHOLD = 10000
     template    => 'c2corg/gunicorn/c2cstats.conf.erb',
     dir         => $libdir,
     require     => File[$conffile],
+  }
+
+  sudoers { 'restart gunicorn':
+    users    => 'c2corg',
+    type     => 'user_spec',
+    commands => [
+      '(root) /etc/init.d/gunicorn',
+      '(root) /usr/sbin/invoke-rc.d gunicorn *',
+    ],
   }
 
 }
