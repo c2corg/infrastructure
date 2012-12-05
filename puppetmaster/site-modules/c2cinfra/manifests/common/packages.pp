@@ -13,7 +13,7 @@ class c2cinfra::common::packages {
     "htop",
     "iputils-ping", "iso-codes",
     "less", "locales-all", "logrotate", "lsb-release",
-    "m4", "make", "mosh", "mtr-tiny",
+    "man-db", "m4", "make", "mosh", "mtr-tiny",
     "netcat", "nmap", "ntp",
     "patch", "psmisc", "pwgen",
     "rsync",
