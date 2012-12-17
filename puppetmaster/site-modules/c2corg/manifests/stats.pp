@@ -1,11 +1,12 @@
 class c2corg::stats {
 
-  $libdir   = '/var/lib/c2cstats'
-  $conffile = '/etc/c2cstats.conf'
-  $cachedir = "${libdir}/cache"
-  $assetdir = "${libdir}/gen"
-  $venv     = '/srv/c2cstats'
-  $coderepo = '/usr/src/c2c-stats'
+  $libdir     = '/var/lib/c2cstats'
+  $conffile   = '/etc/c2cstats.conf'
+  $cachedir   = "${libdir}/cache"
+  $assetcache = "${cachedir}/assets"
+  $assetdir   = "${libdir}/gen"
+  $venv       = '/srv/c2cstats'
+  $coderepo   = '/usr/src/c2c-stats'
 
   $python_version = '2.7'
 
@@ -26,8 +27,6 @@ class c2corg::stats {
     group    => 'c2corg',
     provider => 'git',
     source   => 'git://github.com/saimn/c2c-stats.git',
-    #source   => 'git://github.com/mfournier/c2c-stats.git',
-    #revision => 'chgmts-avant-mise-en-prod',
   }
 
   package { ['python-numpy', 'libevent-dev']:
@@ -46,7 +45,7 @@ class c2corg::stats {
     notify     => Python::Gunicorn['c2cstats'],
   }
 
-  file { [$libdir, $cachedir, $assetdir]:
+  file { [$libdir, $cachedir, $assetcache, $assetdir]:
     ensure => directory,
     owner  => 'www-data',
     group  => 'www-data',
