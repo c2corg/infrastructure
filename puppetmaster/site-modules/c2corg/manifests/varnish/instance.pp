@@ -39,7 +39,7 @@ class c2corg::varnish::instance {
       }
     }
 
-    'rproxy': {
+    /rproxy|test-marc/: {
 
       host {
         'symfony-backend.c2corg': ip => '192.168.192.4';
