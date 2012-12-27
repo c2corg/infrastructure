@@ -90,12 +90,13 @@ class c2corg::webserver::symfony {
     require => Vcsrepo["/srv/www/camptocamp.org"],
   }
 
-  file { "c2corg-envvars.sh":
-    ensure => present,
-    mode   => 0755,
-    path   => "/home/c2corg/c2corg-envvars.sh",
-    owner  => "c2corg",
-    group  => "c2corg",
+  file { 'c2corg-envvars.sh':
+    ensure  => present,
+    mode    => 0755,
+    path    => '/home/c2corg/c2corg-envvars.sh',
+    owner   => 'c2corg',
+    group   => 'c2corg',
+    require => User['c2corg'],
   }
 
   file { "psql-env.sh":
@@ -113,9 +114,10 @@ fi
 ",
   }
 
-  file_line { "import c2corg_vars in environment":
-    ensure => absent,
-    path   => "/home/c2corg/.bashrc",
-    line   => ". ~/c2corg-envvars.sh",
+  file_line { 'import c2corg_vars in environment':
+    ensure  => absent,
+    path    => '/home/c2corg/.bashrc',
+    line    => '. ~/c2corg-envvars.sh',
+    require => User['c2corg'],
   }
 }
