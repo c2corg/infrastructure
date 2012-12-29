@@ -18,6 +18,7 @@ git://github.com/puppetlabs/puppetlabs-rabbitmq.git rabbitmq 6471580ef7
 git://github.com/puppetlabs/puppetlabs-vcsrepo.git vcsrepo 109d181b
 git://github.com/puppetlabs/puppetlabs-lvm.git lvm 3b1f783
 git://github.com/puppetlabs/puppetlabs-stdlib.git stdlib 44e99a7c
+git://github.com/dalen/puppet-puppetdbquery.git puppetdbquery 6d16850c
 git://github.com/ripienaar/puppet-concat.git concat aaf2eeb027
 git://github.com/mfournier/puppet-lldp.git lldp a0553032
 
