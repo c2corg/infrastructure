@@ -25,15 +25,16 @@ git://github.com/mfournier/puppet-lldp.git lldp a0553032
 git://github.com/camptocamp/puppet-varnish.git varnish 89e30831
 git://github.com/camptocamp/puppet-apache.git apache 7a3080ee3
 git://github.com/camptocamp/puppet-nginx.git nginx 38767a43
-git://github.com/camptocamp/puppet-postgresql.git postgresql b1840a6c
-git://github.com/camptocamp/puppet-postgis.git postgis d82fab5
-git://github.com/camptocamp/puppet-mapserver.git mapserver 2eb908fa1d
+git://github.com/camptocamp/puppet-postgresql.git postgresql 8057425d9
+git://github.com/camptocamp/puppet-pgconf.git pgconf a8385d4a1
+git://github.com/camptocamp/puppet-postgis.git postgis f6a436213
+git://github.com/camptocamp/puppet-mapserver.git mapserver 555b46678
 
 git://github.com/camptocamp/puppet-collectd.git collectd 8d369096
 
 git://github.com/stankevich/puppet-python.git python 94d9ca52b
 git://github.com/camptocamp/puppet-ruby.git ruby d7debdf
-git://github.com/camptocamp/puppet-php.git php da817b136
+git://github.com/camptocamp/puppet-php.git php b4547be09
 git://github.com/camptocamp/puppet-buildenv.git buildenv 6ca5168395
 git://github.com/camptocamp/puppet-kmod.git kmod bea065b60
 
