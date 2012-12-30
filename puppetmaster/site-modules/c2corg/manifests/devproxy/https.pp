@@ -95,7 +95,7 @@ RequestHeader set ProxyUser %{PROXY_USER}e
   }
 
   # list of facts to show in inventory
-  $facts = ['role', 'lsbdistcodename', 'virtual', 'datacenter']
+  $facts = ['role', 'lsbdistcodename', 'virtual', 'datacenter', 'interfaces']
 
   $nodes = pdbquery('nodes', ['=', ['node', 'active'], true ])
   $res = pdbfactquery($nodes)
