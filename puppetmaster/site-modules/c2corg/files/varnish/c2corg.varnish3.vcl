@@ -2,7 +2,7 @@ backend symfony {
   .host = "192.168.192.4";
   .port = "80";
   .probe = {
-    .url = "/probe.txt";
+    .request = "GET /probe.txt" "Host: www.camptocamp.org";
     .timeout = 1 s;
     .interval = 5 s;
     .window = 5;
@@ -14,7 +14,7 @@ backend failover {
   .host = "192.168.192.70";
   .port = "80";
   .probe = {
-    .url = "/probe.txt";
+    .request = "GET /probe.txt" "Host: www.camptocamp.org";
     .timeout = 1 s;
     .interval = 5 s;
     .window = 5;
