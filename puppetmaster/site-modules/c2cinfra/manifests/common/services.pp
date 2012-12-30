@@ -30,4 +30,11 @@ class c2cinfra::common::services {
     require => Package["sysstat"],
   }
 
+  service { 'atop':
+    ensure    => stopped,
+    enable    => false,
+    hasstatus => false,
+    require   => Package['atop'],
+  }
+
 }
