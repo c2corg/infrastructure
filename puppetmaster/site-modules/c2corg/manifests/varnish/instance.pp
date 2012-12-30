@@ -27,6 +27,16 @@ class c2corg::varnish::instance {
       }
     }
 
+    rproxy: {
+      varnish::instance { $::hostname:
+        vcl_file => "puppet:///modules/c2corg/varnish/c2corg.varnish3.vcl",
+        storage  => ["file,/var/lib/varnish/${::hostname}/varnish_storage.bin,32G"],
+        params   => ['ban_lurker_sleep=3',
+                     'ping_interval=6',
+                     'thread_pool_min=15'],
+      }
+    }
+
     pre-prod: {
 
       host { ["symfony-backend.c2corg", "storage-backend.c2corg"]:
@@ -39,14 +49,10 @@ class c2corg::varnish::instance {
       }
     }
 
-    /rproxy|test-marc/: {
-
-      host {
-        'symfony-backend.c2corg': ip => '192.168.192.4';
-        'storage-backend.c2corg': ip => '192.168.192.70';
-      }
+    test-marc: {
 
       varnish::instance { $::hostname:
+        vcl_file => "puppet:///modules/c2corg/varnish/c2corg.varnish3.vcl",
         storage => ["file,/var/lib/varnish/${::hostname}/varnish_storage.bin,512M"],
       }
 
