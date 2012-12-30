@@ -33,9 +33,10 @@ class c2cinfra::hn {
   }
 
   service { 'lldpd':
-    ensure  => running,
-    enable  => true,
-    require => Package['lldpd'],
+    ensure    => running,
+    enable    => true,
+    hasstatus => false,
+    require   => Package['lldpd'],
   }
 
 }
