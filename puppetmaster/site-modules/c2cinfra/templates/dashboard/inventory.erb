@@ -1,0 +1,13 @@
+<html><head><title>Micro Inventory</title></head><body>
+<ul>
+<% res.each do |r| %>
+<li><b><%= r['fqdn'] %></b>
+  <ul>
+    <% facts.each do |f| %>
+      <li><i><%= f %> : </i><%= r[f] %></li>
+    <% end %>
+  </ul>
+</li>
+<% end %>
+</ul>
+</body></html>

@@ -94,4 +94,20 @@ RequestHeader set ProxyUser %{PROXY_USER}e
     ensure  => absent,
   }
 
+  # list of facts to show in inventory
+  $facts = ['role', 'lsbdistcodename', 'virtual', 'datacenter']
+
+  $nodes = pdbquery('nodes', ['=', ['node', 'active'], true ])
+  $res = pdbfactquery($nodes)
+
+  file { '/var/www/dev.camptocamp.org/htdocs/inventory.html':
+    content => template('c2cinfra/dashboard/inventory.erb'),
+  }
+
+  file { "/var/www/dev.camptocamp.org/private/dashboard-inventory.part":
+    content => "<li><a href='https://dev.camptocamp.org/inventory.html'>inventory</a></li>\n",
+    notify  => Exec["aggregate dashboard snippets"],
+  }
+
+
 }
