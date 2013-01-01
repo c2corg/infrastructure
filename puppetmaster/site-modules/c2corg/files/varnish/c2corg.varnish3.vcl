@@ -64,10 +64,11 @@ sub vcl_recv {
   elsif (req.http.host ~ "(www|m)\..*camptocamp\.org" || req.http.host ~ "^camptocamp\.org") {
     set req.backend = symfony;
 
-    /* allow static content to get served directly from cache */
-    if (req.url ~ "^/static") {
+    /* allow static content and RSS feeds to get served directly from cache */
+    if (req.url ~ "^/static|/rss/|\.rss$|type=rss" ) {
       remove req.http.Cookie;
     }
+
   }
 
   elsif (req.http.host ~ "^stats\..*camptocamp\.org") {
@@ -120,6 +121,13 @@ sub vcl_fetch {
     } else {
       /* default TTL in varnish cache for cacheable generated content */
       set beresp.ttl = 6h;
+    }
+
+    /* RSS feeds can be heavy to generate and nobody will notice if there's a
+     * few minutes update delay */
+    if (beresp.http.Content-Type ~ "rss\+xml") {
+      remove beresp.http.Set-Cookie;
+      set beresp.ttl = 15m;
     }
   }
 
