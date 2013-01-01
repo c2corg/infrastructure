@@ -112,6 +112,11 @@ sub vcl_fetch {
       /* allow static content to get stored in cache, TTL in cache is defined
        * by headers sent from backend */
       remove beresp.http.Set-Cookie;
+
+      /* generated shapefiles shouldn't be kept in cache for too long */
+      if (req.url ~ "shapefiles") {
+        set beresp.ttl = 6h;
+      }
     } else {
       /* default TTL in varnish cache for cacheable generated content */
       set beresp.ttl = 6h;
