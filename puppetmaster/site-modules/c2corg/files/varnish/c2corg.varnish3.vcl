@@ -61,8 +61,18 @@ sub vcl_recv {
     remove req.http.Cookie;
   }
 
-  elsif (req.http.host ~ "(www|m)\..*camptocamp\.org" || req.http.host ~ "^camptocamp\.org") {
+  elsif (req.http.host ~ "(www|m)\..*camptocamp\.org" ||
+         req.http.host ~ "^camptocamp\.org") {
     set req.backend = symfony;
+
+    /* redirect cookie-less mobile devices, else the redirection sent by
+     * symfony gets cached by varnish and sent to every cookie-less visitor
+     * (cf #752) */
+    if (!req.http.Cookie &&
+        req.http.host ~ "www\..*camptocamp\.org" &&
+        req.http.User-Agent ~ "(?i)Mobile|Symbian|Nokia|SAMSUNG|BlackBerry|Mini|Android") {
+      error 750 "Moved Temporarily";
+    }
 
     /* allow static content and RSS feeds to get served directly from cache */
     if (req.url ~ "^/static|/rss/|\.rss$|type=rss" ) {
@@ -108,7 +118,8 @@ sub vcl_fetch {
     remove beresp.http.Set-Cookie;
   }
 
-  elsif (req.http.host ~ "(www|m)\..*camptocamp\.org" || req.http.host ~ "^camptocamp\.org") {
+  elsif (req.http.host ~ "(www|m)\..*camptocamp\.org" ||
+         req.http.host ~ "^camptocamp\.org") {
     if (req.url ~ "^/static") {
       /* allow static content to get stored in cache, TTL in cache is defined
        * by headers sent from backend */
@@ -145,3 +156,13 @@ sub vcl_deliver {
     set resp.http.X-Cache = "MISS";
   }
 }
+
+sub vcl_error {
+  /* Mobile device redirection */
+  if (obj.status == 750) {
+    set obj.http.Location = "http://" + regsub(req.http.Host, "www", "m") + req.url;
+    set obj.status = 302;
+    return(deliver);
+  }
+}
+
