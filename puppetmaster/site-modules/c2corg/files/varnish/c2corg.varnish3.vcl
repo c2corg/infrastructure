@@ -65,7 +65,7 @@ sub vcl_recv {
     set req.backend = symfony;
 
     /* allow static content to get served directly from cache */
-    if (req.url ~ "\.(gif|png|jpg|jpeg|svg)$") {
+    if (req.url ~ "^/static") {
       remove req.http.Cookie;
     }
   }
@@ -102,17 +102,19 @@ sub vcl_recv {
 sub vcl_fetch {
 
   if (req.http.host ~ "^s\..*camptocamp\.org") {
-
-    /* everything should get served directly from cache */
+    /* everything on s.camptocamp.org should be cached, TTL in cache is defined
+     * by headers sent from backend */
     remove beresp.http.Set-Cookie;
   }
 
   elsif (req.http.host ~ "(www|m)\..*camptocamp\.org" || req.http.host ~ "^camptocamp\.org") {
-    if (req.url ~ "\.(gif|png|jpg|jpeg)$") {
-      // allow pictures to get stored in cache
+    if (req.url ~ "^/static") {
+      /* allow static content to get stored in cache, TTL in cache is defined
+       * by headers sent from backend */
       remove beresp.http.Set-Cookie;
     } else {
-      set beresp.ttl = 6h; // default TTL for generated content
+      /* default TTL in varnish cache for cacheable generated content */
+      set beresp.ttl = 6h;
     }
   }
 
