@@ -77,7 +77,11 @@ class puppet::client {
     recurse => true,
     purge   => true,
     force   => true,
+    require => Package['ruby-json'],
   }
+
+  # json is not part of ruby1.8, so ensure it's not installed by coincidence
+  package { 'ruby-json': ensure => present }
 
   # if datacenter fact is set, then pluginsync has successfully run at least
   # once.
