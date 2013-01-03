@@ -9,5 +9,6 @@ class data::prod {
   $c2cstats_host         = '192.168.192.75'
   $metac2c_host          = '192.168.192.4'
   $metaskirando_host     = '192.168.192.4'
+  $varnish_host          = '192.168.192.60'
 
 }
