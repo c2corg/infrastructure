@@ -12,6 +12,12 @@ class data::common {
 
   $puppetmaster_host = '192.168.192.101'
 
+  $symfony_master_host   = '127.0.0.1'
+  $symfony_failover_host = '127.0.0.1'
+  $c2cstats_host         = '127.0.0.1'
+  $metac2c_host          = '127.0.0.1'
+  $metaskirando_host     = '127.0.0.1'
+
   $www_db_user = "www-data"
   $ml_db_user = "sympa"
   $mco_user = "mco"

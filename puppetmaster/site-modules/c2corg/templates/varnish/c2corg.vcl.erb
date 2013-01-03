@@ -1,5 +1,5 @@
 backend symfony {
-  .host = "192.168.192.4";
+  .host = "<%= symfony_master_host %>";
   .port = "80";
   .probe = {
     .request =
@@ -15,7 +15,7 @@ backend symfony {
 }
 
 backend failover {
-  .host = "192.168.192.70";
+  .host = "<%= symfony_failover_host %>";
   .port = "80";
   .probe = {
     .request =
@@ -31,17 +31,17 @@ backend failover {
 }
 
 backend stats {
-  .host = "192.168.192.75";
+  .host = "<%= c2cstats_host %>";
   .port = "8000";
 }
 
 backend meta {
-  .host = "192.168.192.4";
+  .host = "<%= metac2c_host %>";
   .port = "80";
 }
 
 backend metaskirando {
-  .host = "192.168.192.4";
+  .host = "<%= metaskirando_host %>";
   .port = "80";
 }
 
