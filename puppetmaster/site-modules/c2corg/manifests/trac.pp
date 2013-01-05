@@ -13,9 +13,15 @@ class c2corg::trac {
     require => Package["ca-certificates"],
   }
 
-  package { ["trac", "trac-accountmanager", "trac-email2trac", "trac-mastertickets", "trac-wikirename"]:
+  apt::preferences { "trac_from_bpo":
+    package  => "trac trac-git",
+    pin      => "release a=${::lsbdistcodename}-backports",
+    priority => "1010",
+  }
+
+  package { ['trac', 'trac-accountmanager', 'trac-email2trac', 'trac-mastertickets', 'trac-wikirename', 'trac-git']:
     ensure  => present,
-    require => Package["sqlite3"],
+    require => Package['sqlite3'],
   }
 
   package { ["libapache2-svn", "sqlite3", "graphviz", "libjs-jquery"]:
