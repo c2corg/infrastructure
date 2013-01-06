@@ -33,7 +33,7 @@ class c2cinfra::containers {
       lxc::container { 'rproxy.pse.infra.camptocamp.org':
         ctid   => 60,
         suite  => 'wheezy',
-        fssize => '3G',
+        fssize => '35G',
       }
     }
 
