@@ -80,7 +80,7 @@ REV="$2"
 
 TRAC_ENV="/srv/trac/projects/c2corg/"
 
-/usr/bin/python /usr/share/doc/trac/contrib/trac-post-commit-hook -p "$TRAC_ENV" -r "$REV"
+/usr/bin/python /usr/share/doc/trac/contrib/trac-svn-hook "$REPOS" "$REV"
 ',
   }
 
