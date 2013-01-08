@@ -45,6 +45,11 @@ backend metaskirando {
   .port = "80";
 }
 
+backend v4redirections {
+  .host = "<%= v4redirections_host %>";
+  .port = "80";
+}
+
 sub vcl_recv {
 
   if ( req.url == "/probe.txt" ) {
@@ -91,6 +96,10 @@ sub vcl_recv {
 
   elsif (req.http.host ~ "^(?i)metaskirando\..*camptocamp\.org") {
     set req.backend = metaskirando;
+  }
+
+  elseif (req.http.host ~ "^(?i)((www\.)?skirando\.ch|(www\.)?escalade-online\.com)|(skirando|alpinisme|escalade)\.camptocamp\.com") {
+    set req.backend = v4redirections;
   }
 
   else {

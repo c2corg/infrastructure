@@ -11,7 +11,7 @@ class c2corg::varnish::instance {
   $c2cstats_host         = hiera('c2cstats_host')
   $metac2c_host          = hiera('metac2c_host')
   $metaskirando_host     = hiera('metaskirando_host')
-
+  $v4redirections_host   = hiera('v4redirections_host')
 
   case $::hostname {
     hn1: {
