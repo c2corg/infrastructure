@@ -35,7 +35,7 @@ define c2cinfra::account::user ($ensure=present, $user, $account, $groups=[]) {
         account => $account,
         user    => $user,
         type    => "dss",
-        key     => "AAAAB3NzaC1kc3MAAACBAKaOeR4EnmGLdZyRvbprhZhJv74J+RHBQbtU6O9+64WW7veCPxMt7KaluKxbNxJzGB5lXnRyiLQoaoRE/kjIBq7g/5NDN5OoypevmqTniRO2qhUINs6qNXOsXmroA4XtORYISU8GHXYNxjXPT8eTd9YxuITH8c/7VfeG03l3N4ShAAAAFQCyxcbtPPmEno6XqPQMOM8DVE/bsQAAAIEAnSZOHmOnQ8ByOU2fFfjpC1DRIfV9lGU2xSI3nibcdZGwGGj7RGRNKMCvAqxLSrmpVWe0Tq1Ae5l4IGtg6BoKZP41/MYAYhmWxQRwJ/x8ErQub7RJiHS4e3y/n/hK9tiR0JfzL8Qy6vL1xv6/USDbE4Q09OyriGng954/3SOuYREAAACBAJqXqWMNfy93lvIzjUsYdz8wOr2iW1ur+EHdZbh37Cnf/MD0Ef5OYK0n5ZAiqWl3abZSMg2shnULMyI+bbY6Cr9g22e2fCrKrx7Sr4IzvzADxQDj7JHgiXTPCZQyPz/nlUsVSRezvO/HfzAxjNg1zLwy2WlgGkmmS+NvcKHZwUNP",
+        key     => "AAAAB3NzaC1yc2EAAAADAQABAAABAQD5F/UJcHVtw4iMaXkfeLMTfwUBXvFC+OP1ge2JdL/dxb1pi8U9MTvN8oq3Ze4zlj9JCsklUCVSVWtDRHxDqJrT0aK1j/czyXge1qQ6NN3I2jQeqABobck5O/FVkNDH/mWnwwpMZ4lrzp/fyP1Iml3uhAyUP4a8tX6XkQtFKOVvqdRzMLdRb2ZthzZbzVQeSDnJw+8x9ViDS6JuW95vVFCh/+UPwTwMe1DYm7tMknGAA0NJzRyaga+dpiKk370NfltnVrelqx5BKz/DCVH9PDTRChRW2IJmhUa3ALdp9Cdux+swO27xIbC/oRCfs8s11Zqatrz+TiNEAQBbuuuQ37FB",
         require => User[$account],
       }
     }
