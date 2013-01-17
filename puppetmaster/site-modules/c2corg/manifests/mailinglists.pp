@@ -65,9 +65,9 @@ true()                     smtp,smime,md5   -> reject
 
   sympa::list { "aran":
     send_from => "aran",
-    subject   => "Title TBD",
-    anon_name => "Sender TBD",
-    footer    => template("c2corg/sympa/aran.footer"),
+    subject   => "Boletin de lauegi",
+    anon_name => "Centre de Lauegi Conselh Generau d'Aran",
+    #footer    => template("c2corg/sympa/aran.footer"),
   }
 
 
