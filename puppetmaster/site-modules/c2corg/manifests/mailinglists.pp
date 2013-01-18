@@ -67,9 +67,13 @@ true()                     smtp,smime,md5   -> reject
     send_from => "aran",
     subject   => "Boletin de lauegi",
     anon_name => "Centre de Lauegi d'Aran",
-    #footer    => template("c2corg/sympa/aran.footer"),
   }
 
+  sympa::list { "catalunya":
+    send_from => "everybody",
+    subject   => "Subject TBD",
+    anon_name => "Sender TBD",
+  }
 
   c2corg::mailinglists::meteofrance {[
     '04','05','06','09','2a','2b','31','38','64','65','66','73','74','andorre',
