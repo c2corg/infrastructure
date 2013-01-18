@@ -25,4 +25,8 @@ node 'test-alex' inherits 'base-node' {
     'duty': value => 'dev';
   }
 
+  c2cinfra::backup::dir {
+    ['/srv/www/camptocamp.org/']:
+  }
+
 }
