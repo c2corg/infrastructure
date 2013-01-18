@@ -14,5 +14,8 @@ node 'test-marc' inherits 'base-node' {
 
   include c2corg::varnish::instance
 
+  #@package { sl: tag => 'fuckup' }
+
+  #Package <| name == 'sl' |>
 
 }
