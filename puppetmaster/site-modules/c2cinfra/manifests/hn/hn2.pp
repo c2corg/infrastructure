@@ -8,7 +8,7 @@ class c2cinfra::hn::hn2 inherits c2cinfra::hn {
     changes => [
       'set T0/runlevels 12345',
       'set T0/action respawn',
-      "set T0/process '/sbin/getty -L ttyS0 115200 vt100'"
+      "set T0/process '/sbin/getty -L ttyS1 57600 vt100'"
     ],
     incl    => '/etc/inittab',
     lens    => 'Inittab.lns',
