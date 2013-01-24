@@ -31,9 +31,9 @@ iface eth0.192 inet static
   post-up /sbin/ip rule add from 192.168.192.4 table 192
 
 
-# IBM IMM
+# BMC hn0
 auto eth1
 iface eth1 inet static
-  address 192.168.10.10
+  address 10.10.10.1
   netmask 255.255.255.0
 

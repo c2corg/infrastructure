@@ -12,9 +12,9 @@ iface eth0.192 inet static
   netmask 255.255.255.0
   gateway 192.168.192.1
 
-# IBM IMM
+# BMC hn2
 auto eth1
 iface eth1 inet static
-  address 192.168.10.10
+  address 10.10.2.1
   netmask 255.255.255.0
 
