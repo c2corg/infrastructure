@@ -1,6 +1,6 @@
 class ipmi {
 
-  package { ['ipmitool', 'freeipmi-tools']: ensure => present }
+  include ipmi::client
 
   kmod::load { ['ipmi_devintf', 'ipmi_si']:
     before => [Service['ipmievd'], Collectd::Plugin['ipmi']],
