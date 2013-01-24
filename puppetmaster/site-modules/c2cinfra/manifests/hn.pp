@@ -1,5 +1,17 @@
 class c2cinfra::hn {
 
+  include ipmi::client
+
+  case $::manufacturer {
+    /Dell/: {
+      include hardware::omsa
+    }
+    /IBM/: {
+    }
+    /HP/: {
+    }
+  }
+
   file { "/etc/network/interfaces":
     ensure => present,
     source => "puppet:///modules/c2cinfra/network/${::hostname}",
