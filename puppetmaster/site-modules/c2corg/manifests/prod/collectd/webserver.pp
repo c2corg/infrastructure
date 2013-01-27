@@ -1,11 +1,8 @@
 class c2corg::prod::collectd::webserver {
 
-  collectd::plugin { "processes":
-    content => '# Avoid LoadPlugin as processes is already loaded elsewhere
-<Plugin processes>
-  Process "apache2"
-</Plugin>
-',
+  collectd::config::plugin { 'monitor apache2 process':
+    plugin   => 'processes',
+    settings => 'Process apache2',
   }
 
   # Solution transitoire. Il faudrait trouver une solution qui s'intègre plus

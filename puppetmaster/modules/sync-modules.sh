@@ -30,7 +30,7 @@ git://github.com/camptocamp/puppet-pgconf.git pgconf a8385d4a1
 git://github.com/camptocamp/puppet-postgis.git postgis f6a436213
 git://github.com/camptocamp/puppet-mapserver.git mapserver 555b46678
 
-git://github.com/camptocamp/puppet-collectd.git collectd 8d369096
+git://github.com/mfournier/puppet-collectd.git collectd 1d8879f3
 
 git://github.com/stankevich/puppet-python.git python 94d9ca52b
 git://github.com/camptocamp/puppet-ruby.git ruby d7debdf

@@ -27,25 +27,20 @@ ${logfacility}.* ~
     require => Package["syslog"],
   }
 
-  collectd::plugin { "postgresql":
-    content => "# file managed by puppet
-LoadPlugin \"postgresql\"
-<Plugin postgresql>
+  collectd::config::plugin { 'postgresql plugin config':
+    plugin   => 'postgresql',
+    settings => "
   <Database c2corg>
     Port \"5432\"
     User \"${www_db_user}\"
     Password \"${prod_db_pass}\"
   </Database>
-</Plugin>
 ",
   }
 
-  collectd::plugin { "processes":
-    content => '# Avoid LoadPlugin as processes is already loaded elsewhere
-<Plugin processes>
-  Process "postgres"
-</Plugin>
-',
+  collectd::config::plugin { 'monitor postgres process':
+    plugin   => 'processes',
+    settings => 'Process postgres',
   }
 
 }

@@ -21,17 +21,18 @@ class c2cinfra::hn {
     'GNU/kFreeBSD' => ['cpu', 'swap'],
     default        => ['cpu', 'disk', 'entropy', 'irq', 'swap'],
   }
-  collectd::plugin { $collectdplugins: lines => [] }
+  collectd::plugin { $collectdplugins: }
 
-  collectd::plugin { 'df':
-    lines => [
-      'MountPoint "/dev"',
-      'MountPoint "/dev/shm"',
-      'MountPoint "/lib/init/rw"',
-      'IgnoreSelected true',
-      'ReportReserved true',
-      'ReportInodes true',
-    ],
+  collectd::config::plugin { 'df plugin config':
+    plugin   => 'df',
+    settings => '
+      MountPoint "/dev"
+      MountPoint "/dev/shm"
+      MountPoint "/lib/init/rw"
+      IgnoreSelected true
+      ReportReserved true
+      ReportInodes true
+',
   }
 
   package { "iozone3": }

@@ -21,7 +21,7 @@ class ipmi {
     require   => Package['ipmitool'],
   }
 
-  collectd::plugin { 'ipmi': lines => [] }
+  collectd::plugin { 'ipmi': }
 
   augeas { 'remove module ipmi_devintf':
     incl    => '/etc/modprobe.d/modprobe.conf',

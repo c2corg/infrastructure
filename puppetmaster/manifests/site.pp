@@ -12,7 +12,7 @@ File {
   mode   => 0644,
 }
 
-Exec["apt-get_update"] -> Package <| |>
+Exec["apt-get_update"] -> Package <| tag != 'virtualresource' |>
 Package["sudo"] -> Sudoers <| |>
 
 Sudoers {

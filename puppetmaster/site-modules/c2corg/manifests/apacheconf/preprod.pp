@@ -1,7 +1,11 @@
 class c2corg::apacheconf::preprod inherits c2corg::apacheconf {
 
   include c2corg::apacheconf::redirections
-  include apache::collectd
+
+  collectd::config::plugin { 'apache collectd config':
+    plugin   => 'apache',
+    settings => 'URL "http://localhost/server-status?auto"',
+  }
 
   Apache::Vhost["camptocamp.org"] {
     aliases +> [

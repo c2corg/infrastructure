@@ -1,17 +1,11 @@
 class c2cinfra::collectd::server inherits c2cinfra::collectd::node {
 
-  resources { collectd_conf: purge => true; }
-
-  Collectd::Network["network"] {
-    listen => '"0.0.0.0" "25826"',
+  Collectd::Config::Plugin['setup network plugin'] {
+    settings => '
+Listen     "0.0.0.0" "25826"
+CacheFlush 86400
+',
   }
-
-  include haproxy::collectd::typesdb
-  include c2corg::varnish::typesdb
-
-  package { 'drraw': ensure => absent }
-
-  file { "/var/www/${fqdn}/cgi-bin/drraw.cgi": ensure  => absent }
 
   @@nat::fwd { 'forward collectd port':
     host  => '126',

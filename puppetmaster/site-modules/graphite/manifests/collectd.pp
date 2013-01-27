@@ -15,14 +15,10 @@ class graphite::collectd {
     notify    => Service["collectd"],
   }
 
-  collectd::plugin { "collectd-graphite":
-    require => [Exec["install collectd-graphite"], Service["carbon-aggregator"]],
-    content => '# file managed by puppet
-<LoadPlugin "perl">
-  Globals true
-</LoadPlugin>
-
-<Plugin "perl">
+  collectd::config::plugin { 'collectd-graphite':
+    require  => [Exec["install collectd-graphite"], Service["carbon-aggregator"]],
+    plugin   => 'perl',
+    settings => '
   BaseName "Collectd::Plugins"
   LoadPlugin "Graphite"
 
@@ -32,7 +28,6 @@ class graphite::collectd {
       Host   "localhost"
       Port   "2023"
     </Plugin>
-</Plugin>
 ',
   }
 

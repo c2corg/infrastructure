@@ -1,18 +1,18 @@
 class xcache {
 
-  package { "php5-xcache":
+  package { 'php5-xcache':
     ensure => present,
   }
 
-  xcache::param { "xcache.admin/xcache.admin.enable_auth": value => "Off" }
+  xcache::param { 'xcache.admin/xcache.admin.enable_auth': value => 'Off' }
 
-  file { "xcachestats.php":
+  file { 'xcachestats.php':
     ensure => present,
-    path   => "/var/www/html/xcachestats.php",
-    source => "puppet:///modules/xcache/xcachestats.php",
+    path   => '/var/www/html/xcachestats.php',
+    source => 'puppet:///modules/xcache/xcachestats.php',
   }
 
-  file { "/etc/apache2/conf.d/xcachestats.conf":
+  file { '/etc/apache2/conf.d/xcachestats.conf':
     ensure => present,
     content => "# file managed by puppet
 <Location /xcachestats.php>
@@ -21,14 +21,13 @@ class xcache {
   Allow from localhost ip6-localhost 127.0.0.0/255.0.0.0
 </Location>
 ",
-    notify  => Exec["apache-graceful"],
+    notify  => Exec['apache-graceful'],
   }
 
-  collectd::plugin { "xcachestats":
-    require => [File["/etc/apache2/conf.d/xcachestats.conf"], File["xcachestats.php"]],
-    content => '# file managed by puppet
-LoadPlugin "curl_json"
-<Plugin curl_json>
+  collectd::config::plugin { 'xcachestats':
+    require  => [File['/etc/apache2/conf.d/xcachestats.conf'], File['xcachestats.php']],
+    plugin   => 'curl_json',
+    settings => '
   <URL "http://localhost/xcachestats.php?0">
     Instance "xcache"
     <Key "slots">
@@ -68,7 +67,6 @@ LoadPlugin "curl_json"
       Type "bytes"
     </Key>
   </URL>
-</Plugin>
 ',
   }
 

@@ -1,34 +1,48 @@
 class c2cinfra::collectd::node {
+
   include collectd
+  include haproxy::collectd::typesdb
 
-  collectd::conf {
-    'FQDNLookup':
-      value => 'false';
-    'TypesDB':
-      value => '/usr/share/collectd/types.db', quote => true;
-    'LoadPlugin':
-      value => $::operatingsystem ? {
-        'GNU/kFreeBSD' => ['interface', 'load', 'memory', 'users'],
-        default        => ['contextswitch', 'exec', 'interface', 'load', 'memory', 'processes', 'tcpconns', 'users', 'vmem']
-      };
+  $collectd_host = hiera('collectd_host')
+
+  collectd::config::global {
+    'FQDNLookup': value => 'false';
+    'TypesDB':    value => '/usr/share/collectd/types.db';
   }
 
-  file { "/var/lib/collectd/rrd/":
-    ensure  => absent,
-    recurse => true,
-    force   => true,
-    notify  => Service["collectd"],
+  collectd::plugin { [
+    'contextswitch',
+    'exec',
+    'interface',
+    'load',
+    'memory',
+    'processes',
+    'tcpconns',
+    'users',
+    'vmem']: }
+
+  collectd::config::plugin { 'setup network plugin':
+    plugin   => 'network',
+    settings => inline_template('
+Server     "<%= collectd_host %>"
+CacheFlush 86400
+'),
   }
 
-  collectd::network { 'network':
-    server      => hiera('collectd_host'),
-    cache_flush => 86400,
+  collectd::config::plugin { 'setup syslog plugin':
+    plugin   => 'syslog',
+    settings => 'LogLevel info',
   }
-
-  collectd::syslog { 'info': }
 
   if $::operatingsystem != 'GNU/kFreeBSD' {
     package { 'udev': } # else collectd installation fails on VZs.
+  }
+
+  file { '/var/lib/puppet/modules/':
+    ensure  => absent,
+    purge   => true,
+    force   => true,
+    recurse => true,
   }
 
 }

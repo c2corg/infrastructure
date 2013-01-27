@@ -11,17 +11,18 @@ node 'backup' inherits 'base-node' {
     'duty': value => 'prod';
   }
 
-  collectd::plugin { ['cpu', 'disk', 'swap']: lines => [] }
+  collectd::plugin { ['cpu', 'df', 'disk', 'swap']: }
 
-  collectd::plugin { 'df':
-    lines => [
-      'MountPoint "/dev"',
-      'MountPoint "/dev/shm"',
-      'MountPoint "/lib/init/rw"',
-      'IgnoreSelected true',
-      'ReportReserved true',
-      'ReportInodes true',
-    ],
+  collectd::config::plugin { 'df plugin config':
+    plugin   => 'df',
+    settings => '
+      MountPoint "/dev"
+      MountPoint "/dev/shm"
+      MountPoint "/lib/init/rw"
+      IgnoreSelected true
+      ReportReserved true
+      ReportInodes true
+',
   }
 
 }
