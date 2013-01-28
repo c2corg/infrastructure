@@ -21,7 +21,7 @@ class haproxy::collectd {
 ",
     require  => [
       File['haproxy collectd plugin'],
-      File['haproxy collectd types'],
+      Collectd::Config::Type['haproxy'],
       Service['haproxy'],
     ],
   }
