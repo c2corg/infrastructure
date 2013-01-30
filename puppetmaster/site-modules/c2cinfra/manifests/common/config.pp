@@ -28,20 +28,12 @@ options rotate edns0
     refreshonly => true,
   }
 
-  case $::operatingsystem {
-    "Debian": {
-      if $::is_virtual != true {
-        # kernel must reboot if panic occurs
-        sysctl::value { "kernel.panic": value => "60" }
-        if $::datacenter =~ /c2corg|epnet|pse/ {
-          # disable tcp_sack due to Cisco bug in epnet routers
-          sysctl::value { "net.ipv4.tcp_sack": value => "0" }
-        }
-      }
-    }
-    "GNU/kFreeBSD": {
-      # avoid sysctl type failure
-      file { "/etc/sysctl.conf": ensure => present }
+  if $::is_virtual != true {
+    # kernel must reboot if panic occurs
+    sysctl::value { "kernel.panic": value => "60" }
+    if $::datacenter =~ /c2corg|epnet|pse/ {
+      # disable tcp_sack due to Cisco bug in epnet routers
+      sysctl::value { "net.ipv4.tcp_sack": value => "0" }
     }
   }
 

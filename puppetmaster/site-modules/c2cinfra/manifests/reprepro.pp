@@ -43,7 +43,7 @@ class c2cinfra::reprepro {
   Reprepro::Distribution {
     origin        => "C2corg",
     label         => "C2corg",
-    architectures => "i386 amd64 kfreebsd-amd64 source",
+    architectures => "i386 amd64 source",
     components    => "main",
     sign_with     => "pkgs@c2corg",
   }

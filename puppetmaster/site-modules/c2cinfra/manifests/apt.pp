@@ -14,11 +14,9 @@ deb <%= debmirror %>/debian/ squeeze main contrib non-free
 deb http://security.debian.org/ squeeze/updates main contrib non-free
 deb <%= debmirror %>/debian/ squeeze-proposed-updates main contrib non-free
 
-<% if @operatingsystem != 'GNU/kFreeBSD' # fails to handle many sources lists -%>
 deb <%= debmirror %>/debian/ wheezy main contrib non-free
 deb http://security.debian.org/ wheezy/updates main contrib non-free
 deb <%= debmirror %>/debian/ wheezy-proposed-updates main contrib non-free
-<% end -%>
 "),
   }
 

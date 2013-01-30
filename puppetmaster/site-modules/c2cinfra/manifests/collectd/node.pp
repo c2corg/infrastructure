@@ -34,9 +34,7 @@ CacheFlush 86400
     settings => 'LogLevel info',
   }
 
-  if $::operatingsystem != 'GNU/kFreeBSD' {
-    package { 'udev': } # else collectd installation fails on VZs.
-  }
+  package { 'udev': } # else collectd installation fails on VZs.
 
   file { '/var/lib/puppet/modules/':
     ensure  => absent,

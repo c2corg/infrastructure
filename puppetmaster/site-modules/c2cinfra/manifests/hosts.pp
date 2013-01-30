@@ -12,7 +12,6 @@ class c2cinfra::hosts {
   host { "${::hostname}.${subnet}.infra.camptocamp.org":
     ip => $::hostname ? {
       "hn0"   => "192.168.192.1",
-      "hn1"   => "192.168.192.2",
       "hn2"   => "192.168.192.3",
       "hn3"   => "192.168.192.4",
       "hn4"   => "192.168.192.5",

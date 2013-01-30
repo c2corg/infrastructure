@@ -26,15 +26,9 @@ class c2cinfra::common::packages {
     ]: ensure => installed
   }
 
-  case $::operatingsystem {
-    "Debian": {
-      package { [
-        "ethtool", "iotop", "iptraf", "lsof", "strace", "traceroute", "vlan",
-        ]: ensure => installed
-      }
-    }
-    "GNU/kFreeBSD": {
-    }
+  package { [
+    "ethtool", "iotop", "iptraf", "lsof", "strace", "traceroute", "vlan",
+    ]: ensure => installed
   }
 
   case $::lsbdistcodename {

@@ -17,11 +17,7 @@ class c2cinfra::hn {
     source => "puppet:///modules/c2cinfra/network/${::hostname}",
   }
 
-  $collectdplugins = $::operatingsystem ? {
-    'GNU/kFreeBSD' => ['cpu', 'swap'],
-    default        => ['cpu', 'disk', 'entropy', 'irq', 'swap'],
-  }
-  collectd::plugin { $collectdplugins: }
+  collectd::plugin { ['cpu', 'disk', 'entropy', 'irq', 'swap']: }
 
   collectd::config::plugin { 'df plugin config':
     plugin   => 'df',
@@ -37,9 +33,7 @@ class c2cinfra::hn {
 
   package { "iozone3": }
 
-  if ($::operatingsystem != 'GNU/kFreeBSD') {
-    package { ["hdparm", "xfsprogs", "lvm2"]: }
-  }
+  package { ["hdparm", "xfsprogs", "lvm2"]: }
 
   package { 'lldpd':
     ensure => present,
