@@ -1,15 +1,8 @@
 # VM
 node 'test-saimon' inherits 'base-node' {
 
-  $developer = "saimon"
-
-  realize C2cinfra::Account::User[$developer]
-  c2cinfra::account::user { "${developer}@root": user => $developer, account => "root" }
-
-  sudoers { "root access for ${developer}":
-    users    => $developer,
-    type     => 'user_spec',
-    commands => '(ALL) ALL',
+  class { 'c2corg::dev::env::plain':
+    developer => 'saimon',
   }
 
   fact::register {
