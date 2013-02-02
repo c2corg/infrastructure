@@ -1,6 +1,8 @@
 class c2cinfra::account {
 
-  c2cinfra::account::user { "marc@root": user => "marc", account => "root" }
+  # users which have root access on every machine.
+  c2cinfra::account::user { 'marc@root':  user => 'marc',  account => 'root' }
+  c2cinfra::account::user { 'xbrrr@root': user => 'xbrrr', account => 'root' }
 
   @c2cinfra::account::user {
     "marc": user => "marc", account => "marc",
