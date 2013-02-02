@@ -9,6 +9,7 @@ class c2cinfra::containers {
       vz::ve { '204': hname => 'test-jose.pse.infra.camptocamp.org' }
       vz::ve { '205': hname => 'test-bubu.pse.infra.camptocamp.org' }
       vz::ve { '206': hname => 'test-saimon.pse.infra.camptocamp.org' }
+      vz::ve { '207': hname => 'test-gottferdom.pse.infra.camptocamp.org' }
       vz::ve { '221': hname => 'dev-cda.pse.infra.camptocamp.org' }
 
     }
