@@ -48,6 +48,7 @@ class c2corg::devproxy::http {
 
   c2corg::devproxy::proxy { "dev-cda.dev.camptocamp.org":
     host => "dev-cda.pse.infra.camptocamp.org",
+    ensure => absent,
   }
 
   @@nat::fwd { 'forward http port':
