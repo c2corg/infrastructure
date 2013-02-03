@@ -29,11 +29,6 @@ CacheFlush 86400
 '),
   }
 
-  collectd::config::plugin { 'setup syslog plugin':
-    plugin   => 'syslog',
-    settings => 'LogLevel info',
-  }
-
   package { 'udev': } # else collectd installation fails on VZs.
 
   file { '/var/lib/puppet/modules/':
