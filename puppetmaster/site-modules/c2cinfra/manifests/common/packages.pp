@@ -7,27 +7,22 @@ class c2cinfra::common::packages {
     "bash-completion", "bc", "bind9-host", "bsdmainutils", "bzr",
     "curl", "cron", "cvs",
     "dc", "dnsutils",
-    "elinks", "emacs23-nox",
+    "elinks", "emacs23-nox", "ethtool",
     "fping", "ftp",
     "git-core", "git-svn",
     "htop",
-    "iputils-ping", "iso-codes",
-    "less", "locales-all", "logrotate", "lsb-release",
+    "iputils-ping", "iotop", "iptraf", "iso-codes",
+    "less", "locales-all", "logrotate", "lsb-release", "lsof",
     "man-db", "m4", "make", "mosh", "mtr-tiny",
     "netcat", "nmap", "ntp",
     "patch", "psmisc", "pwgen",
     "rsync",
-    "screen", "sudo", "subversion", "subversion-tools", "sysstat",
-    "tcpdump", "telnet", "time", "tmux", "tshark",
+    "screen", "strace", "sudo", "subversion", "subversion-tools", "sysstat",
+    "tcpdump", "telnet", "time", "tmux", "traceroute", "tshark",
     "unzip",
-    "vim",
+    "vim", "vlan",
     "whois", "wget",
     "xauth",
-    ]: ensure => installed
-  }
-
-  package { [
-    "ethtool", "iotop", "iptraf", "lsof", "strace", "traceroute", "vlan",
     ]: ensure => installed
   }
 
