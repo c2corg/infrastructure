@@ -34,7 +34,7 @@ define c2cinfra::account::user ($ensure=present, $user, $account, $groups=[]) {
       c2cinfra::ssh::userkey { "$name on $account":
         account => $account,
         user    => $user,
-        type    => "dss",
+        type    => "rsa",
         key     => "AAAAB3NzaC1yc2EAAAADAQABAAABAQD5F/UJcHVtw4iMaXkfeLMTfwUBXvFC+OP1ge2JdL/dxb1pi8U9MTvN8oq3Ze4zlj9JCsklUCVSVWtDRHxDqJrT0aK1j/czyXge1qQ6NN3I2jQeqABobck5O/FVkNDH/mWnwwpMZ4lrzp/fyP1Iml3uhAyUP4a8tX6XkQtFKOVvqdRzMLdRb2ZthzZbzVQeSDnJw+8x9ViDS6JuW95vVFCh/+UPwTwMe1DYm7tMknGAA0NJzRyaga+dpiKk370NfltnVrelqx5BKz/DCVH9PDTRChRW2IJmhUa3ALdp9Cdux+swO27xIbC/oRCfs8s11Zqatrz+TiNEAQBbuuuQ37FB",
         require => User[$account],
       }
