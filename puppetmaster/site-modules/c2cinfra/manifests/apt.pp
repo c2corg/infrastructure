@@ -107,7 +107,7 @@ deb http://backports.debian.org/debian-backports ${::lsbdistcodename}-backports 
 
   package { 'unattended-upgrades': ensure => present }
 
-  if ($::lsbdistrelease == 'squeeze') {
+  if ($::lsbdistcodename == 'squeeze') {
     apt::preferences { "upgrade-unattended-upgrades":
       package  => "unattended-upgrades",
       pin      => "release l=C2corg, a=squeeze",
