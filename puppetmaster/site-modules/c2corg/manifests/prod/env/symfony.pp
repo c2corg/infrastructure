@@ -89,7 +89,16 @@ class c2corg::prod::env::symfony {
   }
 
   cron { "removeOldTempImages":
+    ensure  => absent,
     command => "sh /srv/www/camptocamp.org/batch/removeOldTempImages.sh",
+    user    => 'www-data',
+    minute  => 59,
+    hour    => 2,
+  }
+
+  cron { "removeOldTempImages as www-data":
+    command => "sh /srv/www/camptocamp.org/batch/removeOldTempImages.sh",
+    user    => 'www-data',
     minute  => 59,
     hour    => 2,
   }
