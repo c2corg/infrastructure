@@ -13,9 +13,14 @@ class c2cinfra::mcollective {
   package { [
     'mcollective-filemgr-agent',
     'mcollective-package-agent',
-    'mcollective-puppetd-agent',
+    'mcollective-puppet-agent',
     'mcollective-service-agent',
     ]: ensure => present,
+  }
+
+  package { ['mcollective-puppetd-agent', 'mcollective-puppetd-common']:
+    ensure => absent,
+    before => Package['mcollective-puppet-agent'],
   }
 
 }

@@ -14,9 +14,14 @@ class c2cinfra::mcollective::client {
   package { [
     'mcollective-filemgr-client',
     'mcollective-package-client',
-    'mcollective-puppetd-client',
+    'mcollective-puppet-client',
     'mcollective-service-client',
     ]: ensure => present,
+  }
+
+  package { 'mcollective-puppetd-client':
+    ensure => absent,
+    before => Package['mcollective-puppet-client'],
   }
 
   file { "/etc/mcollective/client.cfg":
