@@ -56,6 +56,13 @@ true()                              smtp,smime,md5    -> reject
 ',
   }
 
+  sympa::scenari { "catalunya":
+    content => '
+match([sender],/@igc\.cat$/)       smtp              -> do_it
+true()                              smtp,smime,md5    -> reject
+',
+  }
+
   sympa::scenari { "everybody":
     content => '
 match([sender],/^.*$/)     smtp             -> do_it
@@ -70,9 +77,9 @@ true()                     smtp,smime,md5   -> reject
   }
 
   sympa::list { "catalunya":
-    send_from => "everybody",
-    subject   => "Subject TBD",
-    anon_name => "Sender TBD",
+    send_from => "catalunya",
+    subject   => "Predicció d'Allaus",
+    anon_name => "Institut Geològic de Catalunya",
   }
 
   c2corg::mailinglists::meteofrance {[
