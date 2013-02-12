@@ -78,8 +78,8 @@ true()                     smtp,smime,md5   -> reject
 
   sympa::list { "catalunya":
     send_from => "catalunya",
-    subject   => "Predicció d'Allaus",
-    anon_name => "Institut Geològic de Catalunya",
+    subject   => "Prediccio d'Allaus",
+    anon_name => "Institut Geologic de Catalunya",
   }
 
   c2corg::mailinglists::meteofrance {[
