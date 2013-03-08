@@ -15,6 +15,23 @@ class c2cinfra::hn::hn4 inherits c2cinfra::hn {
     notify  => Exec['refresh init'],
   }
 
+  Etcdefault {
+    file   => 'grub',
+    notify => Exec['update-grub'],
+  }
+
+  etcdefault {
+    'grub cmdline':
+      key   => 'GRUB_CMDLINE_LINUX',
+      value => "\"console=tty1 console=ttyS0,115200n8\"";
+    'grub terminal':
+      key   => 'GRUB_TERMINAL',
+      value => 'serial';
+    'grub serial command':
+      key   => 'GRUB_SERIAL_COMMAND',
+      value => "\"serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1\"";
+  }
+
   @@nat::fwd {
     'forward hn4 ssh port':
       host => '5', from => '20025', to => '22',   tag => 'portfwd', proto => 'tcp';

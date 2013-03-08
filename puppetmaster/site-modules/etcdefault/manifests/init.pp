@@ -1,7 +1,7 @@
 define etcdefault($ensure=present, $file, $key, $value) {
 
   $changes = $ensure ? {
-    present => "set ${key} ${value}",
+    present => "set ${key} '${value}'",
     absent  => "rm ${key}",
   }
 

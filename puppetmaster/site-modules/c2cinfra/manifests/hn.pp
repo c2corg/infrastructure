@@ -31,7 +31,7 @@ class c2cinfra::hn {
 ',
   }
 
-  package { "iozone3": }
+  package { ['iozone3', 'setserial']: }
 
   package { ["hdparm", "xfsprogs", "lvm2"]: }
 
@@ -44,6 +44,10 @@ class c2cinfra::hn {
     enable    => true,
     hasstatus => false,
     require   => Package['lldpd'],
+  }
+
+  exec { 'update-grub':
+    refreshonly => true,
   }
 
 }
