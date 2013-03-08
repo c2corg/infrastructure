@@ -28,6 +28,12 @@ options rotate edns0
     refreshonly => true,
   }
 
+  etcdefault { 'configure default locale':
+     file  => 'locale',
+     key   => 'LANG',
+     value => 'C',
+  }
+
   if $::is_virtual != true {
     # kernel must reboot if panic occurs
     sysctl::value { "kernel.panic": value => "60" }
