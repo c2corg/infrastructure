@@ -20,7 +20,7 @@ defaults
   srvtimeout 50s
 
 frontend c2corg
-  bind    <%= c2corg_vip %>:80
+  bind    *:80
   default_backend website
   #option  httpclose # prevent client-side keepalive
   timeout client 5000 # keep-alive on client-side
@@ -31,9 +31,9 @@ frontend c2corg
 
 backend website
   balance roundrobin
-  server  cache    <%= varnish_host %>:80 check inter 5000 downinter 500   # active node
-  server  main     <%= symfony_master_host %>:80 check inter 5000 backup   # passive node
-  server  failover <%= symfony_failover_host %>:80 check inter 5000 backup # active node
+  server  cache    <%= varnish_host %>:80 check inter 5000 downinter 500 # active node
+  server  main     <%= symfony_master_host %>:80 check inter 5000 backup # 1st failover node
+  server  failover <%= symfony_failover_host %>:80 check inter 5000 backup # 2nd failover node
   option  httpchk HEAD /probe.txt HTTP/1.1\r\nHost:\ www.camptocamp.org
   option  http-server-close # no keep-alive on server-side
 

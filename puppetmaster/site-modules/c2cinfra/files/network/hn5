@@ -12,9 +12,24 @@ auto br0
 iface br0 inet static
   bridge_ports vlan192
   bridge_stp off
+  ucarp-vid 4
+  ucarp-vip 128.179.66.23
+  ucarp-upscript /etc/network/vip-up.sh
+  ucarp-downscript /etc/network/vip-down.sh
+  ucarp-password ieso9EeCh3Ja
   address 192.168.192.6
   netmask 255.255.255.0
   gateway 192.168.192.1
+
+# shared virtual IP address, serving haproxy service
+iface eth1:ucarp inet static
+  address 128.179.66.23
+  netmask 255.255.255.0
+  post-up /sbin/ip ro add 128.179.66.0/24 dev eth0 src 128.179.66.23 table 66
+  post-up /sbin/ip ro add default via 128.179.66.1 table 66
+  post-up /sbin/ip rule add from 128.179.66.23 table 66
+  post-up /usr/sbin/arping -c 3 -B -S 128.179.66.23 -i eth0
+  post-down /sbin/ip rule del from 128.179.66.23 table 66
 
 # BMC hn6
 auto eth0
