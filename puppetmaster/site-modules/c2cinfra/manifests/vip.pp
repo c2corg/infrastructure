@@ -16,7 +16,7 @@ class c2cinfra::vip {
     content => '#!/bin/sh
 # file managed by puppet
 
-/sbin/ifup eth0:ucarp
+/sbin/ifup eth1:ucarp
 ',
   }
   file { '/etc/network/vip-down.sh':
@@ -26,7 +26,7 @@ class c2cinfra::vip {
     content => '#!/bin/sh
 # file managed by puppet
 
-/sbin/ifdown eth0:ucarp
+/sbin/ifdown eth1:ucarp
 ',
   }
 }

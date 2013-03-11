@@ -28,7 +28,7 @@ iface eth1:ucarp inet static
   post-up /sbin/ip ro add 128.179.66.0/24 dev eth0 src 128.179.66.23 table 66
   post-up /sbin/ip ro add default via 128.179.66.1 table 66
   post-up /sbin/ip rule add from 128.179.66.23 table 66
-  post-up /usr/sbin/arping -c 3 -B -S 128.179.66.23 -i eth0
+  post-up /usr/sbin/arping -c 3 -B -S 128.179.66.23 -i eth1
   post-down /sbin/ip rule del from 128.179.66.23 table 66
 
 # BMC hn5
