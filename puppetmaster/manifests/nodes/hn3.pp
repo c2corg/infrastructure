@@ -25,9 +25,6 @@ node 'hn3' inherits 'base-node' {
   include c2corg::prod::env::symfony
   include c2corg::prod::collectd::webserver
 
-  include haproxy
-  include haproxy::collectd
-
   include c2cinfra::collectd::node
 
   fact::register {

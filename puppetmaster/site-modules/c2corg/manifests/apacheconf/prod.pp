@@ -7,12 +7,6 @@ class c2corg::apacheconf::prod inherits c2corg::apacheconf {
     settings => 'URL "http://localhost/server-status?auto"',
   }
 
-  include c2corg::prod::apache::disable80
-
-  # don't listen on *:80, This is haproxy's job.
-  apache::listen { "${symfony_master_host}:80": ensure => present } # TODO: this is crap
-  apache::listen { "127.0.0.1:80": ensure => present } # needed by collectd
-
   if ($::hostname !~ /failover/) {
 
     # TODO: deduplicate this
