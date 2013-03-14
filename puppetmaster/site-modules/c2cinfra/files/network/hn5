@@ -25,7 +25,7 @@ iface br0 inet static
 iface eth1:ucarp inet static
   address 128.179.66.23
   netmask 255.255.255.0
-  post-up /sbin/ip ro add 128.179.66.0/24 dev eth0 src 128.179.66.23 table 66
+  post-up /sbin/ip ro add 128.179.66.0/24 dev eth1 src 128.179.66.23 table 66
   post-up /sbin/ip ro add default via 128.179.66.1 table 66
   post-up /sbin/ip rule add from 128.179.66.23 table 66
   post-up /usr/sbin/arping -c 3 -B -S 128.179.66.23 -i eth1
