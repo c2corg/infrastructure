@@ -1,0 +1,84 @@
+[submodule "puppetmaster/modules/augeas"]
+	path = puppetmaster/modules/augeas
+	url = git://github.com/camptocamp/puppet-augeas.git
+[submodule "puppetmaster/modules/apt"]
+	path = puppetmaster/modules/apt
+	url = git://github.com/camptocamp/puppet-apt.git
+[submodule "puppetmaster/modules/openssl"]
+	path = puppetmaster/modules/openssl
+	url = git://github.com/camptocamp/puppet-openssl.git
+[submodule "puppetmaster/modules/postfix"]
+	path = puppetmaster/modules/postfix
+	url = git://github.com/camptocamp/puppet-postfix.git
+[submodule "puppetmaster/modules/sysctl"]
+	path = puppetmaster/modules/sysctl
+	url = git://github.com/duritong/puppet-sysctl.git
+[submodule "puppetmaster/modules/reprepro"]
+	path = puppetmaster/modules/reprepro
+	url = git://github.com/camptocamp/puppet-reprepro.git
+[submodule "puppetmaster/modules/iptables"]
+	path = puppetmaster/modules/iptables
+	url = git://github.com/kbarber/puppet-iptables.git
+[submodule "puppetmaster/modules/sudo"]
+	path = puppetmaster/modules/sudo
+	url = git://github.com/bodepd/puppet-sudo.git
+[submodule "puppetmaster/modules/rabbitmq"]
+	path = puppetmaster/modules/rabbitmq
+	url = git://github.com/puppetlabs/puppetlabs-rabbitmq.git
+[submodule "puppetmaster/modules/vcsrepo"]
+	path = puppetmaster/modules/vcsrepo
+	url = git://github.com/puppetlabs/puppetlabs-vcsrepo.git
+[submodule "puppetmaster/modules/lvm"]
+	path = puppetmaster/modules/lvm
+	url = git://github.com/puppetlabs/puppetlabs-lvm.git
+[submodule "puppetmaster/modules/stdlib"]
+	path = puppetmaster/modules/stdlib
+	url = git://github.com/puppetlabs/puppetlabs-stdlib.git
+[submodule "puppetmaster/modules/puppetdbquery"]
+	path = puppetmaster/modules/puppetdbquery
+	url = git://github.com/dalen/puppet-puppetdbquery.git
+[submodule "puppetmaster/modules/concat"]
+	path = puppetmaster/modules/concat
+	url = git://github.com/ripienaar/puppet-concat.git
+[submodule "puppetmaster/modules/lldp"]
+	path = puppetmaster/modules/lldp
+	url = git://github.com/mfournier/puppet-lldp.git
+[submodule "puppetmaster/modules/varnish"]
+	path = puppetmaster/modules/varnish
+	url = git://github.com/camptocamp/puppet-varnish.git
+[submodule "puppetmaster/modules/apache"]
+	path = puppetmaster/modules/apache
+	url = git://github.com/camptocamp/puppet-apache.git
+[submodule "puppetmaster/modules/nginx"]
+	path = puppetmaster/modules/nginx
+	url = git://github.com/camptocamp/puppet-nginx.git
+[submodule "puppetmaster/modules/postgresql"]
+	path = puppetmaster/modules/postgresql
+	url = git://github.com/camptocamp/puppet-postgresql.git
+[submodule "puppetmaster/modules/pgconf"]
+	path = puppetmaster/modules/pgconf
+	url = git://github.com/camptocamp/puppet-pgconf.git
+[submodule "puppetmaster/modules/postgis"]
+	path = puppetmaster/modules/postgis
+	url = git://github.com/camptocamp/puppet-postgis.git
+[submodule "puppetmaster/modules/mapserver"]
+	path = puppetmaster/modules/mapserver
+	url = git://github.com/camptocamp/puppet-mapserver.git
+[submodule "puppetmaster/modules/collectd"]
+	path = puppetmaster/modules/collectd
+	url = git://github.com/mfournier/puppet-collectd.git
+[submodule "puppetmaster/modules/python"]
+	path = puppetmaster/modules/python
+	url = git://github.com/stankevich/puppet-python.git
+[submodule "puppetmaster/modules/ruby"]
+	path = puppetmaster/modules/ruby
+	url = git://github.com/camptocamp/puppet-ruby.git
+[submodule "puppetmaster/modules/php"]
+	path = puppetmaster/modules/php
+	url = git://github.com/camptocamp/puppet-php.git
+[submodule "puppetmaster/modules/buildenv"]
+	path = puppetmaster/modules/buildenv
+	url = git://github.com/camptocamp/puppet-buildenv.git
+[submodule "puppetmaster/modules/kmod"]
+	path = puppetmaster/modules/kmod
+	url = git://github.com/camptocamp/puppet-kmod.git
