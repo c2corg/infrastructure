@@ -3,8 +3,8 @@ class c2corg::webserver::metaskirando {
   vcsrepo { "metaskirando.camptocamp.org":
     name     => "/srv/www/metaskirando.camptocamp.org",
     ensure   => "present",
-    provider => "svn",
-    source   => "https://dev.camptocamp.org/svn/c2corg/trunk/metaskirando/",
+    provider => "git",
+    source   => "git://github.com/c2corg/metaskirando.git",
     owner    => "c2corg",
     group    => "c2corg",
     require  => File["/srv/www"],
