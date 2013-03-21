@@ -26,13 +26,11 @@ deb http://${pkgrepo}/c2corg/ ${::lsbdistcodename} main
 ",
   }
 
-  #TODO: post-wheezy release, set this back to testing:
-  # if ($::lsbdistrelease != 'testing')
-  if ($::lsbdistcodename != 'wheezy') { # no backports available for testing
+  if ($::lsbdistrelease != 'testing') {
     apt::sources_list { "debian-backports":
-      content => "# file managed by puppet
-deb http://backports.debian.org/debian-backports ${::lsbdistcodename}-backports main contrib non-free
-",
+      content => inline_template('# file managed by puppet
+deb <%= @lsbdistcodename == "squeeze" ? "http://backports.debian.org/debian-backports" : "#{debmirror}/debian/" %> <%= @lsbdistcodename %>-backports main contrib non-free
+'),
     }
   }
 
