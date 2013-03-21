@@ -35,14 +35,14 @@ class puppet::server {
     # certname
     'master/certname':    value => 'pm';
     # paths
-    'master/modulepath':  value => '/srv/puppetmaster/modules:/srv/puppetmaster/site-modules';
-    'master/manifestdir': value => '/srv/puppetmaster/manifests';
-    'master/manifest':    value => '/srv/puppetmaster/manifests/site.pp';
+    'master/modulepath':  value => '/srv/infrastructure/puppetmaster/modules:/srv/puppetmaster/site-modules';
+    'master/manifestdir': value => '/srv/infrastructure/puppetmaster/manifests';
+    'master/manifest':    value => '/srv/infrastructure/puppetmaster/manifests/site.pp';
     # environments
     'master/environments':  value => 'marc';
-    'marc/modulepath':      value => '/home/marc/puppetmaster/modules:/home/marc/puppetmaster/site-modules';
-    'marc/manifestdir':     value => '/home/marc/puppetmaster/manifests';
-    'marc/manifest':        value => '/home/marc/puppetmaster/manifests/site.pp';
+    'marc/modulepath':      value => '/home/marc/infrastructure/puppetmaster/modules:/home/marc/puppetmaster/site-modules';
+    'marc/manifestdir':     value => '/home/marc/infrastructure/puppetmaster/manifests';
+    'marc/manifest':        value => '/home/marc/infrastructure/puppetmaster/manifests/site.pp';
     # collected resources
     'master/storeconfigs':          value => true;
     'master/thin_storeconfigs':     value => false;
