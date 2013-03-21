@@ -62,14 +62,17 @@ registration = Agentlist
 ",
   }
 
-  file { "/etc/mcollective/facts.yaml":
-    owner    => "root",
-    group    => "root",
-    mode     => 400,
-    loglevel => debug,  # this is needed to avoid it being logged and reported on every run
-    # avoid including highly-dynamic facts as they will cause unnecessary template writes
-    content  => inline_template("<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime|timestamp|free|mco_|path|environment)/ }.to_yaml %>"),
+  file { '/etc/mcollective/facts.yaml':
+    owner    => 'root',
+    group    => 'root',
+    mode     => '0600',
     require  => Package["mcollective"],
+  }
+
+  cron { 'update mcollective facts.yaml':
+    user    => 'root',
+    minute  => fqdn_rand(59),
+    command => 'TMPFILE=$(mktemp); RUBYLIB=/var/lib/puppet/lib/ facter --yaml | egrep -v "uptime|timestamp|free|mco_|path|environment" > $TMPFILE && mv $TMPFILE /etc/mcollective/facts.yaml; rm -f $TMPFILE',
   }
 
 }
