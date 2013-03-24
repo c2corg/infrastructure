@@ -3,7 +3,7 @@
 Veewee::Definition.declare({
   :cpu_count => '1',
   :memory_size=> '256',
-  :disk_size => '10140', :disk_format => 'VDI', :hostiocache => 'off',
+  :disk_size => '25600', :disk_format => 'VDI', :hostiocache => 'off',
   :os_type_id => 'Debian',
   :iso_file => "debian-wheezy-DI-b4-amd64-netinst.iso",
   :iso_src => "http://cdimage.debian.org/cdimage/wheezy_di_beta4/amd64/iso-cd/debian-wheezy-DI-b4-amd64-netinst.iso",
@@ -42,10 +42,9 @@ Veewee::Definition.declare({
     "virtualbox.sh",
     "ruby.sh",
     "puppet.sh",
-    "chef.sh",
     "cleanup-virtualbox.sh",
     "cleanup.sh",
-    "zerodisk.sh"
+    "zerodisk.sh",
   ],
   :postinstall_timeout => "10000"
 })
