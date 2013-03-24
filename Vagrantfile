@@ -7,8 +7,10 @@ Vagrant::Config.run do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  #config.vm.box = "c2corg-debian-squeeze"
-  #config.vm.box = "c2corg-debian-wheezy"
+
+  # IMPORTANT: uncomment one of the following lines:
+  #config.vm.box = "debian-squeeze-64-c2corg"
+  #config.vm.box = "debian-wheezy-64-c2corg"
 
   config.vm.host_name = "vagrant-sandbox"
 
