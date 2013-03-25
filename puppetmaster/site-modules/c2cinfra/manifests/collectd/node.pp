@@ -7,7 +7,6 @@ class c2cinfra::collectd::node {
 
   collectd::config::global {
     'FQDNLookup': value => 'false';
-    'TypesDB':    value => '/usr/share/collectd/types.db';
   }
 
   collectd::plugin { [
