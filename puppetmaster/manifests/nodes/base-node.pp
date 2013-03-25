@@ -23,6 +23,12 @@ node 'base-node' {
   else {
     include puppet::client
     include c2cinfra::mcollective::node
+
+    sudoers { 'vagrant always has root access':
+      users => 'vagrant',
+      type  => "user_spec",
+      commands => [ '(ALL) ALL' ],
+    }
   }
 
   if $::lxc_type == 'container' {
