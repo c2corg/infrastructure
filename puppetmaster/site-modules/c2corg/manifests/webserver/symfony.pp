@@ -85,6 +85,12 @@ class c2corg::webserver::symfony {
     require  => File["/srv/www"],
   }
 
+  exec { 'move legacy meta.c.o svn repo out of the way':
+    command => 'mv /srv/www/meta.camptocamp.org /srv/www/meta.camptocamp.org-svn',
+    onlyif  => 'test -d /srv/www/meta.camptocamp.org/.svn/',
+    before  => Vcsrepo['meta.camptocamp.org'],
+  }
+
   file { "c2corg conf.ini":
     source  => "file:///srv/www/camptocamp.org/deployment/conf.ini-dist",
     require => Vcsrepo["/srv/www/camptocamp.org"],
