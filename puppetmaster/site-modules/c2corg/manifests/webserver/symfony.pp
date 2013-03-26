@@ -78,8 +78,8 @@ class c2corg::webserver::symfony {
   vcsrepo { "meta.camptocamp.org":
     name     => "/srv/www/meta.camptocamp.org",
     ensure   => "present",
-    provider => "svn",
-    source   => "https://dev.camptocamp.org/svn/c2corg/trunk/meta.camptocamp.org/",
+    provider => "git",
+    source   => "git://github.com/c2corg/meta.camptocamp.org.git",
     owner    => "c2corg",
     group    => "c2corg",
     require  => File["/srv/www"],
