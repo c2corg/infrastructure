@@ -38,11 +38,33 @@ backend stats {
 backend meta {
   .host = "<%= metac2c_host %>";
   .port = "80";
+  .probe = {
+    .request =
+      "HEAD /probe.txt HTTP/1.1"
+      "Host: meta.camptocamp.org"
+      "Connection: close"
+      "Accept-Encoding: foo/bar";
+    .timeout = 1 s;
+    .interval = 10 s;
+    .window = 5;
+    .threshold = 2;
+  }
 }
 
 backend metaskirando {
   .host = "<%= metaskirando_host %>";
   .port = "80";
+  .probe = {
+    .request =
+      "HEAD /probe.txt HTTP/1.1"
+      "Host: metaskirando.camptocamp.org"
+      "Connection: close"
+      "Accept-Encoding: foo/bar";
+    .timeout = 1 s;
+    .interval = 10 s;
+    .window = 5;
+    .threshold = 2;
+  }
 }
 
 backend v4redirections {
@@ -106,8 +128,16 @@ sub vcl_recv {
     error 404 "Unknown virtual host";
   }
 
-  /* in case symfony is dead, use failover backend */
+  /* in case main backend is dead, use failover backend */
   if (req.backend == symfony && !req.backend.healthy) {
+    set req.backend = failover;
+  }
+
+  elsif (req.backend == meta && !req.backend.healthy) {
+    set req.backend = failover;
+  }
+
+  elsif (req.backend == metaskirando && !req.backend.healthy) {
     set req.backend = failover;
   }
 
