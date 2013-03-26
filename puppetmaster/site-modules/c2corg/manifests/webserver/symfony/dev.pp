@@ -23,6 +23,11 @@ class c2corg::webserver::symfony::dev inherits c2corg::webserver::symfony {
     group  => $developer,
   }
 
+  File['/srv/www'] {
+    owner  => $developer,
+    group  => $developer,
+  }
+
   File["c2corg-envvars.sh"] {
     path    => "/etc/profile.d/c2corg-envvars.sh",
     owner   => "root",
