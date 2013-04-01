@@ -17,18 +17,18 @@ node 'base-node' {
   include c2cinfra::sudo # TODO: only if package sudo is installed
   include vz::facts
 
-  if $::vagrant {
+  if str2bool($::vagrant) {
     realize C2cinfra::Account::User['vagrant']
-  }
-  else {
-    include puppet::client
-    include c2cinfra::mcollective::node
 
     sudoers { 'vagrant always has root access':
       users => 'vagrant',
       type  => "user_spec",
       commands => [ '(ALL) ALL' ],
     }
+  }
+  else {
+    include puppet::client
+    include c2cinfra::mcollective::node
   }
 
   if $::lxc_type == 'container' {
