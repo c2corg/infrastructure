@@ -5,7 +5,7 @@ class c2corg::apacheconf::dev inherits c2corg::apacheconf {
       $::hostname,
       $::fqdn,
       "${::hostname}.dev.camptocamp.org",
-      '127.127.127.127',
+      'localhost',
     ],
   }
 }

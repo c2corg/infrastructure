@@ -6,6 +6,9 @@ class c2corg::dev::env::symfony ($developer, $rootaccess=true) {
     c2cinfra::account::user { "${developer}@root": user => $developer, account => 'root' }
   }
 
+  # reclaim "localhost", see apache::base
+  $apache_disable_default_vhost = true
+
   include c2corg::database::dev
 
   include c2corg::webserver::symfony::dev
