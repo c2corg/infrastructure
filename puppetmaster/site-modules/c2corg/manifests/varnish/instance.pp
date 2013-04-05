@@ -37,9 +37,15 @@ class c2corg::varnish::instance {
         vcl_content => template('c2corg/varnish/c2corg.vcl.erb'),
         storage     => ["file,/var/lib/varnish/${::hostname}/varnish_storage.bin,512M"],
       }
-
     }
+  }
 
+  if $::lsbdistcodename == 'squeeze' {
+    apt::preferences { "varnish_from_bpo":
+      package  => "varnish libvarnishapi1",
+      pin      => "release a=${::lsbdistcodename}-backports",
+      priority => "1010",
+    }
   }
 
 }
