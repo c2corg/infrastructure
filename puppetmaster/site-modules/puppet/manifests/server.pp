@@ -69,6 +69,17 @@ port = 8081
     before  => Service['puppetmaster'],
   }
 
+  augeas { 'puppetdb database settings':
+    incl    => '/etc/puppetdb/conf.d/database.ini',
+    lens    => 'Rsyncd.lns',
+    changes => [
+      'set database/node-ttl 30d',
+      'set database/node-purge-ttl 30d',
+      'set database/report-ttl 14d',
+    ],
+    notify  => Service['puppetdb'],
+  }
+
   sudoers { 'puppet server':
     users => '%adm',
     type  => "user_spec",
