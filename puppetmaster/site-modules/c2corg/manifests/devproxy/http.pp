@@ -15,6 +15,7 @@ class c2corg::devproxy::http {
       "m.pre-prod.dev.camptocamp.org",
       "www.pre-prod.dev.camptocamp.org",
       "meta.pre-prod.dev.camptocamp.org",
+      "metaskirando.pre-prod.dev.camptocamp.org",
     ],
   }
 

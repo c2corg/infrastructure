@@ -30,6 +30,7 @@ class c2corg::dev::env::symfony ($developer, $rootaccess=true) {
       "m.${::hostname}.dev.camptocamp.org",
       "www.${::hostname}.dev.camptocamp.org",
       "meta.${::hostname}.dev.camptocamp.org",
+      "metaskirando.${::hostname}.dev.camptocamp.org",
     ],
   }
 
