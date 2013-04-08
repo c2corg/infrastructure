@@ -19,7 +19,7 @@ class c2corg::devproxy::http {
     ],
   }
 
-  C2corg::Devproxy::Proxy <| |>
+  C2corg::Devproxy::Proxy <<| |>>
 
   @@nat::fwd { 'forward http port':
     host  => '103',
