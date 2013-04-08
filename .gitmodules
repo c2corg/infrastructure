@@ -82,3 +82,6 @@
 [submodule "puppetmaster/modules/kmod"]
 	path = puppetmaster/modules/kmod
 	url = http://github.com/camptocamp/puppet-kmod.git
+[submodule "puppetmaster/modules/memcached"]
+	path = puppetmaster/modules/memcached
+	url = git://github.com/saz/puppet-memcached.git
