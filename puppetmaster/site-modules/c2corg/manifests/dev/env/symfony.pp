@@ -23,4 +23,14 @@ class c2corg::dev::env::symfony ($developer, $rootaccess=true) {
     commands => '(ALL) ALL',
   }
 
+  @@c2corg::devproxy::proxy { "${::hostname}.dev.camptocamp.org":
+    host    => "${::hostname}.pse.infra.camptocamp.org",
+    aliases => [
+      "s.${::hostname}.dev.camptocamp.org",
+      "m.${::hostname}.dev.camptocamp.org",
+      "www.${::hostname}.dev.camptocamp.org",
+      "meta.${::hostname}.dev.camptocamp.org",
+    ],
+  }
+
 }
