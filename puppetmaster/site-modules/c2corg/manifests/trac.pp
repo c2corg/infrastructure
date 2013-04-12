@@ -84,11 +84,21 @@ TRAC_ENV="/srv/trac/projects/c2corg/"
 ',
   }
 
+
+  # short_open_tag conflicts with <?xml ... headers in pre-commit hook
+  augeas { 'disable php short open tags':
+    incl    => '/etc/php5/cli/php.ini',
+    lens    => 'PHP.lns',
+    changes => 'set PHP/short_open_tag Off',
+    require => Package['php5-cli'],
+  }
+
+
   file { "/srv/svn/repos/c2corg/hooks/pre-commit":
     owner   => "root",
     group   => "root",
     mode    => 0755,
-    require => Package["php5-cli"],
+    require => Augeas['disable php short open tags'],
     content => '#!/bin/bash
 # file managed by puppet
 
