@@ -58,7 +58,7 @@ class puppet::server {
   etcdefault { 'puppetdb java params':
     file   => 'puppetdb',
     key    => 'JAVA_ARGS',
-    value  => '"-Xmx256m"',
+    value  => '"-Xmx384m"',
     notify => Service['puppetdb'],
   }
 
