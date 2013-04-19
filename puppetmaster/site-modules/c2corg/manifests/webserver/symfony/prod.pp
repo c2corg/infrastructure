@@ -17,7 +17,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
 
   $advertising_rw_dir = "/srv/www/camptocamp.org/www-data/persistent/advertising"
 
-  include c2corg::memcachedb
+  include ::c2corg::memcached
 
   include c2cinfra::collectd::plugin::svninfo
   include c2cinfra::collectd::plugin::postfix

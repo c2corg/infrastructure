@@ -1,4 +1,4 @@
-class c2corg::memcachedb {
+class c2corg::memcached {
 
   package { "php5-memcache":
     ensure => present,

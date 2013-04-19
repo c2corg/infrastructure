@@ -8,7 +8,7 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
   $preprod_gmaps_key = hiera('preprod_gmaps_key')
   $preprod_geoportail_key = hiera('preprod_geoportail_key')
 
-  include c2corg::memcachedb
+  include ::c2corg::memcached
 
   /* hackish stuff to autotomatically install and update c2corg codebase */
   Vcsrepo["camptocamp.org"] {
