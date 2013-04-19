@@ -1,7 +1,6 @@
 class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
 
   $sitename = "pre-prod.dev.camptocamp.org"
-  $session_host = hiera('session_host')
   $statsd_host = hiera('statsd_host')
   $www_db_user = hiera('www_db_user')
   $preprod_db_pass = hiera('preprod_db_pass')

@@ -4,7 +4,6 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
   $smtp_server = "127.0.0.1"
   $db_host = hiera('db_host')
   $db_port = hiera('db_port')
-  $session_host = hiera('session_host')
   $statsd_host = hiera('statsd_host')
   $www_db_user = hiera('www_db_user')
   $prod_db_pass = hiera('prod_db_pass')
