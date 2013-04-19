@@ -11,6 +11,12 @@ class c2corg::memcached {
     content => inline_template('; file managed by puppet
 [Session]
 session.save_path=<%= session_hosts.map { |host| "tcp://#{host}:11211" }.join(",") %>
+
+[memcache]
+; apparent off by one error: session_redundancy needs to be set to N+1 for a
+; redundancy of N
+memcache.session_redundancy=<%= session_hosts.count + 1 %>
+memcache.allow_failover=1
 '),
     require => Package['php5-memcache'],
     notify  => Service['apache'],
