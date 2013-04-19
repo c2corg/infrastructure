@@ -4,6 +4,8 @@ class c2corg::memcachedb {
     ensure => present,
   }
 
+  $session_host = hiera('session_host')
+
   augeas { 'enable memcache session storage':
     changes => [
       'set Session/session.save_handler memcache',
