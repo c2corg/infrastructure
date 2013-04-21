@@ -9,7 +9,7 @@ class statsd::server {
     ensure => present,
     mode   => 0755,
     before => Service['pystatsd-server'],
-    source => 'puppet:///statsd/python-statsd.init',
+    source => 'puppet:///modules/statsd/python-statsd.init',
   }
 
   file { '/var/run/pystatsd-server':
