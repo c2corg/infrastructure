@@ -15,7 +15,9 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::apacheconf::preprod
   include xcache
 
-  include memcachedb
+  class {'memcached':
+    max_memory => 32,
+  }
 
   include c2corg::varnish::instance
 
@@ -24,6 +26,11 @@ node 'pre-prod' inherits 'base-node' {
   fact::register {
     'role': value => 'pré-production';
     'duty': value => 'dev';
+  }
+
+  package { 'memcachedb':
+    ensure => absent,
+    before => Class['memcached'],
   }
 
 }
