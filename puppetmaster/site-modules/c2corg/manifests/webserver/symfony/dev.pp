@@ -1,4 +1,4 @@
-class c2corg::webserver::symfony::dev inherits c2corg::webserver::symfony {
+class c2corg::webserver::symfony::dev($developer) inherits c2corg::webserver::symfony {
 
   $sitename = "${::hostname}.dev.camptocamp.org"
 

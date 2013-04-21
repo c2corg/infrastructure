@@ -11,7 +11,7 @@ class c2corg::dev::env::symfony ($developer, $rootaccess=true) {
 
   include c2corg::database::dev
 
-  include c2corg::webserver::symfony::dev
+  class {'c2corg::webserver::symfony::dev': developer => $developer }
   include c2corg::webserver::carto
   include c2corg::webserver::svg
 
