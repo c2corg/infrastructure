@@ -6,8 +6,6 @@ node 'www-failover' inherits 'base-node' {
   realize C2cinfra::Account::User['gottferdom']
   realize C2cinfra::Account::User['gerbaux']
 
-  $symfony_master_host = '192.168.192.70'
-
   include c2corg::webserver::symfony::prod
   include c2corg::webserver::carto
   include c2corg::webserver::svg

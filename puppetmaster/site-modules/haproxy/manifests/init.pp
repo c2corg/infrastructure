@@ -20,6 +20,10 @@ class haproxy {
     notify => Service['haproxy'],
   }
 
+  $varnish_host          = hiera('varnish_host')
+  $symfony_master_host   = hiera('symfony_master_host')
+  $symfony_failover_host = hiera('symfony_failover_host')
+
   file { "/etc/haproxy/haproxy.cfg":
     ensure  => present,
     owner   => "root",

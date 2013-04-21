@@ -6,11 +6,6 @@ node 'hn3' inherits 'base-node' {
   realize C2cinfra::Account::User['gottferdom']
   realize C2cinfra::Account::User['gerbaux']
 
-  $c2corg_vip            = hiera('c2corg_vip')
-  $varnish_host          = hiera('varnish_host')
-  $symfony_master_host   = hiera('symfony_master_host')
-  $symfony_failover_host = hiera('symfony_failover_host')
-
   include c2cinfra::hn::hn3
 
   include c2corg::webserver::symfony::prod
