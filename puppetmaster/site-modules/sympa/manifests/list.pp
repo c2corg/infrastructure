@@ -1,4 +1,4 @@
-define sympa::list ($ensure='present', $subject, $anon_name, $send_from, $footer='absent') {
+define sympa::list ($ensure='present', $subject, $anon_name, $send_from, $footer='absent', $listmaster, $hname) {
 
   File {
     ensure => $ensure,

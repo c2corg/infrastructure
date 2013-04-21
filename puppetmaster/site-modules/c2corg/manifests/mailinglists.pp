@@ -4,20 +4,25 @@ class c2corg::mailinglists {
 
   include c2cinfra::collectd::plugin::postfix
 
-  $dbhost = hiera('db_host')
-  $dbport = hiera('db_port')
-  $dbtype = 'Pg'
-  $dbname = 'c2corg'
-  $dbuser = hiera('ml_db_user')
-  $dbpwd  = hiera('ml_db_pass')
-  $hname  = 'lists.camptocamp.org'
   $listmaster = 'listmaster@camptocamp.org'
-
+  $hname      = 'lists.camptocamp.org'
   $postfix_smtp_listen = "0.0.0.0"
   $root_mail_recipient = $c2cinfra::mta::root_mail_recipient
 
-  include sympa
-  include sympa::mta
+  class { 'sympa':
+    dbhost     => hiera('db_host'),
+    dbport     => hiera('db_port'),
+    dbtype     => 'Pg',
+    dbname     => 'c2corg',
+    dbuser     => hiera('ml_db_user'),
+    dbpwd      => hiera('ml_db_pass'),
+    hname      => $hname,
+    listmaster => $listmaster,
+  }
+
+  class { 'sympa::mta':
+    hname => $hname,
+  }
 
   @@nat::fwd { 'forward smtp port':
     host  => '102',
@@ -59,7 +64,7 @@ true()                              smtp,smime,md5    -> reject
   sympa::scenari { "catalunya":
     content => '
 match([sender],/@igc\.cat$/)       smtp              -> do_it
-true()                              smtp,smime,md5    -> reject
+true()                             smtp,smime,md5    -> reject
 ',
   }
 
@@ -71,20 +76,27 @@ true()                     smtp,smime,md5   -> reject
   }
 
   sympa::list { "aran":
-    send_from => "aran",
-    subject   => "Boletin de lauegi",
-    anon_name => "Centre de Lauegi d'Aran",
+    send_from  => "aran",
+    subject    => "Boletin de lauegi",
+    anon_name  => "Centre de Lauegi d'Aran",
+    listmaster => $listmaster,
+    hname      => $hname,
   }
 
   sympa::list { "catalunya":
-    send_from => "catalunya",
-    subject   => "Prediccio d'Allaus",
-    anon_name => "Institut Geologic de Catalunya",
+    send_from  => "catalunya",
+    subject    => "Prediccio d'Allaus",
+    anon_name  => "Institut Geologic de Catalunya",
+    listmaster => $listmaster,
+    hname      => $hname,
+
   }
 
   c2corg::mailinglists::meteofrance {[
-    '04','05','06','09','2a','2b','31','38','64','65','66','73','74','andorre',
-  ]: }
+    '04','05','06','09','2a','2b','31','38','64','65','66','73','74','andorre']:
+    listmaster => $listmaster,
+    hname      => $hname,
+  }
 
   file { "/var/cache/meteofrance":
     ensure => directory,

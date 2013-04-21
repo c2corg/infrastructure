@@ -1,4 +1,4 @@
-class sympa {
+class sympa($dbhost, $dbport, $dbtype, $dbname, $dbuser, $dbpwd, $hname, $listmaster) {
 
   apt::preferences { "sympa_from_c2corg_repo":
     package  => "sympa",

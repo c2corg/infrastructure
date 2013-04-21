@@ -1,4 +1,4 @@
-class sympa::mta inherits postfix {
+class sympa::mta($hname) inherits postfix {
 
   Postfix::Config["myorigin"] { value => $::fqdn }
 
