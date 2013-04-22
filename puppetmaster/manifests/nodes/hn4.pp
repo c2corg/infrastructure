@@ -18,8 +18,11 @@ node 'hn4' inherits 'base-node' {
     'duty': value => 'prod';
   }
 
-  $postgresql_backupfmt = "custom"
-  include postgresql::backup
+  class { 'postgresql::backup':
+    backup_format => 'custom',
+    backup_dir    => '/var/backups/pgsql',
+  }
+
   c2cinfra::backup::dir { '/var/backups/pgsql': }
 
 }

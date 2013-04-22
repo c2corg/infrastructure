@@ -6,7 +6,7 @@ class c2corg::database::common inherits c2corg::database {
     changes   => "set *[type='local'][user='all'][database='all']/method md5",
     notify    => Service["postgresql"],
     require   => Package["postgresql"],
-    incl      => "/etc/postgresql/${postgresql::params::version}/main/pg_hba.conf",
+    incl      => "/etc/postgresql/${postgresql::params::default_version}/main/pg_hba.conf",
     lens      => 'Pg_Hba.lns',
   }
 

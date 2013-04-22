@@ -11,11 +11,14 @@ node 'content-factory' inherits 'base-node' {
 
   include c2cinfra::collectd::node
 
-  include postgresql::backup
-
   fact::register {
     'role': value => 'pré-publication articles';
     'duty': value => 'dev';
+  }
+
+  class { 'postgresql::backup':
+    backup_format => 'custom',
+    backup_dir    => '/var/backups/pgsql',
   }
 
   c2cinfra::backup::dir { '/var/backups/pgsql': }
