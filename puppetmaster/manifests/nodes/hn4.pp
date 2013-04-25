@@ -7,9 +7,9 @@ node 'hn4' inherits 'base-node' {
   include c2cinfra::filesystem::postgres
   include c2corg::prod::env::postgres
 
-  include memcachedb
-  include c2cinfra::filesystem::memcachedb
-  collectd::plugin { 'memcached': }
+  #include memcachedb
+  #include c2cinfra::filesystem::memcachedb
+  #collectd::plugin { 'memcached': }
 
   include c2cinfra::collectd::node
 

@@ -2,7 +2,7 @@
 class data::prod {
 
   $db_host       = '192.168.192.5'
-  $session_hosts = ['192.168.192.65', '192.168.192.5']
+  $session_hosts = ['192.168.192.65', '192.168.192.66']
 
   $symfony_master_host   = '192.168.192.4'
   $symfony_failover_host = '192.168.192.70'
