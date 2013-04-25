@@ -28,9 +28,4 @@ node 'pre-prod' inherits 'base-node' {
     'duty': value => 'dev';
   }
 
-  package { 'memcachedb':
-    ensure => absent,
-    before => Class['memcached'],
-  }
-
 }
