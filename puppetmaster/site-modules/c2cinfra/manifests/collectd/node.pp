@@ -9,6 +9,14 @@ class c2cinfra::collectd::node {
     'FQDNLookup': value => 'false';
   }
 
+  if $::lsbdistcodename == 'squeeze' {
+    apt::preferences { 'collectd_from_bpo':
+      package  => 'collectd collectd-core collectd-dbg collectd-dev collectd-utils libcollectdclient-dev libcollectdclient0',
+      pin      => "release a=${::lsbdistcodename}-backports",
+      priority => '1010',
+    }
+  }
+
   collectd::plugin { [
     'contextswitch',
     'exec',
@@ -29,12 +37,5 @@ CacheFlush 86400
   }
 
   package { 'udev': } # else collectd installation fails on VZs.
-
-  file { '/var/lib/puppet/modules/':
-    ensure  => absent,
-    purge   => true,
-    force   => true,
-    recurse => true,
-  }
 
 }
