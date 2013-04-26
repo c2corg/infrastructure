@@ -24,6 +24,8 @@ set /files/etc/puppet/puppet.conf/agent/certname "$2"
 set /files/etc/puppet/puppet.conf/agent/waitforcert 120
 set /files/etc/puppet/puppet.conf/main/server pm
 set /files/etc/puppet/puppet.conf/main/pluginsync true
+set /files/etc/puppet/puppet.conf/main/report true
+set /files/etc/puppet/puppet.conf/main/report_server pm
 set /files/etc/default/puppet/START yes
 save
 EOF
