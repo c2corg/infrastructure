@@ -15,11 +15,11 @@ class c2cinfra::containers {
 
     'hn2': {
 
-      vz::ve { '50':  hname => 'dnscache.pse.infra.camptocamp.org' }
-      vz::ve { '55':  hname => 'msgbroker.pse.infra.camptocamp.org' }
+      vz::ve { '50':  hname => 'dnscache.pse.infra.camptocamp.org', ensure => absent }
+      vz::ve { '55':  hname => 'msgbroker.pse.infra.camptocamp.org', ensure => absent }
       vz::ve { '70':  hname => 'www-failover.pse.infra.camptocamp.org' }
       vz::ve { '101': hname => 'pm.pse.infra.camptocamp.org' }
-      vz::ve { '102': hname => 'lists.pse.infra.camptocamp.org' }
+      vz::ve { '102': hname => 'lists.pse.infra.camptocamp.org', ensure => absent }
       vz::ve { '103': hname => 'dev.pse.infra.camptocamp.org' }
       vz::ve { '125': hname => 'pkg.pse.infra.camptocamp.org' }
       vz::ve { '126': hname => 'monit.pse.infra.camptocamp.org' }
@@ -41,6 +41,25 @@ class c2cinfra::containers {
         suite  => 'wheezy',
         fssize => '2G',
       }
+
+      lxc::container { 'lists.pse.infra.camptocamp.org':
+        ctid   => 102,
+        suite  => 'squeeze',
+        fssize => '3G',
+      }
+
+      lxc::container { 'dnscache.pse.infra.camptocamp.org':
+        ctid   => 50,
+        suite  => 'wheezy',
+        fssize => '2G',
+      }
+
+      lxc::container { 'msgbroker.pse.infra.camptocamp.org':
+        ctid   => 55,
+        suite  => 'wheezy',
+        fssize => '2G',
+      }
+
     }
 
     'hn6': {
