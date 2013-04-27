@@ -6,7 +6,6 @@ node 'hn5' inherits 'base-node' {
 
   include c2cinfra::vip
 
-  class { 'c2cinfra::filesystem::lxc': } ->
   class { 'lxc::host': } ->
   class { 'c2cinfra::containers': }
 
