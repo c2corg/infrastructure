@@ -13,14 +13,18 @@ class c2cinfra::common::services {
 
   package { "nscd": ensure => absent }
 
+  if (str2bool($::is_virtual) == true) { $run_ntp = false }
+  elsif (str2bool($::lxc_container) == true) { $run_ntp = false }
+  else { $run_ntp = true }
+
   service { "ntp":
-    ensure => $::is_virtual ? {
-      'true'  => stopped,
-      'false' => running,
+    ensure => $run_ntp ? {
+      false => stopped,
+      true  => running,
     },
-    enable => $::is_virtual ? {
-      'true'  => false,
-      'false' => true,
+    enable => $run_ntp ? {
+      false => false,
+      true  => true,
     },
     hasstatus => true,
     require => Package["ntp"],
