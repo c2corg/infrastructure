@@ -21,7 +21,7 @@ class c2cinfra::containers {
       vz::ve { '101': hname => 'pm.pse.infra.camptocamp.org' }
       vz::ve { '102': hname => 'lists.pse.infra.camptocamp.org', ensure => absent }
       vz::ve { '103': hname => 'dev.pse.infra.camptocamp.org' }
-      vz::ve { '125': hname => 'pkg.pse.infra.camptocamp.org' }
+      vz::ve { '125': hname => 'pkg.pse.infra.camptocamp.org', ensure => absent }
       vz::ve { '126': hname => 'monit.pse.infra.camptocamp.org' }
       vz::ve { '140': hname => 'content-factory.pse.infra.camptocamp.org' }
       vz::ve { '141': hname => 'pre-prod.pse.infra.camptocamp.org' }
@@ -58,6 +58,12 @@ class c2cinfra::containers {
         ctid   => 55,
         suite  => 'wheezy',
         fssize => '2G',
+      }
+
+      lxc::container { 'pkg.pse.infra.camptocamp.org':
+        ctid   => 125,
+        suite  => 'wheezy',
+        fssize => '3G',
       }
 
     }
