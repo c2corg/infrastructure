@@ -2,7 +2,7 @@
 node 'memcache1' inherits 'base-node' {
 
   class {'memcached':
-    max_memory => 128,
+    max_memory => 32,
   }
 
   include c2cinfra::collectd::node

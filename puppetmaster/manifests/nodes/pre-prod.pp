@@ -16,7 +16,7 @@ node 'pre-prod' inherits 'base-node' {
   include xcache
 
   class {'memcached':
-    max_memory => 32,
+    max_memory => 16,
   }
 
   include c2corg::varnish::instance
