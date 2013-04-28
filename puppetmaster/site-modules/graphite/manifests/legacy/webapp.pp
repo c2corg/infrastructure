@@ -1,6 +1,6 @@
-class graphite::webapp {
+class graphite::legacy::webapp {
 
-  include graphite
+  include ::graphite
 
   exec { "install graphite webapp":
     command => "python setup.py install --prefix /opt/graphite --install-lib /opt/graphite/webapp",

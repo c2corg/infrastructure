@@ -1,6 +1,6 @@
-class graphite::carbon {
+class graphite::legacy::carbon {
 
-  include graphite
+  include ::graphite
 
   exec { "install carbon":
     command => "python setup.py install --prefix /opt/carbon --install-lib /opt/carbon/lib",
