@@ -105,12 +105,10 @@ deb <%= @lsbdistcodename == "squeeze" ? "http://backports.debian.org/debian-back
 
   package { 'unattended-upgrades': ensure => present }
 
-  if ($::lsbdistcodename == 'squeeze') {
-    apt::preferences { "upgrade-unattended-upgrades":
-      package  => "unattended-upgrades",
-      pin      => "release l=C2corg, a=squeeze",
-      priority => "1100",
-    }
+  apt::preferences { "backported unattended-upgrades version":
+    package  => "unattended-upgrades python-apt",
+    pin      => "release l=C2corg, a=${::lsbdistcodename}",
+    priority => "1100",
   }
 
   if ($::lsbdistrelease == 'testing') {
