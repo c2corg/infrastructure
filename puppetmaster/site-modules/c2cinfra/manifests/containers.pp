@@ -105,6 +105,12 @@ class c2cinfra::containers {
         suite  => 'wheezy',
         fssize => '2G',
       }
+
+      lxc::container { 'collectd0.pse.infra.camptocamp.org':
+        ctid   => 127,
+        suite  => 'wheezy',
+        fssize => '80G',
+      }
     }
 
   }
