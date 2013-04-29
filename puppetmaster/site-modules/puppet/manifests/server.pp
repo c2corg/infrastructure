@@ -88,6 +88,7 @@ port = 8081
     type  => "user_spec",
     commands => [
       '(root) /usr/bin/puppet cert *',
+      '(root) /usr/bin/puppet node *',
       '(root) /etc/init.d/puppetmaster',
       '(root) /etc/init.d/puppetdb',
       '(root) /usr/sbin/invoke-rc.d puppetmaster *',
