@@ -10,9 +10,7 @@ class graphite {
       }
     }
 
-    package { ['python-whisper', 'graphite-carbon', 'graphite-web']:
-      ensure => present
-    }
+    package { 'graphite-web': ensure => present }
 
   } else {
 
