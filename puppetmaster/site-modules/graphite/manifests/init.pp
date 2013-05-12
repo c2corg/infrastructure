@@ -10,8 +10,6 @@ class graphite {
       }
     }
 
-    package { 'graphite-web': ensure => present }
-
   } else {
 
     vcsrepo { "/usr/src/graphite":

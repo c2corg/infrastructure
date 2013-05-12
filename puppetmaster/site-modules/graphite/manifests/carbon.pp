@@ -4,6 +4,7 @@ class graphite::carbon {
     fail('unsupported system')
   }
 
+  include '::graphite'
   include '::runit'
 
   package { ['python-whisper', 'graphite-carbon']:
