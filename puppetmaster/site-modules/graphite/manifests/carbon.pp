@@ -42,6 +42,7 @@ retentions = 15s:7d,1m:21d,15m:5y
   runit::service { 'carbon-cache':
     user    => '_graphite',
     group   => '_graphite',
+    logdir  => '/var/log/carbon',
     rundir  => '/var/lib/graphite',
     command => '/usr/bin/carbon-cache --debug --pidfile=carbon-cache.pid --config=/etc/carbon/carbon.conf start',
   }
