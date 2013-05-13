@@ -88,3 +88,6 @@
 [submodule "puppetmaster/modules/runit"]
 	path = puppetmaster/modules/runit
 	url = http://github.com/mstrauss/puppet-runit.git
+[submodule "puppetmaster/modules/uwsgi"]
+	path = puppetmaster/modules/uwsgi
+	url = http://github.com/mfournier/puppet-uwsgi.git
