@@ -24,7 +24,7 @@ class graphite::carbon {
 pattern = ^carbon\.
 retentions = 60:90d
 
-[default_1min_for_1day]
+[default_local_setting]
 pattern = .*
 retentions = 15s:7d,1m:21d,15m:5y
 ',
