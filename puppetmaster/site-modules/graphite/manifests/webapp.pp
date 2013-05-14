@@ -50,8 +50,9 @@ class graphite::webapp {
   }
 
   File_line {
-    path   => '/etc/graphite/local_settings.py',
-    notify => Runit::Service['graphite-webapp'],
+    path    => '/etc/graphite/local_settings.py',
+    notify  => Runit::Service['graphite-webapp'],
+    require => Package['graphite-web'],
   }
 
   file_line {
