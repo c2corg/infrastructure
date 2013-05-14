@@ -16,8 +16,16 @@ class c2cinfra::apt::squeeze inherits c2cinfra::apt {
     priority => "50",
   }
 
+  Apt::Preferences["jessie"] {
+    priority => "50",
+  }
+
+  Apt::Preferences["jessie-proposed-updates"] {
+    priority => "50",
+  }
+
   Apt::Conf["01default-release"] {
-    content => 'APT::Default-Release "stable";', # warning: changing this can break the system !
+    content => 'APT::Default-Release "oldstable";', # warning: changing this can break the system !
   }
 
 }

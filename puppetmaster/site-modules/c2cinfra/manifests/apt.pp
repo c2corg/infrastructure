@@ -62,6 +62,18 @@ deb <%= @lsbdistcodename == "squeeze" ? "http://backports.debian.org/debian-back
     priority => undef,
   }
 
+  apt::preferences { "jessie":
+    package  => "*",
+    pin      => "release n=jessie",
+    priority => undef,
+  }
+
+  apt::preferences { "jessie-proposed-updates":
+    package  => "*",
+    pin      => "release n=jessie-proposed-updates",
+    priority => undef,
+  }
+
   apt::preferences { "sid":
     package  => "*",
     pin      => "release n=sid",
