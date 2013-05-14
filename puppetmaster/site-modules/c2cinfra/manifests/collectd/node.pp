@@ -32,7 +32,7 @@ class c2cinfra::collectd::node {
     plugin   => 'network',
     settings => inline_template('
 Server     "<%= collectd_host %>"
-CacheFlush 86400
+ReportStats true
 '),
   }
 
