@@ -1,7 +1,7 @@
 # VM
 node 'monit' inherits 'base-node' {
 
-  include c2cinfra::collectd::server
+  include c2cinfra::collectd::node
   include graphite::legacy::carbon
   include graphite::legacy::collectd
   include graphite::legacy::webapp
