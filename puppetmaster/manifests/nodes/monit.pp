@@ -2,10 +2,10 @@
 node 'monit' inherits 'base-node' {
 
   include c2cinfra::collectd::server
-  include graphite::carbon
-  include graphite::collectd
-  include graphite::webapp
-  include statsd::server
+  include graphite::legacy::carbon
+  include graphite::legacy::collectd
+  include graphite::legacy::webapp
+  include statsd::server::python
   include c2cinfra::syslog::server
   include c2corg::syslog::pgfouine
   include c2corg::syslog::haproxy

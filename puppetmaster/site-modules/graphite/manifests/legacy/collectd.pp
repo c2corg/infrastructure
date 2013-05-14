@@ -1,4 +1,4 @@
-class graphite::collectd {
+class graphite::legacy::collectd {
 
   vcsrepo { "/usr/src/collectd-graphite/":
     ensure   => present,

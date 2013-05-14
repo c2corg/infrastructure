@@ -1,4 +1,4 @@
-class statsd::server {
+class statsd::server::python {
 
   package { 'python-statsd':
     ensure => present,
