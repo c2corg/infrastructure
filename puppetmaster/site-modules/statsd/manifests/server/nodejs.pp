@@ -12,7 +12,8 @@ class statsd::server::nodejs {
   service { 'statsd':
     ensure    => stopped,
     enable    => false,
-    hasstatus => true,
+    hasstatus => false,
+    pattern   => 'nodejs.*stats\.js.*/var/log/statsd/statsd.log',
   } ->
   runit::service { 'statsd':
     user    => '_statsd',
