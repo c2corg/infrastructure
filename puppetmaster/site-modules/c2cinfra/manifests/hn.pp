@@ -17,8 +17,6 @@ class c2cinfra::hn {
     source => "puppet:///modules/c2cinfra/network/${::hostname}",
   }
 
-  collectd::plugin { ['cpu', 'disk', 'entropy', 'irq', 'swap']: }
-
   package { ['iozone3', 'setserial']: }
 
   package { ["hdparm", "xfsprogs", "lvm2"]: }

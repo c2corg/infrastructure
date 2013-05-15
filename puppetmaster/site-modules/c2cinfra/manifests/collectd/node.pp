@@ -18,15 +18,12 @@ class c2cinfra::collectd::node {
   }
 
   collectd::plugin { [
-    'contextswitch',
-    'exec',
     'interface',
-    'load',
-    'memory',
     'processes',
+    'protocols',
     'tcpconns',
     'users',
-    'vmem']: }
+  ]: }
 
   collectd::config::plugin { 'setup network plugin':
     plugin   => 'network',
@@ -47,6 +44,22 @@ ReportStats true
       ReportReserved true
       ReportInodes true
 ',
+  }
+
+  # additional plugins on hardware nodes
+  if $::manufacturer or $::datacenter == 'gandi' {
+
+    collectd::plugin { [
+      'cpu',
+      'contextswitch',
+      'disk',
+      'entropy',
+      'irq',
+      'load',
+      'memory',
+      'swap',
+      'vmem',
+    ]: }
   }
 
   package { 'udev': } # else collectd installation fails on VZs.

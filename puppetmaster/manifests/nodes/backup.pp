@@ -10,6 +10,4 @@ node 'backup' inherits 'base-node' {
     'duty': value => 'prod';
   }
 
-  collectd::plugin { ['cpu', 'disk', 'swap']: }
-
 }
