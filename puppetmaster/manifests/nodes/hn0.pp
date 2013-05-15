@@ -10,8 +10,6 @@ node 'hn0' inherits 'base-node' {
 
   include c2cinfra::filesystem::openvz
 
-  include c2cinfra::collectd::node
-
   fact::register {
     'role': value => ['HN openvz', 'routeur'];
     'duty': value => 'prod';

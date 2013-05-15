@@ -21,8 +21,6 @@ node 'pre-prod' inherits 'base-node' {
 
   include c2corg::varnish::instance
 
-  include c2cinfra::collectd::node
-
   fact::register {
     'role': value => 'pré-production';
     'duty': value => 'dev';

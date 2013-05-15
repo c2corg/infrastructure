@@ -3,7 +3,6 @@ node 'pm' inherits 'base-node' {
 
   include puppet::server
   include c2cinfra::mcollective::client
-  include c2cinfra::collectd::node
   include buildenv::deb
 
   file { '/etc/c2corg':

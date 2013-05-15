@@ -5,7 +5,6 @@ node 'memcache0' inherits 'base-node' {
     max_memory => 32,
   }
 
-  include c2cinfra::collectd::node
   collectd::plugin { 'memcached': }
 
   fact::register {

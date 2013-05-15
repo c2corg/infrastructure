@@ -29,6 +29,7 @@ node 'base-node' {
   else {
     include puppet::client
     include c2cinfra::mcollective::node
+    include c2cinfra::collectd::node
   }
 
   if $::lxc_type == 'container' {

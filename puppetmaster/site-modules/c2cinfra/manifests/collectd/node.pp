@@ -36,6 +36,19 @@ ReportStats true
 '),
   }
 
+  collectd::config::plugin { 'df plugin config':
+    plugin   => 'df',
+    settings => '
+      FSType "tmpfs"
+      MountPoint "/dev"
+      MountPoint "/dev/shm"
+      MountPoint "/lib/init/rw"
+      IgnoreSelected true
+      ReportReserved true
+      ReportInodes true
+',
+  }
+
   package { 'udev': } # else collectd installation fails on VZs.
 
 }

@@ -9,8 +9,6 @@ node 'content-factory' inherits 'base-node' {
 
   include c2corg::apacheconf::content-factory
 
-  include c2cinfra::collectd::node
-
   fact::register {
     'role': value => 'pré-publication articles';
     'duty': value => 'dev';

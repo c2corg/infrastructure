@@ -20,8 +20,6 @@ node 'hn3' inherits 'base-node' {
   include c2corg::prod::env::symfony
   include c2corg::prod::collectd::webserver
 
-  include c2cinfra::collectd::node
-
   fact::register {
     'role': value => 'serveur web principal';
     'duty': value => 'prod';

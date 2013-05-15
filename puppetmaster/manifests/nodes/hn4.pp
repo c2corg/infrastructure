@@ -7,8 +7,6 @@ node 'hn4' inherits 'base-node' {
   include c2cinfra::filesystem::postgres
   include c2corg::prod::env::postgres
 
-  include c2cinfra::collectd::node
-
   fact::register {
     'role': value => 'postgresql principal';
     'duty': value => 'prod';

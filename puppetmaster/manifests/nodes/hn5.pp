@@ -2,7 +2,6 @@
 node 'hn5' inherits 'base-node' {
 
   include c2cinfra::hn::hn5
-  include c2cinfra::collectd::node
 
   include c2cinfra::vip
 
