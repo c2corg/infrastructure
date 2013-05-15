@@ -48,4 +48,22 @@ class c2corg::varnish::instance {
     }
   }
 
+  collectd::plugin::config { 'varnish monitoring':
+    plugin   => 'varnish',
+    settings => '
+  CollectCache        "true"
+  CollectConnections  "true"
+  CollectBackend      "true"
+  CollectSHM          "true"
+  CollectESI          "false"
+  CollectFetch        "true"
+  CollectHCB          "false"
+  CollectSMA          "false"
+  CollectSMS          "false"
+  CollectSM           "true"
+  CollectTotals       "true"
+  CollectWorkers      "true"
+',
+  }
+
 }

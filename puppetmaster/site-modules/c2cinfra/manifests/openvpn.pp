@@ -28,6 +28,14 @@ class c2cinfra::openvpn {
     enable    => true,
   }
 
+  collectd::config::plugin { 'openvpn status file':
+    plugin   => 'openvpn',
+    settings => '
+  StatusFile "/var/run/openvpn-status.log"
+  ImprovedNamingSchema "true"
+',
+  }
+
   file { '/etc/pam.d/c2corg-openvpn':
     content => '# file managed by puppet
 auth required pam_pwdfile.so pwdfile /etc/openvpn/passwd

@@ -24,4 +24,6 @@ class hardware::raid::md {
      require   => Package['mdadm'],
   }
 
+  collectd::plugin { 'md': }
+
 }
