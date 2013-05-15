@@ -72,7 +72,7 @@ registration = Agentlist
   cron { 'update mcollective facts.yaml':
     user    => 'root',
     minute  => fqdn_rand(59),
-    command => 'TMPFILE=$(mktemp); RUBYLIB=/var/lib/puppet/lib/ facter --yaml | egrep -v "uptime_|timestamp|free|mco_|path|environment" > $TMPFILE && mv $TMPFILE /etc/mcollective/facts.yaml; rm -f $TMPFILE',
+    command => 'TMPFILE=$(mktemp); PATH=/usr/sbin:/usr/bin:/sbin:/bin; RUBYLIB=/var/lib/puppet/lib/ facter --yaml | egrep -v "uptime_|timestamp|free|mco_|path|environment" > $TMPFILE 2>/dev/null && mv $TMPFILE /etc/mcollective/facts.yaml; rm -f $TMPFILE',
   }
 
 }
