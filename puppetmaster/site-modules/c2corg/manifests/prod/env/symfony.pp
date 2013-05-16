@@ -79,11 +79,11 @@ class c2corg::prod::env::symfony {
     settings => '
 <Directory "/srv/www/camptocamp.org/www-data/persistent/uploads/images">
   Instance "images"
-  Recursive "false
+  Recursive false
 </Directory>
 <Directory "/srv/www/camptocamp.org/www-data/persistent/uploads/images_temp">
   Instance "images_temp"
-  Recursive "false
+  Recursive false
 </Directory>
 ',
   }
