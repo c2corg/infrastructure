@@ -48,22 +48,27 @@ class c2corg::varnish::instance {
     }
   }
 
-  collectd::config::plugin { 'varnish monitoring':
-    plugin   => 'varnish',
-    settings => '
-  CollectCache        "true"
-  CollectConnections  "true"
-  CollectBackend      "true"
-  CollectSHM          "true"
-  CollectESI          "false"
-  CollectFetch        "true"
-  CollectHCB          "false"
-  CollectSMA          "false"
-  CollectSMS          "false"
-  CollectSM           "true"
-  CollectTotals       "true"
-  CollectWorkers      "true"
-',
+  # varnish & collectd combination from bpo for squeeze is broken
+  if $::lsbdistcodename == 'wheezy' {
+    collectd::config::plugin { 'varnish monitoring':
+      plugin   => 'varnish',
+      settings => "
+<Instance \"${::hostname}\">
+  CollectCache        true
+  CollectConnections  true
+  CollectBackend      true
+  CollectSHM          true
+  CollectESI          false
+  CollectFetch        true
+  CollectHCB          false
+  CollectSMA          false
+  CollectSMS          false
+  CollectSM           true
+  CollectTotals       true
+  CollectWorkers      true
+</Instance>
+",
+    }
   }
 
 }
