@@ -8,7 +8,7 @@ ReportStats true
   }
 
   @@nat::fwd { 'forward collectd port':
-    host  => '126',
+    host  => '127',
     from  => '25826',
     to    => '25826',
     proto => 'udp',
