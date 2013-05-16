@@ -50,6 +50,14 @@ class puppet::client {
     minute  => fqdn_rand(59),
   }
 
+  # TODO: find a way to also run this plugin on LXC hosts
+  if (!$::lxc_type) or ($::lxc_type == 'container') {
+    collectd::config::plugin { 'monitor puppet agent':
+      plugin   => 'processes',
+      settings => 'ProcessMatch "puppetd" "/usr/bin/puppet agent"',
+    }
+  }
+
   $agent = $::puppetversion ? {
     /^0\.2/ => 'puppetd',
     default => 'agent',

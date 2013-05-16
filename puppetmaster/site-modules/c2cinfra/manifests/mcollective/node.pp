@@ -62,6 +62,14 @@ registration = Agentlist
 ",
   }
 
+  # TODO: find a way to also run this plugin on LXC hosts
+  if (!$::lxc_type) or ($::lxc_type == 'container') {
+    collectd::config::plugin { 'monitor mcollectived':
+      plugin   => 'processes',
+      settings => 'ProcessMatch "mcollectived" "/usr/sbin/mcollectived.*/etc/mcollective/server.cfg"',
+    }
+  }
+
   file { '/etc/mcollective/facts.yaml':
     owner    => 'root',
     group    => 'root',
