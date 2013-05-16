@@ -74,6 +74,20 @@ class c2corg::prod::env::symfony {
     require => Vcsrepo["/srv/www/meta.camptocamp.org"],
   }
 
+  collectd::config::plugin { 'count photos':
+    plugin   => 'filecount',
+    settings => '
+<Directory "/srv/www/camptocamp.org/www-data/persistent/uploads/images">
+  Instance "images"
+  Recursive "false
+</Directory>
+<Directory "/srv/www/camptocamp.org/www-data/persistent/uploads/images_temp">
+  Instance "images_temp"
+  Recursive "false
+</Directory>
+',
+  }
+
   Cron { environment => 'MAILTO="dev@camptocamp.org"', user => "c2corg" }
 
   cron { "buildC2cShapefiles":
