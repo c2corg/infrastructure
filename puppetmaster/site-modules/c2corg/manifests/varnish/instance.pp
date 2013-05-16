@@ -48,7 +48,7 @@ class c2corg::varnish::instance {
     }
   }
 
-  collectd::plugin::config { 'varnish monitoring':
+  collectd::config::plugin { 'varnish monitoring':
     plugin   => 'varnish',
     settings => '
   CollectCache        "true"
