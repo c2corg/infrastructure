@@ -4,7 +4,11 @@ class c2corg::apacheconf::prod inherits c2corg::apacheconf {
 
   collectd::config::plugin { 'apache collectd config':
     plugin   => 'apache',
-    settings => 'URL "http://localhost/server-status?auto"',
+    settings => '
+<Instance "prod">
+  URL "http://localhost/server-status?auto"
+</Instance>
+',
   }
 
   if ($::hostname !~ /failover/) {
