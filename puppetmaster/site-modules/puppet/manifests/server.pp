@@ -113,6 +113,11 @@ port = 8081
 ',
   }
 
+  collectd::config::plugin { 'monitor puppetmasterd':
+    plugin   => 'processes',
+    settings => 'ProcessMatch "puppetmasterd" "/usr/bin/puppet master"',
+  }
+
   tidy { '/var/lib/puppet/reports/':
     age     => '2w',
     type    => 'mtime',
