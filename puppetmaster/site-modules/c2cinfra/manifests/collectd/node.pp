@@ -62,6 +62,8 @@ ReportStats true
     ]: }
   }
 
-  package { 'udev': } # else collectd installation fails on VZs.
+  if $::lxc_type == 'container' {
+    package { 'udev': ensure => purged }
+  }
 
 }
