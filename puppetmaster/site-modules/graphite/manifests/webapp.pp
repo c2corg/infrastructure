@@ -9,6 +9,7 @@ class graphite::webapp {
   include '::runit'
 
   realize Uwsgi::Plugin['python27']
+  realize Uwsgi::Plugin['carbon']
 
   package { 'graphite-web':
     ensure => present
@@ -33,7 +34,9 @@ class graphite::webapp {
   uwsgi-socket = 0.0.0.0:3031
   http-socket = 0.0.0.0:8080
   stats-server = 0.0.0.0:1717
+  plugin = carbon
   carbon = 127.0.0.1:2003
+  carbon-id = graphite-webapp
   gid = _graphite
   uid = _graphite
   wsgi-file = /usr/share/graphite-web/graphite.wsgi
