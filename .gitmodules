@@ -49,9 +49,6 @@
 [submodule "puppetmaster/modules/apache"]
 	path = puppetmaster/modules/apache
 	url = http://github.com/camptocamp/puppet-apache.git
-[submodule "puppetmaster/modules/nginx"]
-	path = puppetmaster/modules/nginx
-	url = http://github.com/camptocamp/puppet-nginx.git
 [submodule "puppetmaster/modules/postgresql"]
 	path = puppetmaster/modules/postgresql
 	url = http://github.com/camptocamp/puppet-postgresql.git
