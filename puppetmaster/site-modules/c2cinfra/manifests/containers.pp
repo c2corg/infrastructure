@@ -111,8 +111,13 @@ class c2cinfra::containers {
         suite  => 'wheezy',
         fssize => '80G',
       }
+
+      lxc::container { 'test-stef74.pse.infra.camptocamp.org':
+        ctid   => 204,
+        suite  => 'wheezy',
+        fssize => '3G',
+      }
+
     }
-
   }
-
 }

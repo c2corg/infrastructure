@@ -90,6 +90,16 @@ define c2cinfra::account::user ($ensure=present, $user, $account, $groups=[]) {
       }
     }
 
+    "stef74": {
+      c2cinfra::ssh::userkey { "$name on $account":
+        account => $account,
+        user    => $user,
+        type    => "rsa",
+        key     => "TODO",
+        require => User[$account],
+      }
+    }
+
     # the key is vagrant's official unsecure key:
     # https://github.com/mitchellh/vagrant/blob/master/keys/vagrant.pub
     "vagrant": {
