@@ -33,7 +33,7 @@ class graphite::webapp {
   master = true
   uwsgi-socket = 0.0.0.0:3031
   http-socket = 0.0.0.0:8080
-  stats-server = 0.0.0.0:1717
+  stats-server = 127.0.0.1:1717
   plugin = carbon
   carbon = 127.0.0.1:2003
   carbon-id = graphite-webapp
