@@ -130,6 +130,4 @@ port = 8081
     mode   => 2775,
   }
 
-  cron { "restart puppetmaster": ensure => absent }
-
 }

@@ -118,36 +118,4 @@ RequestHeader set ProxyUser %{PROXY_USER}e
     notify  => Exec["aggregate dashboard snippets"],
   }
 
-
-  # legacy stuff
-  apache::directive { [
-    "rewrite pgfouine hardcoded URLs",
-    "rewrite graphite hardcoded URLs",
-    "rewrite haproxy hardcoded URLs",
-    "rewrite drraws hardcoded URLs",
-  ]:
-    vhost  => "dev.camptocamp.org",
-    ensure => absent,
-  }
-
-  package { "libapache2-mod-proxy-html": ensure => absent }
-
-  apache::module { "proxy_html":
-    ensure  => absent,
-  }
-
-  c2corg::devproxy::dashboard { "haproxy stats":
-    ensure   => absent,
-    location => "/haproxy-stats",
-    url      => "http://hn3.pse.infra.camptocamp.org:8008/stats",
-    vhost    => "dev.camptocamp.org",
-  }
-
-  c2corg::devproxy::dashboard { "drraw rrd viewer":
-    ensure   => absent,
-    location => "/cgi-bin/drraw.cgi",
-    url      => "http://monit.pse.infra.camptocamp.org/cgi-bin/drraw.cgi",
-    vhost    => "drraw.dev.camptocamp.org",
-  }
-
 }
