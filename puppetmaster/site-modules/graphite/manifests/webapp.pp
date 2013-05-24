@@ -40,6 +40,8 @@ class graphite::webapp {
   gid = _graphite
   uid = _graphite
   wsgi-file = /usr/share/graphite-web/graphite.wsgi
+  die-on-term = true
+  no-orphan = true
 ',
   } ~>
 
