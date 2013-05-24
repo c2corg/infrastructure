@@ -13,6 +13,9 @@ class c2corg::trac {
   }
 
   realize Uwsgi::Plugin['python27']
+  realize Uwsgi::Plugin['carbon']
+
+  $carbon_host = hiera('carbon_host')
 
   file { ['/var/log/trac', '/var/lib/trac']:
     ensure => directory,
@@ -21,7 +24,7 @@ class c2corg::trac {
   } ->
 
   file { '/srv/trac/projects/c2corg/conf/uwsgi.ini':
-    content => '# file managed by puppet
+    content => "# file managed by puppet
 [uwsgi]
   vacuum = true
   master = true
@@ -31,9 +34,11 @@ class c2corg::trac {
   http-socket = 127.0.0.1:8080
   stats-server = 127.0.0.1:1717
   carbon-id = trac
+  plugin = carbon
+  carbon = ${carbon_host}:2003
   die-on-term = true
   no-orphan = true
-',
+",
   } ~>
 
   runit::service { 'trac':
