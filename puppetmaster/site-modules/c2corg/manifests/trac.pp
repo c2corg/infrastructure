@@ -50,11 +50,6 @@ class c2corg::trac {
     require   => Uwsgi::Plugin['python27'],
   }
 
-  @@host { "dev.camptocamp.org":
-    ip  => $::ipaddress,
-    tag => "internal-hosts",
-  }
-
 # trac upgrade notes:
 # trac-admin . upgrade
 # trac-admin . wiki upgrade
