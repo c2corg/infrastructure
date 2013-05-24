@@ -1,5 +1,44 @@
 class c2corg::devproxy::https {
 
+  include apache::ssl
+
+  include c2corg::webserver
+
+  $sslcert_country = "CH"
+  $sslcert_organisation = "Camptocamp.org"
+  apache::vhost::ssl { "dev.camptocamp.org":
+    certcn  => "dev.camptocamp.org",
+    sslonly => true,
+    cert    => "file:///etc/puppet/dev.camptocamp.org.crt",
+    certkey => "file:///etc/puppet/dev.camptocamp.org.key",
+    certchain => "file:///usr/share/ca-certificates/cacert.org/cacert.org.crt",
+    require => Package["ca-certificates"],
+  }
+
+  apache::directive { "trac":
+    vhost     => "dev.camptocamp.org",
+    directive => "
+Alias /tracdocs/ /usr/share/pyshared/trac/htdocs/
+
+ScriptAlias /trac/c2corg /var/www/dev.camptocamp.org/cgi-bin/trac.cgi
+",
+  }
+
+  apache::directive { "enable dokuwiki":
+    vhost     => "dev.camptocamp.org",
+    directive => "
+Alias /wikiassoce /usr/share/dokuwiki/
+
+<Directory /usr/share/dokuwiki/>
+        Options +FollowSymLinks
+        AllowOverride All
+        order allow,deny
+        allow from all
+</Directory>
+",
+  }
+
+
   c2corg::devproxy::dashboard { "pgfouine reports":
     location => "/pgfouine/",
     url      => "http://monit.pse.infra.camptocamp.org/pgfouine/",
