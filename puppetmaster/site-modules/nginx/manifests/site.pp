@@ -1,4 +1,4 @@
-define nginx::site ($ensure=present, source=undef, content=undef) {
+define nginx::site ($ensure=present, $source=undef, $content=undef) {
 
   file { "/etc/nginx/sites-available/${name}.conf":
     ensure  => $ensure,

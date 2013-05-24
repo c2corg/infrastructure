@@ -1,4 +1,4 @@
-define nginx::conf ($ensure=present, source=undef, content=undef) {
+define nginx::conf ($ensure=present, $source=undef, $content=undef) {
 
   file { "/etc/nginx/conf.d/${name}.conf":
     ensure  => $ensure,
