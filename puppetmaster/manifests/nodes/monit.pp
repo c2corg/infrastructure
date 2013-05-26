@@ -8,7 +8,6 @@ node 'monit' inherits 'base-node' {
   include c2cinfra::syslog::server
   include c2corg::syslog::pgfouine
   include c2corg::syslog::haproxy
-  include c2cinfra::filesystem::monit
 
   $mpm_package = 'event'
   include apache
