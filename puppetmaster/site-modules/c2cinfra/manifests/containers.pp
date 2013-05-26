@@ -3,11 +3,11 @@ class c2cinfra::containers {
   case $::hostname {
     'hn0': {
 
-      vz::ve { '201': hname => 'test-alex.pse.infra.camptocamp.org' }
-      vz::ve { '202': hname => 'test-xbrrr.pse.infra.camptocamp.org' }
-      vz::ve { '203': hname => 'test-marc.pse.infra.camptocamp.org' }
-      vz::ve { '206': hname => 'test-saimon.pse.infra.camptocamp.org' }
-      vz::ve { '207': hname => 'test-gottferdom.pse.infra.camptocamp.org' }
+      #vz::ve { '201': hname => 'test-alex.pse.infra.camptocamp.org' }
+      #vz::ve { '202': hname => 'test-xbrrr.pse.infra.camptocamp.org' }
+      #vz::ve { '203': hname => 'test-marc.pse.infra.camptocamp.org' }
+      #vz::ve { '206': hname => 'test-saimon.pse.infra.camptocamp.org' }
+      #vz::ve { '207': hname => 'test-gottferdom.pse.infra.camptocamp.org' }
 
     }
 
@@ -16,13 +16,45 @@ class c2cinfra::containers {
       lxc::container { 'www-failover.pse.infra.camptocamp.org':
         ctid   => 70,
         suite  => 'squeeze',
+        fstype => 'ext3',
         fssize => '180G',
       }
 
       lxc::container { 'monit.pse.infra.camptocamp.org':
         ctid   => 126,
         suite  => 'squeeze',
+        fstype => 'ext3',
         fssize => '120G',
+      }
+
+      lxc::container { 'test-alex.pse.infra.camptocamp.org':
+        ctid   => 201,
+        suite  => 'squeeze',
+        fssize => '15G',
+      }
+
+      lxc::container { 'test-xbrrr.pse.infra.camptocamp.org':
+        ctid   => 202,
+        suite  => 'squeeze',
+        fssize => '15G',
+      }
+
+      lxc::container { 'test-marc.pse.infra.camptocamp.org':
+        ctid   => 203,
+        suite  => 'squeeze',
+        fssize => '15G',
+      }
+
+      lxc::container { 'test-saimon.pse.infra.camptocamp.org':
+        ctid   => 206,
+        suite  => 'wheezy',
+        fssize => '4G',
+      }
+
+      lxc::container { 'test-gottferdom.pse.infra.camptocamp.org':
+        ctid   => 207,
+        suite  => 'squeeze',
+        fssize => '15G',
       }
 
     }
