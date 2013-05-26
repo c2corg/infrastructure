@@ -16,13 +16,13 @@ class c2cinfra::containers {
       lxc::container { 'www-failover.pse.infra.camptocamp.org':
         ctid   => 70,
         suite  => 'squeeze',
-        fssize => '180',
+        fssize => '180G',
       }
 
       lxc::container { 'monit.pse.infra.camptocamp.org':
         ctid   => 126,
         suite  => 'squeeze',
-        fssize => '120',
+        fssize => '120G',
       }
 
     }
