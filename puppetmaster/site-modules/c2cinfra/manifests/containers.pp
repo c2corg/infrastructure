@@ -13,8 +13,17 @@ class c2cinfra::containers {
 
     'hn2': {
 
-      vz::ve { '70':  hname => 'www-failover.pse.infra.camptocamp.org' }
-      vz::ve { '126': hname => 'monit.pse.infra.camptocamp.org' }
+      lxc::container { 'www-failover.pse.infra.camptocamp.org':
+        ctid   => 70,
+        suite  => 'squeeze',
+        fssize => '180',
+      }
+
+      lxc::container { 'monit.pse.infra.camptocamp.org':
+        ctid   => 126,
+        suite  => 'squeeze',
+        fssize => '120',
+      }
 
     }
 
