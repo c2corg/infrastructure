@@ -23,4 +23,6 @@ fi
 ",
   }
 
+  package { 'firmware-linux-nonfree': ensure => present }
+
 }
