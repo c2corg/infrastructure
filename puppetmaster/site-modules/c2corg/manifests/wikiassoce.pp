@@ -1,11 +1,10 @@
 class c2corg::wikiassoce {
 
-  package { "dokuwiki": ensure => present }
+  include '::php::fpm'
 
-  file { "/etc/apache2/conf.d/dokuwiki.conf":
-    ensure  => absent,
-    require => Package["dokuwiki"],
-    notify  => Exec["apache-graceful"],
+  package { 'dokuwiki':
+    ensure  => present,
+    require => Service['php5-fpm'],
   }
 
 }
