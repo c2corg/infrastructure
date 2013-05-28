@@ -15,15 +15,6 @@ class c2corg::devproxy::https {
     require => Package["ca-certificates"],
   }
 
-  apache::directive { "trac":
-    vhost     => "dev.camptocamp.org",
-    directive => "
-Alias /tracdocs/ /usr/share/pyshared/trac/htdocs/
-
-ScriptAlias /trac/c2corg /var/www/dev.camptocamp.org/cgi-bin/trac.cgi
-",
-  }
-
   c2corg::devproxy::dashboard { "pgfouine reports":
     location => "/pgfouine/",
     url      => "http://monit.pse.infra.camptocamp.org/pgfouine/",
