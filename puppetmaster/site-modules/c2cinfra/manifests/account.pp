@@ -29,6 +29,9 @@ class c2cinfra::account {
     "saimon": user => "saimon", account => "saimon",
       groups => ["adm", "www-data"];
 
+    "stef74": user => "stef74", account => "stef74",
+      groups => ["adm", "www-data"];
+
     "c2corg": user => "c2corg", account => "c2corg",
       groups => ["adm", "www-data"];
 

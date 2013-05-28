@@ -17,8 +17,6 @@ node 'www-failover' inherits 'base-node' {
   include c2corg::prod::env::symfony
   include c2corg::prod::collectd::webserver
 
-  include c2cinfra::filesystem::photos
-
   fact::register {
     'role': value => ['failover', 'archivage photos'];
     'duty': value => 'prod';

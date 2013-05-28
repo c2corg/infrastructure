@@ -6,8 +6,14 @@ auto lo
 iface lo inet loopback
 
 # internal network/vlan w/default gateway
-auto eth1.192
-iface eth1.192 inet static
+auto vlan192
+iface vlan192 inet manual
+  vlan-raw-device eth1
+
+auto br0
+iface br0 inet static
+  bridge_ports vlan192
+  bridge_stp off
   address 192.168.192.3
   netmask 255.255.255.0
   gateway 192.168.192.1
