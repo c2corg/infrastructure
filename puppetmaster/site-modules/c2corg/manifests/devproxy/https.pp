@@ -24,21 +24,6 @@ ScriptAlias /trac/c2corg /var/www/dev.camptocamp.org/cgi-bin/trac.cgi
 ",
   }
 
-  apache::directive { "enable dokuwiki":
-    vhost     => "dev.camptocamp.org",
-    directive => "
-Alias /wikiassoce /usr/share/dokuwiki/
-
-<Directory /usr/share/dokuwiki/>
-        Options +FollowSymLinks
-        AllowOverride All
-        order allow,deny
-        allow from all
-</Directory>
-",
-  }
-
-
   c2corg::devproxy::dashboard { "pgfouine reports":
     location => "/pgfouine/",
     url      => "http://monit.pse.infra.camptocamp.org/pgfouine/",
