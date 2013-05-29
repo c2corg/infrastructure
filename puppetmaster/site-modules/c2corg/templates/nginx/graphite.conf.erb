@@ -14,7 +14,7 @@ server {
 }
 
 server {
-  listen 80 ssl;
+  listen 80;
   server_name graphite.dev.camptocamp.org graphite.pse.infra.dev.camptocamp.org;
 
   rewrite ^.*$ https://$host$request_uri? permanent;
