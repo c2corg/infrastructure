@@ -4,6 +4,14 @@ class c2corg::devproxy::http {
     source => 'puppet:///c2corg/nginx/http-devproxy.conf',
   }
 
+  $resolvers = hiera('resolvers')
+
+  nginx::conf { 'resolver':
+    content => inline_template('# file managed by puppet
+resolver <%= resolvers.join(" ") %>;
+'),
+  }
+
   @@nat::fwd { 'forward http port':
     host  => '103',
     from  => '80',
