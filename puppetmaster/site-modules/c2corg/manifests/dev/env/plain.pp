@@ -12,7 +12,4 @@ class c2corg::dev::env::plain ($developer, $rootaccess=true) {
     commands => '(ALL) ALL',
   }
 
-  @@c2corg::devproxy::proxy { "${::hostname}.dev.camptocamp.org":
-    host    => "${::hostname}.pse.infra.camptocamp.org",
-  }
 }
