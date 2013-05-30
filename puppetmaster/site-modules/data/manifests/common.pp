@@ -25,6 +25,8 @@ class data::common {
 
   $c2corg_vip = '128.179.66.23'
 
+  $resolvers = ['8.8.8.8', '8.8.4.4']
+
   $www_db_user = "www-data"
   $ml_db_user = "sympa"
   $mco_user = "mco"
