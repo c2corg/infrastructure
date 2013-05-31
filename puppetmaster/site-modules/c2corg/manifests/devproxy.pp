@@ -1,7 +1,7 @@
-class c2corg::devproxy::http {
+class c2corg::devproxy {
 
-  nginx::site { 'http-devproxy':
-    source => 'puppet:///c2corg/nginx/http-devproxy.conf',
+  nginx::site { 'devproxy':
+    source => 'puppet:///c2corg/nginx/devproxy.conf',
   }
 
   $resolvers = hiera('resolvers')

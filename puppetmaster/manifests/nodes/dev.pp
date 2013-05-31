@@ -5,7 +5,7 @@ node 'dev' inherits 'base-node' {
   include '::c2corg::trac'
   include '::c2corg::wikiassoce'
 
-  include '::c2corg::devproxy::http'
+  include '::c2corg::devproxy'
   include '::c2corg::devproxy::https'
 
   include '::c2corg::devproxy::graphite'
