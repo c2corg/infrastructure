@@ -1,57 +1,11 @@
 class c2corg::devproxy::https {
 
-  include apache::ssl
-
-  include c2corg::webserver
-
-  $sslcert_country = "CH"
-  $sslcert_organisation = "Camptocamp.org"
-  apache::vhost::ssl { "dev.camptocamp.org":
-    certcn  => "dev.camptocamp.org",
-    sslonly => true,
-    cert    => "file:///etc/puppet/dev.camptocamp.org.crt",
-    certkey => "file:///etc/puppet/dev.camptocamp.org.key",
-    certchain => "file:///usr/share/ca-certificates/cacert.org/cacert.org.crt",
-    require => Package["ca-certificates"],
-  }
-
-  c2corg::devproxy::dashboard { "pgfouine reports":
-    location => "/pgfouine/",
-    url      => "http://monit.pse.infra.camptocamp.org/pgfouine/",
-    vhost    => "dev.camptocamp.org",
-  }
-
-  c2corg::devproxy::dashboard { "haproxy logs":
-    location => "/haproxy-logs/",
-    url      => "http://monit.pse.infra.camptocamp.org/haproxy-logs/",
-    vhost    => "dev.camptocamp.org",
-  }
-
-  c2corg::devproxy::dashboard { "apache server-status":
-    location => "/hn3-apache-server-status",
-    url      => "http://hn3.pse.infra.camptocamp.org/server-status",
-    vhost    => "dev.camptocamp.org",
-  }
-
-  c2corg::devproxy::dashboard { "graphite viewer":
-    location => "/",
-    url      => "http://monit.pse.infra.camptocamp.org:8080/",
-    vhost    => "graphite.dev.camptocamp.org",
-  }
-
   @@nat::fwd { 'forward https port':
     host  => '103',
     from  => '443',
     to    => '443',
     proto => 'tcp',
     tag   => 'portfwd',
-  }
-
-  apache::module { "headers": ensure => present }
-
-  apache::directive { "dashboard alias":
-    vhost     => "dev.camptocamp.org",
-    directive => "Alias /dashboard /var/www/dev.camptocamp.org/private/dashboard.html"
   }
 
   file { "/var/www/dev.camptocamp.org/private/dashboard-AAA-header.part":
