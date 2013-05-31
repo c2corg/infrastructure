@@ -1,13 +1,5 @@
 class c2corg::devproxy::https {
 
-  @@nat::fwd { 'forward https port':
-    host  => '103',
-    from  => '443',
-    to    => '443',
-    proto => 'tcp',
-    tag   => 'portfwd',
-  }
-
   file { "/var/www/dev.camptocamp.org/private/dashboard-AAA-header.part":
     content => "<html><body>\n",
     notify  => Exec["aggregate dashboard snippets"],

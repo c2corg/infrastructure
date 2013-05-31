@@ -20,4 +20,12 @@ resolver <%= resolvers.join(" ") %>;
     tag   => 'portfwd',
   }
 
+  @@nat::fwd { 'forward https port':
+    host  => '103',
+    from  => '443',
+    to    => '443',
+    proto => 'tcp',
+    tag   => 'portfwd',
+  }
+
 }
