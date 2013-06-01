@@ -7,7 +7,7 @@ class c2cinfra::devproxy::inventory {
   $res = pdbfactquery($nodes)
 
   file { '/srv/dev.camptocamp.org/htdocs/inventory.html':
-    content => template('c2cinfra/dashboard/inventory.erb'),
+    content => template('c2cinfra/inventory.html.erb'),
   }
 
 }
