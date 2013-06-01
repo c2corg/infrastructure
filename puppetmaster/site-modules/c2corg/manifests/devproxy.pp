@@ -12,6 +12,15 @@ resolver <%= resolvers.join(" ") %>;
 '),
   }
 
+  file { '/etc/nginx/c2cauth.conf':
+    ensure  => present,
+    notify  => Exec['reload-nginx'],
+    content => '# file managed by puppet
+auth_basic "use your Trac username and password";
+auth_basic_user_file /srv/trac/projects/c2corg/conf/htpasswd;
+',
+  }
+
   @@nat::fwd { 'forward http port':
     host  => '103',
     from  => '80',

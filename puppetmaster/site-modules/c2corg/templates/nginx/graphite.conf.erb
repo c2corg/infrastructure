@@ -9,6 +9,7 @@ server {
   include uwsgi_params;
 
   location / {
+    include c2cauth.conf;
     uwsgi_pass <%= collectd_host %>:3031;
   }
 }
