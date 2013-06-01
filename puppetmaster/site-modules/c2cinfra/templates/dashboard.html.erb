@@ -1,7 +1,7 @@
 <html><body>
 <ul>
-<%  dashboard.each do |url,desc| -%>
-<li><a href="<%= url %>"><%= desc %></a></li>
+<%  dashboard.keys.sort.each do |key| -%>
+<li><a href="<%= key %>"><%= dashboard[key] %></a></li>
 <% end -%>
 </ul>
 </body></html>

@@ -46,7 +46,7 @@ auth_basic_user_file /srv/trac/projects/c2corg/conf/htpasswd;
     '/pgfouine'                             => 'pgfouine reports',
     '/haproxy-logs'                         => 'haproxy logs',
     'https://graphite.dev.camptocamp.org/'  => 'graphite viewer',
-    'http://128.179.66.23:8080/stats'       => 'haproxy stats',
+    'http://128.179.66.23:8008/stats'       => 'haproxy stats',
   }
 
   file { '/srv/dev.camptocamp.org/htdocs/dashboard.html':
