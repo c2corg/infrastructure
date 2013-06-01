@@ -1,4 +1,4 @@
-class c2corg::wikiassoce {
+class c2cinfra::wikiassoce {
 
   include '::php::fpm'
 

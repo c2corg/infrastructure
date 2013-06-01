@@ -1,4 +1,4 @@
-class c2corg::trac {
+class c2cinfra::trac {
 
   include '::uwsgi'
   include '::runit'

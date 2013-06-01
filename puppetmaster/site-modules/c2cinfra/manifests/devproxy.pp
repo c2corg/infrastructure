@@ -1,7 +1,7 @@
-class c2corg::devproxy {
+class c2cinfra::devproxy {
 
   nginx::site { 'devproxy':
-    source => 'puppet:///c2corg/nginx/devproxy.conf',
+    source => 'puppet:///c2cinfra/nginx/devproxy.conf',
   }
 
   $resolvers = hiera('resolvers')
@@ -51,7 +51,7 @@ auth_basic_user_file /srv/trac/projects/c2corg/conf/htpasswd;
 
   file { '/srv/dev.camptocamp.org/htdocs/dashboard.html':
     ensure  => present,
-    content => template('c2corg/dashboard.html.erb'),
+    content => template('c2cinfra/dashboard.html.erb'),
   }
 
 }

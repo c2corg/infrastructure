@@ -1,4 +1,4 @@
-class c2corg::devproxy::inventory {
+class c2cinfra::devproxy::inventory {
 
   # list of facts to show in inventory
   $facts = ['role', 'lsbdistcodename', 'virtual', 'datacenter', 'interfaces']

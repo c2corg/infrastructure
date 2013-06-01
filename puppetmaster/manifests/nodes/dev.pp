@@ -2,14 +2,14 @@
 node 'dev' inherits 'base-node' {
 
   include '::nginx'
-  include '::c2corg::trac'
-  include '::c2corg::wikiassoce'
+  include '::c2cinfra::trac'
+  include '::c2cinfra::wikiassoce'
 
-  include '::c2corg::devproxy'
-  include '::c2corg::devproxy::graphite'
-  include '::c2corg::devproxy::dashboard'
-  include '::c2corg::devproxy::trac'
-  include '::c2corg::devproxy::wikiassoce'
+  include '::c2cinfra::devproxy'
+  include '::c2cinfra::devproxy::graphite'
+  include '::c2cinfra::devproxy::inventory'
+  include '::c2cinfra::devproxy::trac'
+  include '::c2cinfra::devproxy::wikiassoce'
 
   fact::register {
     'role': value => ['trac dev', 'wiki association', 'proxy environnements dev'];
