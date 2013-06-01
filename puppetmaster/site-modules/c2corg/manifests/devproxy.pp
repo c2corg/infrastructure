@@ -28,4 +28,21 @@ resolver <%= resolvers.join(" ") %>;
     tag   => 'portfwd',
   }
 
+  file { ['/srv/dev.camptocamp.org', '/srv/dev.camptocamp.org/htdocs']:
+    ensure => directory,
+  }
+
+  $dashboard = {
+    '/inventory.html'                       => 'inventory',
+    '/pgfouine/'                            => 'pgfouine reports',
+    '/haproxy-logs/'                        => 'haproxy logs',
+    'https://graphite.dev.camptocamp.org/'  => 'graphite viewer',
+    'http://128.179.66.23:8080/stats'       => 'haproxy stats',
+  }
+
+  file { '/srv/dev.camptocamp.org/htdocs/dashboard.html':
+    ensure  => present,
+    content => template('c2corg/dashboard.html.erb'),
+  }
+
 }
