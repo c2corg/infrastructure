@@ -6,9 +6,10 @@ node 'dev' inherits 'base-node' {
   include '::c2corg::wikiassoce'
 
   include '::c2corg::devproxy'
-  include '::c2corg::devproxy::https'
-
   include '::c2corg::devproxy::graphite'
+  include '::c2corg::devproxy::dashboard'
+  include '::c2corg::devproxy::trac'
+  include '::c2corg::devproxy::wikiassoce'
 
   fact::register {
     'role': value => ['trac dev', 'wiki association', 'proxy environnements dev'];

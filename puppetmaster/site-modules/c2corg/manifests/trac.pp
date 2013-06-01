@@ -48,10 +48,6 @@ class c2corg::trac {
     logdir    => '/var/log/trac',
     command   => '/usr/bin/uwsgi_python27 --ini /srv/trac/projects/c2corg/conf/uwsgi.ini',
     require   => Uwsgi::Plugin['python27'],
-  } ->
-
-  ::nginx::site { 'trac':
-    source => 'puppet:///modules/c2corg/nginx/trac.conf',
   }
 
 # trac upgrade notes:
