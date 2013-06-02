@@ -5,6 +5,8 @@ node 'test-stef74' inherits 'base-node' {
     developer => 'stef74',
   }
 
+  include '::c2corg::database::dev'
+
   fact::register {
     'role': value => 'dev';
     'duty': value => 'dev';
