@@ -34,13 +34,17 @@ class c2corg::trac {
 
   apache::directive { "svn":
     vhost     => "dev.camptocamp.org",
-    directive => "
+    directive => '
 <Location /svn/c2corg>
   AuthType Basic
   AuthName Subversion
   AuthUserFile /srv/trac/projects/c2corg/conf/htpasswd
+
+  <LimitExcept GET PROPFIND OPTIONS REPORT>
+    Require valid-user
+  </LimitExcept>
 </Location>
-",
+',
   }
 
   @@host { "dev.camptocamp.org":
