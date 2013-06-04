@@ -24,31 +24,21 @@ class c2corg::trac {
     require => Package['sqlite3'],
   }
 
-  package { ["libapache2-svn", "sqlite3", "graphviz", "libjs-jquery"]:
+  package { ["sqlite3", "graphviz", "libjs-jquery"]:
     ensure => present,
   }
 
   apache::module { "dav_svn":
-    require => Package["libapache2-svn"],
+    ensure => absent,
   }
 
   apache::directive { "svn":
     vhost     => "dev.camptocamp.org",
     directive => "
 <Location /svn/c2corg>
-  DAV svn
-  SVNPath /srv/svn/repos/c2corg
-
-  AuthzSVNAccessFile /srv/svn/repos/c2corg/conf/svnaccess.conf
-
   AuthType Basic
   AuthName Subversion
   AuthUserFile /srv/trac/projects/c2corg/conf/htpasswd
-
-  <LimitExcept GET PROPFIND OPTIONS REPORT>
-    Require valid-user
-  </LimitExcept>
-
 </Location>
 ",
   }
