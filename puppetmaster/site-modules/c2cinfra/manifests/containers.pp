@@ -3,12 +3,6 @@ class c2cinfra::containers {
   case $::hostname {
     'hn0': {
 
-      #vz::ve { '201': hname => 'test-alex.pse.infra.camptocamp.org' }
-      #vz::ve { '202': hname => 'test-xbrrr.pse.infra.camptocamp.org' }
-      #vz::ve { '203': hname => 'test-marc.pse.infra.camptocamp.org' }
-      #vz::ve { '206': hname => 'test-saimon.pse.infra.camptocamp.org' }
-      #vz::ve { '207': hname => 'test-gottferdom.pse.infra.camptocamp.org' }
-
     }
 
     'hn2': {
@@ -148,13 +142,6 @@ class c2cinfra::containers {
         suite  => 'wheezy',
         fssize => '80G',
       }
-
-      lxc::container { 'test-stef74.pse.infra.camptocamp.org':
-        ctid   => 204,
-        suite  => 'wheezy',
-        ensure => absent,
-      }
-
 
     }
   }
