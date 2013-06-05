@@ -9,7 +9,7 @@ class c2corg::devproxy::http {
   }
 
   c2corg::devproxy::proxy { "pre-prod.dev.camptocamp.org":
-    host => "pre-prod.pse.infra.camptocamp.org:8080",
+    host => "pre-prod.pse.infra.camptocamp.org",
     aliases => [
       "s.pre-prod.dev.camptocamp.org",
       "m.pre-prod.dev.camptocamp.org",
