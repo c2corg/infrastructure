@@ -18,7 +18,6 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
 
   include ::c2corg::memcached
 
-  include c2cinfra::collectd::plugin::svninfo
   include c2cinfra::collectd::plugin::postfix
 
 
