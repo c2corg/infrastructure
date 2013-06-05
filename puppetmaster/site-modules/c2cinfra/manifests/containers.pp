@@ -70,7 +70,7 @@ class c2cinfra::containers {
       lxc::container { 'rproxy.pse.infra.camptocamp.org':
         ctid   => 60,
         suite  => 'wheezy',
-        fssize => '35G',
+        fssize => '38G',
       }
 
       lxc::container { 'memcache1.pse.infra.camptocamp.org':
@@ -112,7 +112,7 @@ class c2cinfra::containers {
       lxc::container { 'dev.pse.infra.camptocamp.org':
         ctid   => 103,
         suite  => 'squeeze',
-        fssize => '5G',
+        fssize => '6G',
       }
 
       lxc::container { 'content-factory.pse.infra.camptocamp.org':
@@ -124,7 +124,7 @@ class c2cinfra::containers {
       lxc::container { 'pre-prod.pse.infra.camptocamp.org':
         ctid   => 141,
         suite  => 'squeeze',
-        fssize => '12G',
+        fssize => '15G',
       }
 
     }
