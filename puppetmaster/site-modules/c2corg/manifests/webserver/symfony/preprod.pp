@@ -10,9 +10,18 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
   include ::c2corg::memcached
 
   /* hackish stuff to autotomatically install and update c2corg codebase */
-  Vcsrepo["camptocamp.org"] {
-    ensure => "latest",
-    notify => Exec["c2corg refresh"],
+  Vcsrepo['camptocamp.org'] {
+    ensure   => 'latest',
+    provider => 'git',
+    source   => 'git://github.com/c2corg/camptocamp.org.git',
+    notify   => Exec['c2corg refresh'],
+  }
+
+  exec { 'move legacy www.c.o svn repo out of the way':
+    command => 'mv /srv/www/camptocamp.org /srv/www/camptocamp.org-svn',
+    unless  => 'test -d /srv/www/camptocamp.org/.git/',
+    onlyif  => 'test -d /srv/www/camptocamp.org/.svn/',
+    before  => Vcsrepo['camptocamp.org'],
   }
 
   Vcsrepo["meta.camptocamp.org"] {
