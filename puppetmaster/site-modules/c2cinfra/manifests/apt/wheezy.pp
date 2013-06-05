@@ -28,4 +28,11 @@ class c2cinfra::apt::wheezy inherits c2cinfra::apt {
     content => 'APT::Default-Release "stable";', # warning: changing this can break the system !
   }
 
+  # see debbug#711174
+  apt::preferences { 'force working version of base-files':
+    package  => 'base-files',
+    pin      => 'release l=C2corg, a=wheezy',
+    priority => '1100',
+  }
+
 }

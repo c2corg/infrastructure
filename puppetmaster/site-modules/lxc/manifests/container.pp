@@ -38,6 +38,13 @@ define lxc::container (
 
     if ($fssize != false) {
       $fsopts = "-B lvm --lvname lxc${ctname} --vgname ${vgname} --fstype ${fstype} --fssize ${fssize}"
+
+      logical_volume { "lxc${ctname}":
+        ensure       => present,
+        volume_group => "${vgname}",
+        size         => "${fssize}",
+        require      => Exec["create container ${ctname}"],
+      }
     }
 
     exec { "create container ${ctname}":

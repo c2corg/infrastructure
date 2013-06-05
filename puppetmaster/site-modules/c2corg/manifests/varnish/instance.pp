@@ -26,10 +26,13 @@ class c2corg::varnish::instance {
 
     pre-prod: {
       varnish::instance { $::hostname:
-        address     => ['*:8080'],
+        address     => ["${::ipaddress}:80"],
         vcl_content => template('c2corg/varnish/c2corg.vcl.erb'),
         storage     => ["file,/var/lib/varnish/${::hostname}/varnish_storage.bin,512M"],
       }
+
+      Apache::Listen <| title == '80' |> { ensure => absent }
+      apache::listen { '127.0.0.1:80': ensure => present }
     }
 
     test-marc: {
