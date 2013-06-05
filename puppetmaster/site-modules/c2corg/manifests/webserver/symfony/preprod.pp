@@ -12,6 +12,7 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
   /* hackish stuff to autotomatically install and update c2corg codebase */
   Vcsrepo['camptocamp.org'] {
     ensure   => 'latest',
+    revision => 'master',
     provider => 'git',
     source   => 'git://github.com/c2corg/camptocamp.org.git',
     notify   => Exec['c2corg refresh'],
