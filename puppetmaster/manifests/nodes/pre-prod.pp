@@ -13,6 +13,7 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::webserver::svg
 
   include c2corg::apacheconf::preprod
+  include c2corg::webserver::metaskirando
   include xcache
 
   class {'memcached':

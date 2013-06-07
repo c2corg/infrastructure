@@ -16,6 +16,7 @@ class c2corg::dev::env::symfony ($developer, $rootaccess=true) {
   include c2corg::webserver::svg
 
   include c2corg::apacheconf::dev
+  include c2corg::webserver::metaskirando
 
   sudoers { "root access for ${developer}":
     users    => $developer,

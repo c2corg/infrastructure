@@ -8,6 +8,7 @@ node 'content-factory' inherits 'base-node' {
   include c2corg::webserver::svg
 
   include c2corg::apacheconf::content-factory
+  include c2corg::webserver::metaskirando
 
   fact::register {
     'role': value => 'pré-publication articles';
