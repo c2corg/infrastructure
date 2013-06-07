@@ -77,10 +77,27 @@ registration = Agentlist
     require  => Package["mcollective"],
   }
 
+  file { '/usr/local/sbin/update-facts-dot-yaml.sh':
+    ensure  => present,
+    mode    => '0755',
+    content => '#!/bin/sh
+# file managed by puppet
+
+export TMPFILE=$(mktemp)
+export PATH=/usr/sbin:/usr/bin:/sbin:/bin
+export RUBYLIB=/var/lib/puppet/lib/
+
+facter --yaml | egrep -v "uptime_|timestamp|free|mco_|path|environment" > $TMPFILE && \
+mv $TMPFILE /etc/mcollective/facts.yaml
+rm -f $TMPFILE
+
+',
+  } ->
+
   cron { 'update mcollective facts.yaml':
     user    => 'root',
     minute  => fqdn_rand(59),
-    command => 'TMPFILE=$(mktemp); PATH=/usr/sbin:/usr/bin:/sbin:/bin; RUBYLIB=/var/lib/puppet/lib/ facter --yaml | egrep -v "uptime_|timestamp|free|mco_|path|environment" > $TMPFILE 2>/dev/null && mv $TMPFILE /etc/mcollective/facts.yaml; rm -f $TMPFILE',
+    command => '/usr/local/sbin/update-facts-dot-yaml.sh 2>/dev/null | logger -t update-facts',
   }
 
 }
