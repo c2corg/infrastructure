@@ -3,7 +3,7 @@ class c2cinfra::trac {
   include '::uwsgi'
   include '::runit'
 
-  package { ['sqlite3', 'graphviz', 'libjs-jquery']:
+  package { ['sqlite3', 'graphviz', 'libjs-jquery', 'python-subversion']:
     ensure => present,
   } ->
 
