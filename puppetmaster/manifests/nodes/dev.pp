@@ -17,7 +17,7 @@ node 'dev' inherits 'base-node' {
   }
 
   c2cinfra::backup::dir { [
-    '/srv/trac',
+    '/srv',
     '/var/lib/dokuwiki/',
   ]: }
 
