@@ -12,22 +12,11 @@ class c2corg::webserver::symfony::dev($developer) inherits c2corg::webserver::sy
   }
 
   Vcsrepo['camptocamp.org'] {
-    ensure   => present,
-    provider => 'git',
-    source   => 'git://github.com/c2corg/camptocamp.org.git',
     owner    => $developer,
     group    => $developer,
   }
 
-  exec { 'move legacy www.c.o svn repo out of the way':
-    command => 'mv /srv/www/camptocamp.org /srv/www/camptocamp.org-svn',
-    unless  => 'test -d /srv/www/camptocamp.org/.git/',
-    onlyif  => 'test -d /srv/www/camptocamp.org/.svn/',
-    before  => Vcsrepo['camptocamp.org'],
-  }
-
   Vcsrepo["meta.camptocamp.org"] {
-    ensure => present,
     owner  => $developer,
     group  => $developer,
   }

@@ -20,12 +20,6 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
 
   include c2cinfra::collectd::plugin::postfix
 
-  Vcsrepo['camptocamp.org'] {
-    ensure   => present,
-    provider => 'git',
-    source   => 'git://github.com/c2corg/camptocamp.org.git',
-  }
-
   File["c2corg conf.ini"] {
     path => "/srv/www/camptocamp.org/deployment/prod.ini",
   }

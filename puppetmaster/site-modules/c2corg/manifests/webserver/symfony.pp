@@ -68,8 +68,8 @@ class c2corg::webserver::symfony {
   vcsrepo { "camptocamp.org":
     name     => "/srv/www/camptocamp.org",
     ensure   => "present",
-    provider => "svn",
-    source   => "https://dev.camptocamp.org/svn/c2corg/trunk/camptocamp.org/",
+    provider => 'git',
+    source   => 'git://github.com/c2corg/camptocamp.org.git',
     owner    => "c2corg",
     group    => "c2corg",
     require  => File["/srv/www"],
@@ -85,8 +85,16 @@ class c2corg::webserver::symfony {
     require  => File["/srv/www"],
   }
 
+  exec { 'move legacy www.c.o svn repo out of the way':
+    command => 'mv /srv/www/camptocamp.org /srv/www/camptocamp.org-svn',
+    unless  => 'test -d /srv/www/camptocamp.org/.git/',
+    onlyif  => 'test -d /srv/www/camptocamp.org/.svn/',
+    before  => Vcsrepo['camptocamp.org'],
+  }
+
   exec { 'move legacy meta.c.o svn repo out of the way':
     command => 'mv /srv/www/meta.camptocamp.org /srv/www/meta.camptocamp.org-svn',
+    unless  => 'test -d /srv/www/meta.camptocamp.org/.git/',
     onlyif  => 'test -d /srv/www/meta.camptocamp.org/.svn/',
     before  => Vcsrepo['meta.camptocamp.org'],
   }

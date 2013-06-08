@@ -13,20 +13,12 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
   Vcsrepo['camptocamp.org'] {
     ensure   => 'latest',
     revision => 'master',
-    provider => 'git',
-    source   => 'git://github.com/c2corg/camptocamp.org.git',
     notify   => Exec['c2corg refresh'],
   }
 
-  exec { 'move legacy www.c.o svn repo out of the way':
-    command => 'mv /srv/www/camptocamp.org /srv/www/camptocamp.org-svn',
-    unless  => 'test -d /srv/www/camptocamp.org/.git/',
-    onlyif  => 'test -d /srv/www/camptocamp.org/.svn/',
-    before  => Vcsrepo['camptocamp.org'],
-  }
-
-  Vcsrepo["meta.camptocamp.org"] {
-    ensure => "latest",
+  Vcsrepo['meta.camptocamp.org'] {
+    ensure   => 'latest',
+    revision => 'master',
   }
 
   File["c2corg conf.ini"] {
