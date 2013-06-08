@@ -16,7 +16,7 @@ node 'pm' inherits 'base-node' {
   }
 
   c2cinfra::backup::dir {
-    ['/srv/puppetmaster', '/var/lib/puppet/ssl', '/home', '/etc/puppet/hiera']:
+    ['/srv/infrastructure', '/var/lib/puppet/ssl', '/home', '/etc/puppet/hiera']:
   }
 
 }
