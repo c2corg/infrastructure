@@ -1,0 +1,7 @@
+<html><body>
+<ul>
+<%  dashboard.keys.sort.each do |key| -%>
+<li><a href="<%= key %>"><%= dashboard[key] %></a></li>
+<% end -%>
+</ul>
+</body></html>

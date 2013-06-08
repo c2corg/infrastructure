@@ -1,0 +1,22 @@
+# file managed by puppet
+server {
+  listen 443 ssl;
+  server_name graphite.dev.camptocamp.org graphite.pse.infra.dev.camptocamp.org;
+
+  ssl_certificate     /vagrant/sslcerts/graphite.dev.camptocamp.org.crt;
+  ssl_certificate_key /vagrant/sslcerts/graphite.dev.camptocamp.org.key;
+
+  include uwsgi_params;
+
+  location / {
+    include c2cauth.conf;
+    uwsgi_pass <%= collectd_host %>:3031;
+  }
+}
+
+server {
+  listen 80;
+  server_name graphite.dev.camptocamp.org graphite.pse.infra.dev.camptocamp.org;
+
+  rewrite ^.*$ https://$host$request_uri? permanent;
+}

@@ -9,6 +9,7 @@ class data::common {
 
   $collectd_host = '192.168.192.127'
   $statsd_host   = '192.168.192.127'
+  $carbon_host   = '192.168.192.127'
   $syslog_host   = '192.168.192.126'
   $broker_host   = '192.168.192.55'
 
@@ -23,6 +24,8 @@ class data::common {
   $varnish_host          = '127.0.0.1'
 
   $c2corg_vip = '128.179.66.23'
+
+  $resolvers = ['8.8.8.8', '8.8.4.4']
 
   $www_db_user = "www-data"
   $ml_db_user = "sympa"

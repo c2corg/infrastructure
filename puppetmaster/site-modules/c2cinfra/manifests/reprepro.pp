@@ -83,10 +83,4 @@ port=80
     source => 'puppet:///puppet/install-puppet.sh',
   }
 
-  @@host { "pkg.dev.camptocamp.org":
-    ensure => absent,
-    ip => $::ipaddress,
-    tag => "internal-hosts",
-  }
-
 }

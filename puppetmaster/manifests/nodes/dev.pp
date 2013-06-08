@@ -1,11 +1,15 @@
 # VM
 node 'dev' inherits 'base-node' {
 
-  include c2corg::trac
-  include c2corg::wikiassoce
+  include '::nginx'
+  include '::c2cinfra::trac'
+  include '::c2cinfra::wikiassoce'
 
-  include c2corg::devproxy::http
-  include c2corg::devproxy::https
+  include '::c2cinfra::devproxy'
+  include '::c2cinfra::devproxy::graphite'
+  include '::c2cinfra::devproxy::inventory'
+  include '::c2cinfra::devproxy::trac'
+  include '::c2cinfra::devproxy::wikiassoce'
 
   fact::register {
     'role': value => ['trac dev', 'wiki association', 'proxy environnements dev'];
@@ -14,7 +18,6 @@ node 'dev' inherits 'base-node' {
 
   c2cinfra::backup::dir { [
     '/srv/trac',
-    '/srv/svn',
     '/var/lib/dokuwiki/',
   ]: }
 

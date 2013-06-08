@@ -46,11 +46,4 @@ class c2cinfra::backup {
     ensure => absent,
   }
 
-  # legacy common::concatfilepart dir
-  file { "/root/.backups.include.d":
-    ensure  => absent,
-    purge   => true,
-    force   => true,
-    recurse => true,
-  }
 }

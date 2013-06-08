@@ -1,21 +1,15 @@
 class c2cinfra::common::config {
 
+  $resolvers = hiera('resolvers')
+
   file { "/etc/resolv.conf":
-    content => $::datacenter ? {
-      /c2corg|epnet|pse/ => "# file managed by puppet
+    content => inline_template('# file managed by puppet
 search camptocamp.org infra.camptocamp.org
-nameserver 192.168.192.50
-nameserver 8.8.8.8
-nameserver 8.8.4.4
+<% resolvers.each do |nameserver| -%>
+nameserver <%= nameserver %>
+<% end -%>
 options timeout:2 edns0
-",
-      default => "# file managed by puppet
-search camptocamp.org infra.camptocamp.org
-nameserver 8.8.8.8
-nameserver 8.8.4.4
-options rotate edns0
-",
-    },
+'),
   }
 
   file { "/etc/timezone":

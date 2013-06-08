@@ -18,9 +18,4 @@ class c2cinfra::mcollective {
     ]: ensure => present,
   }
 
-  package { ['mcollective-puppetd-agent', 'mcollective-puppetd-common']:
-    ensure => absent,
-    before => Package['mcollective-puppet-agent'],
-  }
-
 }

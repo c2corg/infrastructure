@@ -30,11 +30,6 @@ class c2cinfra::hosts {
     host_aliases => "ip6-loopback",
   }
 
-  case $::datacenter {
-    /c2corg|epnet|pse/ : { Host <<| tag == 'internal-hosts' |>> }
-    'gandi'        : { Host <<| tag == 'external-hosts' |>> }
-  }
-
   host { "ip6-localnet": ip => "fe00::0" }
   host { "ip6-mcastprefix": ip => "ff00::0" }
   host { "ip6-allnodes": ip => "ff02::1" }

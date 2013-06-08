@@ -19,11 +19,6 @@ class c2cinfra::mcollective::client {
     ]: ensure => present,
   }
 
-  package { 'mcollective-puppetd-client':
-    ensure => absent,
-    before => Package['mcollective-puppet-client'],
-  }
-
   file { "/etc/mcollective/client.cfg":
     mode    => 0644,
     require => Package["mcollective-client"],

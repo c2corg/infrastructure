@@ -105,10 +105,6 @@ true()                     smtp,smime,md5   -> reject
     before => Cron["bulletin nivo"],
   }
 
-  file { "/usr/local/bin/bulletins-2005.sh":
-    ensure => absent,
-  }
-
   file { "/usr/local/bin/meteofrance.py":
     ensure => present,
     mode   => 755,

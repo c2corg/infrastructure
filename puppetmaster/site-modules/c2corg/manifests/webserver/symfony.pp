@@ -12,9 +12,6 @@ class c2corg::webserver::symfony {
   package { "imagemagick": }
   package { "ruby-sass": }
 
-  # stuff no longer required on this system class
-  package{ ["php-symfony", "msmtp"]: ensure => absent }
-
   # short_open_tag conflicts with <?xml ... headers
   augeas { 'disable php short open tags':
     incl    => '/etc/php5/apache2/php.ini',
@@ -128,10 +125,4 @@ fi
 ",
   }
 
-  file_line { 'import c2corg_vars in environment':
-    ensure  => absent,
-    path    => '/home/c2corg/.bashrc',
-    line    => '. ~/c2corg-envvars.sh',
-    require => User['c2corg'],
-  }
 }
