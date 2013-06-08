@@ -214,4 +214,9 @@ fi
 ',
   }
 
+  file { '/etc/alternatives/editor':
+    ensure => link,
+    target => '/usr/bin/vim.basic',
+  }
+
 }
