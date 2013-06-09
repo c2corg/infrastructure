@@ -7,6 +7,7 @@ server {
   ssl_certificate_key /srv/sslcerts/graphite.dev.camptocamp.org.key;
 
   include uwsgi_params;
+  uwsgi_param REMOTE_USER $remote_user;
 
   location / {
     include c2cauth.conf;
