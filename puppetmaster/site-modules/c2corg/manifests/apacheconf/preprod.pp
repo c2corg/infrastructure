@@ -13,6 +13,11 @@ class c2corg::apacheconf::preprod inherits c2corg::apacheconf {
 
   Apache::Vhost["camptocamp.org"] {
     aliases +> [
+      $::hostname,
+      "www.${::hostname}",
+      "m.${::hostname}",
+      "s.${::hostname}",
+      $::fqdn,
       "pre-prod.dev.camptocamp.org",
       "www.pre-prod.dev.camptocamp.org",
       "m.pre-prod.dev.camptocamp.org",
