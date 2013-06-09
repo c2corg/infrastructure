@@ -14,7 +14,7 @@ class c2cinfra::common::packages {
     "iputils-ping", "iotop", "iptraf", "iso-codes",
     "less", "locales-all", "logrotate", "lsb-release", "lsof",
     "man-db", "m4", "make", "mosh", "mtr-tiny",
-    "netcat", "nmap", "ntp",
+    "netcat", "ngrep", "nmap", "ntp",
     "patch", "psmisc", "pwgen",
     "rsync",
     "screen", "strace", "sudo", "subversion", "subversion-tools", "sysstat",
