@@ -6,15 +6,19 @@ class c2cinfra::account {
 
   @c2cinfra::account::user {
     "marc": user => "marc", account => "marc",
+      tag    => ['trempoline'],
       groups => ["adm", "www-data"];
 
     "alex": user => "alex", account => "alex",
+      tag    => ['trempoline'],
       groups => ["adm", "www-data"];
 
     "gottferdom": user => "gottferdom", account => "gottferdom",
+      tag    => ['trempoline'],
       groups => ["adm", "www-data"];
 
     "xbrrr": user => "xbrrr", account => "xbrrr",
+      tag    => ['trempoline'],
       groups => ["adm", "www-data"];
 
     "gerbaux": user => "gerbaux", account => "gerbaux",
@@ -27,9 +31,11 @@ class c2cinfra::account {
       groups => ["adm", "www-data"];
 
     "saimon": user => "saimon", account => "saimon",
+      tag    => ['trempoline'],
       groups => ["adm", "www-data"];
 
     "stef74": user => "stef74", account => "stef74",
+      tag    => ['trempoline'],
       groups => ["adm", "www-data"];
 
     "c2corg": user => "c2corg", account => "c2corg",

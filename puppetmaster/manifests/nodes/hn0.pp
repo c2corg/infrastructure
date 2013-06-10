@@ -8,8 +8,10 @@ node 'hn0' inherits 'base-node' {
 
   include c2cinfra::openvpn
 
+  C2cinfra::Account::User <| tag == 'trempoline' |>
+
   fact::register {
-    'role': value => ['HN lxc', 'routeur'];
+    'role': value => ['HN lxc', 'routeur', 'ssh trempoline'];
     'duty': value => 'prod';
   }
 
