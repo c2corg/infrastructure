@@ -23,6 +23,13 @@ class c2cinfra::ssh::sshd {
     notify  => Service['ssh'],
   }
 
+  augeas { 'sshd/PasswordAuthentication':
+    incl    => '/etc/ssh/sshd_config',
+    lens    => 'Sshd.lns',
+    changes => 'set PasswordAuthentication no',
+    notify  => Service['ssh'],
+  }
+
   package { "openssh-server":
     ensure => present,
     before => File["/etc/ssh/authorized_keys"],
