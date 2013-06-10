@@ -32,11 +32,4 @@ class c2cinfra::hn::hn5 inherits c2cinfra::hn {
       value => "\"serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1\"";
   }
 
-  @@nat::fwd {
-    'forward hn5 ssh port':
-      host => '6', from => '20026', to => '22',   tag => 'portfwd', proto => 'tcp';
-    'forward hn5 mosh port':
-      host => '6', from => '6006',  to => '6006', tag => 'portfwd', proto => 'udp';
-  }
-
 }

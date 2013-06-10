@@ -63,22 +63,6 @@ define lxc::container (
       }
     }
 
-    @@nat::fwd { "fwd LXC ${ctname} ssh port":
-      host   => $ctid,
-      from   => "10${ctid}",
-      to     => 22,
-      proto  => 'tcp',
-      tag    => 'portfwd',
-    }
-
-    @@nat::fwd { "fwd LXC ${ctname} mosh port":
-      host   => $ctid,
-      from   => "60${ctid}",
-      to     => "60${ctid}",
-      proto  => 'udp',
-      tag    => 'portfwd',
-    }
-
   } else {
 
     exec { "destroy container ${ctname}":
