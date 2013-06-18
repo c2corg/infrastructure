@@ -24,6 +24,10 @@ class graphite::carbon {
 pattern = ^carbon\.
 retentions = 60:90d
 
+[collectd_policy]
+pattern = ^collectd\.
+retentions = 10s:1d,30s:7d,1m:21d,15m:5y
+
 [default_local_setting]
 pattern = .*
 retentions = 15s:7d,1m:21d,15m:5y
