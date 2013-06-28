@@ -1,8 +1,8 @@
-import "nodes/*.pp"
+import 'nodes/*.pp'
 
-filebucket { main: server => $puppet_server }
+filebucket { 'main': server => $puppet_server }
 
-Exec { path => "/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/bin:/usr/local/sbin" }
+Exec { path => '/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/bin:/usr/local/sbin' }
 
 File {
   backup => main,
@@ -11,28 +11,28 @@ File {
   mode   => 0644,
 }
 
-Exec["apt-get_update"] -> Package <| tag != 'virtualresource' |>
-Package["sudo"] -> Sudoers <| |>
+Exec['apt-get_update'] -> Package <| tag != 'virtualresource' |>
+Package['sudo'] -> Sudoers <| |>
 
 Sudoers {
   hosts   => $::hostname,
-  target  => "/etc/sudoers",
+  target  => '/etc/sudoers',
 }
 
 Apache::Vhost {
-  user  => "root",
-  group => "root",
-  mode  => 0755,
+  user  => 'root',
+  group => 'root',
+  mode  => '0755',
 }
 
 Apache::Vhost-ssl {
-  user  => "root",
-  group => "root",
-  mode  => 0755,
+  user  => 'root',
+  group => 'root',
+  mode  => '0755',
 }
 
 # purge unmanaged users.
-resources { "user":
-  purge => true,
-  unless_system_user => "999",
+resources { 'user':
+  purge              => true,
+  unless_system_user => '999',
 }
