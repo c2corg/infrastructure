@@ -7,7 +7,7 @@ class c2cinfra::trac {
     ensure => present,
   } ->
 
-  package { ['trac', 'trac-accountmanager', 'trac-email2trac', 'trac-mastertickets', 'trac-wikirename', 'trac-git']:
+  package { ['trac', 'trac-accountmanager', 'trac-email2trac', 'trac-mastertickets', 'trac-wikirename', 'trac-git', 'trac-github']:
     ensure => present,
     before => Runit::Service['trac'],
   }
