@@ -59,4 +59,6 @@ class data::common {
   $ganalytics_key = "invalid-key"
   $mobile_ganalytics_key = "invalid-key"
 
+  $duty = 'dev'
+
 }
