@@ -23,10 +23,15 @@ class c2cinfra::ssh::sshd {
     notify  => Service['ssh'],
   }
 
+  $pwauth = str2bool($::vagrant) ? {
+    true  => 'yes',
+    false => 'no',
+  }
+
   augeas { 'sshd/PasswordAuthentication':
     incl    => '/etc/ssh/sshd_config',
     lens    => 'Sshd.lns',
-    changes => 'set PasswordAuthentication no',
+    changes => "set PasswordAuthentication ${pwauth}",
     notify  => Service['ssh'],
   }
 
