@@ -6,6 +6,7 @@ node 'test-stef74' inherits 'base-node' {
   }
 
   include '::c2corg::database::dev'
+  include '::nginx'
 
   fact::register {
     'role': value => 'dev';
@@ -33,5 +34,20 @@ node 'test-stef74' inherits 'base-node' {
     enable    => true,
     hasstatus => true,
   }
+
+  nginx::site { 'proxypass-jetty':
+    content => '# file managed by puppet
+server {
+  listen 80;
+  server_name test-stef74 test-stef74.dev.camptocamp.org test-stef74.pse.infra.camptocamp.org;
+
+  location / {
+    proxy_pass http://localhost:8080/;
+  }
+}
+',
+  }
+
+
 
 }
