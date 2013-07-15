@@ -41,9 +41,12 @@ server {
   listen 80;
   server_name test-stef74 test-stef74.dev.camptocamp.org test-stef74.pse.infra.camptocamp.org;
 
-  location / {
+  location /solr/ {
     proxy_pass http://localhost:8080/;
   }
+
+  root /var/www;
+
 }
 ',
   }
