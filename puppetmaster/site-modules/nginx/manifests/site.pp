@@ -5,6 +5,7 @@ define nginx::site ($ensure=present, $source=undef, $content=undef) {
     source  => $source,
     content => $content,
     require => Package['nginx'],
+    notify  => Exec['reload-nginx'],
   } ->
 
   file { "/etc/nginx/sites-enabled/${name}.conf":
