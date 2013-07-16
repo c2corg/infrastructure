@@ -42,7 +42,7 @@ server {
   server_name test-stef74 test-stef74.dev.camptocamp.org test-stef74.pse.infra.camptocamp.org;
 
   location /solr/ {
-    proxy_pass http://localhost:8080/;
+    proxy_pass http://localhost:8080/solr/;
   }
 
   root /var/www;
