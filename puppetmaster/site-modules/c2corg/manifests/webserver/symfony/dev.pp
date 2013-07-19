@@ -53,4 +53,27 @@ export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
     content => template("c2corg/symfony/psql-env.sh.erb"),
   }
 
+  # symlink cache and log dirs to local filesystem, in case git repo is in a
+  # vagrant shared dir.
+  if str2bool($::vagrant) {
+    file { ['/var/tmp/c2corg', '/var/tmp/c2corg/cache', '/var/tmp/c2corg/log']:
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'www-data',
+      before => Vcsrepo['camptocamp.org'],
+    }
+
+    file { '/srv/www/camptocamp.org/cache':
+      ensure  => link,
+      target  => '/var/tmp/c2corg/cache',
+      require => Vcsrepo['camptocamp.org'],
+    }
+
+    file { '/srv/www/camptocamp.org/log':
+      ensure  => link,
+      target  => '/var/tmp/c2corg/log',
+      require => Vcsrepo['camptocamp.org'],
+    }
+  }
+
 }
