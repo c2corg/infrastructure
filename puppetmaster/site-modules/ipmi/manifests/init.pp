@@ -14,6 +14,13 @@ class ipmi {
     before => Service['ipmievd'],
   }
 
+  etcdefault { 'configure ipmievd for polling':
+    key    => 'IPMIEVD_OPTIONS',
+    file   => 'ipmievd',
+    value  => '"sel daemon"',
+    notify => Service['ipmievd'],
+  }
+
   service { 'ipmievd':
     ensure    => 'running',
     enable    => true,
