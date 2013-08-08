@@ -144,5 +144,20 @@ class c2cinfra::containers {
       }
 
     }
+
+    'hn8': {
+
+      lxc::container { 'riemann.pse.infra.camptocamp.org':
+        ctid   => 128,
+        suite  => 'wheezy',
+        fssize => '3G',
+      }
+
+      lxc::container { 'logstash.pse.infra.camptocamp.org':
+        ctid   => 129,
+        suite  => 'wheezy',
+        fssize => '3G',
+      }
+    }
   }
 }
