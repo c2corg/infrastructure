@@ -30,6 +30,23 @@ class ipmi {
 
   collectd::plugin { 'ipmi': }
 
+  collectd::config::chain { 'RemoveIpmiSpecialChars':
+    type     => 'precache',
+    targets  => ['replace'],
+    matches  => ['regex'],
+    settings => '
+<Rule "remove_ipmi_special_chars">
+  <Match "regex">
+    Plugin "^ipmi$"
+  </Match>
+  <Target "replace">
+    TypeInstance "\\(" ""
+    TypeInstance "\\)" ""
+  </Target>
+</Rule>
+',
+  }
+
   augeas { 'remove module ipmi_devintf':
     incl    => '/etc/modprobe.d/modprobe.conf',
     lens    => 'Modprobe.lns',
