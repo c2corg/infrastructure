@@ -1,5 +1,7 @@
 class c2cinfra::devproxy {
 
+  include '::nginx::monitoring'
+
   nginx::site { 'devproxy':
     source => 'puppet:///c2cinfra/nginx/devproxy.conf',
   }
