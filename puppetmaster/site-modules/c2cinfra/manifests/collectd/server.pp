@@ -20,6 +20,18 @@ Tag collectd
 ",
   }
 
+  collectd::config::plugin { 'send metrics to carbon':
+    plugin   => 'write_graphite',
+    settings => '
+<Carbon>
+  Host "localhost"
+  Port "2003"
+  Protocol "udp"
+  Prefix "collectd."
+</Carbon>
+',
+  }
+
   @@nat::fwd { 'forward collectd port':
     host  => '127',
     from  => '25826',
