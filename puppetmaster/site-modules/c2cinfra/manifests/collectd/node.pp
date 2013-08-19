@@ -78,6 +78,7 @@ VerboseInterface "All"
       'entropy',
       'irq',
       'load',
+      'lvm',
       'memory',
       'swap',
       'vmem',
