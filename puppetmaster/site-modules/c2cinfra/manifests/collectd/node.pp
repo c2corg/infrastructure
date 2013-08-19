@@ -23,7 +23,6 @@ class c2cinfra::collectd::node {
   }
 
   collectd::plugin { [
-    'interface',
     'processes',
     'protocols',
     'tcpconns',
@@ -59,6 +58,13 @@ ReportStats true
 SocketFile "/var/run/collectd.sock"
 SocketGroup "root"
 DeleteSocket true
+',
+  }
+
+  collectd::config::plugin { 'setup netlink plugin':
+    plugin   => 'netlink',
+    settings => '
+VerboseInterface "All"
 ',
   }
 
