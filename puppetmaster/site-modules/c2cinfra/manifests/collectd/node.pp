@@ -48,6 +48,8 @@ ReportStats true
       IgnoreSelected true
       ReportReserved true
       ReportInodes true
+      ValuesAbsolute true
+      ValuesPercentage true
 ',
   }
 
