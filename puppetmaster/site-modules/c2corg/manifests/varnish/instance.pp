@@ -60,14 +60,22 @@ class c2corg::varnish::instance {
   CollectCache        true
   CollectConnections  true
   CollectBackend      true
+  CollectBan          true
   CollectSHM          true
+  CollectDirectorDNS  true
   CollectESI          false
   CollectFetch        true
   CollectHCB          false
+  CollectObjects      true
+  CollectPurge        true
+  CollectSession      true
   CollectSMA          false
   CollectSMS          false
   CollectSM           true
+  CollectStruct       true
   CollectTotals       true
+  CollectUptime       true
+  CollectVCL          true
   CollectWorkers      true
 </Instance>
 ",
