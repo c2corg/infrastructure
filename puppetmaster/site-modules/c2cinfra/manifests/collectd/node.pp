@@ -1,6 +1,13 @@
 class c2cinfra::collectd::node {
 
-  include collectd
+  class {'collectd':
+    interval => {
+      'filecount' => '300',
+      'df'        => '60',
+      'lvm'       => '60',
+      'entropy'   => '60',
+    },
+  }
   include haproxy::collectd::typesdb
 
   $collectd_host = hiera('collectd_host')
