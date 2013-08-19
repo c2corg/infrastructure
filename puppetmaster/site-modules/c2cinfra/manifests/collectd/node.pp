@@ -53,6 +53,15 @@ ReportStats true
 ',
   }
 
+  collectd::config::plugin { 'setup unixsock plugin':
+    plugin   => 'unixsock',
+    settings => '
+SocketFile "/var/run/collectd.sock"
+SocketGroup "root"
+DeleteSocket true
+',
+  }
+
   # additional plugins on hardware nodes
   if $::manufacturer or $::datacenter == 'gandi' {
 
