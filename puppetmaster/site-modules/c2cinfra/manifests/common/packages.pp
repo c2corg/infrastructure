@@ -17,7 +17,7 @@ class c2cinfra::common::packages {
     "netcat", "ngrep", "nmap", "ntp",
     "patch", "psmisc", "pwgen",
     "rsync",
-    "screen", "strace", "sudo", "subversion", "subversion-tools", "sysstat",
+    "screen", "socat", "strace", "sudo", "subversion", "subversion-tools", "sysstat",
     "tcpdump", "telnet", "time", "tmux", "traceroute", "tshark",
     "unzip",
     "vim", "vlan",
