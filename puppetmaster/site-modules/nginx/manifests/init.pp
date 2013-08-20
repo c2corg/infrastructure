@@ -1,5 +1,13 @@
 class nginx ($package='nginx-full') {
 
+  if $::lsbdistcodename == 'squeeze' {
+    apt::preferences { "nginx_from_bpo":
+      package  => "nginx nginx-full nginx-extras nginx-common nginx-light nginx-naxsi",
+      pin      => "release a=${::lsbdistcodename}-backports",
+      priority => "1010",
+    }
+  }
+
   package { $package:
     ensure => present,
     alias  => 'nginx',
