@@ -61,11 +61,15 @@ DeleteSocket true
 ',
   }
 
-  collectd::config::plugin { 'setup netlink plugin':
-    plugin   => 'netlink',
-    settings => '
+  if $::lsbdistcodename == 'squeeze' {
+    collectd::plugin { 'interface': }
+  } else {
+    collectd::config::plugin { 'setup netlink plugin':
+      plugin   => 'netlink',
+      settings => '
 VerboseInterface "All"
 ',
+    }
   }
 
   # additional plugins on hardware nodes
