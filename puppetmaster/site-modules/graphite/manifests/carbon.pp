@@ -24,6 +24,22 @@ class graphite::carbon {
 pattern = ^carbon\.
 retentions = 60:90d
 
+[collectd_policy_lvm]
+pattern = ^collectd\..*\.lvm-.*
+retentions = 30s:1d,2m:7d,10m:21d,30m:5y
+
+[collectd_policy_df]
+pattern = ^collectd\..*\.df-.*
+retentions = 30s:1d,2m:7d,10m:21d,30m:5y
+
+[collectd_policy_entropy]
+pattern = ^collectd\..*\.entropy
+retentions = 30s:1d,2m:7d,10m:21d,30m:5y
+
+[collectd_policy_filecount]
+pattern = ^collectd\..*\.filecount-.*
+retentions = 5m:1d,15m:7d,60m:5y
+
 [collectd_policy]
 pattern = ^collectd\.
 retentions = 10s:1d,30s:7d,1m:21d,15m:5y
