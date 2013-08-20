@@ -55,7 +55,7 @@ ReportStats true
   collectd::config::plugin { 'setup unixsock plugin':
     plugin   => 'unixsock',
     settings => '
-SocketFile "/var/run/collectd.sock"
+SocketFile "/var/run/collectd-unixsock"
 SocketGroup "root"
 DeleteSocket true
 ',
