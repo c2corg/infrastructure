@@ -61,6 +61,22 @@ DeleteSocket true
 ',
   }
 
+  $riemann_host = hiera('riemann_host')
+
+  collectd::config::plugin { 'send metrics to riemann':
+    plugin   => 'write_riemann',
+    settings => "
+Tag collectd
+Tag \"${::duty}\"
+Tag \"${::lsbdistcodename}\"
+<Node riemann>
+  Host \"${riemann_host}\"
+  AlwaysAppendDS true
+</Node>
+",
+  }
+
+
   if $::lsbdistcodename == 'squeeze' {
     collectd::plugin { 'interface': }
   } else {

@@ -7,19 +7,6 @@ ReportStats true
 ',
   }
 
-  $riemann_host = hiera('riemann_host')
-
-  collectd::config::plugin { 'send metrics to riemann':
-    plugin   => 'write_riemann',
-    settings => "
-Tag collectd
-<Node riemann>
-  Host \"${riemann_host}\"
-  AlwaysAppendDS true
-</Node>
-",
-  }
-
   collectd::config::plugin { 'send metrics to carbon':
     plugin   => 'write_graphite',
     settings => '
