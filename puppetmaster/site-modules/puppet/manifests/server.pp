@@ -49,7 +49,7 @@ class puppet::server {
     'master/storeconfigs_backend':  value => 'puppetdb';
     'master/dbadapter':             value => '', ensure => absent;
     # reporting
-    'master/reports': value => 'store,log,puppetdb';
+    'master/reports': value => 'store,log,puppetdb,riemann';
     # config_version
     'marc/config_version':  value => '/usr/bin/git --git-dir /home/marc/infrastructure/.git rev-parse --short master 2>/dev/null || echo unknown';
     'main/config_version':  value => '/usr/bin/git --git-dir /srv/infrastructure/.git rev-parse --short master 2>/dev/null || echo unknown';
@@ -111,6 +111,18 @@ port = 8081
 :puppet:
     :datasource: data
 ',
+  }
+
+  $riemann_host = hiera('riemann_host')
+
+  class { '::riemann::client::ruby': } ->
+  file { '/etc/puppet/riemann.yaml':
+    ensure  => present,
+    notify  => Service['puppetmaster'],
+    content => "---
+:riemann_server: '${riemann_host}'
+:riemann_port: 5555
+",
   }
 
   collectd::config::plugin { 'monitor puppetmasterd':

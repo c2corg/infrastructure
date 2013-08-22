@@ -88,3 +88,6 @@
 [submodule "puppetmaster/modules/uwsgi"]
 	path = puppetmaster/modules/uwsgi
 	url = http://github.com/mfournier/puppet-uwsgi.git
+[submodule "puppetmaster/modules/riemann_report"]
+	path = puppetmaster/modules/riemann_report
+	url = git://github.com/jamtur01/puppet-riemann.git
