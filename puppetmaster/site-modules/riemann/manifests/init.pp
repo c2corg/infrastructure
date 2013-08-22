@@ -1,6 +1,6 @@
 class riemann {
 
-  package { ['java7-runtime-headless', 'riemann', 'ruby-riemann-client']:
+  package { ['java7-runtime-headless', 'riemann']:
     ensure => present,
   } ->
 
