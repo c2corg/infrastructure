@@ -2,8 +2,6 @@ class haproxy::collectd {
 
   $plugin= '/usr/local/sbin/haproxy-stat.sh'
 
-  package { 'socat': }
-
   file { 'haproxy collectd plugin':
     path    => $plugin,
     source  => 'puppet:///modules/haproxy/haproxy-stat.sh',
