@@ -7,16 +7,4 @@ ReportStats true
 ',
   }
 
-  collectd::config::plugin { 'send metrics to carbon':
-    plugin   => 'write_graphite',
-    settings => '
-<Carbon>
-  Host "localhost"
-  Port "2003"
-  Protocol "udp"
-  Prefix "collectd."
-</Carbon>
-',
-  }
-
 }

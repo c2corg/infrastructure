@@ -76,6 +76,19 @@ Tag \"${::lsbdistcodename}\"
 ",
   }
 
+  $carbon_host = hiera('carbon_host')
+
+  collectd::config::plugin { 'send metrics to carbon':
+    plugin   => 'write_graphite',
+    settings => "
+<Node>
+  Host \"${carbon_host}\"
+  Port \"2003\"
+  Protocol \"udp\"
+  Prefix \"collectd.\"
+</Node>
+",
+  }
 
   if $::lsbdistcodename == 'squeeze' {
     collectd::plugin { 'interface': }
