@@ -60,19 +60,20 @@ DeleteSocket true
 ',
   }
 
-  $riemann_host = hiera('riemann_host')
-
   collectd::config::plugin { 'send metrics to riemann':
     plugin   => 'write_riemann',
-    settings => "
+    settings => inline_template('
 Tag collectd
-Tag \"${::duty}\"
-Tag \"${::lsbdistcodename}\"
+Tag "<%= @duty %>"
+Tag "<%= @lsbdistcodename %>"
+<% @role.split(",").each do |r| -%>
+Tag "<%= r %>"
+<% end -%>
 <Node riemann>
-  Host \"${riemann_host}\"
+  Host "<%= scope.function_hiera("riemann_host") %>"
   AlwaysAppendDS true
 </Node>
-",
+'),
   }
 
   $carbon_host = hiera('carbon_host')
