@@ -6,7 +6,7 @@ node 'test-saimon' inherits 'base-node' {
   }
 
   fact::register {
-    'role': value => 'dev';
+    'role': value => ['dev'];
     'duty': value => 'dev';
   }
 

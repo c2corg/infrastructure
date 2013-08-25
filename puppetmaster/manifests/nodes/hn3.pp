@@ -21,7 +21,7 @@ node 'hn3' inherits 'base-node' {
   include c2corg::prod::collectd::webserver
 
   fact::register {
-    'role': value => 'serveur web principal';
+    'role': value => ['apache', 'main web server'];
     'duty': value => 'prod';
   }
 

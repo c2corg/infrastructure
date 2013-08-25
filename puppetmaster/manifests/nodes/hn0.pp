@@ -11,7 +11,7 @@ node 'hn0' inherits 'base-node' {
   C2cinfra::Account::User <| tag == 'trempoline' |>
 
   fact::register {
-    'role': value => ['HN lxc', 'routeur', 'ssh trempoline'];
+    'role': value => ['hn', 'lxc', 'router', 'ssh proxy'];
     'duty': value => 'prod';
   }
 

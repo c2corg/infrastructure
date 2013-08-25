@@ -4,7 +4,7 @@ node 'dnscache' inherits 'base-node' {
   include unbound
 
   fact::register {
-    'role': value => 'cache DNS subnet privé';
+    'role': value => ['dns cache'];
     'duty': value => 'prod';
   }
 

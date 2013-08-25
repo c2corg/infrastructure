@@ -11,7 +11,7 @@ node 'content-factory' inherits 'base-node' {
   include c2corg::webserver::metaskirando
 
   fact::register {
-    'role': value => 'pré-publication articles';
+    'role': value => ['apache', 'postgresql', 'pre-publication'];
     'duty': value => 'dev';
   }
 

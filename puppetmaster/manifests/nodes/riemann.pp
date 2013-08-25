@@ -5,7 +5,7 @@ node 'riemann' inherits 'base-node' {
   include '::riemann::dash'
 
   fact::register {
-    'role': value => 'riemann';
+    'role': value => ['riemann'];
     'duty': value => 'prod';
   }
 

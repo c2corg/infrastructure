@@ -9,7 +9,7 @@ node 'hn6' inherits 'base-node' {
   class { 'c2cinfra::containers': }
 
   fact::register {
-    'role': value => 'HN lxc, VIP haproxy';
+    'role': value => ['hn', 'lxc', 'haproxy', 'vip'];
     'duty': value => 'prod';
   }
 

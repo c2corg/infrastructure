@@ -12,7 +12,7 @@ node 'dev' inherits 'base-node' {
   include '::c2cinfra::devproxy::wikiassoce'
 
   fact::register {
-    'role': value => ['trac dev', 'wiki association', 'proxy environnements dev'];
+    'role': value => ['trac dev', 'wiki association', 'proxy dev stuff'];
     'duty': value => 'prod';
   }
 

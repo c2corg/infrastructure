@@ -9,7 +9,7 @@ node 'test-stef74' inherits 'base-node' {
   include '::nginx'
 
   fact::register {
-    'role': value => 'dev';
+    'role': value => ['dev'];
     'duty': value => 'dev';
   }
 

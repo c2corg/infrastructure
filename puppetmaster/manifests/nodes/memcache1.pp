@@ -8,7 +8,7 @@ node 'memcache1' inherits 'base-node' {
   collectd::plugin { 'memcached': }
 
   fact::register {
-    'role': value => 'instance memcached';
+    'role': value => ['memcache'];
     'duty': value => 'prod';
   }
 }

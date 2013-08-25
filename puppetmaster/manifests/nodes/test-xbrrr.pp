@@ -7,7 +7,7 @@ node 'test-xbrrr' inherits 'base-node' {
   }
 
   fact::register {
-    'role': value => 'dev';
+    'role': value => ['apache', 'postgresql', 'dev'];
     'duty': value => 'dev';
   }
 

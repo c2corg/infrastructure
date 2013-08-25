@@ -6,7 +6,7 @@ node 'pm' inherits 'base-node' {
   include buildenv::deb
 
   fact::register {
-    'role': value => 'config management';
+    'role': value => ['puppetmaster', 'config management'];
     'duty': value => 'prod';
   }
 

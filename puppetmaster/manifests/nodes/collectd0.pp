@@ -6,7 +6,7 @@ node 'collectd0' inherits 'base-node' {
   include '::statsd::server::nodejs'
 
   fact::register {
-    'role': value => 'metrics collection';
+    'role': value => ['graphite', 'statsd'];
     'duty': value => 'prod';
   }
 

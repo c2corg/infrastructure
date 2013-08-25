@@ -8,7 +8,7 @@ node 'hn4' inherits 'base-node' {
   include c2corg::prod::env::postgres
 
   fact::register {
-    'role': value => 'postgresql principal';
+    'role': value => ['postgresql', 'main database'];
     'duty': value => 'prod';
   }
 

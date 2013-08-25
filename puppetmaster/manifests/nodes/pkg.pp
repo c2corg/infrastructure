@@ -4,7 +4,7 @@ node 'pkg' inherits 'base-node' {
   include c2cinfra::reprepro
 
   fact::register {
-    'role': value => 'repository de paquets';
+    'role': value => ['reprepro', 'package repository'];
     'duty': value => 'prod';
   }
 

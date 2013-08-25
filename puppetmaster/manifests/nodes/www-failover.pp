@@ -18,7 +18,7 @@ node 'www-failover' inherits 'base-node' {
   include c2corg::prod::collectd::webserver
 
   fact::register {
-    'role': value => ['failover', 'archivage photos'];
+    'role': value => ['apache', 'failover web server', 'media storage'];
     'duty': value => 'prod';
   }
 

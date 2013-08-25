@@ -23,7 +23,7 @@ node 'pre-prod' inherits 'base-node' {
   include c2corg::varnish::instance
 
   fact::register {
-    'role': value => 'pré-production';
+    'role': value => ['apache', 'postgresql', 'pre-prod'];
     'duty': value => 'dev';
   }
 
