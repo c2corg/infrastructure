@@ -6,7 +6,7 @@ node 'hn0' inherits 'base-node' {
   class { 'lxc::host': } ->
   class { 'c2cinfra::containers': }
 
-  include c2cinfra::openvpn
+  include '::c2cinfra::openvpn::server'
 
   C2cinfra::Account::User <| tag == 'trempoline' |>
 

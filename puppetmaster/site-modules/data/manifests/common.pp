@@ -49,6 +49,8 @@ class data::common {
 
   $shared_crypt_pass = "JryqixNl7088w" # "password"
 
+  $backup_vpn_password = "password"
+
   $lxc_root_password = "123"
 
   $prod_gmaps_key    = "invalid-key"
