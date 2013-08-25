@@ -8,7 +8,6 @@ class c2cinfra::collectd::node {
       'entropy'   => '60',
     },
   }
-  include haproxy::collectd::typesdb
 
   $collectd_host = hiera('collectd_host')
 
