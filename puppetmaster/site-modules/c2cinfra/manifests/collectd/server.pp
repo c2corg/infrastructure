@@ -19,11 +19,4 @@ ReportStats true
 ',
   }
 
-  @@nat::fwd { 'forward collectd port':
-    host  => '127',
-    from  => '25826',
-    to    => '25826',
-    proto => 'udp',
-    tag   => 'portfwd',
-  }
 }

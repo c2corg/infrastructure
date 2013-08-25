@@ -1,15 +1,5 @@
 class c2cinfra::rabbitmq {
 
-  #TODO: configure SSL + enable portfwd
-
-  #@@nat::fwd { 'forward stomp port':
-  #  host  => '55',
-  #  from  => '61613',
-  #  to    => '61613',
-  #  proto => 'tcp',
-  #  tag   => 'portfwd',
-  #}
-
   $mco_user = hiera('mco_user')
 
   apt::preferences { "rabbitmq_from_c2corg_repo":
