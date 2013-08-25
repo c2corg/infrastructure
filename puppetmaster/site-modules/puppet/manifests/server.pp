@@ -1,14 +1,14 @@
 class puppet::server {
 
-  package { ["puppetmaster", "vim-puppet", "puppet-lint", "puppetdb", "puppetdb-terminus"]:
+  package { ['puppetmaster', 'vim-puppet', 'puppet-lint', 'puppetdb', 'puppetdb-terminus']:
     ensure  => present,
   }
 
-  service { "puppetmaster":
+  service { 'puppetmaster':
     enable     => true,
     ensure     => running,
     hasstatus  => true,
-    require    => Package["puppetmaster"],
+    require    => Package['puppetmaster'],
   }
 
   service { 'puppetdb':
