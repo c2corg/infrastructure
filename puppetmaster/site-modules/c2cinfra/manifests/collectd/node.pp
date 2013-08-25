@@ -6,6 +6,7 @@ class c2cinfra::collectd::node {
       'df'        => '60',
       'lvm'       => '60',
       'entropy'   => '60',
+      'ipmi'      => '60',
     },
   }
 
