@@ -11,7 +11,6 @@ class data::common {
   $carbon_host   = '192.168.192.127'
   $riemann_host  = '192.168.192.128'
   $statsd_host   = '192.168.192.127'
-  $carbon_host   = '192.168.192.127'
   $syslog_host   = '192.168.192.126'
   $broker_host   = '192.168.192.55'
 
