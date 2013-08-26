@@ -82,7 +82,7 @@ Tag "<%= r %>"
   collectd::config::plugin { 'send metrics to carbon':
     plugin   => 'write_graphite',
     settings => "
-<Node>
+<Node carbon>
   Host \"${carbon_host}\"
   Port \"2003\"
   Protocol \"udp\"
