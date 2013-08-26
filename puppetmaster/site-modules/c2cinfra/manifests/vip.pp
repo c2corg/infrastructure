@@ -3,7 +3,7 @@ class c2cinfra::vip {
   package { 'ucarp': ensure => present }
 
   include haproxy
-  #include haproxy::collectd
+  include haproxy::collectd
 
   file { '/etc/network/vip-up.sh':
     ensure  => present,

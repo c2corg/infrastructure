@@ -1,25 +1,28 @@
 class haproxy::collectd {
 
-  $plugin= '/usr/local/sbin/haproxy-stat.sh'
+  $path   = '/usr/lib/collectd'
+  $plugin = "${path}/haproxy.py"
 
   file { 'haproxy collectd plugin':
     path    => $plugin,
-    source  => 'puppet:///modules/haproxy/haproxy-stat.sh',
+    source  => 'puppet:///modules/haproxy/collectd-haproxy/haproxy.py',
     mode    => 0755,
-    require => Package['socat'],
     notify  => Service['collectd'],
   }
 
   collectd::config::plugin { 'haproxy':
-    plugin   => 'exec',
+    plugin   => 'python',
     settings => "
-  Exec \"haproxy:haproxy\" \"${plugin}\" \"-x\" \"c2corg\"
-  Exec \"haproxy:haproxy\" \"${plugin}\" \"-x\" \"website\"
-  Exec \"haproxy:haproxy\" \"${plugin}\" \"-x\" \"storage\"
+ModulePath \"${path}\"
+Import haproxy
+<Module haproxy>
+  Socket \"/var/run/haproxy.sock\"
+  ProxyMonitor c2corg
+  ProxyMonitor website
+</Module>
 ",
     require  => [
       File['haproxy collectd plugin'],
-      Collectd::Config::Type['haproxy'],
       Service['haproxy'],
     ],
   }
