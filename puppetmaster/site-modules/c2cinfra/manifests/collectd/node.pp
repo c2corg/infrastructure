@@ -10,8 +10,6 @@ class c2cinfra::collectd::node {
     },
   }
 
-  $collectd_host = hiera('collectd_host')
-
   collectd::config::global {
     'FQDNLookup': value => 'false';
   }
@@ -28,14 +26,6 @@ class c2cinfra::collectd::node {
     'tcpconns',
     'users',
   ]: }
-
-  collectd::config::plugin { 'setup network plugin':
-    plugin   => 'network',
-    settings => inline_template('
-Server     "<%= collectd_host %>"
-ReportStats true
-'),
-  }
 
   collectd::config::plugin { 'df plugin config':
     plugin   => 'df',

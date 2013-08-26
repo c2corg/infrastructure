@@ -7,7 +7,6 @@ class data::common {
 
   $pkgrepo_host = 'pkg.dev.camptocamp.org'
 
-  $collectd_host = '192.168.192.127'
   $carbon_host   = '192.168.192.127'
   $riemann_host  = '192.168.192.128'
   $statsd_host   = '192.168.192.127'
