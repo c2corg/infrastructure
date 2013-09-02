@@ -1,5 +1,5 @@
 # VM
-node 'collectd0' inherits 'base-node' {
+node 'metrics' inherits 'base-node' {
 
   include '::graphite::carbon'
   include '::graphite::webapp'
