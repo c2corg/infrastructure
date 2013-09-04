@@ -12,6 +12,10 @@ class c2cinfra::hn {
     }
   }
 
+  if $::processor0 =~ /(I|i)ntel/ {
+    include '::hardware::intel'
+  }
+
   file { "/etc/network/interfaces":
     ensure => present,
     source => "puppet:///modules/c2cinfra/network/${::hostname}",
