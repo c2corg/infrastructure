@@ -93,4 +93,4 @@
 	url = git://github.com/jamtur01/puppet-riemann.git
 [submodule "puppetmaster/site-modules/haproxy/files/collectd-haproxy"]
 	path = puppetmaster/site-modules/haproxy/files/collectd-haproxy
-	url = https://github.com/mleinart/collectd-haproxy.git
+	url = https://github.com/mfournier/collectd-haproxy.git
