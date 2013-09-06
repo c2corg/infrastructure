@@ -1,6 +1,7 @@
 class c2cinfra::syslog::client {
 
   $syslog_server = hiera('syslog_host')
+  $logstash_server = hiera('logstash_host')
 
   package { "syslog":
     name   => "rsyslog",
@@ -19,6 +20,7 @@ class c2cinfra::syslog::client {
     content => inline_template('# file managed by puppet
 $MaxMessageSize 64k
 *.*    @@<%= syslog_server %>
+*.*    @<%= logstash_server %>:5544
 '),
     require => Package["syslog"],
     notify  => Service["syslog"],

@@ -11,6 +11,7 @@ class data::common {
   $riemann_host  = '192.168.192.128'
   $statsd_host   = '192.168.192.127'
   $syslog_host   = '192.168.192.126'
+  $logstash_host = '192.168.192.129'
   $broker_host   = '192.168.192.55'
 
   $puppetmaster_host = '192.168.192.101'
