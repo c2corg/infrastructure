@@ -59,6 +59,7 @@ retentions = 15s:7d,1m:21d,15m:5y
     lens    => 'Carbon.lns',
     changes => [
       'set cache/MAX_UPDATES_PER_SECOND 100',
+      'set cache/MAX_UPDATES_PER_SECOND_ON_SHUTDOWN 250',
       'set cache/MAX_CREATES_PER_MINUTE 25',
       'set cache/WHISPER_AUTOFLUSH True',
       'set cache/ENABLE_UDP_LISTENER True',
