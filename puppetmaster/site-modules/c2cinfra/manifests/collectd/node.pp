@@ -57,6 +57,7 @@ DeleteSocket true
 Tag collectd
 Tag "<%= @duty %>"
 Tag "<%= @lsbdistcodename %>"
+<% @role ||= "" -%>
 <% @role.split(",").each do |r| -%>
 Tag "<%= r %>"
 <% end -%>

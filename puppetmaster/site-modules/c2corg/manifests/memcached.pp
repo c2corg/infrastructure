@@ -18,7 +18,7 @@ session.save_path=<%= session_hosts.map { |host| "tcp://#{host}:11211" }.join(",
 memcache.session_redundancy=<%= session_hosts.count + 1 %>
 memcache.allow_failover=1
 '),
-    require => Package['php5-memcache'],
+    require => [Package['php5-memcache'], Package['apache']],
     notify  => Service['apache'],
   }
 
