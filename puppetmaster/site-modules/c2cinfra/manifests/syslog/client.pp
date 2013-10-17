@@ -18,6 +18,7 @@ class c2cinfra::syslog::client {
     path    => "/etc/rsyslog.d/remotelogs.conf",
     ensure  => present,
     content => inline_template('# file managed by puppet
+$SystemLogRateLimitInterval 0
 $MaxMessageSize 64k
 *.*    @@<%= syslog_server %>
 *.*    @<%= logstash_server %>:5544;RSYSLOG_ForwardFormat
