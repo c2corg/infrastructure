@@ -20,7 +20,7 @@ class c2cinfra::syslog::client {
     content => inline_template('# file managed by puppet
 $MaxMessageSize 64k
 *.*    @@<%= syslog_server %>
-*.*    @<%= logstash_server %>:5544
+*.*    @<%= logstash_server %>:5544;RSYSLOG_ForwardFormat
 '),
     require => Package["syslog"],
     notify  => Service["syslog"],
