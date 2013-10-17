@@ -97,7 +97,7 @@ rm -f $TMPFILE
   cron { 'update mcollective facts.yaml':
     user    => 'root',
     minute  => fqdn_rand(59),
-    command => '/usr/local/sbin/update-facts-dot-yaml.sh 2>/dev/null | logger -t update-facts',
+    command => '/usr/local/sbin/update-facts-dot-yaml.sh 2>/dev/null | logger -i -t update-facts',
   }
 
 }

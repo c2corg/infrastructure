@@ -118,7 +118,7 @@ true()                     smtp,smime,md5   -> reject
   }
 
   cron { "bulletin nivo":
-    command => "python2.6 /usr/local/bin/meteofrance.py -m smtp 2>&1 | logger -t meteofrance",
+    command => "python2.6 /usr/local/bin/meteofrance.py -m smtp 2>&1 | logger -i -t meteofrance",
     user    => "nobody",
     minute  => 15,
     hour    => [8,10,12,16,17,18,19],

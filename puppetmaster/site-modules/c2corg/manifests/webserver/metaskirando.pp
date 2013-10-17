@@ -19,7 +19,7 @@ class c2corg::webserver::metaskirando {
 
   if (hiera('duty') == 'prod') {
     cron { "update metaskirando data":
-      command => "/srv/www/metaskirando.camptocamp.org/get_data 2>&1 | logger -t metaskirando",
+      command => "/srv/www/metaskirando.camptocamp.org/get_data 2>&1 | logger -i -t metaskirando",
       user    => "www-data",
       minute  => [0,15,30,45],
       require => File["/var/www/metaskirando.camptocamp.org/private/data"],
