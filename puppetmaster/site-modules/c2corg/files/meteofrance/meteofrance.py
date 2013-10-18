@@ -361,7 +361,7 @@ def main():
     else:
         handler = logging.handlers.SysLogHandler(address='/dev/log')
 
-    formatter = logging.Formatter('%(name)25s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter('%(name)s[%(process)d]: %(levelname)s - %(message)s')
     handler.setFormatter(formatter)
 
     logger.setLevel(logging.DEBUG)
