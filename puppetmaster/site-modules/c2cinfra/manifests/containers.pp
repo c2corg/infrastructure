@@ -94,7 +94,7 @@ class c2cinfra::containers {
       lxc::container { 'pkg.pse.infra.camptocamp.org':
         ctid   => 125,
         suite  => 'wheezy',
-        fssize => '3G',
+        fssize => '6G',
       }
 
       lxc::container { 'pm.pse.infra.camptocamp.org':
