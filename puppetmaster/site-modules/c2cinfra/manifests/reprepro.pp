@@ -64,23 +64,29 @@ class c2cinfra::reprepro {
 
   /* setup a mini-webserver to publish all this stuff. */
 
-  include thttpd
+  class { 'nginx': package => 'nginx-light' }
 
-  file { "/etc/thttpd/thttpd.conf":
-    ensure  => present,
+  nginx::site { 'pkg':
+    require => File[$reprepro_basedir],
     content => "# file managed by puppet
-user=www-data
-chroot
-dir=$reprepro_basedir
-port=80
+server {
+  listen 80 default_server;
+  server_name pkg.dev.camptocamp.org;
+
+  location / {
+    root ${reprepro_basedir};
+    autoindex on;
+  }
+}
 ",
-    require => [Package["thttpd"], File[$reprepro_basedir]],
-    notify  => Service["thttpd"],
   }
 
   file { "${reprepro_basedir}/install-puppet.sh":
     ensure => present,
     source => 'puppet:///puppet/install-puppet.sh',
   }
+
+  package { 'thttpd': ensure => absent } ->
+  file { '/etc/thttpd/thttpd.conf': ensure => absent }
 
 }
