@@ -102,7 +102,9 @@ class c2corg::prod::env::symfony {
     minute  => [15,45],
   }
 
+  # disable potential image deletion culprit
   cron { "removeOldTempImages as www-data":
+    ensure  => absent,
     command => "sh /srv/www/camptocamp.org/batch/removeOldTempImages.sh",
     user    => 'www-data',
     minute  => 59,
