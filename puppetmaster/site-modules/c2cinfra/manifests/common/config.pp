@@ -28,6 +28,11 @@ options timeout:2 edns0
      value => 'C',
   }
 
+  file { '/etc/mtab':
+    ensure => symlink,
+    target => '/proc/mounts',
+  }
+
   if $::is_virtual != true {
     # kernel must reboot if panic occurs
     sysctl::value { "kernel.panic": value => "60" }
