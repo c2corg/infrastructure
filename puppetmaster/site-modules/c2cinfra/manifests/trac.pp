@@ -3,11 +3,21 @@ class c2cinfra::trac {
   include '::uwsgi'
   include '::runit'
 
+  if ($::lsbdistcodename == 'wheezy') {
+    apt::preferences { 'trac from bpo':
+      package  => 'trac',
+      pin      => "release a=${::lsbdistcodename}-backports",
+      priority => '1010',
+    }
+  }
+
   package { ['sqlite3', 'graphviz', 'libjs-jquery', 'python-subversion', 'php5-cli']:
     ensure => present,
   } ->
-
-  package { ['trac', 'trac-accountmanager', 'trac-email2trac', 'trac-mastertickets', 'trac-wikirename', 'trac-git', 'trac-github']:
+  package { 'trac-git':
+    ensure => absent,
+  } ->
+  package { ['trac', 'trac-accountmanager', 'trac-email2trac', 'trac-mastertickets', 'trac-wikirename', 'trac-github']:
     ensure => present,
     before => Runit::Service['trac'],
   }
