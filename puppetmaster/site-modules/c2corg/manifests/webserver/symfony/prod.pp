@@ -38,7 +38,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
     'MOBILE_VERSION_HOST'   => 'm.${sitename}',
     'CLASSIC_VERSION_HOST'  => 'www.${sitename}',
     'STATIC_HOST'           => 's.${sitename}',
-    'STATIC_BASE_URL'       => 'http://s.${sitename}',
+    'STATIC_BASE_URL'       => '//s.${sitename}',
     'SMTP'                  => '${smtp_server}',
     'ADVERTISING_RW_DIR'    => '${advertising_rw_dir}',
     'ADVERTISING_ADMIN'     => '${advertising_admin}',
