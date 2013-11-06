@@ -40,7 +40,7 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
     'MOBILE_VERSION_HOST'   => 'm.${sitename}',
     'CLASSIC_VERSION_HOST'  => 'www.${sitename}',
     'STATIC_HOST'           => 's.${sitename}',
-    'STATIC_BASE_URL'       => '//s.${sitename}',
+    'STATIC_BASE_URL'       => 'http://s.${sitename}',
     'GMAPS_KEY'             => '${preprod_gmaps_key}',
     'GEOPORTAIL_KEY'        => '${preprod_geoportail_key}',
   }
