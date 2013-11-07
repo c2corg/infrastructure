@@ -1,6 +1,6 @@
 class c2cinfra::filesystem::backup {
 
-  zpool { 'srv': disk => 'xvdd' }
+  zpool { 'srv': disk => 'xvdc' }
 
   zfs { 'srv/backups': ensure => present }
 

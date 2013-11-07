@@ -1,19 +1,19 @@
 class c2cinfra::backup::server {
 
-  package { 'zfs-fuse': ensure => present }
-
-  etcdefault { 'enable zfs at boot':
-    key     => 'ENABLE_ZFS',
-    file    => 'zfs-fuse',
-    value   => 'yes',
-    require => Package['zfs-fuse'],
-    before  => Service['zfs-fuse'],
+  apt::sources_list { 'zfsonlinux':
+    content => 'deb http://archive.zfsonlinux.org/debian wheezy main',
   }
 
-  service { 'zfs-fuse':
-    ensure    => running,
-    hasstatus => false,
-  }
+  apt::key { 'A71C1E00': }
+
+  # manually download and install this package from
+  # http://mirrors.gandi.net/kernel/debs
+  package { "linux-headers-${kernelversion}-xenu-${kernelversion}-amd64": } ->
+  file { ["/lib/modules/${kernelrelease}/build", "/lib/modules/${kernelrelease}/source"]:
+    ensure => link,
+    target => "/usr/src/linux-headers-3.2.52-xenu-3.2.52-amd64/"
+  } ->
+  package { ['debian-zfs', 'zfsutils']: }
 
   C2cinfra::Ssh::Userkey <<| tag == 'backups' |>>
   Zfs <<| tag == 'backups' |>>
@@ -24,17 +24,17 @@ class c2cinfra::backup::server {
     ensure => absent,
   }
 
-  cron { "daily backup increment":
-    command => "/usr/local/sbin/increment-backups.sh",
+  cron { 'daily backup increment':
+    command => '/usr/local/sbin/increment-backups.sh',
     hour    => 11,
     minute  => 20,
   }
 
-  file { "/usr/local/sbin/increment-backups.sh":
-    mode    => 0755,
-    owner   => "root",
-    before  => Cron["daily backup increment"],
-    require => Package["zfs-fuse"],
+  file { '/usr/local/sbin/increment-backups.sh':
+    mode    => '0755',
+    owner   => 'root',
+    before  => Cron['daily backup increment'],
+    require => Package['debian-zfs'],
     content => '#!/bin/sh
 
 export PATH="/bin:/sbin"
