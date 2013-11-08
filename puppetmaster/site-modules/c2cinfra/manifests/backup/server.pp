@@ -13,7 +13,12 @@ class c2cinfra::backup::server {
     ensure => link,
     target => "/usr/src/linux-headers-3.2.52-xenu-3.2.52-amd64/"
   } ->
-  package { ['debian-zfs', 'zfsutils']: }
+  package { ['debian-zfs', 'zfsutils']: } ->
+  etcdefault { 'mount ZFS at boot':
+    file  => 'zfs',
+    key   => 'ZFS_MOUNT',
+    value => 'yes',
+  }
 
   C2cinfra::Ssh::Userkey <<| tag == 'backups' |>>
   Zfs <<| tag == 'backups' |>>
