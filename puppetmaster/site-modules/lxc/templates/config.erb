@@ -8,10 +8,9 @@ lxc.tty                                 = 6
 lxc.pts                                 = 1024
 
 ## Capabilities
-lxc.cap.drop                            = mac_admin
-lxc.cap.drop                            = mac_override
-lxc.cap.drop                            = sys_admin
-lxc.cap.drop                            = sys_module
+<% cap_drop.each do |cap| -%>
+lxc.cap.drop                            = <%= cap %>
+<% end -%>
 ## Devices
 # Allow all devices
 #lxc.cgroup.devices.allow               = a
@@ -41,6 +40,9 @@ lxc.cgroup.devices.allow                = c 5:0 rwm
 lxc.cgroup.devices.allow                = c 1:9 rwm
 # /dev/zero
 lxc.cgroup.devices.allow                = c 1:5 rwm
+<% extra_devices.each do |device| -%>
+lxc.cgroup.devices.allow                = <%= device %>
+<% end -%>
 
 ## Limits
 #lxc.cgroup.cpu.shares                  = 1024

@@ -7,6 +7,8 @@ define lxc::container (
   $fssize=false,
   $suite,
   $ctid,
+  $cap_drop=['mac_admin','mac_override','sys_admin','sys_module'],
+  $extra_devices=[],
 ) {
 
   require 'lxc::host'
@@ -22,6 +24,11 @@ define lxc::container (
     ensure  => $ensure,
     content => template('lxc/preseed.cfg.erb'),
   }
+
+  #collectd::config::plugin { "collectd config for container ${ctname}":
+  #  plugin   => 'cgroups',
+  #  settings => "CGroup \"${ctname}\"",
+  #}
 
   file { "/etc/lxc/auto/${ctname}":
     ensure => $ensure ? {
