@@ -53,6 +53,10 @@ define lxc::container (
       require => File["/var/lib/lxc/${ctname}-preseed.cfg"],
       timeout => 0,
       logoutput => true,
+    } ->
+    file { "/var/lib/lxc/${ctname}/config":
+      ensure  => present,
+      content => template('lxc/config.erb'),
     }
 
     if ($autostart == true) {
