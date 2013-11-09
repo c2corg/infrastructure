@@ -27,4 +27,9 @@ Import haproxy
     ],
   }
 
+  collectd::config::plugin { 'monitor haproxy':
+    plugin   => 'processes',
+    settings => 'ProcessMatch "haproxy" "/usr/sbin/haproxy.*/etc/haproxy/haproxy.cfg"',
+  }
+
 }
