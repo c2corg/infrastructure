@@ -4,7 +4,7 @@ node 'hn4' inherits 'base-node' {
   include c2cinfra::hn::hn4
 
   include c2corg::database::prod
-  include c2cinfra::filesystem::postgres
+  include c2cinfra::filesystem::postgres84
   include c2corg::prod::env::postgres
 
   fact::register {

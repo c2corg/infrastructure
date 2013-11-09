@@ -1,4 +1,4 @@
-class c2cinfra::filesystem::postgres {
+class c2cinfra::filesystem::postgres84 {
 
   # /tmp
   logical_volume { "tmp":
