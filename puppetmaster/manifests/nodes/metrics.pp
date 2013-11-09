@@ -11,7 +11,7 @@ node 'metrics' inherits 'base-node' {
   }
 
   c2cinfra::backup::dir { [
-    '/var/lib/graphite/whisper',
+    '/var/lib/graphite',
   ]: }
 
 }
