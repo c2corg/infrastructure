@@ -74,6 +74,10 @@ define lxc::container (
       }
     }
 
+    c2cinfra::metrics::alias { "by-hardware-node/${::hostname}/${ctname}":
+      target => "collectd/${ctname}",
+    }
+
   } else {
 
     exec { "destroy container ${ctname}":

@@ -68,6 +68,12 @@ deb http://http.debian.net/debian/ wheezy-proposed-updates main contrib non-free
     include lxc::guest
   }
 
+  if $::duty {
+    c2cinfra::metrics::alias { "by-duty/${::duty}/${::hostname}":
+      target => "collectd/${::hostname}",
+    }
+  }
+
   # Marc doesn't need to use root's account every time he must
   # manually run puppet.
   realize C2cinfra::Account::User['marc']
