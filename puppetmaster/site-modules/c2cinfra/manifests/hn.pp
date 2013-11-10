@@ -23,7 +23,7 @@ class c2cinfra::hn {
 
   package { ['iozone3', 'setserial']: }
 
-  package { ["hdparm", "xfsprogs", "lvm2"]: }
+  package { ['hdparm', 'lvm2']: }
 
   package { 'lldpd':
     ensure => present,

@@ -22,7 +22,7 @@ class c2cinfra::common::packages {
     "unzip",
     "vim", "vlan",
     "whois", "wget",
-    "xauth",
+    "xauth", "xfsprogs",
     ]: ensure => installed
   }
 
