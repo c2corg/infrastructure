@@ -33,15 +33,6 @@ options timeout:2 edns0
     target => '/proc/mounts',
   }
 
-  if $::is_virtual != true {
-    # kernel must reboot if panic occurs
-    sysctl::value { "kernel.panic": value => "60" }
-    if $::datacenter =~ /c2corg|epnet|pse/ {
-      # disable tcp_sack due to Cisco bug in epnet routers
-      sysctl::value { "net.ipv4.tcp_sack": value => "0" }
-    }
-  }
-
   Etcdefault {
     notify => Service["sysstat"],
     file   => 'sysstat',
