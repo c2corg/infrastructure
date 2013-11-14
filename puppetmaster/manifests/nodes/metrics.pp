@@ -4,6 +4,7 @@ node 'metrics' inherits 'base-node' {
   include '::graphite::carbon'
   include '::graphite::webapp'
   include '::statsd::server::nodejs'
+  include '::c2cinfra::metrics::aliases'
 
   fact::register {
     'role': value => ['graphite', 'statsd'];
