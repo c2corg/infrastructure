@@ -31,6 +31,7 @@ class c2cinfra::collectd::node {
     plugin   => 'df',
     settings => '
       FSType "tmpfs"
+      FSType "bind"
       MountPoint "/dev"
       MountPoint "/dev/shm"
       MountPoint "/lib/init/rw"
