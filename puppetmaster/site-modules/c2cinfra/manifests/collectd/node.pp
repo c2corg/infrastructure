@@ -12,6 +12,7 @@ class c2cinfra::collectd::node {
 
   collectd::config::global {
     'FQDNLookup': value => 'false';
+    'Hostname':   value => "${::hostname}";
   }
 
   apt::preferences { 'collectd_from_c2corg':
