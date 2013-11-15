@@ -64,6 +64,9 @@ class c2cinfra::containers {
 
     }
 
+    'hn4': {
+    }
+
     'hn5': {
 
       lxc::container { 'rproxy.pse.infra.camptocamp.org':
