@@ -1,5 +1,7 @@
 class c2corg::apacheconf {
 
+  apache::module { 'proxy_http': }
+
   apache::vhost { "camptocamp.org":
     aliases => [
       "www.camptocamp.org",
