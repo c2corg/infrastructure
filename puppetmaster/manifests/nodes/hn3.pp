@@ -16,7 +16,7 @@ node 'hn3' inherits 'base-node' {
   include c2corg::apacheconf::prod
   include xcache
 
-  include c2cinfra::filesystem::symfony
+  include c2cinfra::filesystem::symfony_legacy
   include c2corg::prod::env::symfony
   include c2corg::prod::collectd::webserver
 
