@@ -64,6 +64,10 @@ class c2cinfra::containers {
 
     }
 
+    'hn3': {
+
+    }
+
     'hn4': {
 
       logical_volume { 'lxcsymfony0srvwww':     initial_size => '2G' } ->
