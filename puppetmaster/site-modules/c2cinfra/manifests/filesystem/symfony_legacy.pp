@@ -1,4 +1,4 @@
-class c2cinfra::filesystem::symfony {
+class c2cinfra::filesystem::symfony_legacy {
 
   # /tmp
   logical_volume { "tmp":
