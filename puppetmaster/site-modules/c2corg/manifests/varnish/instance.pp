@@ -80,6 +80,12 @@ class c2corg::varnish::instance {
 </Instance>
 ",
     }
+
+  collectd::config::plugin { 'monitor varnish':
+    plugin   => 'processes',
+    settings => "ProcessMatch \"varnish\" \"/usr/sbin/varnishd.*/etc/varnish/${::hostname}.vcl\"",
+  }
+
   }
 
 }

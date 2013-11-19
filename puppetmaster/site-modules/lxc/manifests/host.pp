@@ -86,4 +86,6 @@ class lxc::host {
     require => Package['live-debconfig'],
   }
 
+  c2cinfra::metrics::dir { "by-hardware-node/${::hostname}": }
+
 }

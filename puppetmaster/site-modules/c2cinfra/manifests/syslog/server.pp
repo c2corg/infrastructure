@@ -5,6 +5,8 @@ class c2cinfra::syslog::server inherits c2cinfra::syslog::client {
 
   package { "petit": ensure => present }
 
+  $db_host = hiera('db_host')
+
   File["local syslog config"] {
     path    => "/etc/syslog-ng/local.conf",
     content => "# file managed by puppet
@@ -27,7 +29,7 @@ destination d_postgresql_prod {
 
 filter f_postgresql_prod {
   program('postgres') and
-  host('192.168.192.5');
+  host('${db_host}');
 };
 
 log {

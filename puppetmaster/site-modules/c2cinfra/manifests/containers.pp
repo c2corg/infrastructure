@@ -1,5 +1,10 @@
 class c2cinfra::containers {
 
+  Logical_volume {
+    ensure       => present,
+    volume_group => 'vg0',
+  }
+
   case $::hostname {
     'hn0': {
 
@@ -56,6 +61,31 @@ class c2cinfra::containers {
         suite  => 'squeeze',
         fssize => '15G',
       }
+
+    }
+
+    'hn3': {
+
+    }
+
+    'hn4': {
+
+      logical_volume { 'lxcsymfony0srvwww':     initial_size => '2G' } ->
+      logical_volume { 'lxcsymfony0varwww':     initial_size => '15G' } ->
+      logical_volume { 'lxcsymfony0persistent': initial_size => '20G' }  ->
+      logical_volume { 'lxcsymfony0volatile':   initial_size => '40G' } ->
+      lxc::container { 'symfony0.pse.infra.camptocamp.org':
+        ctid   => 62,
+        suite  => 'wheezy',
+        fssize => '5G',
+        cap_drop => ['mac_admin','mac_override','sys_module'],
+        extra_devices => ['b 254:2 rwm', 'b 254:3 rwm', 'b 254:4 rwm', 'b 254:5 rwm'],
+      }
+
+      @@mknod { 'srvwww':     type => 'b', major => 254, minor => 2, tag => 'symfony0' }
+      @@mknod { 'varwww':     type => 'b', major => 254, minor => 3, tag => 'symfony0' }
+      @@mknod { 'persistent': type => 'b', major => 254, minor => 4, tag => 'symfony0' }
+      @@mknod { 'volatile':   type => 'b', major => 254, minor => 5, tag => 'symfony0' }
 
     }
 
@@ -158,6 +188,22 @@ class c2cinfra::containers {
         suite  => 'wheezy',
         fssize => '3G',
       }
+
+      logical_volume { 'lxcdb1pgbackup': initial_size => '30G' } ->
+      logical_volume { 'lxcdb1pgxlog':   initial_size => '5G' }  ->
+      logical_volume { 'lxcdb1pgdata':   initial_size => '40G' } ->
+      lxc::container { 'db1.pse.infra.camptocamp.org':
+        ctid   => 53,
+        suite  => 'wheezy',
+        fssize => '5G',
+        cap_drop => ['mac_admin','mac_override','sys_module'],
+        extra_devices => ['b 254:5 rwm', 'b 254:6 rwm', 'b 254:7 rwm'],
+      }
+
+      @@mknod { 'pgbackup': type => 'b', major => 254, minor => 5, tag => 'db1' }
+      @@mknod { 'pgxlog':   type => 'b', major => 254, minor => 6, tag => 'db1' }
+      @@mknod { 'pgdata':   type => 'b', major => 254, minor => 7, tag => 'db1' }
+
     }
   }
 }

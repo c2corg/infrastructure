@@ -1,15 +1,15 @@
 # hiera lookup based on "duty" fact
 class data::prod {
 
-  $db_host       = '192.168.192.5'
+  $db_host       = '192.168.192.53'
   $session_hosts = ['192.168.192.65', '192.168.192.66']
 
-  $symfony_master_host   = '192.168.192.4'
+  $symfony_master_host   = '192.168.192.62'
   $symfony_failover_host = '192.168.192.70'
   $c2cstats_host         = '192.168.192.75'
-  $metac2c_host          = '192.168.192.4'
-  $metaskirando_host     = '192.168.192.4'
-  $v4redirections_host   = '192.168.192.4'
+  $metac2c_host          = '192.168.192.62'
+  $metaskirando_host     = '192.168.192.62'
+  $v4redirections_host   = '192.168.192.62'
   $varnish_host          = '192.168.192.60'
 
 }

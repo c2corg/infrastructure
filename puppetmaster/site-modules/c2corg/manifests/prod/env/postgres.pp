@@ -20,7 +20,7 @@ class c2corg::prod::env::postgres {
   }
 
   sysctl::value {
-    "kernel.shmmax": value => "4127514624";
+    "kernel.shmmax": value => "4131987456";
     "kernel.shmall": value => "2097152";
   }
 

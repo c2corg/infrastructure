@@ -7,6 +7,8 @@ define lxc::container (
   $fssize=false,
   $suite,
   $ctid,
+  $cap_drop=['mac_admin','mac_override','sys_admin','sys_module'],
+  $extra_devices=[],
 ) {
 
   require 'lxc::host'
@@ -22,6 +24,11 @@ define lxc::container (
     ensure  => $ensure,
     content => template('lxc/preseed.cfg.erb'),
   }
+
+  #collectd::config::plugin { "collectd config for container ${ctname}":
+  #  plugin   => 'cgroups',
+  #  settings => "CGroup \"${ctname}\"",
+  #}
 
   file { "/etc/lxc/auto/${ctname}":
     ensure => $ensure ? {
@@ -53,6 +60,10 @@ define lxc::container (
       require => File["/var/lib/lxc/${ctname}-preseed.cfg"],
       timeout => 0,
       logoutput => true,
+    } ->
+    file { "/var/lib/lxc/${ctname}/config":
+      ensure  => present,
+      content => template('lxc/config.erb'),
     }
 
     if ($autostart == true) {
@@ -61,6 +72,10 @@ define lxc::container (
         unless  => "lxc-info -n ${ctname} --state | grep -q RUNNING",
         require => Exec["create container ${ctname}"],
       }
+    }
+
+    c2cinfra::metrics::alias { "by-hardware-node/${::hostname}/${ctname}":
+      target => "collectd/${ctname}",
     }
 
   } else {

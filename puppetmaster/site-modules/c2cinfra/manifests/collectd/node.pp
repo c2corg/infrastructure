@@ -12,6 +12,7 @@ class c2cinfra::collectd::node {
 
   collectd::config::global {
     'FQDNLookup': value => 'false';
+    'Hostname':   value => "${::hostname}";
   }
 
   apt::pin { 'collectd_from_c2corg':
@@ -32,6 +33,7 @@ class c2cinfra::collectd::node {
     plugin   => 'df',
     settings => '
       FSType "tmpfs"
+      FSType "bind"
       MountPoint "/dev"
       MountPoint "/dev/shm"
       MountPoint "/lib/init/rw"

@@ -1,152 +1,76 @@
 class c2cinfra::filesystem::symfony {
 
-  # /tmp
-  logical_volume { "tmp":
-    ensure       => present,
-    volume_group => "vg0",
-    initial_size => "1G",
-  }
-
-  filesystem { "/dev/vg0/tmp":
-    ensure  => present,
-    fs_type => "ext3",
-    require => Logical_volume["tmp"],
-  }
-
-  mount { "/tmp":
-    ensure  => mounted,
-    atboot  => true,
-    fstype  => "ext3",
-    options => "defaults",
-    device  => "/dev/vg0/tmp",
-    require => Filesystem["/dev/vg0/tmp"],
-    before  => File["/tmp"],
-  }
-
+  Mknod <<| tag == $::hostname |>> ->
 
   # /var/www
-  logical_volume { "www":
-    ensure       => present,
-    volume_group => "vg0",
-    initial_size => "5G",
-  }
-
-  filesystem { "/dev/vg0/www":
+  filesystem { '/dev/varwww':
     ensure  => present,
-    fs_type => "ext3",
-    require => Logical_volume["www"],
-  }
+    fs_type => 'ext4',
+  } ->
 
-  mount { "/var/www":
+  mount { '/var/www':
     ensure  => mounted,
     atboot  => true,
-    fstype  => "ext3",
-    options => "defaults",
-    device  => "/dev/vg0/www",
-    require => Filesystem["/dev/vg0/www"],
-  }
-
-
-  # /var/log
-  logical_volume { "log":
-    ensure       => present,
-    volume_group => "vg0",
-    initial_size => "2G",
-  }
-
-  filesystem { "/dev/vg0/log":
-    ensure  => present,
-    fs_type => "ext3",
-    require => Logical_volume["log"],
-  }
-
-  mount { "/var/log":
-    ensure  => mounted,
-    atboot  => true,
-    fstype  => "ext3",
-    options => "defaults",
-    device  => "/dev/vg0/log",
-    require => Filesystem["/dev/vg0/log"],
-  }
+    fstype  => 'ext4',
+    options => 'defaults',
+    device  => '/dev/varwww',
+  } ->
 
 
   # /srv/www
-  logical_volume { "c2corg":
-    ensure       => present,
-    volume_group => "vg0",
-    initial_size => "1G",
-  }
-
-  filesystem { "/dev/vg0/c2corg":
+  filesystem { '/dev/srvwww':
     ensure  => present,
-    fs_type => "ext3",
-    require => Logical_volume["c2corg"],
-  }
+    fs_type => 'ext4',
+  } ->
 
-  mount { "/srv/www":
+  mount { '/srv/www':
     ensure  => mounted,
     atboot  => true,
-    options => "noatime",
-    fstype  => "ext3",
-    device  => "/dev/vg0/c2corg",
+    options => 'noatime',
+    fstype  => 'ext4',
+    device  => '/dev/srvwww',
     require => [
-      Filesystem["/dev/vg0/c2corg"],
-      File["/srv/www"],
-      Vcsrepo["/srv/www/camptocamp.org"],
+      File['/srv/www'],
+      Vcsrepo['/srv/www/camptocamp.org'],
     ],
-  }
+  } ->
 
 
   # /srv/www/camptocamp.org/persistent
-  logical_volume { "persistent":
-    ensure       => present,
-    volume_group => "vg0",
-    initial_size => "80G",
-  }
-
-  filesystem { "/dev/vg0/persistent":
+  filesystem { '/dev/persistent':
     ensure  => present,
-    fs_type => "ext3",
-    require => Logical_volume["persistent"],
-  }
+    fs_type => 'ext4',
+  } ->
 
-  mount { "/srv/www/camptocamp.org/www-data/persistent":
+  mount { '/srv/www/camptocamp.org/www-data/persistent':
     ensure  => mounted,
     atboot  => true,
-    options => "noatime",
-    fstype  => "ext3",
-    device  => "/dev/vg0/persistent",
+    options => 'noatime',
+    fstype  => 'ext4',
+    device  => '/dev/persistent',
     require => [
-      Mount["/srv/www"],
-      Filesystem["/dev/vg0/persistent"],
-      Vcsrepo["/srv/www/camptocamp.org"],
+      Mount['/srv/www'],
+      Vcsrepo['/srv/www/camptocamp.org'],
     ],
-  }
+  } ->
 
 
   # /srv/www/camptocamp.org/volatile
-  logical_volume { "volatile":
-    ensure       => present,
-    volume_group => "vg0",
-    initial_size => "30G",
-  }
-
-  filesystem { "/dev/vg0/volatile":
+  filesystem { '/dev/volatile':
     ensure  => present,
-    fs_type => "xfs",
-    require => [Package["xfsprogs"], Logical_volume["volatile"]],
-  }
+    fs_type => 'xfs',
+    require => Package['xfsprogs'],
+  } ->
 
-  mount { "/srv/www/camptocamp.org/www-data/volatile":
+  mount { '/srv/www/camptocamp.org/www-data/volatile':
     ensure  => mounted,
     atboot  => true,
-    options => "noatime,nobarrier",
-    fstype  => "xfs",
-    device  => "/dev/vg0/volatile",
+    options => 'noatime,nobarrier',
+    fstype  => 'xfs',
+    device  => '/dev/volatile',
     require => [
-      Mount["/srv/www"],
-      Filesystem["/dev/vg0/volatile"],
-      Vcsrepo["/srv/www/camptocamp.org"],
+      Mount['/srv/www'],
+      Vcsrepo['/srv/www/camptocamp.org'],
     ],
   }
 
