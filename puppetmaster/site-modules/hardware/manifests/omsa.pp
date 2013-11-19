@@ -8,19 +8,21 @@ class hardware::omsa {
 
   apt::key { '34D8786F': }
 
-  apt::sources_list { 'dell-openmanage':
-    content => "deb http://linux.dell.com/repo/community/deb/${version}  /\n",
+  apt::source { 'dell-openmanage':
+    location => "http://linux.dell.com/repo/community/deb/${version}",
+    release  => '/',
+    repos    => ''
   }
 
-  apt::preferences { 'dell-openmanage':
-    package  => '*',
-    pin      => 'origin "linux.dell.com"',
+  apt::pin { 'dell-openmanage':
+    packages => '*',
+    origin   => 'linux.dell.com',
     priority => '50',
   }
 
-  apt::preferences { 'libsmbios2-from-dell':
-    package  => 'libsmbios2',
-    pin      => 'origin "linux.dell.com"',
+  apt::pin { 'libsmbios2-from-dell':
+    packages => 'libsmbios2',
+    origin   => 'linux.dell.com',
     priority => '1100',
   }
 

@@ -11,8 +11,12 @@ File {
   mode   => 0644,
 }
 
-Exec['apt-get_update'] -> Package <| tag != 'virtualresource' |>
+Exec['apt_update'] -> Package <| tag != 'virtualresource' |>
 Package['sudo'] -> Sudoers <| |>
+
+Apt::Source {
+  include_src => false,
+}
 
 Sudoers {
   hosts   => $::hostname,

@@ -1,28 +1,31 @@
 class puppet::client {
 
   # undo workaround for expired release files in snapshot.debian.org
-  apt::conf { "90snapshot-validity":
-    ensure  => present,
-    content => 'Acquire::Check-Valid-Until "true";',
+  apt::conf { 'snapshot-validity':
+    ensure    => present,
+    priority  => '90',
+    content   => 'Acquire::Check-Valid-Until "true";',
   }
 
-  apt::preferences { "puppet-packages_from_c2corg_repo":
-    package  => "puppet puppetmaster puppetmaster-common puppet-common vim-puppet puppetdb puppetdb-terminus",
-    pin      => "release l=C2corg, a=${::lsbdistcodename}",
-    priority => "1010",
+  apt::pin { 'puppet-packages_from_c2corg_repo':
+    packages => 'puppet puppetmaster puppetmaster-common puppet-common vim-puppet puppetdb puppetdb-terminus',
+    label    => 'C2corg',
+    release  => "${::lsbdistcodename}",
+    priority => '1010',
   }
 
-  apt::preferences { "facter_from_c2corg_repo":
-    package  => "facter",
-    pin      => "release l=C2corg, a=${::lsbdistcodename}",
-    priority => "1010",
+  apt::pin { 'facter_from_c2corg_repo':
+    packages => 'facter',
+    label    => 'C2corg',
+    release  => "${::lsbdistcodename}",
+    priority => '1010',
   }
 
   if $::lsbdistcodename == 'squeeze' {
-    apt::preferences { "augeas_from_bpo":
-      package  => "libaugeas0 augeas-lenses augeas-tools",
-      pin      => "release a=${::lsbdistcodename}-backports",
-      priority => "1010",
+    apt::pin { 'augeas_from_bpo':
+      packages => 'libaugeas0 augeas-lenses augeas-tools',
+      release  => "${::lsbdistcodename}-backports",
+      priority => '1010',
     }
   }
 

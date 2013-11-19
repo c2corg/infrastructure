@@ -1,10 +1,10 @@
 class sympa($dbhost, $dbport, $dbtype, $dbname, $dbuser, $dbpwd, $hname, $listmaster) {
 
-  apt::preferences { "sympa_from_c2corg_repo":
-    package  => "sympa",
-    pin      => "release l=C2corg, a=${::lsbdistcodename}",
-    priority => "1010",
-    before   => Package["sympa"],
+  apt::pin { 'sympa_from_c2corg_repo':
+    packages => 'sympa',
+    label    => 'C2corg',
+    release  => "${::lsbdistcodename}",
+    priority => '1010',
   }
 
 

@@ -8,121 +8,156 @@ class c2cinfra::apt {
 
   $pkgrepo = hiera('pkgrepo_host')
 
-  apt::sources_list { "debian":
-    content => inline_template("# file managed by puppet
-deb <%= debmirror %>/debian/ squeeze main contrib non-free
-deb http://security.debian.org/ squeeze/updates main contrib non-free
-deb <%= debmirror %>/debian/ squeeze-proposed-updates main contrib non-free
-
-deb <%= debmirror %>/debian/ wheezy main contrib non-free
-deb http://security.debian.org/ wheezy/updates main contrib non-free
-deb <%= debmirror %>/debian/ wheezy-proposed-updates main contrib non-free
-"),
+  apt::source { 'debian-squeeze':
+    location  => "${debmirror}/debian/",
+    release   => 'squeeze',
+    repos     => 'main contrib non-free',
   }
 
-  apt::sources_list { "c2corg":
-    content => "# file managed by puppet
-deb http://${pkgrepo}/c2corg/ ${::lsbdistcodename} main
-",
+  apt::source { 'debian-squeeze-security':
+    location  => "http://security.debian.org/",
+    release   => 'squeeze/updates',
+    repos     => 'main contrib non-free',
+  }
+
+  apt::source { 'debian-squeeze-proposed-updates':
+    location  => "${debmirror}/debian/",
+    release   => 'squeeze-proposed-updates',
+    repos     => 'main contrib non-free',
+  }
+
+  apt::source { 'debian-wheezy':
+    location  => "${debmirror}/debian/",
+    release   => 'wheezy',
+    repos     => 'main contrib non-free',
+  }
+
+  apt::source { 'debian-wheezy-security':
+    location  => "http://security.debian.org/",
+    release   => 'wheezy/updates',
+    repos     => 'main contrib non-free',
+  }
+
+  apt::source { 'debian-wheezy-proposed-updates':
+    location  => "${debmirror}/debian/",
+    release   => 'wheezy-proposed-updates',
+    repos     => 'main contrib non-free',
+  }
+
+
+  apt::source { 'c2corg':
+    location  => "http://${pkgrepo}/c2corg/",
+    release   => "${::lsbdistcodename}",
+    repos     => 'main',
   }
 
   if ($::lsbdistrelease != 'testing') {
-    apt::sources_list { "debian-backports":
-      content => inline_template('# file managed by puppet
-deb <%= @lsbdistcodename == "squeeze" ? "http://backports.debian.org/debian-backports" : "#{debmirror}/debian/" %> <%= @lsbdistcodename %>-backports main contrib non-free
-'),
+    apt::source { 'debian-backports':
+      location => $::lsbdistcodename ? {
+        'squeeze' => 'http://backports.debian.org/debian-backports',
+        default   => "${debmirror}/debian/",
+      },
+      release   => "${::lsbdistcodename}-backports",
+      repos     => 'main contrib non-free',
     }
   }
 
-  apt::key { "c2corg":
-    source => "http://${pkgrepo}/pubkey.txt",
+  apt::key { 'c2corg':
+    key_source => "http://${pkgrepo}/pubkey.txt",
   }
 
-  apt::preferences { "squeeze":
-    package  => "*",
-    pin      => "release n=squeeze",
+  apt::pin { 'squeeze':
+    packages => '*',
+    codename => 'squeeze',
     priority => undef,
   }
 
-  apt::preferences { "squeeze-proposed-updates":
-    package  => "*",
-    pin      => "release n=squeeze-proposed-updates",
+  apt::pin { 'squeeze-proposed-updates':
+    packages => '*',
+    codename => 'squeeze-proposed-updates',
     priority => undef,
   }
 
-  apt::preferences { "wheezy":
-    package  => "*",
-    pin      => "release n=wheezy",
+  apt::pin { 'wheezy':
+    packages => '*',
+    codename => 'wheezy',
     priority => undef,
   }
 
-  apt::preferences { "wheezy-proposed-updates":
-    package  => "*",
-    pin      => "release n=wheezy-proposed-updates",
+  apt::pin { 'wheezy-proposed-updates':
+    packages => '*',
+    codename => 'wheezy-proposed-updates',
     priority => undef,
   }
 
-  apt::preferences { "jessie":
-    package  => "*",
-    pin      => "release n=jessie",
+  apt::pin { 'jessie':
+    packages => '*',
+    codename => 'jessie',
     priority => undef,
   }
 
-  apt::preferences { "jessie-proposed-updates":
-    package  => "*",
-    pin      => "release n=jessie-proposed-updates",
+  apt::pin { 'jessie-proposed-updates':
+    packages => '*',
+    codename => 'jessie-proposed-updates',
     priority => undef,
   }
 
-  apt::preferences { "sid":
-    package  => "*",
-    pin      => "release n=sid",
-    priority => "20",
+  apt::pin { 'sid':
+    packages => '*',
+    codename => 'sid',
+    priority => '20',
   }
 
-  apt::preferences { "snapshots":
-    package  => "*",
-    pin      => "origin snapshot.debian.org",
-    priority => "10",
+  apt::pin { 'snapshots':
+    packages => '*',
+    origin   => 'snapshot.debian.org',
+    priority => '10',
   }
 
-  apt::preferences { "backports":
-    package  => "*",
-    pin      => "release a=${::lsbdistcodename}-backports",
-    priority => "50",
+  apt::pin { 'backports':
+    packages => '*',
+    release  => "${::lsbdistcodename}-backports",
+    priority => '50',
   }
 
-  apt::preferences { "c2corg":
-    package  => "*",
-    pin      => "release l=C2corg, a=${::lsbdistcodename}",
-    priority => "110",
+  apt::pin { 'c2corg':
+    packages => '*',
+    release  => "${::lsbdistcodename}",
+    label    => 'C2corg',
+    priority => '110',
   }
 
-  apt::conf { "10apt-cache-limit":
-    ensure  => present,
-    content => 'APT::Cache-Limit 50000000;',
+  apt::conf { 'apt-cache-limit':
+    ensure   => present,
+    priority => '10',
+    content  => 'APT::Cache-Limit 50000000;',
   }
 
-  apt::conf { "01default-release":
-    ensure  => present,
-    content => undef,
-  }
-
-
-  file { "/etc/apt/sources.list":
-    content => "# file managed by puppet\n",
-    before => Exec["apt-get_update"],
-    notify => Exec["apt-get_update"],
+  apt::conf { 'default-release':
+    ensure   => present,
+    priority => '01',
+    content  => undef,
   }
 
   package { 'unattended-upgrades': ensure => present }
 
-  apt::preferences { "backported unattended-upgrades version":
-    package  => "unattended-upgrades python-apt",
-    pin      => "release l=C2corg, a=${::lsbdistcodename}",
-    priority => "1100",
+  apt::pin { 'backported unattended-upgrades version':
+    packages => 'unattended-upgrades python-apt',
+    release  => "${::lsbdistcodename}",
+    label    => 'C2corg',
+    priority => '1100',
   }
 
+  apt::conf { 'avoid-installing-unnecessary-stuff':
+    ensure   => present,
+    priority => '50',
+    content  => '// file managed by puppet
+APT::Install-Recommends "0";
+APT::Install-Suggests "0";
+',
+  }
+
+  # used in 50unattended-upgrades.erb
   if ($::lsbdistrelease == 'testing') {
     $pattern = 'a=testing'
     $extra = ''
@@ -131,17 +166,10 @@ deb <%= @lsbdistcodename == "squeeze" ? "http://backports.debian.org/debian-back
     $extra = "o=Debian Backports,n=${::lsbdistcodename}-backports"
   }
 
-  apt::conf { '50avoid-installing-unnecessary-stuff':
-    ensure  => present,
-    content => '// file managed by puppet
-APT::Install-Recommends "0";
-APT::Install-Suggests "0";
-',
-  }
-
-  apt::conf { '50unattended-upgrades':
-    ensure  => present,
-    content => template('c2cinfra/apt/50unattended-upgrades.erb'),
+  apt::conf { 'unattended-upgrades':
+    ensure   => present,
+    priority => '50',
+    content  => template('c2cinfra/apt/50unattended-upgrades.erb'),
   }
 
   file { '/etc/apt/apt.conf.d/99unattended-upgrade':

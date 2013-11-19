@@ -8,10 +8,11 @@ class lxc::host {
   package { ['lxc', 'lxctl', 'bridge-utils', 'debootstrap']: ensure => present }
 
   # backported from sid, unless they get included in wheezy
-  apt::preferences { 'lxc-packages_from_c2corg_repo':
-    package  => 'lxc live-debconfig',
-    pin      => "release l=C2corg, a=${::lsbdistcodename}",
-    priority => "1010",
+  apt::pin { 'lxc-packages_from_c2corg_repo':
+    packages => 'lxc live-debconfig',
+    label    => 'C2corg',
+    release  => "${::lsbdistcodename}",
+    priority => '1010',
   }
 
   file { '/cgroup': ensure => directory }

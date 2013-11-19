@@ -2,10 +2,11 @@ class c2cinfra::rabbitmq {
 
   $mco_user = hiera('mco_user')
 
-  apt::preferences { "rabbitmq_from_c2corg_repo":
-    package  => "rabbitmq-server",
-    pin      => "release l=C2corg, a=${::lsbdistcodename}",
-    priority => "1010",
+  apt::pin { 'rabbitmq_from_c2corg_repo':
+    packages => 'rabbitmq-server',
+    label    => 'C2corg',
+    release  => "${::lsbdistcodename}",
+    priority => '1010',
   }
 
   class { "rabbitmq::server":

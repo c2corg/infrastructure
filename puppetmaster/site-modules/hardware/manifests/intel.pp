@@ -5,9 +5,9 @@ class hardware::intel {
   }
 
   # see http://lists.debian.org/debian-user/2013/09/msg00126.html
-  apt::preferences { 'backport intel microcode updates':
-    package  => 'intel-microcode amd64-microcode iucode-tool',
-    pin      => "release a=${::lsbdistcodename}-backports",
+  apt::pin { 'backport intel microcode updates':
+    packages => 'intel-microcode amd64-microcode iucode-tool',
+    release  => "${::lsbdistcodename}-backports",
     priority => '1010',
   }
 }

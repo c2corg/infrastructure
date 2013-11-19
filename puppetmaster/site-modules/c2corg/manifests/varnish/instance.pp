@@ -44,10 +44,10 @@ class c2corg::varnish::instance {
   }
 
   if $::lsbdistcodename == 'squeeze' {
-    apt::preferences { "varnish_from_bpo":
-      package  => "varnish libvarnishapi1",
-      pin      => "release a=${::lsbdistcodename}-backports",
-      priority => "1010",
+    apt::pin { 'varnish_from_bpo':
+      packages => 'varnish libvarnishapi1',
+      release  => "${::lsbdistcodename}-backports",
+      priority => '1010',
     }
   }
 

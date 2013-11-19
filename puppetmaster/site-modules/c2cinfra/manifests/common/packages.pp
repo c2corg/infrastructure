@@ -27,11 +27,11 @@ class c2cinfra::common::packages {
   }
 
   case $::lsbdistcodename {
-    "squeeze": {
-      apt::preferences { "misc_pkgs_from_bpo":
-        package  => "mosh",
-        pin      => "release a=${::lsbdistcodename}-backports",
-        priority => "1010",
+    'squeeze': {
+      apt::pin { 'misc_pkgs_from_bpo':
+        packages => 'mosh',
+        release  => "${::lsbdistcodename}-backports",
+        priority => '1010',
       }
 
     }

@@ -1,9 +1,9 @@
 class statsd::server::nodejs {
 
-  apt::preferences { 'statsd_from_c2corg_repo':
-    package  => 'statsd nodejs',
-    pin      => 'release l=C2corg',
-    priority => "1010",
+  apt::pin { 'statsd_from_c2corg_repo':
+    packages => 'statsd nodejs',
+    label    => 'C2corg',
+    priority => '1010',
   }
 
   package { 'statsd':

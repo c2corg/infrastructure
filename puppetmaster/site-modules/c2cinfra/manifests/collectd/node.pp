@@ -14,9 +14,10 @@ class c2cinfra::collectd::node {
     'FQDNLookup': value => 'false';
   }
 
-  apt::preferences { 'collectd_from_c2corg':
-    package  => 'collectd collectd-core collectd-dbg collectd-dev collectd-utils libcollectdclient-dev libcollectdclient1',
-    pin      => "release l=C2corg, a=${::lsbdistcodename}",
+  apt::pin { 'collectd_from_c2corg':
+    packages => 'collectd collectd-core collectd-dbg collectd-dev collectd-utils libcollectdclient-dev libcollectdclient1',
+    label    => 'C2corg',
+    release  =>  "${::lsbdistcodename}",
     priority => '1010',
   }
 
