@@ -3,7 +3,7 @@
 	url = http://github.com/camptocamp/puppet-augeas.git
 [submodule "puppetmaster/modules/apt"]
 	path = puppetmaster/modules/apt
-	url = http://github.com/camptocamp/puppet-apt.git
+	url = http://github.com/puppetlabs/puppetlabs-apt.git
 [submodule "puppetmaster/modules/openssl"]
 	path = puppetmaster/modules/openssl
 	url = http://github.com/camptocamp/puppet-openssl.git
