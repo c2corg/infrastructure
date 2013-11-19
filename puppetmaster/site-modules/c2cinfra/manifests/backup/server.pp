@@ -1,7 +1,9 @@
 class c2cinfra::backup::server {
 
-  apt::sources_list { 'zfsonlinux':
-    content => 'deb http://archive.zfsonlinux.org/debian wheezy main',
+  apt::source { 'zfsonlinux':
+    location => 'http://archive.zfsonlinux.org/debian',
+    release  => "${::lsbdistcodename}",
+    repos    => 'main',
   }
 
   apt::key { 'A71C1E00': }
