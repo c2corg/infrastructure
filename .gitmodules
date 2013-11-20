@@ -1,96 +1,96 @@
 [submodule "puppetmaster/modules/augeas"]
 	path = puppetmaster/modules/augeas
-	url = http://github.com/camptocamp/puppet-augeas.git
+	url = https://github.com/camptocamp/puppet-augeas
 [submodule "puppetmaster/modules/apt"]
 	path = puppetmaster/modules/apt
-	url = http://github.com/puppetlabs/puppetlabs-apt.git
+	url = https://github.com/puppetlabs/puppetlabs-apt
 [submodule "puppetmaster/modules/openssl"]
 	path = puppetmaster/modules/openssl
-	url = http://github.com/camptocamp/puppet-openssl.git
+	url = https://github.com/camptocamp/puppet-openssl
 [submodule "puppetmaster/modules/postfix"]
 	path = puppetmaster/modules/postfix
-	url = http://github.com/camptocamp/puppet-postfix.git
+	url = https://github.com/camptocamp/puppet-postfix
 [submodule "puppetmaster/modules/sysctl"]
 	path = puppetmaster/modules/sysctl
-	url = http://github.com/duritong/puppet-sysctl.git
+	url = https://github.com/duritong/puppet-sysctl
 [submodule "puppetmaster/modules/reprepro"]
 	path = puppetmaster/modules/reprepro
-	url = http://github.com/camptocamp/puppet-reprepro.git
+	url = https://github.com/camptocamp/puppet-reprepro
 [submodule "puppetmaster/modules/iptables"]
 	path = puppetmaster/modules/iptables
-	url = http://github.com/kbarber/puppet-iptables.git
+	url = https://github.com/kbarber/puppet-iptables
 [submodule "puppetmaster/modules/sudo"]
 	path = puppetmaster/modules/sudo
-	url = http://github.com/bodepd/puppet-sudo.git
+	url = https://github.com/bodepd/puppet-sudo
 [submodule "puppetmaster/modules/rabbitmq"]
 	path = puppetmaster/modules/rabbitmq
-	url = http://github.com/puppetlabs/puppetlabs-rabbitmq.git
+	url = https://github.com/puppetlabs/puppetlabs-rabbitmq
 [submodule "puppetmaster/modules/vcsrepo"]
 	path = puppetmaster/modules/vcsrepo
-	url = http://github.com/puppetlabs/puppetlabs-vcsrepo.git
+	url = https://github.com/puppetlabs/puppetlabs-vcsrepo
 [submodule "puppetmaster/modules/lvm"]
 	path = puppetmaster/modules/lvm
-	url = http://github.com/puppetlabs/puppetlabs-lvm.git
+	url = https://github.com/puppetlabs/puppetlabs-lvm
 [submodule "puppetmaster/modules/stdlib"]
 	path = puppetmaster/modules/stdlib
-	url = http://github.com/puppetlabs/puppetlabs-stdlib.git
+	url = https://github.com/puppetlabs/puppetlabs-stdlib
 [submodule "puppetmaster/modules/puppetdbquery"]
 	path = puppetmaster/modules/puppetdbquery
-	url = http://github.com/dalen/puppet-puppetdbquery.git
+	url = https://github.com/dalen/puppet-puppetdbquery
 [submodule "puppetmaster/modules/concat"]
 	path = puppetmaster/modules/concat
-	url = http://github.com/ripienaar/puppet-concat.git
+	url = https://github.com/ripienaar/puppet-concat
 [submodule "puppetmaster/modules/lldp"]
 	path = puppetmaster/modules/lldp
-	url = http://github.com/mfournier/puppet-lldp.git
+	url = https://github.com/mfournier/puppet-lldp
 [submodule "puppetmaster/modules/varnish"]
 	path = puppetmaster/modules/varnish
-	url = http://github.com/camptocamp/puppet-varnish.git
+	url = https://github.com/camptocamp/puppet-varnish
 [submodule "puppetmaster/modules/apache"]
 	path = puppetmaster/modules/apache
-	url = http://github.com/camptocamp/puppet-apache.git
+	url = https://github.com/camptocamp/puppet-apache
 [submodule "puppetmaster/modules/postgresql"]
 	path = puppetmaster/modules/postgresql
-	url = http://github.com/camptocamp/puppet-postgresql.git
+	url = https://github.com/camptocamp/puppet-postgresql
 [submodule "puppetmaster/modules/pgconf"]
 	path = puppetmaster/modules/pgconf
-	url = http://github.com/camptocamp/puppet-pgconf.git
+	url = https://github.com/camptocamp/puppet-pgconf
 [submodule "puppetmaster/modules/postgis"]
 	path = puppetmaster/modules/postgis
-	url = http://github.com/camptocamp/puppet-postgis.git
+	url = https://github.com/camptocamp/puppet-postgis
 [submodule "puppetmaster/modules/mapserver"]
 	path = puppetmaster/modules/mapserver
-	url = http://github.com/camptocamp/puppet-mapserver.git
+	url = https://github.com/camptocamp/puppet-mapserver
 [submodule "puppetmaster/modules/collectd"]
 	path = puppetmaster/modules/collectd
-	url = http://github.com/mfournier/puppet-collectd.git
+	url = https://github.com/mfournier/puppet-collectd
 [submodule "puppetmaster/modules/python"]
 	path = puppetmaster/modules/python
-	url = http://github.com/stankevich/puppet-python.git
+	url = https://github.com/stankevich/puppet-python
 [submodule "puppetmaster/modules/ruby"]
 	path = puppetmaster/modules/ruby
-	url = http://github.com/camptocamp/puppet-ruby.git
+	url = https://github.com/camptocamp/puppet-ruby
 [submodule "puppetmaster/modules/php"]
 	path = puppetmaster/modules/php
-	url = http://github.com/camptocamp/puppet-php.git
+	url = https://github.com/camptocamp/puppet-php
 [submodule "puppetmaster/modules/buildenv"]
 	path = puppetmaster/modules/buildenv
-	url = http://github.com/camptocamp/puppet-buildenv.git
+	url = https://github.com/camptocamp/puppet-buildenv
 [submodule "puppetmaster/modules/kmod"]
 	path = puppetmaster/modules/kmod
-	url = http://github.com/camptocamp/puppet-kmod.git
+	url = https://github.com/camptocamp/puppet-kmod
 [submodule "puppetmaster/modules/memcached"]
 	path = puppetmaster/modules/memcached
-	url = git://github.com/saz/puppet-memcached.git
+	url = git://github.com/saz/puppet-memcached
 [submodule "puppetmaster/modules/runit"]
 	path = puppetmaster/modules/runit
-	url = http://github.com/mstrauss/puppet-runit.git
+	url = https://github.com/mstrauss/puppet-runit
 [submodule "puppetmaster/modules/uwsgi"]
 	path = puppetmaster/modules/uwsgi
-	url = http://github.com/mfournier/puppet-uwsgi.git
+	url = https://github.com/mfournier/puppet-uwsgi
 [submodule "puppetmaster/modules/riemann_report"]
 	path = puppetmaster/modules/riemann_report
-	url = git://github.com/jamtur01/puppet-riemann.git
+	url = https://github.com/jamtur01/puppet-riemann
 [submodule "puppetmaster/site-modules/haproxy/files/collectd-haproxy"]
 	path = puppetmaster/site-modules/haproxy/files/collectd-haproxy
-	url = https://github.com/mfournier/collectd-haproxy.git
+	url = https://github.com/mfournier/collectd-haproxy
