@@ -49,7 +49,7 @@ class puppet::server {
     'master/storeconfigs_backend':  value => 'puppetdb';
     'master/dbadapter':             value => '', ensure => absent;
     # reporting
-    'master/reports': value => 'store,log,puppetdb,riemann';
+    'master/reports': value => 'log,puppetdb,riemann';
     # config_version
     'marc/config_version':  value => '/usr/bin/git --git-dir /home/marc/infrastructure/.git rev-parse --short master 2>/dev/null || echo unknown';
     'main/config_version':  value => '/usr/bin/git --git-dir /srv/infrastructure/.git rev-parse --short master 2>/dev/null || echo unknown';
@@ -128,12 +128,6 @@ port = 8081
   collectd::config::plugin { 'monitor puppetmasterd':
     plugin   => 'processes',
     settings => 'ProcessMatch "puppetmasterd" "/usr/bin/puppet master"',
-  }
-
-  tidy { '/var/lib/puppet/reports/':
-    age     => '2w',
-    type    => 'mtime',
-    recurse => true,
   }
 
   file { '/etc/puppet/hiera':
