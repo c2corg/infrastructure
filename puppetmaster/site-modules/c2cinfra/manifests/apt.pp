@@ -62,7 +62,8 @@ class c2cinfra::apt {
     }
   }
 
-  apt::key { 'c2corg':
+  # c2corg reprepro signing key
+  apt::key { '6C074B04':
     key_source => "http://${pkgrepo}/pubkey.txt",
   }
 
