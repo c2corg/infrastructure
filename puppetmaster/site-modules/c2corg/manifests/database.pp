@@ -20,6 +20,8 @@ class c2corg::database {
   } ->
   class { 'postgis': }
 
+  # default ACLs
+
   postgresql::server::pg_hba_rule { 'trust postgres user':
     type        => 'local',
     database    => 'all',
@@ -29,13 +31,40 @@ class c2corg::database {
     order       => '010',
   }
 
+  postgresql::server::pg_hba_rule { 'allow authenticated users over ipv4 loopback':
+    type        => 'host',
+    database    => 'all',
+    user        => 'all',
+    address     => '127.0.0.1/32',
+    auth_method => 'md5',
+    order       => '015',
+  }
+
+  postgresql::server::pg_hba_rule { 'allow authenticated users over ipv6 loopback':
+    type        => 'host',
+    database    => 'all',
+    user        => 'all',
+    address     => '::1/128',
+    auth_method => 'md5',
+    order       => '015',
+  }
+
+  postgresql::server::pg_hba_rule { 'allow authenticated users over local socket':
+    type        => 'local',
+    database    => 'all',
+    user        => 'all',
+    address     => undef,
+    auth_method => 'md5',
+    order       => '015',
+  }
+
   postgresql::server::pg_hba_rule { 'forbid non-ssl connections':
     type        => 'host',
     database    => 'all',
     user        => 'all',
     address     => '0.0.0.0/0',
     auth_method => 'reject',
-    order       => '015',
+    order       => '020',
   }
 
 
