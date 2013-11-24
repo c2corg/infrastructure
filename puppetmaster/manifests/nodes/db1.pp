@@ -10,11 +10,7 @@ node 'db1' inherits 'base-node' {
     'duty': value => 'prod';
   }
 
-  class { 'postgresql::backup':
-    backup_format => 'custom',
-    backup_dir    => '/var/backups/pgsql',
-  }
-
+  include c2cinfra::backup::postgresql
   c2cinfra::backup::dir { '/var/backups/pgsql': }
 
 }

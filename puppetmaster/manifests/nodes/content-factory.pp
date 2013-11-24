@@ -15,11 +15,7 @@ node 'content-factory' inherits 'base-node' {
     'duty': value => 'dev';
   }
 
-  class { 'postgresql::backup':
-    backup_format => 'custom',
-    backup_dir    => '/var/backups/pgsql',
-  }
-
+  include c2cinfra::backup::postgresql
   c2cinfra::backup::dir { '/var/backups/pgsql': }
 
 }
