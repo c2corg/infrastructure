@@ -3,6 +3,7 @@ class data::common {
 
   $db_port = '5432'
   $db_host = '127.0.0.1'
+  $db_replication_master_host = '127.0.0.1'
   $session_hosts = ['127.0.0.1']
 
   $pkgrepo_host = 'pkg.dev.camptocamp.org'
@@ -30,6 +31,7 @@ class data::common {
 
   $www_db_user = "www-data"
   $ml_db_user = "sympa"
+  $replication_db_user = "replication"
   $mco_user = "mco"
 
   # All defined keys & passwords. Values used in production are stored on the
@@ -37,6 +39,7 @@ class data::common {
   $prod_db_pass = "password"
   $preprod_db_pass = "password"
   $dev_db_pass = "password"
+  $replication_db_pass = "password"
 
   $mco_pass = "password"
   $mco_psk  = "psk"
