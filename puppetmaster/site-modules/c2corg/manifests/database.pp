@@ -27,7 +27,7 @@ class c2corg::database {
     database    => 'all',
     user        => 'postgres',
     address     => undef,
-    auth_method => 'peer',
+    auth_method => 'ident',
     order       => '010',
   }
 
