@@ -60,6 +60,7 @@ DeleteSocket true
 Tag collectd
 Tag "<%= @duty %>"
 Tag "<%= @lsbdistcodename %>"
+Tag "puppet_config_version:<%= scope.catalog.version %>"
 <% @role ||= "" -%>
 <% @role.split(",").each do |r| -%>
 Tag "<%= r %>"
