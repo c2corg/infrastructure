@@ -64,7 +64,7 @@ class c2corg::database {
     user        => 'all',
     address     => '0.0.0.0/0',
     auth_method => 'reject',
-    order       => '020',
+    order       => '990',
   }
 
 
