@@ -2,6 +2,7 @@
 node 'db1' inherits 'base-node' {
 
   include c2corg::database::prod
+  include c2corg::database::replication::master
   include c2cinfra::filesystem::postgres91
   include c2corg::prod::env::postgres
 
