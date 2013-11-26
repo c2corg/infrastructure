@@ -34,15 +34,15 @@ from lxml.html import fromstring, tostring
 
 # config
 
-BASE_URL = "http://france.meteofrance.com/france/MONTAGNE?MONTAGNE_PORTLET.path=montagnebulletinneige/"
+BASE_URL = "http://www.meteofrance.com/previsions-meteo-montagne/bulletin-avalanches/d/av"
 WORK_DIR = "/var/cache/meteofrance/"
 SENDER = 'nobody@lists.camptocamp.org'
 STORE_NIVO = WORK_DIR + 'meteofrance.json'
 STORE_NIVO_TEXT = WORK_DIR + 'meteofrance_text.json'
 STORE_SYNTH = WORK_DIR + 'meteofrance_synth.json'
-DEPT_LIST = ["DEPT74", "DEPT73", "DEPT38", "DEPT04", "DEPT05", "DEPT06",
-             "DEPT2A", "DEPT2B", "DEPT66", "DEPT31", "DEPT09", "ANDORRE",
-             "DEPT64", "DEPT65"]
+DEPT_LIST = ["dept74", "dept73", "dept38", "dept04", "dept05", "dept06",
+             "dept2A", "dept2B", "dept66", "dept31", "dept09", "andorre",
+             "dept64", "dept65"]
 TITLE_NIVO = u"neige et avalanches"
 TITLE_SYNTH = u"de synthèse hebdomadaire"
 CONTENT_NIVO = u"""Le bulletin neige et avalanches est constitué d'images,
@@ -167,7 +167,7 @@ class MFBot():
             return
 
         content = resp.read().decode('iso-8859-1', 'replace')
-        self.page = fromstring(content, base_url='http://france.meteofrance.com/')
+        self.page = fromstring(content, base_url='http://www.meteofrance.com/')
 
     def prepare_mail(self, recipient, html_content, txt_content, **kwargs):
         """
@@ -185,7 +185,7 @@ class MFBot():
         part.
         """
 
-        nivo_content = self.page.get_element_by_id("bulletinNeigeMontagne")
+        nivo_content = self.page.get_element_by_id("p_p_id_bulletinsNeigeAvalanche_WAR_mf3rpcportlet_")
         img_list = nivo_content.cssselect('img')
         if not img_list:
             self.log.info('%s nivo images - No images', self.dept)
@@ -247,7 +247,7 @@ class MFBot():
         Send text bulletin when it replaces image bulletin
         """
 
-        nivo_content = self.page.get_element_by_id("bulletinNeigeMontagne")
+        nivo_content = self.page.cssselect('#p_p_id_bulletinsNeigeAvalanche_WAR_mf3rpcportlet_ .mod-massif .mod-body')
         nivo_html = tostring(nivo_content,
                              encoding='iso-8859-1').decode('utf-8')
 
@@ -255,7 +255,8 @@ class MFBot():
             self.log.info('%s nivo text - No bulletin', self.dept)
             return
 
-        nivo_html = nivo_html.replace('<div id="bulletinNeigeMontagne">', '')
+        nivo_html = nivo_html.replace('<p class="p-style-2">', '')
+        nivo_html = nivo_html.replace('<p/>', '')
         nivo_html = re.sub(r'<a.*?</a>', r'', nivo_html)
         nivo_html = re.sub(r'<h3.*?</h3>', r'', nivo_html)
         nivo_html = re.sub(r'<div.*?</div>', r'', nivo_html)
