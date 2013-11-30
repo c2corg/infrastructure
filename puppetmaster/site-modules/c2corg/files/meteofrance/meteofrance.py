@@ -255,12 +255,14 @@ class MFBot():
             self.log.info('%s nivo text - Empty text, nothing to do',
                           self.dept)
             return
-
+        
+        content_html = content.replace('\n', '<br\>')
+        
         ctx = {'bulletin_type': TITLE_NIVO,
                'dept': self.dept,
                'full_url': self.url}
 
-        mail = self.prepare_mail(recipient, content, content, **ctx)
+        mail = self.prepare_mail(recipient, content_html, content, **ctx)
 
         try:
             with open(STORE_NIVO_TEXT, 'r') as f:
