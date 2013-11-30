@@ -10,7 +10,7 @@ class c2corg::webserver::symfony {
   package { ["php5-pgsql", "php5-gd", "php-pear"]: }
   package { "gettext": }
   package { "imagemagick": }
-  package { "ruby-sass": }
+  package { "ruby-compass": }
 
   # short_open_tag conflicts with <?xml ... headers
   augeas { 'disable php short open tags':
