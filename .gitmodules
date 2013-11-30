@@ -21,7 +21,7 @@
 	url = https://github.com/kbarber/puppet-iptables
 [submodule "puppetmaster/modules/sudo"]
 	path = puppetmaster/modules/sudo
-	url = https://github.com/bodepd/puppet-sudo
+	url = https://github.com/puppetlabs/puppetlabs-sudo
 [submodule "puppetmaster/modules/rabbitmq"]
 	path = puppetmaster/modules/rabbitmq
 	url = https://github.com/puppetlabs/puppetlabs-rabbitmq
@@ -39,7 +39,7 @@
 	url = https://github.com/dalen/puppet-puppetdbquery
 [submodule "puppetmaster/modules/concat"]
 	path = puppetmaster/modules/concat
-	url = https://github.com/ripienaar/puppet-concat
+	url = https://github.com/puppetlabs/puppetlabs-concat
 [submodule "puppetmaster/modules/lldp"]
 	path = puppetmaster/modules/lldp
 	url = https://github.com/mfournier/puppet-lldp
@@ -84,7 +84,7 @@
 	url = https://github.com/mstrauss/puppet-runit
 [submodule "puppetmaster/modules/uwsgi"]
 	path = puppetmaster/modules/uwsgi
-	url = https://github.com/mfournier/puppet-uwsgi
+	url = https://github.com/bkuberek/puppet-uwsgi
 [submodule "puppetmaster/modules/riemann_report"]
 	path = puppetmaster/modules/riemann_report
 	url = https://github.com/jamtur01/puppet-riemann
