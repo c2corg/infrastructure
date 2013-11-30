@@ -30,19 +30,19 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formatdate
 
-from lxml.html import fromstring, tostring
+from lxml.html import tostring
 
 # config
 
-BASE_URL = "http://www.meteofrance.com/previsions-meteo-montagne/bulletin-avalanches/d/av"
+BASE_URL = "http://www.meteofrance.com/mf3-rpc-portlet/rest/bulletins/lastest/fwfx5/AV"
 WORK_DIR = "/var/cache/meteofrance/"
 SENDER = 'nobody@lists.camptocamp.org'
 STORE_NIVO = WORK_DIR + 'meteofrance.json'
 STORE_NIVO_TEXT = WORK_DIR + 'meteofrance_text.json'
 STORE_SYNTH = WORK_DIR + 'meteofrance_synth.json'
-DEPT_LIST = ["dept74", "dept73", "dept38", "dept04", "dept05", "dept06",
-             "dept2A", "dept2B", "dept66", "dept31", "dept09", "andorre",
-             "dept64", "dept65"]
+DEPT_LIST = ["DEPT74", "DEPT73", "DEPT38", "DEPT04", "DEPT05", "DEPT06",
+             "DEPT2A", "DEPT2B", "DEPT66", "DEPT31", "DEPT09", "ANDORRE",
+             "DEPT64", "DEPT65"]
 TITLE_NIVO = u"neige et avalanches"
 TITLE_SYNTH = u"de synthèse hebdomadaire"
 CONTENT_NIVO = u"""Le bulletin neige et avalanches est constitué d'images,
@@ -143,7 +143,7 @@ class MFBot():
     This bot parses Meteofrance's snow bulletin and send an email with the
     extracted content.
     """
-    def __init__(self, dept=None):
+    def __init__(self, dept):
         cj = cookielib.CookieJar()
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
         self.opener.addheaders = [('User-agent', 'MFBot/1.0')]
@@ -152,8 +152,7 @@ class MFBot():
         self.dept = dept
         self.url = BASE_URL + dept
         self.status = 1
-        if dept:
-            self.get_content()
+        self.get_content()
 
     def get_content(self):
         """
@@ -166,15 +165,14 @@ class MFBot():
             self.log.error('%s - page not available', self.dept)
             return
 
-        content = resp.read().decode('iso-8859-1', 'replace')
-        self.page = fromstring(content, base_url='http://www.meteofrance.com/')
+        self.content = json.loads(resp.read().decode('utf-8'))
 
     def prepare_mail(self, recipient, html_content, txt_content, **kwargs):
         """
         Do the string substitutions in the templates and return a Mail object
         """
         bulletin_html = HTML_TPL.format(content=html_content, **kwargs)
-        bulletin_txt = TXT_TPL.format(content=CONTENT_NIVO, **kwargs)
+        bulletin_txt = TXT_TPL.format(content=txt_content, **kwargs)
         subject = SUBJECT_TPL.format(**kwargs)
 
         return Mail(recipient, bulletin_txt, bulletin_html, subject)
@@ -247,54 +245,39 @@ class MFBot():
         Send text bulletin when it replaces image bulletin
         """
 
-        nivo_content = self.page.cssselect('#p_p_id_bulletinsNeigeAvalanche_WAR_mf3rpcportlet_ .mod-massif .mod-body')
-        nivo_html = tostring(nivo_content,
-                             encoding='iso-8859-1').decode('utf-8')
+        content = self.content['corpsBulletin']
 
-        if re.match('.*Pas de bulletin disponible pour ce lieu.*', nivo_html):
+        if re.match('.*Pas de bulletin disponible pour ce lieu.*', content):
             self.log.info('%s nivo text - No bulletin', self.dept)
             return
 
-        nivo_html = nivo_html.replace('<p class="p-style-2">', '')
-        nivo_html = nivo_html.replace('<p/>', '')
-        nivo_html = re.sub(r'<a.*?</a>', r'', nivo_html)
-        nivo_html = re.sub(r'<h3.*?</h3>', r'', nivo_html)
-        nivo_html = re.sub(r'<div.*?</div>', r'', nivo_html)
-        nivo_html = nivo_html.replace('</div>', '')
-        nivo_html = re.sub(r'<t.*?>', r'', nivo_html)
-        nivo_html = re.sub(r'</t.*?>', r'', nivo_html)
-        nivo_html = re.sub(r'<!--', r'', nivo_html)
-        nivo_html = re.sub(r'-->', r'', nivo_html)
-        nivo_html = re.sub(r'(<br\s*/?>\s*){3,}', r'<br>', nivo_html)
-        nivo_txt = re.sub(r'<br\s*/?>', r'\n', nivo_html)
+        if len(content) < 300:
+            self.log.info('%s nivo text - Empty text, nothing to do',
+                          self.dept)
+            return
 
-        if len(nivo_txt) > 300:
-            ctx = {'bulletin_type': TITLE_NIVO,
-                   'dept': self.dept,
-                   'full_url': self.url}
+        ctx = {'bulletin_type': TITLE_NIVO,
+               'dept': self.dept,
+               'full_url': self.url}
 
-            m = self.prepare_mail(recipient, nivo_html, nivo_txt, **ctx)
+        mail = self.prepare_mail(recipient, content, content, **ctx)
 
-            try:
-                with open(STORE_NIVO_TEXT, 'r') as f:
-                    nivo_ref = json.load(f)
-            except IOError:
-                nivo_ref = {}
+        try:
+            with open(STORE_NIVO_TEXT, 'r') as f:
+                nivo_ref = json.load(f)
+        except IOError:
+            nivo_ref = {}
 
-            if (self.dept in nivo_ref and
-                len(nivo_ref[self.dept]) == len(nivo_txt) and
-                nivo_ref[self.dept] == nivo_txt):
-                self.log.info('%s nivo text - No change - Nothing to do', self.dept)
-            else:
-                # text changed -> send the mail and store new text
-                self.log.info('%s nivo text - Sending mail', self.dept)
-                m.send(method=method)
-
-                nivo_ref[self.dept] = nivo_txt
-                with open(STORE_NIVO_TEXT, 'w') as f:
-                    json.dump(nivo_ref, f)
+        if nivo_ref.get(self.dept, '') == content:
+            self.log.info('%s nivo text - No change, nothing to do', self.dept)
         else:
-            self.log.info('%s nivo text - Empty text - Nothing to do', self.dept)
+            # text changed -> send the mail and store new text
+            self.log.info('%s nivo text - Sending mail', self.dept)
+            mail.send(method=method)
+
+            nivo_ref[self.dept] = content
+            with open(STORE_NIVO_TEXT, 'w') as f:
+                json.dump(nivo_ref, f)
 
     def send_synth_text(self, recipient, method='smtp'):
         """
@@ -373,12 +356,12 @@ def main():
             "meteofrance-%s@lists.camptocamp.org" % dept.replace('DEPT', '')
 
         try:
-            bot = MFBot(dept=dept)
+            bot = MFBot(dept)
 
             if bot.status:
-                bot.send_nivo_images(recipient, method=args.smtp_method)
+                # bot.send_nivo_images(recipient, method=args.smtp_method)
                 bot.send_nivo_text(recipient, method=args.smtp_method)
-                bot.send_synth_text(recipient, method=args.smtp_method)
+                # bot.send_synth_text(recipient, method=args.smtp_method)
         except KeyboardInterrupt:
             sys.exit('Ctrl-C pressed, aborting.')
         except:
