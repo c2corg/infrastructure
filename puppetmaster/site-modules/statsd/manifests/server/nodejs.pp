@@ -1,8 +1,14 @@
 class statsd::server::nodejs {
 
   apt::pin { 'statsd_from_c2corg_repo':
-    packages => 'statsd nodejs',
+    packages => 'statsd',
     label    => 'C2corg',
+    priority => '1010',
+  }
+
+  apt::pin { 'nodejs from bpo':
+    packages => 'nodejs',
+    release  => "${::lsbdistcodename}-backports",
     priority => '1010',
   }
 
