@@ -6,11 +6,17 @@ class c2corg::webserver::symfony {
   include php
   include postgresql::client
 
-  apache::module { ["headers", "expires"]: }
-  package { ["php5-pgsql", "php5-gd", "php-pear"]: }
-  package { "gettext": }
-  package { "imagemagick": }
-  package { "ruby-compass": }
+  apache::module { ['headers', 'expires']: }
+  package { ['php5-pgsql', 'php5-gd', 'php-pear']: }
+  package { 'gettext': }
+  package { 'imagemagick': }
+  package { ['ruby-compass', 'node-uglify']: }
+
+  apt::pin { 'uglifyjs from bpo':
+    packages => 'nodejs node-uglify',
+    release  => "${::lsbdistcodename}-backports",
+    priority => '1010',
+  }
 
   # short_open_tag conflicts with <?xml ... headers
   augeas { 'disable php short open tags':
