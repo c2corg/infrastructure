@@ -60,7 +60,7 @@
 	url = https://github.com/camptocamp/puppet-mapserver
 [submodule "puppetmaster/modules/collectd"]
 	path = puppetmaster/modules/collectd
-	url = https://github.com/mfournier/puppet-collectd
+	url = https://github.com/camptocamp/puppet-collectd
 [submodule "puppetmaster/modules/python"]
 	path = puppetmaster/modules/python
 	url = https://github.com/stankevich/puppet-python
