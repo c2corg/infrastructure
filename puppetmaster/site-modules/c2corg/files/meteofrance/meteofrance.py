@@ -256,7 +256,7 @@ class MFBot():
                           self.dept)
             return
         
-        content_html = content.replace('\n', '<br\>')
+        content_html = content.replace('\n', '<br/>')
         
         ctx = {'bulletin_type': TITLE_NIVO,
                'dept': self.dept,
