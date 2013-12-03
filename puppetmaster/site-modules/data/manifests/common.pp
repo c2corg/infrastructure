@@ -8,6 +8,8 @@ class data::common {
 
   $pkgrepo_host = 'pkg.dev.camptocamp.org'
 
+  $root_mail_recipient = 'invalid@email.tld'
+
   $carbon_host   = '192.168.192.127'
   $riemann_host  = '192.168.192.128'
   $statsd_host   = '192.168.192.127'

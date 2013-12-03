@@ -36,30 +36,28 @@ class c2corg::webserver::symfony {
     require => Package["python-setuptools"],
   }
 
-  $sender_relay_map = "/etc/postfix/sender_relay"
-  $sasl_pw_map      = "/etc/postfix/sasl_pw"
+  $sender_relay_map = '/etc/postfix/sender_relay'
+  $sasl_pw_map      = '/etc/postfix/sasl_pw'
 
   postfix::config {
-    "sender_dependent_relayhost_maps":      value => "hash:${sender_relay_map}";
-    "smtp_sasl_password_maps":              value => "hash:${sasl_pw_map}";
-    "smtp_sender_dependent_authentication": value => "yes";
-    "smtp_sasl_security_options":           value => "noanonymous";
-    "smtp_sasl_auth_enable":                value => "yes";
-    "smtp_use_tls":                         value => "yes";
+    'sender_dependent_relayhost_maps':      value => "hash:${sender_relay_map}";
+    'smtp_sasl_password_maps':              value => "hash:${sasl_pw_map}";
+    'smtp_sender_dependent_authentication': value => 'yes';
+    'smtp_sasl_security_options':           value => 'noanonymous';
+    'smtp_sasl_auth_enable':                value => 'yes';
+    'smtp_use_tls':                         value => 'yes';
   }
 
-  package { "libsasl2-modules": notify => Service["postfix"] }
+  package { 'libsasl2-modules': notify => Service['postfix'] }
 
   postfix::hash { $sender_relay_map:
     content => "noreply@camptocamp.org    [smtp.gmail.com]:587\n",
-    before  => Postfix::Config["sender_dependent_relayhost_maps"],
   }
 
   $noreply_pass = hiera('noreply_pass')
 
   postfix::hash { $sasl_pw_map:
     content => "smtp.gmail.com    noreply@camptocamp.org:${noreply_pass}\n",
-    before  => Postfix::Config["smtp_sasl_password_maps"],
   }
 
   file { "/srv/www":

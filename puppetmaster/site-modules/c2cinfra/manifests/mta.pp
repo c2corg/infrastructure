@@ -1,15 +1,16 @@
 class c2cinfra::mta {
 
-  $postfix_relayhost = "googlemail.com"
-  $root_mail_recipient = "marc.fournier@camptocamp.org"
-
   if ($::hostname != 'lists') {
-    include postfix::satellite
+    class { '::postfix':
+      root_mail_recipient => hiera('root_mail_recipient'),
+      relayhost           => 'googlemail.com',
+    }
+    class { '::postfix::satellite': }
   }
 
-  postfix::config { "smtp_tls_CAfile":
-    value   => "/etc/ssl/certs/ca-certificates.crt",
-    require => File["ca-certificates.crt"],
+  postfix::config { 'smtp_tls_CAfile':
+    value   => '/etc/ssl/certs/ca-certificates.crt',
+    require => File['ca-certificates.crt'],
   }
 
 }

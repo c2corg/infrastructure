@@ -1,13 +1,9 @@
 class c2corg::mailinglists {
 
-  include c2cinfra::mta # just import attributes
-
   include c2cinfra::collectd::plugin::postfix
 
   $listmaster = 'listmaster@camptocamp.org'
   $hname      = 'lists.camptocamp.org'
-  $postfix_smtp_listen = "0.0.0.0"
-  $root_mail_recipient = $c2cinfra::mta::root_mail_recipient
 
   class { 'sympa':
     dbhost     => hiera('db_host'),

@@ -1,21 +1,25 @@
-class sympa::mta($hname) inherits postfix {
+class sympa::mta($hname) {
 
-  Postfix::Config["myorigin"] { value => $::fqdn }
-
-  postfix::config {
-    "myhostname":         value => $::fqdn;
-    "mydestination":      value => "$::fqdn,$hname";
-    "mynetworks":         value => "127.0.0.0/8";
-    "virtual_alias_maps": value => "hash:/etc/postfix/virtual";
-    "transport_maps":     value => "hash:/etc/postfix/transport";
-    "relayhost":          value => "", ensure => absent;
+  class { '::postfix':
+    myorigin            => $::fqdn,
+    mynetworks          => '127.0.0.0/8',
+    mydestination       => "$::fqdn,$hname",
+    smtp_listen         => '0.0.0.0',
+    root_mail_recipient => hiera('root_mail_recipient'),
   }
 
-  postfix::hash { "/etc/postfix/virtual":
+  postfix::config {
+    'myhostname':         value => $::fqdn;
+    'virtual_alias_maps': value => 'hash:/etc/postfix/virtual';
+    'transport_maps':     value => 'hash:/etc/postfix/transport';
+    'relayhost':          value => '', ensure => absent;
+  }
+
+  postfix::hash { '/etc/postfix/virtual':
     ensure => present,
   }
 
-  postfix::hash { "/etc/postfix/transport":
+  postfix::hash { '/etc/postfix/transport':
     ensure => present,
   }
 
