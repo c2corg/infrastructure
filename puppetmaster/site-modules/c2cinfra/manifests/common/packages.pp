@@ -15,7 +15,7 @@ class c2cinfra::common::packages {
     "less", "locales-all", "logrotate", "lsb-release", "lsof",
     "man-db", "m4", "make", "mosh", "mtr-tiny",
     "netcat", "ngrep", "nmap", "ntp",
-    "patch", "psmisc", "pwgen",
+    "patch", "psmisc", "pv", "pwgen",
     "rsync",
     "screen", "socat", "strace", "sudo", "subversion", "subversion-tools", "sysstat",
     "tcpdump", "telnet", "time", "tmux", "traceroute", "tshark",
