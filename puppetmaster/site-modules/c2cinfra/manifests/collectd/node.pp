@@ -86,6 +86,28 @@ Tag "<%= r %>"
 ",
   }
 
+  collectd::config::plugin { 'aggregate CPU metrics':
+    plugin   => 'aggregation',
+    settings => '
+<Aggregation>
+  Plugin "cpu"
+  Type "cpu"
+
+  SetPlugin "cpu"
+  SetPluginInstance "%{aggregation}"
+
+  GroupBy "Host"
+  GroupBy "TypeInstance"
+
+  CalculateSum true
+  CalculateAverage true
+  CalculateMinimum true
+  CalculateMaximum true
+</Aggregation>
+',
+  }
+
+
   if $::lsbdistcodename == 'squeeze' {
     collectd::plugin { 'interface': }
   } else {
