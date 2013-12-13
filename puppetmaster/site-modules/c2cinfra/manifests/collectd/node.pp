@@ -67,7 +67,6 @@ Tag "<%= r %>"
 <% end -%>
 <Node riemann>
   Host "<%= scope.function_hiera("riemann_host") %>"
-  AlwaysAppendDS true
 </Node>
 '),
   }
