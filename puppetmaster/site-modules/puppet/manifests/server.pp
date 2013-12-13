@@ -113,6 +113,12 @@ port = 8081
 ',
   }
 
+  file { '/etc/puppet/hiera':
+    ensure => directory,
+    group  => 'adm',
+    mode   => 2775,
+  }
+
   $riemann_host = hiera('riemann_host')
 
   class { '::riemann::client::ruby': } ->
@@ -130,10 +136,27 @@ port = 8081
     settings => 'ProcessMatch "puppetmasterd" "/usr/bin/puppet master"',
   }
 
-  file { '/etc/puppet/hiera':
-    ensure => directory,
-    group  => 'adm',
-    mode   => 2775,
+  collectd::config::plugin { 'puppetdb metrics':
+    plugin   => 'curl_json',
+    settings => template('puppet/collectd-puppetdb.conf'),
+  }
+
+  collectd::config::chain { 'PuppetDbNiceNames':
+    type     => 'precache',
+    targets  => ['replace'],
+    matches  => ['regex'],
+    settings => '
+<Rule "nice_names_for_puppetdb">
+  <Match "regex">
+    Plugin "^curl_json$"
+    PluginInstance "^puppetdb_"
+  </Match>
+  <Target "replace">
+    Plugin "curl_json" "puppetdb"
+    PluginInstance "puppetdb_" ""
+  </Target>
+</Rule>
+',
   }
 
 }
