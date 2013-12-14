@@ -1,8 +1,8 @@
 # hiera lookup based on "duty" fact
 class data::prod {
 
-  $db_host       = '192.168.192.53'
-  $db_replication_master_host = '192.168.192.53'
+  $db_host       = '192.168.192.52'
+  $db_replication_master_host = '192.168.192.52'
   $session_hosts = ['192.168.192.65', '192.168.192.66']
 
   $symfony_master_host   = '192.168.192.62'
