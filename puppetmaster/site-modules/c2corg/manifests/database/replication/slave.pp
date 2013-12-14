@@ -15,7 +15,10 @@ class c2corg::database::replication::slave {
   $replication_pass = hiera('replication_db_pass')
 
   postgresql::server::config_entry {
-    'hot_standby' : value => 'on';
+    'hot_standby'       : value => 'on';
+    'wal_level'         : ensure => absent;
+    'max_wal_senders'   : ensure => absent;
+    'wal_keep_segments' : ensure => absent;
   }
 
   file { "${::postgresql::params::datadir}/recovery.conf":
