@@ -309,7 +309,7 @@ class MFBot():
 
         synth_html = tostring(synth_content[0],
                               encoding='iso-8859-1').decode('utf-8')
-        synth_html = synth_html.replace('<p class="p-style-2">A74261211', '')
+        synth_html = re.sub('<p class="p-style-2">.*?<br>', '', synth_html)
         synth_html = synth_html.replace('</p>', '')
         synth_txt = re.sub(r'<br\s*/?>', r'\n', synth_html)
 
