@@ -22,6 +22,7 @@ import logging.handlers
 import os
 import re
 import smtplib
+import signal
 import sys
 import urllib2
 
@@ -29,11 +30,12 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formatdate
-from lxml.html import tostring
+from lxml.html import tostring, fromstring
 from urllib2 import HTTPError
 
 # config
 
+BASE_URL = "http://www.meteofrance.com/previsions-meteo-montagne/bulletin-avalanches/synthese/d/AV"
 REST_URL = "http://www.meteofrance.com/mf3-rpc-portlet/rest/"
 WORK_DIR = "/var/cache/meteofrance/"
 SENDER = 'nobody@lists.camptocamp.org'
@@ -151,10 +153,9 @@ class MFBot():
 
         self.log = logging.getLogger('MFBot')
         self.dept = dept
-        self.status = 1
 
-    def get_content(self, url):
-        """Download a url and load the json."""
+    def get_url(self, url):
+        """Download an url."""
 
         self.log.debug('Downloading %s ...', url)
         try:
@@ -164,10 +165,20 @@ class MFBot():
             raise
 
         if resp.getcode() != 200:
-            self.status = 0
             self.log.error('%s - page not available', self.dept)
             return
 
+        return resp
+
+    def get_html(self, url):
+        """Download page and load the html."""
+        resp = self.get_url(url)
+        return fromstring(resp.read().decode('iso-8859-1', 'replace'),
+                          base_url='http://www.meteofrance.com/')
+
+    def get_json(self, url):
+        """Download an url and load the json."""
+        resp = self.get_url(url)
         return json.loads(resp.read().decode('utf-8'))
 
     def prepare_mail(self, recipient, html_content, txt_content, **kwargs):
@@ -187,8 +198,8 @@ class MFBot():
         """
 
         # broken !
-        # url = REST_URL + "bulletins/lastest/fwfx5/AV" + self.dept
-        # content = self.get_content(url)
+        url = REST_URL + "bulletins/lastest/fwfx5/AV" + self.dept
+        content = self.get_html(url)
 
         nivo_content = content.get_element_by_id("p_p_id_bulletinsNeigeAvalanche_WAR_mf3rpcportlet_")
         img_list = nivo_content.cssselect('img')
@@ -203,7 +214,8 @@ class MFBot():
         for i in range(len(img_list)):
             html_content += img_code.format(id=i + 1)
 
-        ctx = {'bulletin_type': TITLE_NIVO, 'dept': self.dept, 'full_url': url}
+        ctx = {'bulletin_type': TITLE_NIVO, 'dept': self.dept,
+               'full_url': url}
 
         m = self.prepare_mail(recipient, html_content, CONTENT_NIVO, **ctx)
 
@@ -234,9 +246,10 @@ class MFBot():
             img_ref = {}
 
         if (self.dept in img_ref and
-            len(img_ref[self.dept]) == len(img_src) and
-            img_ref[self.dept] == img_src):
-            self.log.info('%s nivo images - No change - Nothing to do', self.dept)
+                len(img_ref[self.dept]) == len(img_src) and
+                img_ref[self.dept] == img_src):
+            self.log.info('%s nivo images - No change, nothing to do',
+                          self.dept)
         else:
             # images changed -> send the mail and store new image names
             self.log.info('%s nivo images - Sending mail', self.dept)
@@ -250,7 +263,7 @@ class MFBot():
         """Send text bulletin when it replaces image bulletin."""
 
         url = REST_URL + "bulletins/lastest/fwfx5/AV" + self.dept
-        content = self.get_content(url)['corpsBulletin']
+        content = self.get_json(url)['corpsBulletin']
 
         if re.match('.*Pas de bulletin disponible pour ce lieu.*', content):
             self.log.info('%s nivo text - No bulletin', self.dept)
@@ -286,10 +299,9 @@ class MFBot():
     def send_synth_text(self, recipient, method='smtp'):
         """Send weekly synthesis."""
 
-        # broken !
-        # url = REST_URL + "bulletins/lastest/fwfx5/AV" + self.dept
-        # content = self.get_content(url)
-        synth_content = content.cssselect("#bulletinSyntheseMontagne .bulletinText")
+        url = BASE_URL + self.dept
+        content = self.get_html(url)
+        synth_content = content.cssselect(".mod-body .p-style-2")
 
         if not synth_content:
             self.log.info('%s synth - No content', self.dept)
@@ -297,8 +309,8 @@ class MFBot():
 
         synth_html = tostring(synth_content[0],
                               encoding='iso-8859-1').decode('utf-8')
-        synth_html = synth_html.replace('<div class="onlyText bulletinText">', '')
-        synth_html = synth_html.replace('</div>', '')
+        synth_html = synth_html.replace('<p class="p-style-2">A74261211', '')
+        synth_html = synth_html.replace('</p>', '')
         synth_txt = re.sub(r'<br\s*/?>', r'\n', synth_html)
 
         if len(synth_txt) > 300:
@@ -314,9 +326,9 @@ class MFBot():
                 synth_ref = {}
 
             if (self.dept in synth_ref and
-                len(synth_ref[self.dept]) == len(synth_txt) and
-                synth_ref[self.dept] == synth_txt):
-                self.log.info('%s synth - No change - Nothing to do', self.dept)
+                    len(synth_ref[self.dept]) == len(synth_txt) and
+                    synth_ref[self.dept] == synth_txt):
+                self.log.info('%s synth - No change, nothing to do', self.dept)
             else:
                 # text changed -> send the mail and store new text
                 self.log.info('%s synth - Sending mail', self.dept)
@@ -340,7 +352,7 @@ def main():
     parser.add_argument('-t', '--to', action='store', dest='recipient',
                         help='Recipient of the mail (useful for tests).')
     parser.add_argument('-d', '--debug', action='store_true',
-                        help="Debug mode: print logs, ")
+                        help="Debug mode: print logs, set WORK_DIR to cwd.")
     args = parser.parse_args()
 
     # logging config
@@ -364,19 +376,24 @@ def main():
         recipient = args.recipient or \
             "meteofrance-%s@lists.camptocamp.org" % dept.replace('DEPT', '')
 
-        try:
-            bot = MFBot(dept)
+        bot = MFBot(dept)
 
-            if bot.status:
-                # bot.send_nivo_images(recipient, method=args.smtp_method)
-                bot.send_nivo_text(recipient, method=args.smtp_method)
-                # bot.send_synth_text(recipient, method=args.smtp_method)
-        except KeyboardInterrupt:
-            sys.exit('Ctrl-C pressed, aborting.')
-        except HTTPError:
-            pass
-        except:
-            logger.error("Unexpected error: %s" % sys.exc_info()[1])
+        # 'nivo_images',
+        for bulletin_type in ('nivo_text', 'synth_text'):
+            func = getattr(bot, 'send_' + bulletin_type)
+
+            try:
+                func(recipient, method=args.smtp_method)
+            except HTTPError:
+                pass
+            except Exception:
+                logger.error("Unexpected error: %s" % sys.exc_info()[1])
+
+
+def signal_handler(signal, frame):
+    sys.exit('Ctrl-C pressed, aborting.')
+
 
 if __name__ == '__main__':
+    signal.signal(signal.SIGINT, signal_handler)
     main()
