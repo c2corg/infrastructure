@@ -71,7 +71,18 @@ retentions = 15s:7d,1m:21d,15m:5y
     group   => '_graphite',
     logdir  => '/var/log/carbon',
     rundir  => '/var/lib/graphite',
-    command => '/usr/bin/carbon-cache --debug --pidfile=carbon-cache.pid --config=/etc/carbon/carbon.conf start',
+    content => '#!/bin/bash
+
+envdir="/etc/sv/carbon-cache/env"
+root=/var/lib/graphite
+echo "Starting carbon-cache from ${root}"
+cd $root
+mkdir -p "${envdir}"
+rm -f "${root}/carbon-cache.pid"
+exec 2>&1
+exec chpst -e "${envdir}" -u _graphite:_graphite /usr/bin/carbon-cache --debug --pidfile=carbon-cache.pid --config=/etc/carbon/carbon.conf start
+',
+    finish_command => '/usr/bin/carbon-cache --debug --pidfile=/var/lib/graphite/carbon-cache.pid --config=/etc/carbon/carbon.conf stop; rm -f /var/lib/graphite/carbon-cache.pid',
   }
 
 }
