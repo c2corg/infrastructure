@@ -13,7 +13,6 @@ node 'base-node' {
   include c2cinfra::hosts
   include c2cinfra::syslog::client
   include c2cinfra::sudo # TODO: only if package sudo is installed
-  include vz::facts
 
   class { 'apt':
     purge_sources_list   => true,
