@@ -23,6 +23,7 @@ import os
 import re
 import smtplib
 import signal
+import subprocess
 import sys
 import urllib2
 
@@ -39,7 +40,7 @@ BASE_URL = "http://www.meteofrance.com/previsions-meteo-montagne/bulletin-avalan
 REST_URL = "http://www.meteofrance.com/mf3-rpc-portlet/rest/"
 WORK_DIR = "/var/cache/meteofrance/"
 SENDER = 'nobody@lists.camptocamp.org'
-STORE_NIVO = 'meteofrance.json'
+STORE_NIVO = 'meteofrance_nivo.json'
 STORE_NIVO_TEXT = 'meteofrance_text.json'
 STORE_SYNTH = 'meteofrance_synth.json'
 DEPT_LIST = ["DEPT74", "DEPT73", "DEPT38", "DEPT04", "DEPT05", "DEPT06",
@@ -197,67 +198,60 @@ class MFBot():
         part.
         """
 
-        # broken !
-        url = REST_URL + "bulletins/lastest/fwfx5/AV" + self.dept
-        content = self.get_html(url)
+        dept = self.dept.replace('DEPT', '').lower()
 
-        nivo_content = content.get_element_by_id("p_p_id_bulletinsNeigeAvalanche_WAR_mf3rpcportlet_")
-        img_list = nivo_content.cssselect('img')
-
-        if not img_list:
-            self.log.info('%s nivo images - No images', self.dept)
+        try:
+            subprocess.check_call(['phantomjs', 'meteofrance.js', dept])
+        except subprocess.CalledProcessError:
+            self.log.error('%s phantomjs script failed.', self.dept)
             return
 
+        with open(os.path.join(WORK_DIR, 'meteofrance.json'), 'r') as f:
+            data = json.load(f)
+
+        if dept not in data:
+            self.log.error('%s Data not found', self.dept)
+            return
+
+        data = data[dept]
+
+        # find all images
+        img_list = re.findall(r'mf_OPP.*?\.png', data['content'])
+
         # generate the <img> codes for each image
-        img_code = '<img src="cid:image{id}"><br>'
-        html_content = ""
-        for i in range(len(img_list)):
-            html_content += img_code.format(id=i + 1)
+        html_content = re.sub(r'(mf_OPP.*?\.png)', r'cid:\1', data['content'])
 
-        ctx = {'bulletin_type': TITLE_NIVO, 'dept': self.dept,
-               'full_url': url}
-
+        ctx = {'bulletin_type': TITLE_NIVO, 'dept': self.dept, 'full_url': ''}
         m = self.prepare_mail(recipient, html_content, CONTENT_NIVO, **ctx)
 
-        img_src = []
-
-        for i, im in enumerate(img_list):
-            im.make_links_absolute()
-            src = im.get('src')
-            img_src.append(os.path.basename(src))
-            resp = self.opener.open(src)
-
-            if resp.getcode() != 200:
-                self.log.error('%s - cannot retrieve %s', self.dept, src)
-                continue
+        for filename in img_list:
+            with open(filename) as f:
+                img = f.read()
 
             # Open the files in binary mode. Let the MIMEImage class
             # automatically guess the specific image type.
-            msg_image = MIMEImage(resp.read())
+            msg_image = MIMEImage(img)
 
             # Define the image's ID as referenced above
-            msg_image.add_header('Content-ID', '<image{id}>'.format(id=i + 1))
+            msg_image.add_header('Content-ID', '<{}>'.format(filename))
             m.attach(msg_image)
 
         try:
             with open(os.path.join(WORK_DIR, STORE_NIVO), 'r') as f:
-                img_ref = json.load(f)
+                data_ref = json.load(f)
         except IOError:
-            img_ref = {}
+            data_ref = {}
 
-        if (self.dept in img_ref and
-                len(img_ref[self.dept]) == len(img_src) and
-                img_ref[self.dept] == img_src):
-            self.log.info('%s nivo images - No change, nothing to do',
-                          self.dept)
+        ref = data_ref.get(self.dept)
+        if ref and ref == data['content']:
+            self.log.info('%s nivo - No change, nothing to do', self.dept)
         else:
-            # images changed -> send the mail and store new image names
-            self.log.info('%s nivo images - Sending mail', self.dept)
+            self.log.info('%s nivo - Sending mail', self.dept)
             m.send(method=method)
+            data_ref[self.dept] = data['content']
 
-            img_ref[self.dept] = img_src
-            with open(os.path.join(WORK_DIR, STORE_NIVO), 'w') as f:
-                json.dump(img_ref, f)
+        with open(os.path.join(WORK_DIR, STORE_NIVO), 'w') as f:
+            json.dump(data_ref, f)
 
     def send_nivo_text(self, recipient, method='smtp'):
         """Send text bulletin when it replaces image bulletin."""
@@ -378,8 +372,7 @@ def main():
 
         bot = MFBot(dept)
 
-        # 'nivo_images',
-        for bulletin_type in ('nivo_text', 'synth_text'):
+        for bulletin_type in ('nivo_images', 'nivo_text', 'synth_text'):
             func = getattr(bot, 'send_' + bulletin_type)
 
             try:
