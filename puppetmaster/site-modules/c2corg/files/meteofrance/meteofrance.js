@@ -341,7 +341,7 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
                 var section = $(".article-row:eq(0)");
                 var range_name = section.find("h3")[0].innerHTML;
                 // toc
-                toc += "<a href='#" + range.id + "'>" + range_name + "</a><br />";
+                toc += "<a href='#" + range.id + "'>" + range_name + "</a><br /><br />";
                 // mountain range title
                 return "<hr />" +
                        "<a href='" + url + "' id='" + range.id + "'><h3>" + range_name + "</h3></a>"+
@@ -446,6 +446,9 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
 
                 return content;
               });
+              
+              // link to toc
+              output += "<p><a href='#toc'><i>Sommaire</i></a></p>";
 
               return next(status, range.url);
             } catch (e) {
@@ -459,6 +462,7 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
         }
       });
     } else {
+      toc = "<p id='toc'>" + toc + "</p>";
       output = toc + output;
       return finalClbk(output);
     }
