@@ -60,15 +60,18 @@ Bulletin {bulletin_type} - {dept}
 
 {content}
 
-----
+--------------------------------------------------------------------------------
+
 Ce bulletin {bulletin_type} est rédigé par MétéoFrance ({full_url}).
 La liste de diffusion est gérée par Camptocamp-association (http://www.camptocamp.org).
 
 Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse suivante :
 http://www.camptocamp.org/users/mailinglists
 
-N’hésitez pas à saisir vos sorties pour rapporter vos observations sur les conditions nivologiques
-et l'activité avalancheuse : http://www.camptocamp.org/outings/wizard
+N’hésitez pas à saisir vos sorties pour rapporter vos observations sur
+les conditions nivologiques et l'activité avalancheuse :
+http://www.camptocamp.org/outings/wizard
+
 """
 
 HTML_TPL = u"""
@@ -77,6 +80,7 @@ HTML_TPL = u"""
 <body>
   <h1>Bulletin {bulletin_type} - {dept}</h1>
   <p>{content}</p>
+  <hr />
   <div>
   <p>Ce bulletin {bulletin_type} est rédigé par
   <a href="{full_url}">MétéoFrance</a>.<br>
