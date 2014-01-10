@@ -317,7 +317,7 @@ if (!dpt) {
 }
 
 function handle_dpt_pages(urls, urlClbk, finalClbk) {
-  var page, next, retrieve, output = "";
+  var page, next, retrieve, output = "", toc = "";
 
   next = function(status, url) {
     page.close();
@@ -339,8 +339,12 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
             try {
               output += page.evaluate(function(url) {
                 var section = $(".article-row:eq(0)");
+                var range_name = section.find("h3")[0].innerHTML;
+                // toc
+                toc += "<a href='#" + range.id + "'>" + range_name + "</a><br />";
                 // mountain range title
-                return "<a href='" + url + "'>" + section.find("h3")[0].outerHTML + "</a>"+
+                return "<hr />" +
+                       "<a href='" + url + "' id='" + range.id + "'><h3>" + range_name + "</h3></a>"+
                 // risk estimation
                        "<h3>" + section.find("h4").text() + "</h3>" +
                        section.find("p")[0].outerHTML;
@@ -455,6 +459,7 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
         }
       });
     } else {
+      output = toc + output;
       return finalClbk(output);
     }
   };
