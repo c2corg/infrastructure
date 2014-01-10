@@ -66,6 +66,9 @@ La liste de diffusion est gérée par Camptocamp-association (http://www.camptoc
 
 Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse suivante :
 http://www.camptocamp.org/users/mailinglists
+
+N’hésitez pas à saisir vos sorties pour rapporter vos observations sur les conditions nivologiques
+et l'activité avalancheuse : http://www.camptocamp.org/outings/wizard
 """
 
 HTML_TPL = u"""
@@ -81,6 +84,8 @@ HTML_TPL = u"""
   <a href="http://www.camptocamp.org/">Camptocamp-association</a>.</p>
   <p>Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse suivante&nbsp;:
   <a href="http://www.camptocamp.org/users/mailinglists">http://www.camptocamp.org/users/mailinglists</a></p>
+  <p>N’hésitez pas à <a href="http://www.camptocamp.org/outings/wizard">saisir vos sorties</a> pour rapporter vos observations sur les conditions nivologiques
+et l'activité avalancheuse.</p>
   </div>
 </body>
 </html>
