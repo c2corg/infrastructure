@@ -362,7 +362,7 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
               };
               page.render("mf_" + range.id + "_risk_cartouche.png");
               info("Rendered image mf_" + range.id + "_risk_cartouche.png");
-              output += "<div><img src='mf_" + range.id + "_risk_cartouche.png' /></div>";
+              output += "<div><img width='200' height='80' src='mf_" + range.id + "_risk_cartouche.png' /></div>";
 
               // risk estimation & notation
               output += page.evaluate(function() {
@@ -391,7 +391,8 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
               };
               page.render("mf_" + range.id + "_chart.png");
               info("Rendered image mf_" + range.id + "_chart.png");
-              output += "<div><img src='mf_" + range.id + "_chart.png' /></div>";
+              output += "<div><img width='" + bcr.width + "' height='" + bcr.height +
+                        "' src='mf_" + range.id + "_chart.png' /></div>";
 
               // snow quality
               output += page.evaluate(function() {
@@ -413,7 +414,8 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
               };
               page.render("mf_" + range.id + "_snow.png");
               info("Rendered image mf_" + range.id + "_snow.png");
-              output += "<div><img src='mf_" + range.id + "_snow.png' /></div>";
+              output += "<div><img width='" + (bcr.width - 2) + "' height='" + (bcr.height - 3) +
+                        "' src='mf_" + range.id + "_snow.png' /></div>";
 
               // TODO weather forecast?
 
