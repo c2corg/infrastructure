@@ -36,8 +36,9 @@ from urllib2 import HTTPError
 
 # config
 
-BASE_URL = "http://www.meteofrance.com/previsions-meteo-montagne/bulletin-avalanches/synthese/d/AV"
-REST_URL = "http://www.meteofrance.com/mf3-rpc-portlet/rest/"
+MF_URL = "http://www.meteofrance.com/"
+BASE_URL = MF_URL + "previsions-meteo-montagne/bulletin-avalanches/synthese/d/AV"
+REST_URL = MF_URL + "mf3-rpc-portlet/rest/"
 WORK_DIR = "/var/cache/meteofrance/"
 SENDER = 'nobody@lists.camptocamp.org'
 STORE_NIVO = 'meteofrance_nivo.json'
@@ -68,7 +69,7 @@ La liste de diffusion est gérée par Camptocamp-association (http://www.camptoc
 Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse suivante :
 http://www.camptocamp.org/users/mailinglists
 
-N’hésitez pas à saisir vos sorties pour rapporter vos observations sur
+N'hésitez pas à saisir vos sorties pour rapporter vos observations sur
 les conditions nivologiques et l'activité avalancheuse :
 http://www.camptocamp.org/outings/wizard
 
@@ -88,15 +89,16 @@ HTML_TPL = u"""
   <a href="http://www.camptocamp.org/">Camptocamp-association</a>.</p>
   <p>Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse suivante&nbsp;:
   <a href="http://www.camptocamp.org/users/mailinglists">http://www.camptocamp.org/users/mailinglists</a></p>
-  <p>N’hésitez pas à <a href="http://www.camptocamp.org/outings/wizard">saisir vos sorties</a> pour rapporter vos observations sur les conditions nivologiques
-et l'activité avalancheuse.</p>
+  <p>N'hésitez pas à <a href="http://www.camptocamp.org/outings/wizard">saisir
+  vos sorties</a> pour rapporter vos observations sur les conditions
+  nivologiques et l'activité avalancheuse.</p>
   </div>
 </body>
 </html>
 """
 
 
-class Mail():
+class Mail(object):
     """
     This class allows to
     - create a multipart email template,
@@ -104,12 +106,10 @@ class Mail():
     - attach other parts (e.g. images)
     - send the email
     """
-    def __init__(self, recipient, text_content, html_content, subject,
-                 encoding='iso-8859-1'):
+    def __init__(self, recipient, text, html, subject, encoding='utf8'):
         "Create the message container and add text and html content"
 
-        self.recipient = recipient
-
+        self.log = logging.getLogger('MFBot')
         self.msg = MIMEMultipart('related')
         self.msg['From'] = SENDER
         self.msg['To'] = recipient
@@ -124,37 +124,42 @@ class Mail():
         self.msg.attach(msg_alternative)
 
         # Record the MIME types of both parts - text/plain and text/html.
-        msg_text = MIMEText(text_content, 'plain', encoding)
-        msg_alternative.attach(msg_text)
+        msg_alternative.attach(MIMEText(text, 'plain', encoding))
 
         # According to RFC 2046, the last part of a multipart message, in this
         # case the HTML message, is best and preferred.
-        msg_text = MIMEText(html_content, 'html', encoding)
-        msg_alternative.attach(msg_text)
+        msg_alternative.attach(MIMEText(html, 'html', encoding))
 
-    def attach(self, part):
-        self.msg.attach(part)
+    def attach_image(self, filename):
+        with open(filename) as f:
+            img = f.read()
 
-    def send(self, method="smtp"):
+        # Open the files in binary mode. Let the MIMEImage class
+        # automatically guess the specific image type.
+        msg_image = MIMEImage(img)
+
+        # Define the image's ID as referenced above
+        msg_image.add_header('Content-ID', '<{}>'.format(filename))
+        self.msg.attach(msg_image)
+
+    def send(self, method='smtp'):
         "Send the message via a SMTP server."
 
         if method == 'smtp':
             # sendmail function takes 3 arguments: sender's address,
             # recipient's address and message to send
             s = smtplib.SMTP('localhost')
-            s.sendmail(SENDER, self.recipient, self.msg.as_string())
+            s.sendmail(SENDER, self.msg['To'], self.msg.as_string())
             s.quit()
         elif method == 'msmtp':
-            p = os.popen("msmtp -t", "w")
-            p.write(self.msg.as_string())
-            # status = p.close()
+            p = subprocess.Popen(['msmtp', '-t'], stdin=subprocess.PIPE)
+            p.communicate(input=self.msg.as_string())
+            if p.returncode != 0:
+                self.log.error('Failed to send mail')
 
 
-class MFBot():
-    """
-    This bot parses Meteofrance's snow bulletin and send an email with the
-    extracted content.
-    """
+class MFBot(object):
+    """Bot which parses Meteofrance's snow bulletin and send it by email."""
 
     def __init__(self, dept):
         cj = cookielib.CookieJar()
@@ -184,7 +189,7 @@ class MFBot():
         """Download page and load the html."""
         resp = self.get_url(url)
         return fromstring(resp.read().decode('iso-8859-1', 'replace'),
-                          base_url='http://www.meteofrance.com/')
+                          base_url=MF_URL)
 
     def get_json(self, url):
         """Download an url and load the json."""
@@ -192,12 +197,14 @@ class MFBot():
         return json.loads(resp.read().decode('utf-8'))
 
     def prepare_mail(self, recipient, html_content, txt_content, **kwargs):
-        """
-        Do the string substitutions in the templates and return a Mail object
-        """
-        bulletin_html = HTML_TPL.format(content=html_content, **kwargs)
-        bulletin_txt = TXT_TPL.format(content=txt_content, **kwargs)
-        subject = SUBJECT_TPL.format(**kwargs)
+        """Substite strings in the templates and return a Mail object."""
+
+        ctx = {'bulletin_type': '', 'dept': self.dept, 'full_url': MF_URL}
+        ctx.update(kwargs)
+
+        bulletin_html = HTML_TPL.format(content=html_content, **ctx)
+        bulletin_txt = TXT_TPL.format(content=txt_content, **ctx)
+        subject = SUBJECT_TPL.format(**ctx)
 
         return Mail(recipient, bulletin_txt, bulletin_html, subject)
 
@@ -230,21 +237,6 @@ class MFBot():
         # generate the <img> codes for each image
         html_content = re.sub(r'(mf_OPP.*?\.png)', r'cid:\1', data['content'])
 
-        ctx = {'bulletin_type': TITLE_NIVO, 'dept': self.dept, 'full_url': ''}
-        m = self.prepare_mail(recipient, html_content, CONTENT_NIVO, **ctx)
-
-        for filename in img_list:
-            with open(filename) as f:
-                img = f.read()
-
-            # Open the files in binary mode. Let the MIMEImage class
-            # automatically guess the specific image type.
-            msg_image = MIMEImage(img)
-
-            # Define the image's ID as referenced above
-            msg_image.add_header('Content-ID', '<{}>'.format(filename))
-            m.attach(msg_image)
-
         try:
             with open(os.path.join(WORK_DIR, STORE_NIVO), 'r') as f:
                 data_ref = json.load(f)
@@ -256,11 +248,17 @@ class MFBot():
             self.log.info('%s nivo - No change, nothing to do', self.dept)
         else:
             self.log.info('%s nivo - Sending mail', self.dept)
+            m = self.prepare_mail(recipient, html_content, CONTENT_NIVO,
+                                  bulletin_type=TITLE_NIVO)
+
+            for filename in img_list:
+                m.attach_image(filename)
+
             m.send(method=method)
             data_ref[self.dept] = data['content']
 
-        with open(os.path.join(WORK_DIR, STORE_NIVO), 'w') as f:
-            json.dump(data_ref, f)
+            with open(os.path.join(WORK_DIR, STORE_NIVO), 'w') as f:
+                json.dump(data_ref, f)
 
     def send_nivo_text(self, recipient, method='smtp'):
         """Send text bulletin when it replaces image bulletin."""
@@ -288,11 +286,9 @@ class MFBot():
             # text changed -> send the mail and store new text
             content_html = content.replace('\n', '<br/>')
 
-            ctx = {'bulletin_type': TITLE_NIVO, 'dept': self.dept,
-                   'full_url': url}
-
             self.log.info('%s nivo text - Sending mail', self.dept)
-            mail = self.prepare_mail(recipient, content_html, content, **ctx)
+            mail = self.prepare_mail(recipient, content_html, content,
+                                     bulletin_type=TITLE_NIVO)
             mail.send(method=method)
 
             nivo_ref[self.dept] = content
@@ -316,32 +312,30 @@ class MFBot():
         synth_html = synth_html.replace('</p>', '')
         synth_txt = re.sub(r'<br\s*/?>', r'\n', synth_html)
 
-        if len(synth_txt) > 300:
-            ctx = {'bulletin_type': TITLE_SYNTH, 'dept': self.dept,
-                   'full_url': url}
-
-            m = self.prepare_mail(recipient, synth_html, synth_txt, **ctx)
-
-            try:
-                with open(os.path.join(WORK_DIR, STORE_SYNTH), 'r') as f:
-                    synth_ref = json.load(f)
-            except IOError:
-                synth_ref = {}
-
-            if (self.dept in synth_ref and
-                    len(synth_ref[self.dept]) == len(synth_txt) and
-                    synth_ref[self.dept] == synth_txt):
-                self.log.info('%s synth - No change, nothing to do', self.dept)
-            else:
-                # text changed -> send the mail and store new text
-                self.log.info('%s synth - Sending mail', self.dept)
-                m.send(method=method)
-
-                synth_ref[self.dept] = synth_txt
-                with open(os.path.join(WORK_DIR, STORE_SYNTH), 'w') as f:
-                    json.dump(synth_ref, f)
-        else:
+        if len(synth_txt) < 300:
             self.log.info('%s synth - Empty text - Nothing to do', self.dept)
+            return
+
+        try:
+            with open(os.path.join(WORK_DIR, STORE_SYNTH), 'r') as f:
+                synth_ref = json.load(f)
+        except IOError:
+            synth_ref = {}
+
+        if (self.dept in synth_ref and
+                len(synth_ref[self.dept]) == len(synth_txt) and
+                synth_ref[self.dept] == synth_txt):
+            self.log.info('%s synth - No change, nothing to do', self.dept)
+        else:
+            # text changed -> send the mail and store new text
+            self.log.info('%s synth - Sending mail', self.dept)
+            m = self.prepare_mail(recipient, synth_html, synth_txt,
+                                  bulletin_type=TITLE_SYNTH, full_url=url)
+            m.send(method=method)
+
+            synth_ref[self.dept] = synth_txt
+            with open(os.path.join(WORK_DIR, STORE_SYNTH), 'w') as f:
+                json.dump(synth_ref, f)
 
 
 def main():
