@@ -428,7 +428,7 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
                   content += "<li>" + options[i].firstChild.nodeValue;
                   switch (options.eq(i).find("span").text()) {
                     case "low":
-                      content += " &#2198;";
+                      content += " &#x2198;";
                       break;
                     case "medium":
                       content += " &#x2192;";
