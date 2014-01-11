@@ -10,7 +10,7 @@ class c2corg::webserver::symfony {
   package { ['php5-pgsql', 'php5-gd', 'php-pear']: }
   package { 'gettext': }
   package { 'imagemagick': }
-  package { ['ruby-compass', 'node-uglify']: }
+  package { ['ruby-compass', 'node-uglify', 'optipng']: }
 
   apt::pin { 'uglifyjs from bpo':
     packages => 'nodejs node-uglify',
