@@ -317,7 +317,7 @@ if (!dpt) {
 }
 
 function handle_dpt_pages(urls, urlClbk, finalClbk) {
-  var page, next, retrieve, output = "", toc = "";
+  var page, next, retrieve, output = "";
 
   next = function(status, url) {
     page.close();
@@ -339,12 +339,9 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
             try {
               output += page.evaluate(function(url) {
                 var section = $(".article-row:eq(0)");
-                var range_name = section.find("h3")[0].innerHTML;
-                // toc
-                toc += "<a href='#" + range.id + "'>" + range_name + "</a><br /><br />";
                 // mountain range title
                 return "<hr />" +
-                       "<a href='" + url + "' id='" + range.id + "'><h3>" + range_name + "</h3></a>"+
+                       "<a href='" + url + "'><h3>" + section.find("h3")[0].innerHTML + "</h3></a>"+
                 // risk estimation
                        "<h3>" + section.find("h4").text() + "</h3>" +
                        section.find("p")[0].outerHTML;
@@ -367,7 +364,7 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
               // risk estimation & notation
               output += page.evaluate(function() {
                 var section = $(".article-row:eq(0)");
-                return section.children("p:eq(1)")[0].outerHTML + 
+                return section.children("p:eq(1)")[0].outerHTML +
                        section.find(".bloc-last .right-box").html();
               });
 
@@ -448,9 +445,6 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
 
                 return content;
               });
-              
-              // link to toc
-              output += "<p><a href='#toc'><i>Sommaire</i></a></p>";
 
               return next(status, range.url);
             } catch (e) {
@@ -464,8 +458,6 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
         }
       });
     } else {
-      toc = "<p id='toc'>" + toc + "</p>";
-      output = toc + output;
       return finalClbk(output);
     }
   };
