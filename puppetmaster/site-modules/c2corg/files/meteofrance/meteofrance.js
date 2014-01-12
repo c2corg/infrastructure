@@ -317,7 +317,7 @@ if (!dpt) {
 }
 
 function handle_dpt_pages(urls, urlClbk, finalClbk) {
-  var page, next, retrieve, output = "";
+  var page, next, retrieve, output = "", toc = "";
 
   next = function(status, url) {
     page.close();
@@ -337,11 +337,13 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
             info("Parsing " + (config.base_url + range.url));
 
             try {
+              toc += "<a href='#" + range.id + "'>" + range.name + "</a>&nbsp;&nbsp;&nbsp;";
               output += page.evaluate(function(url) {
                 var section = $(".article-row:eq(0)");
                 // mountain range title
                 return "<hr />" +
-                       "<a href='" + url + "'><h3>" + section.find("h3")[0].innerHTML + "</h3></a>"+
+                       "<h3><a name='" + url.split("/").pop() + "' href='" + url + "'>" + $.trim(section.find("h3")[0].innerHTML) + "</a>" +
+                       "&nbsp;<a href='#toc'><small>Sommaire</small></a></h3>" +
                 // risk estimation
                        "<h3>" + section.find("h4").text() + "</h3>" +
                        section.find("p")[0].outerHTML;
@@ -364,7 +366,7 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
               // risk estimation & notation
               output += page.evaluate(function() {
                 var section = $(".article-row:eq(0)");
-                return section.children("p:eq(1)")[0].outerHTML +
+                return section.children("p:eq(1)")[0].outerHTML + 
                        section.find(".bloc-last .right-box").html();
               });
 
@@ -458,7 +460,7 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
         }
       });
     } else {
-      return finalClbk(output);
+      return finalClbk("<p id='toc'>" + toc + "</p>" + output);
     }
   };
 
