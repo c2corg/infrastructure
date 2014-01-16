@@ -95,14 +95,14 @@ true()                     smtp,smime,md5   -> reject
   }
 
   file { "/var/cache/meteofrance":
-    ensure => directory,
+    ensure => absent,
     owner  => "nobody",
     group  => "nogroup",
     before => Cron["bulletin nivo"],
   }
 
   file { "/usr/local/bin/meteofrance.py":
-    ensure => present,
+    ensure => absent,
     mode   => 755,
     source => "puppet:///modules/c2corg/meteofrance/meteofrance.py",
     before => Cron["bulletin nivo"],
@@ -114,6 +114,7 @@ true()                     smtp,smime,md5   -> reject
   }
 
   cron { "bulletin nivo":
+    ensure  => absent,
     command => "python2.6 /usr/local/bin/meteofrance.py -m smtp 2>&1 | logger -i -t meteofrance",
     user    => "nobody",
     minute  => 15,
