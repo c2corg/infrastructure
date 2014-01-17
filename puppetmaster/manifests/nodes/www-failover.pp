@@ -17,6 +17,8 @@ node 'www-failover' inherits 'base-node' {
   include c2corg::prod::env::symfony
   include c2corg::prod::collectd::webserver
 
+  include c2corg::mailinglists::webfetch
+
   fact::register {
     'role': value => ['apache', 'failover web server', 'media storage'];
     'duty': value => 'prod';
