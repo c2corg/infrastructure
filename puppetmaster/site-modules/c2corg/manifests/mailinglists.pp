@@ -94,34 +94,6 @@ true()                     smtp,smime,md5   -> reject
     hname      => $hname,
   }
 
-  file { "/var/cache/meteofrance":
-    ensure => absent,
-    owner  => "nobody",
-    group  => "nogroup",
-    before => Cron["bulletin nivo"],
-  }
-
-  file { "/usr/local/bin/meteofrance.py":
-    ensure => absent,
-    mode   => 755,
-    source => "puppet:///modules/c2corg/meteofrance/meteofrance.py",
-    before => Cron["bulletin nivo"],
-  }
-
-  package { ["python-lxml", "python-argparse"]:
-    ensure => present,
-    before => File["/usr/local/bin/meteofrance.py"],
-  }
-
-  cron { "bulletin nivo":
-    ensure  => absent,
-    command => "python2.6 /usr/local/bin/meteofrance.py -m smtp 2>&1 | logger -i -t meteofrance",
-    user    => "nobody",
-    minute  => 15,
-    hour    => [8,10,12,16,17,18,19],
-    month   => [10,11,12,01,02,03,04,05,06],
-  }
-
   Mailalias {
     recipient => 'marc.fournier+slf@camptocamp.org',
     notify    => Exec["newaliases"],
