@@ -252,7 +252,7 @@ class MFBot(object):
                                   bulletin_type=TITLE_NIVO)
 
             for filename in img_list:
-                m.attach_image(filename)
+                m.attach_image(WORK_DIR + filename)
 
             m.send(method=method)
             data_ref[self.dept] = data['content']
