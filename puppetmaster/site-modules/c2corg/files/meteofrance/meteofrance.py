@@ -131,7 +131,7 @@ class Mail(object):
         msg_alternative.attach(MIMEText(html, 'html', encoding))
 
     def attach_image(self, filename):
-        with open(filename) as f:
+        with open(WORK_DIR + filename) as f:
             img = f.read()
 
         # Open the files in binary mode. Let the MIMEImage class
@@ -252,7 +252,7 @@ class MFBot(object):
                                   bulletin_type=TITLE_NIVO)
 
             for filename in img_list:
-                m.attach_image(WORK_DIR + filename)
+                m.attach_image(filename)
 
             m.send(method=method)
             data_ref[self.dept] = data['content']
