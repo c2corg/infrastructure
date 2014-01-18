@@ -217,7 +217,7 @@ class MFBot(object):
         dept = self.dept.replace('DEPT', '').lower()
 
         try:
-            subprocess.check_call(['phantomjs', 'meteofrance.js', dept])
+            subprocess.check_call(['phantomjs', 'meteofrance.js', '--working-dir=/var/cache/meteofrance/ ' + dept])
         except subprocess.CalledProcessError:
             self.log.error('%s phantomjs script failed.', self.dept)
             return
