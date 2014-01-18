@@ -460,7 +460,7 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
         }
       });
     } else {
-      return finalClbk("<p id='toc'>" + toc + "</p>" + output);
+      return finalClbk("<a name='toc'></a><p>" + toc + "</p>" + output);
     }
   };
 
