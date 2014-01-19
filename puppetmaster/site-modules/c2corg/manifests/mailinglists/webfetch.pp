@@ -26,7 +26,7 @@ class c2corg::mailinglists::webfetch {
 
   cron { 'bulletin nivo':
     ensure  => present,
-    command => 'cd /usr/local/bin/ && ./meteofrance.py -m smtp --to dev@camptocamp.org 2>&1 | logger -i -t bulletin-nivo',
+    command => 'cd /usr/local/bin/ && ./meteofrance.py -m smtp 2>&1 | logger -i -t bulletin-nivo',
     user    => 'nobody',
     minute  => 15,
     hour    => [8,10,12,16,17,18,19],
