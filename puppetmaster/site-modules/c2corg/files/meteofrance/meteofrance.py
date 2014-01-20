@@ -264,25 +264,14 @@ class MFBot(object):
         """Send text bulletin when it replaces image bulletin."""
 
         url = REST_URL + self.dept
-        content = self.get_html(url)
-        nivo_content = content.cssselect(".mod-body .p-style-2")
+        content = self.get_json(url)['corpsBulletin']
 
-        if not nivo_content:
-            self.log.info('%s nivo - No content', self.dept)
-            return
-        
-        nivo_html = tostring(nivo_content[0],
-                              encoding='iso-8859-1').decode('utf-8')
-        nivo_html = re.sub('<p class="p-style-2">.*?<br>', '', nivo_html)
-        nivo_html = nivo_html.replace('</p>', '')
-        nivo_txt = re.sub(r'<br\s*/?>', r'\n', nivo_html)
-        
-        if re.match('.*Pas de bulletin disponible pour ce lieu.*', nivo_txt):
+        if re.match('.*Pas de bulletin disponible pour ce lieu.*', content):
             self.log.info('%s nivo text - No bulletin', self.dept)
             return
 
-        if len(nivo_txt) < 300:
-            self.log.info('%s nivo - Empty text - Nothing to do', self.dept)
+        if len(content) < 300:
+            self.log.info('%s nivo text - Empty text', self.dept)
             return
 
         try:
@@ -291,18 +280,18 @@ class MFBot(object):
         except IOError:
             nivo_ref = {}
 
-        if (self.dept in nivo_ref and
-                len(nivo_ref[self.dept]) == len(nivo_txt) and
-                nivo_ref[self.dept] == nivo_txt):
-            self.log.info('%s nivo - No change, nothing to do', self.dept)
+        if nivo_ref.get(self.dept, '') == content:
+            self.log.info('%s nivo text - No change, nothing to do', self.dept)
         else:
             # text changed -> send the mail and store new text
-            self.log.info('%s nivo - Sending mail', self.dept)
-            m = self.prepare_mail(recipient, nivo_html, nivo_txt,
-                                  bulletin_type=TITLE_NIVO, full_url=url)
-            m.send(method=method)
+            content_html = content.replace('\n', '<br/>')
 
-            nivo_ref[self.dept] = nivo_txt
+            self.log.info('%s nivo text - Sending mail', self.dept)
+            mail = self.prepare_mail(recipient, content_html, content,
+                                     bulletin_type=TITLE_NIVO)
+            mail.send(method=method)
+
+            nivo_ref[self.dept] = content
             with open(os.path.join(WORK_DIR, STORE_NIVO_TEXT), 'w') as f:
                 json.dump(nivo_ref, f)
 
