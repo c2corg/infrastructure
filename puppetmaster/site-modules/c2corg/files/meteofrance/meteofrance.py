@@ -36,9 +36,9 @@ from urllib2 import HTTPError
 
 # config
 
-MF_URL = "http://www.meteofrance.com/previsions-meteo-montagne/bulletin-avalanches/"
-BASE_URL = MF_URL + "synthese/d/AV"
-REST_URL = MF_URL + "d/AV"
+MF_URL = "http://www.meteofrance.com/"
+BASE_URL = MF_URL + "previsions-meteo-montagne/bulletin-avalanches/synthese/d/AV"
+REST_URL = MF_URL + "mf3-rpc-portlet/rest/"
 WORK_DIR = "/var/cache/meteofrance/"
 SENDER = 'nobody@lists.camptocamp.org'
 STORE_NIVO = 'meteofrance_nivo.json'
@@ -263,7 +263,7 @@ class MFBot(object):
     def send_nivo_text(self, recipient, method='smtp'):
         """Send text bulletin when it replaces image bulletin."""
 
-        url = REST_URL + self.dept
+        url = REST_URL + "bulletins/lastest/fwfx5/AV" + self.dept
         content = self.get_json(url)['corpsBulletin']
 
         if re.match('.*Pas de bulletin disponible pour ce lieu.*', content):
