@@ -41,9 +41,7 @@ BASE_URL = MF_URL + "previsions-meteo-montagne/bulletin-avalanches/synthese/d/AV
 REST_URL = MF_URL + "mf3-rpc-portlet/rest/"
 WORK_DIR = "/var/cache/meteofrance/"
 SENDER = 'nobody@lists.camptocamp.org'
-STORE_NIVO = 'meteofrance_nivo.json'
-STORE_NIVO_TEXT = 'meteofrance_text.json'
-STORE_SYNTH = 'meteofrance_synth.json'
+MF_STORE = 'meteofrance_store.json'
 DEPT_LIST = ["DEPT74", "DEPT73", "DEPT38", "DEPT04", "DEPT05", "DEPT06",
              "DEPT2A", "DEPT2B", "DEPT66", "DEPT31", "DEPT09", "ANDORRE",
              "DEPT64", "DEPT65"]
@@ -156,6 +154,8 @@ class Mail(object):
             p.communicate(input=self.msg.as_string())
             if p.returncode != 0:
                 self.log.error('Failed to send mail')
+        else:
+            self.log.warning('Unknown method, no mail sent')
 
 
 class Bot(object):
@@ -164,6 +164,8 @@ class Bot(object):
         cj = cookielib.CookieJar()
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
         self.opener.addheaders = [('User-agent', 'MFBot/1.0')]
+
+        self.store = None
         self.log = logging.getLogger('MFBot')
 
     def get_url(self, url):
@@ -193,6 +195,15 @@ class Bot(object):
         resp = self.get_url(url)
         return json.loads(resp.read().decode('utf-8'))
 
+    def open_store(self):
+        with open(self.store, 'r') as f:
+            data = json.load(f)
+        return data
+
+    def save_store(self, data):
+        with open(self.store, 'w') as f:
+            json.dump(data, f)
+
 
 class MFBot(Bot):
     """Bot which parses Meteofrance's snow bulletin and send it by email."""
@@ -200,6 +211,10 @@ class MFBot(Bot):
     def __init__(self, dept):
         super(MFBot, self).__init__()
         self.dept = dept
+        self.store = os.path.join(WORK_DIR, MF_STORE)
+        if not os.path.isfile(self.store):
+            with open(self.store, 'w') as f:
+                json.dump({'nivo': {}, 'synth': {}, 'images': {}}, f)
 
     def prepare_mail(self, recipient, html_content, txt_content, **kwargs):
         """Substite strings in the templates and return a Mail object."""
@@ -240,13 +255,9 @@ class MFBot(Bot):
         # generate the <img> codes for each image
         html_content = re.sub(r'(mf_OPP.*?\.png)', r'cid:\1', data['content'])
 
-        try:
-            with open(os.path.join(WORK_DIR, STORE_NIVO), 'r') as f:
-                data_ref = json.load(f)
-        except IOError:
-            data_ref = {}
+        data_ref = self.open_store()
+        ref = data_ref['images'].get(self.dept)
 
-        ref = data_ref.get(self.dept)
         if ref and ref == data['content']:
             self.log.info('%s nivo - No change, nothing to do', self.dept)
         else:
@@ -258,10 +269,8 @@ class MFBot(Bot):
                 m.attach_image(filename)
 
             m.send(method=method)
-            data_ref[self.dept] = data['content']
-
-            with open(os.path.join(WORK_DIR, STORE_NIVO), 'w') as f:
-                json.dump(data_ref, f)
+            data_ref['images'][self.dept] = data['content']
+            self.save_store(data_ref)
 
     def send_nivo_text(self, recipient, method='smtp'):
         """Send text bulletin when it replaces image bulletin."""
@@ -277,26 +286,22 @@ class MFBot(Bot):
             self.log.info('%s nivo text - Empty text', self.dept)
             return
 
-        try:
-            with open(os.path.join(WORK_DIR, STORE_NIVO_TEXT), 'r') as f:
-                nivo_ref = json.load(f)
-        except IOError:
-            nivo_ref = {}
+        data_ref = self.open_store()
+        ref = data_ref['nivo'].get(self.dept)
 
-        if nivo_ref.get(self.dept, '') == content:
+        if ref and ref == content:
             self.log.info('%s nivo text - No change, nothing to do', self.dept)
         else:
             # text changed -> send the mail and store new text
-            content_html = content.replace('\n', '<br/>')
+            html_content = content.replace('\n', '<br/>')
 
             self.log.info('%s nivo text - Sending mail', self.dept)
-            mail = self.prepare_mail(recipient, content_html, content,
+            mail = self.prepare_mail(recipient, html_content, content,
                                      bulletin_type=TITLE_NIVO)
             mail.send(method=method)
 
-            nivo_ref[self.dept] = content
-            with open(os.path.join(WORK_DIR, STORE_NIVO_TEXT), 'w') as f:
-                json.dump(nivo_ref, f)
+            data_ref['nivo'][self.dept] = content
+            self.save_store(data_ref)
 
     def send_synth_text(self, recipient, method='smtp'):
         """Send weekly synthesis."""
@@ -319,15 +324,10 @@ class MFBot(Bot):
             self.log.info('%s synth - Empty text - Nothing to do', self.dept)
             return
 
-        try:
-            with open(os.path.join(WORK_DIR, STORE_SYNTH), 'r') as f:
-                synth_ref = json.load(f)
-        except IOError:
-            synth_ref = {}
+        data_ref = self.open_store()
+        ref = data_ref['synth'].get(self.dept)
 
-        if (self.dept in synth_ref and
-                len(synth_ref[self.dept]) == len(synth_txt) and
-                synth_ref[self.dept] == synth_txt):
+        if ref and ref == synth_txt:
             self.log.info('%s synth - No change, nothing to do', self.dept)
         else:
             # text changed -> send the mail and store new text
@@ -335,10 +335,8 @@ class MFBot(Bot):
             m = self.prepare_mail(recipient, synth_html, synth_txt,
                                   bulletin_type=TITLE_SYNTH, full_url=url)
             m.send(method=method)
-
-            synth_ref[self.dept] = synth_txt
-            with open(os.path.join(WORK_DIR, STORE_SYNTH), 'w') as f:
-                json.dump(synth_ref, f)
+            data_ref['synth'][self.dept] = synth_txt
+            self.save_store(data_ref)
 
 
 def main():
