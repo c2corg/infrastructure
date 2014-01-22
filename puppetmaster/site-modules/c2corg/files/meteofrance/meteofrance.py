@@ -131,7 +131,7 @@ class Mail(object):
         msg_alternative.attach(MIMEText(html, 'html', encoding))
 
     def attach_image(self, filename):
-        with open(WORK_DIR + filename) as f:
+        with open(os.path.join(WORK_DIR, filename)) as f:
             img = f.read()
 
         # Open the files in binary mode. Let the MIMEImage class
@@ -158,16 +158,13 @@ class Mail(object):
                 self.log.error('Failed to send mail')
 
 
-class MFBot(object):
-    """Bot which parses Meteofrance's snow bulletin and send it by email."""
+class Bot(object):
 
-    def __init__(self, dept):
+    def __init__(self):
         cj = cookielib.CookieJar()
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
         self.opener.addheaders = [('User-agent', 'MFBot/1.0')]
-
         self.log = logging.getLogger('MFBot')
-        self.dept = dept
 
     def get_url(self, url):
         """Download an url."""
@@ -196,6 +193,14 @@ class MFBot(object):
         resp = self.get_url(url)
         return json.loads(resp.read().decode('utf-8'))
 
+
+class MFBot(Bot):
+    """Bot which parses Meteofrance's snow bulletin and send it by email."""
+
+    def __init__(self, dept):
+        super(MFBot, self).__init__()
+        self.dept = dept
+
     def prepare_mail(self, recipient, html_content, txt_content, **kwargs):
         """Substite strings in the templates and return a Mail object."""
 
@@ -209,15 +214,13 @@ class MFBot(object):
         return Mail(recipient, bulletin_txt, bulletin_html, subject)
 
     def send_nivo_images(self, recipient, method='smtp'):
-        """
-        Add images as attachment to the message and reference it in the html
-        part.
-        """
+        """Send bulletin with images extracted by the phantomjs script"""
 
         dept = self.dept.replace('DEPT', '').lower()
 
         try:
-            subprocess.check_call(['phantomjs', 'meteofrance.js', '--working-dir=' + WORK_DIR, dept])
+            subprocess.check_call(['phantomjs', 'meteofrance.js',
+                                   '--working-dir=' + WORK_DIR, dept])
         except subprocess.CalledProcessError:
             self.log.error('%s phantomjs script failed.', self.dept)
             return
@@ -339,7 +342,7 @@ class MFBot(object):
 
 
 def main():
-    "Main function with arguments parsing."
+    """Main function with arguments parsing."""
 
     parser = argparse.ArgumentParser(
         description="Send Meteofrance's snow bulletins.")
@@ -375,7 +378,8 @@ def main():
 
         bot = MFBot(dept)
 
-        for bulletin_type in ('nivo_images', 'nivo_text', 'synth_text'):
+        # 'nivo_text', -> deactivated until it replaces the images bulletin
+        for bulletin_type in ('nivo_images', 'synth_text'):
             func = getattr(bot, 'send_' + bulletin_type)
 
             try:
