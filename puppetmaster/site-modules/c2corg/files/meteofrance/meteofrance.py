@@ -42,6 +42,7 @@ REST_URL = MF_URL + "mf3-rpc-portlet/rest/"
 WORK_DIR = "/var/cache/meteofrance/"
 SENDER = 'nobody@lists.camptocamp.org'
 MF_STORE = 'meteofrance_store.json'
+SLF_STORE = 'slf_store.json'
 DEPT_LIST = ["DEPT74", "DEPT73", "DEPT38", "DEPT04", "DEPT05", "DEPT06",
              "DEPT2A", "DEPT2B", "DEPT66", "DEPT31", "DEPT09", "ANDORRE",
              "DEPT64", "DEPT65"]
@@ -213,8 +214,7 @@ class MFBot(Bot):
         self.dept = dept
         self.store = os.path.join(WORK_DIR, MF_STORE)
         if not os.path.isfile(self.store):
-            with open(self.store, 'w') as f:
-                json.dump({'nivo': {}, 'synth': {}, 'images': {}}, f)
+            self.save_store({'nivo': {}, 'synth': {}, 'images': {}})
 
     def prepare_mail(self, recipient, html_content, txt_content, **kwargs):
         """Substite strings in the templates and return a Mail object."""
@@ -337,6 +337,17 @@ class MFBot(Bot):
             m.send(method=method)
             data_ref['synth'][self.dept] = synth_txt
             self.save_store(data_ref)
+
+
+class SLFBot(Bot):
+    """Bot which parses SLF's snow bulletin and send it by email."""
+
+    def __init__(self, lang):
+        super(SLFBot, self).__init__()
+        self.lang = lang
+        self.store = os.path.join(WORK_DIR, SLF_STORE)
+        if not os.path.isfile(self.store):
+            self.save_store({})
 
 
 def main():
