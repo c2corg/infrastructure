@@ -16,7 +16,7 @@ class riemann::dash {
     ensure  => present,
     content => '# file managed by puppet
 set :port, 8080
-config[:ws_config] = "/var/run/riemann-dash/config.json"
+config[:ws_config] = "/etc/riemann/config.json"
 ',
   } ~>
 

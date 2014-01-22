@@ -10,7 +10,7 @@ node 'riemann' inherits 'base-node' {
   }
 
   c2cinfra::backup::dir {
-    ['/etc/riemann', '/var/run/riemann-dash']:
+    ['/etc/riemann']:
   }
 
 
