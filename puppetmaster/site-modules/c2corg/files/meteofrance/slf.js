@@ -171,7 +171,7 @@ function handle_bulletin(language) {
 
             var zoneCount = zones.match(/<h3>/g).length;
             info(zoneCount + " zones found");
-            
+
             for (i=0; i<zoneCount; i++) {
               // hide all dialog except the one we care for, and capture the summary image
               bcr = page.evaluate(function(i) {
