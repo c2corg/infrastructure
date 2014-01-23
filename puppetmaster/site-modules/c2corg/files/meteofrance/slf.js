@@ -152,36 +152,50 @@ function handle_bulletin(language) {
                 html += "<img src='http://www.slf.ch/avalanche/bulletin/it/gk1_" + id + "_a_0.png' width='150' />";
                 // snow type
                 html += $this.find("h4")[0].outerHTML;
-                // exposition
-                html += $this.find("h5")[0].outerHTML;
-                html += "%%IMG_" + i + "_SUMMARY%%";
-                html += $this.find("p")[0].outerHTML;
-                // dangerous places
-                html += $this.find("h5")[1].outerHTML;
-                html += $this.find("p")[1].outerHTML;
+                if ($this.find("h5").length) {
+                  // exposition
+                  html += $this.find("h5")[0].outerHTML;
+                  html += "%%IMG_" + i + "_SUMMARY%%";
+                  html += $this.find("p")[0].outerHTML;
+                  // dangerous places
+                  html += $this.find("h5")[1].outerHTML;
+                  html += $this.find("p")[1].outerHTML;
+                } else {
+                  // simple text
+                  html += $this.find("p")[0].outerHTML;
+                }
               });
 
               return html;
             });
 
-            var zoneCount = zones.match(/%%IMG_[0-9]_SUMMARY%%/g).length;
+            var zoneCount = zones.match(/<h3>/g).length;
             info(zoneCount + " zones found");
-
+            
             for (i=0; i<zoneCount; i++) {
               // hide all dialog except the one we care for, and capture the summary image
               bcr = page.evaluate(function(i) {
                 $(".ui-dialog").hide();
-                return $(".ui-dialog").eq(i).show().css("top", 0).find("img")[0].getBoundingClientRect();
+                var img = $(".ui-dialog").eq(i).show().css("top", 0).find("img");
+                if (img.length) {
+                  return img[0].getBoundingClientRect();
+                } else {
+                  return null;
+                }
               }, i);
-              page.clipRect = {
-                top: bcr.top,
-                left: bcr.left,
-                width: bcr.width,
-                height: bcr.height
-              };
-              page.render("slf_zone_" + String.fromCharCode(65 + i) + "_summary.png");
-              info("Rendered image slf_zone_" + String.fromCharCode(65 + i) + "_summary.png");
-              zones = zones.replace("%%IMG_" + i + "_SUMMARY%%", "<img src='slf_zone_" + String.fromCharCode(65 + i) + "_summary.png' />");
+              if (bcr) {
+                page.clipRect = {
+                  top: bcr.top,
+                  left: bcr.left,
+                  width: bcr.width,
+                  height: bcr.height
+                };
+                page.render("slf_zone_" + String.fromCharCode(65 + i) + "_summary.png");
+                info("Rendered image slf_zone_" + String.fromCharCode(65 + i) + "_summary.png");
+                zones = zones.replace("%%IMG_" + i + "_SUMMARY%%", "<img src='slf_zone_" + String.fromCharCode(65 + i) + "_summary.png' />");
+              } else {
+                info("Skipped image slf_zone_" + String.fromCharCode(65 + i) + "_summary.png");
+              }
             }
             output += zones;
 
