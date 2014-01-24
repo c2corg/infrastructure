@@ -2,11 +2,11 @@
 # -*- coding:utf-8 -*-
 
 """
-Send Meteofrance's snow bulletins
----------------------------------
+Send Meteofrance and SLF snow bulletins
+---------------------------------------
 
-This script parse Meteofrance's snow bulletins, download images and send it by
-email.
+This script parse Meteofrance and SLF snow bulletins, download images and send
+it by email.
 
 Dependencies:
 - python-lxml
@@ -36,16 +36,22 @@ from urllib2 import HTTPError
 
 # config
 
-MF_URL = "http://www.meteofrance.com/"
-BASE_URL = MF_URL + "previsions-meteo-montagne/bulletin-avalanches/synthese/d/AV"
-REST_URL = MF_URL + "mf3-rpc-portlet/rest/"
 WORK_DIR = "/var/cache/meteofrance/"
 SENDER = 'nobody@lists.camptocamp.org'
+
+MF_URL = "http://www.meteofrance.com/"
+MF_BASE_URL = (MF_URL +
+               "previsions-meteo-montagne/bulletin-avalanches/synthese/d/AV")
+MF_REST_URL = MF_URL + "mf3-rpc-portlet/rest/"
 MF_STORE = 'meteofrance_store.json'
-SLF_STORE = 'slf_store.json'
+
 DEPT_LIST = ["DEPT74", "DEPT73", "DEPT38", "DEPT04", "DEPT05", "DEPT06",
              "DEPT2A", "DEPT2B", "DEPT66", "DEPT31", "DEPT09", "ANDORRE",
              "DEPT64", "DEPT65"]
+
+SLF_URL = "http://www.slf.ch/lawinenbulletin"
+SLF_STORE = 'slf_store.json'
+SLF_LANGS = ['FR', 'DE', 'IT', 'EN']
 
 TITLE_NIVO = u"neige et avalanches"
 TITLE_SYNTH = u"de synthèse hebdomadaire"
@@ -60,10 +66,11 @@ Bulletin {bulletin_type} - {dept}
 
 {content}
 
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
-Ce bulletin {bulletin_type} est rédigé par MétéoFrance ({full_url}).
-La liste de diffusion est gérée par Camptocamp-association (http://www.camptocamp.org).
+Ce bulletin {bulletin_type} est rédigé par {src_name} ({src_url}).
+La liste de diffusion est gérée par Camptocamp-association
+(http://www.camptocamp.org).
 
 Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse suivante :
 http://www.camptocamp.org/users/mailinglists
@@ -71,7 +78,6 @@ http://www.camptocamp.org/users/mailinglists
 N'hésitez pas à saisir vos sorties pour rapporter vos observations sur
 les conditions nivologiques et l'activité avalancheuse :
 http://www.camptocamp.org/outings/wizard
-
 """
 
 HTML_TPL = u"""
@@ -83,7 +89,7 @@ HTML_TPL = u"""
   <hr />
   <div>
   <p>Ce bulletin {bulletin_type} est rédigé par
-  <a href="{full_url}">MétéoFrance</a>.<br>
+  <a href="{src_url}">{src_name}</a>.<br>
   La liste de diffusion est gérée par
   <a href="http://www.camptocamp.org/">Camptocamp-association</a>.</p>
   <p>Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse suivante&nbsp;:
@@ -99,14 +105,12 @@ HTML_TPL = u"""
 
 class Mail(object):
     """
-    This class allows to
-    - create a multipart email template,
-    - add text and html content,
-    - attach other parts (e.g. images)
-    - send the email
+    Create a multipart email template, add text, html and images, and send the
+    email.
     """
+
     def __init__(self, recipient, text, html, subject, encoding='utf8'):
-        "Create the message container and add text and html content"
+        """Create the message container and add text and html content"""
 
         self.log = logging.getLogger('MFBot')
         self.msg = MIMEMultipart('related')
@@ -130,6 +134,8 @@ class Mail(object):
         msg_alternative.attach(MIMEText(html, 'html', encoding))
 
     def attach_image(self, filename):
+        """Read the image and attach it to the email."""
+
         with open(os.path.join(WORK_DIR, filename)) as f:
             img = f.read()
 
@@ -142,7 +148,7 @@ class Mail(object):
         self.msg.attach(msg_image)
 
     def send(self, method='smtp'):
-        "Send the message via a SMTP server."
+        """Send the message via a SMTP server."""
 
         if method == 'smtp':
             # sendmail function takes 3 arguments: sender's address,
@@ -219,7 +225,8 @@ class MFBot(Bot):
     def prepare_mail(self, recipient, html_content, txt_content, **kwargs):
         """Substite strings in the templates and return a Mail object."""
 
-        ctx = {'bulletin_type': '', 'dept': self.dept, 'full_url': MF_URL}
+        ctx = {'bulletin_type': '', 'dept': self.dept,
+               'src_url': MF_URL, 'src_name': 'MétéoFrance'}
         ctx.update(kwargs)
 
         bulletin_html = HTML_TPL.format(content=html_content, **ctx)
@@ -275,7 +282,7 @@ class MFBot(Bot):
     def send_nivo_text(self, recipient, method='smtp'):
         """Send text bulletin when it replaces image bulletin."""
 
-        url = REST_URL + "bulletins/lastest/fwfx5/AV" + self.dept
+        url = MF_REST_URL + "bulletins/lastest/fwfx5/AV" + self.dept
         content = self.get_json(url)['corpsBulletin']
 
         if re.match('.*Pas de bulletin disponible pour ce lieu.*', content):
@@ -306,7 +313,7 @@ class MFBot(Bot):
     def send_synth_text(self, recipient, method='smtp'):
         """Send weekly synthesis."""
 
-        url = BASE_URL + self.dept
+        url = MF_BASE_URL + self.dept
         content = self.get_html(url)
         synth_content = content.cssselect(".mod-body .p-style-2")
 
@@ -333,7 +340,7 @@ class MFBot(Bot):
             # text changed -> send the mail and store new text
             self.log.info('%s synth - Sending mail', self.dept)
             m = self.prepare_mail(recipient, synth_html, synth_txt,
-                                  bulletin_type=TITLE_SYNTH, full_url=url)
+                                  bulletin_type=TITLE_SYNTH, src_url=url)
             m.send(method=method)
             data_ref['synth'][self.dept] = synth_txt
             self.save_store(data_ref)
@@ -342,12 +349,69 @@ class MFBot(Bot):
 class SLFBot(Bot):
     """Bot which parses SLF's snow bulletin and send it by email."""
 
-    def __init__(self, lang):
+    def __init__(self):
         super(SLFBot, self).__init__()
-        self.lang = lang
         self.store = os.path.join(WORK_DIR, SLF_STORE)
         if not os.path.isfile(self.store):
             self.save_store({})
+
+    def prepare_mail(self, recipient, html_content, txt_content, **kwargs):
+        """Substite strings in the templates and return a Mail object."""
+
+        ctx = {'bulletin_type': '', 'dept': '',
+               'src_url': SLF_URL, 'src_name': 'SLF'}
+        ctx.update(kwargs)
+
+        bulletin_html = HTML_TPL.format(content=html_content, **ctx)
+        bulletin_txt = TXT_TPL.format(content=txt_content, **ctx)
+        subject = SUBJECT_TPL.format(**ctx)
+
+        return Mail(recipient, bulletin_txt, bulletin_html, subject)
+
+    def send(self, lang, recipient, method='smtp'):
+        """Send bulletin with images extracted by the phantomjs script"""
+
+        if lang not in SLF_LANGS:
+            return
+
+        try:
+            subprocess.check_call(['phantomjs', 'slf.js',
+                                   '--working-dir=' + WORK_DIR, lang])
+        except subprocess.CalledProcessError:
+            self.log.error('%s phantomjs slf.js script failed.', lang)
+            return
+
+        with open(os.path.join(WORK_DIR, 'slf.json'), 'r') as f:
+            data = json.load(f)
+
+        if lang not in data:
+            self.log.error('%s Data not found', lang)
+            return
+
+        data = data[lang]
+
+        # find all images
+        img_list = re.findall(r'slf_.*?\.png', data['content'])
+
+        # generate the <img> codes for each image
+        html_content = re.sub(r'(slf_.*?\.png)', r'cid:\1', data['content'])
+
+        data_ref = self.open_store()
+        ref = data_ref.get(lang)
+
+        if ref and ref == data['content']:
+            self.log.info('%s nivo - No change, nothing to do', lang)
+        else:
+            self.log.info('%s nivo - Sending mail', lang)
+            m = self.prepare_mail(recipient, html_content, CONTENT_NIVO,
+                                  bulletin_type=TITLE_NIVO, dept=lang)
+
+            for filename in img_list:
+                m.attach_image(filename)
+
+            m.send(method=method)
+            data_ref[lang] = data['content']
+            self.save_store(data_ref)
 
 
 def main():
@@ -381,6 +445,14 @@ def main():
     logger.setLevel(logging.DEBUG)
     logger.addHandler(handler)
 
+    bot = SLFBot()
+    for lang in SLF_LANGS:
+        try:
+            bot.send(lang, args.recipient, method=args.smtp_method)
+        except Exception:
+            logger.error("Unexpected error: %s" % sys.exc_info()[1])
+
+    return
     for dept in DEPT_LIST:
         recipient = args.recipient or \
             "meteofrance-%s@lists.camptocamp.org" % dept.replace('DEPT', '')
