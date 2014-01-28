@@ -390,11 +390,22 @@ class SLFBot(Bot):
 
         data = data[lang]
 
-        # find all images
+        # find all images and generate the <img> codes for each image
         img_list = re.findall(r'slf_.*?\.png', data['content'])
-
-        # generate the <img> codes for each image
         html_content = re.sub(r'(slf_.*?\.png)', r'cid:\1', data['content'])
+
+        img_http = re.findall(r'http://www\.slf\.ch/.*?\.png', data['content'])
+        html_content = re.sub(
+            r'http://www.slf.ch/avalanche/bulletin/it/(.*?\.png)', r'cid:\1',
+            html_content)
+
+        for url in img_http:
+            filename = url.split('/')[-1]
+            img_list.append(filename)
+
+            resp = self.opener.open(url)
+            with open(filename, 'wb') as f:
+                f.write(resp.read())
 
         data_ref = self.open_store()
         ref = data_ref.get(lang)
@@ -452,7 +463,6 @@ def main():
         except Exception:
             logger.error("Unexpected error: %s" % sys.exc_info()[1])
 
-    return
     for dept in DEPT_LIST:
         recipient = args.recipient or \
             "meteofrance-%s@lists.camptocamp.org" % dept.replace('DEPT', '')
