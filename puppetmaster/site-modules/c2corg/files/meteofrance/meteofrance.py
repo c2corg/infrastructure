@@ -226,7 +226,7 @@ class MFBot(Bot):
         """Substite strings in the templates and return a Mail object."""
 
         ctx = {'bulletin_type': '', 'dept': self.dept,
-               'src_url': MF_URL, 'src_name': 'MétéoFrance'}
+               'src_url': MF_URL, 'src_name': u'MétéoFrance'}
         ctx.update(kwargs)
 
         bulletin_html = HTML_TPL.format(content=html_content, **ctx)
