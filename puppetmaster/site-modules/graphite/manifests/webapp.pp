@@ -33,6 +33,9 @@ class graphite::webapp {
   master = true
   uwsgi-socket = 0.0.0.0:3031
   http-socket = 0.0.0.0:8080
+  add-header = Access-Control-Allow-Origin: *
+  add-header = Access-Control-Allow-Methods: GET, OPTIONS
+  add-header = Access-Control-Allow-Headers: origin, authorization, accept
   stats-server = 127.0.0.1:1717
   plugin = carbon
   carbon = 127.0.0.1:2003
