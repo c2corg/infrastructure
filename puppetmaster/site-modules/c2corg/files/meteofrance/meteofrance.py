@@ -16,6 +16,7 @@ Dependencies:
 
 import argparse
 import cookielib
+import gettext
 import json
 import logging
 import logging.handlers
@@ -35,7 +36,6 @@ from lxml.html import tostring, fromstring
 from urllib2 import HTTPError
 
 # config
-
 WORK_DIR = "/var/cache/meteofrance/"
 SENDER = 'nobody@lists.camptocamp.org'
 
@@ -53,22 +53,29 @@ SLF_URL = "http://www.slf.ch/lawinenbulletin"
 SLF_STORE = 'slf_store.json'
 SLF_LANGS = ['FR', 'DE', 'IT', 'EN']
 
-TITLE_NIVO = u"neige et avalanches"
-TITLE_SYNTH = u"de synthèse hebdomadaire"
+# create gettext instances
+langs = {lang: gettext.translation('messages', 'translations',
+                                   languages=[lang.lower()])
+         for lang in SLF_LANGS}
+langs['FR'].install(unicode=True)
+
+# strings
+TITLE_NIVO = u"Bulletin neige et avalanches"
+TITLE_SYNTH = u"Bulletin de synthèse hebdomadaire"
 CONTENT_NIVO = u"""Le bulletin neige et avalanches est constitué d'images,
 celles-ci sont en pièce jointe ou dans la version html de ce mail."""
 
-SUBJECT_TPL = u"Bulletin {bulletin_type} - {dept}"
 
-TXT_TPL = u"""
-Bulletin {bulletin_type} - {dept}
+def get_txt_tpl(**kwargs):
+    return _(u"""
+{title}
 =====================================
 
 {content}
 
 -------------------------------------------------------------------------------
 
-Ce bulletin {bulletin_type} est rédigé par {src_name} ({src_url}).
+Ce bulletin est rédigé par {src_name} ({src_url}).
 La liste de diffusion est gérée par Camptocamp-association
 (http://www.camptocamp.org).
 
@@ -78,18 +85,19 @@ http://www.camptocamp.org/users/mailinglists
 N'hésitez pas à saisir vos sorties pour rapporter vos observations sur
 les conditions nivologiques et l'activité avalancheuse :
 http://www.camptocamp.org/outings/wizard
-"""
+""").format(**kwargs)
 
-HTML_TPL = u"""
+
+def get_html_tpl(**kwargs):
+    return _(u"""
 <html>
 <head></head>
 <body>
-  <h1>Bulletin {bulletin_type} - {dept}</h1>
+  <h1>{title}</h1>
   <p>{content}</p>
   <hr />
   <div>
-  <p>Ce bulletin {bulletin_type} est rédigé par
-  <a href="{src_url}">{src_name}</a>.<br>
+  <p>Ce bulletin est rédigé par <a href="{src_url}">{src_name}</a>.<br>
   La liste de diffusion est gérée par
   <a href="http://www.camptocamp.org/">Camptocamp-association</a>.</p>
   <p>Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse suivante&nbsp;:
@@ -100,7 +108,7 @@ HTML_TPL = u"""
   </div>
 </body>
 </html>
-"""
+""").format(**kwargs)
 
 
 class Mail(object):
@@ -222,18 +230,16 @@ class MFBot(Bot):
         if not os.path.isfile(self.store):
             self.save_store({'nivo': {}, 'synth': {}, 'images': {}})
 
-    def prepare_mail(self, recipient, html_content, txt_content, **kwargs):
+    def prepare_mail(self, recipient, html_content, txt_content, title='',
+                     **kwargs):
         """Substite strings in the templates and return a Mail object."""
 
-        ctx = {'bulletin_type': '', 'dept': self.dept,
-               'src_url': MF_URL, 'src_name': u'MétéoFrance'}
+        ctx = {'title': title, 'src_url': MF_URL, 'src_name': u'MétéoFrance'}
         ctx.update(kwargs)
 
-        bulletin_html = HTML_TPL.format(content=html_content, **ctx)
-        bulletin_txt = TXT_TPL.format(content=txt_content, **ctx)
-        subject = SUBJECT_TPL.format(**ctx)
-
-        return Mail(recipient, bulletin_txt, bulletin_html, subject)
+        bulletin_html = get_html_tpl(content=html_content, **ctx)
+        bulletin_txt = get_txt_tpl(content=txt_content, **ctx)
+        return Mail(recipient, bulletin_txt, bulletin_html, title)
 
     def send_nivo_images(self, recipient, method='smtp'):
         """Send bulletin with images extracted by the phantomjs script"""
@@ -269,8 +275,9 @@ class MFBot(Bot):
             self.log.info('%s nivo - No change, nothing to do', self.dept)
         else:
             self.log.info('%s nivo - Sending mail', self.dept)
-            m = self.prepare_mail(recipient, html_content, CONTENT_NIVO,
-                                  bulletin_type=TITLE_NIVO)
+            m = self.prepare_mail(
+                recipient, html_content, CONTENT_NIVO,
+                title=u"{} - {}".format(TITLE_NIVO, self.dept))
 
             for filename in img_list:
                 m.attach_image(filename)
@@ -303,8 +310,9 @@ class MFBot(Bot):
             html_content = content.replace('\n', '<br/>')
 
             self.log.info('%s nivo text - Sending mail', self.dept)
-            mail = self.prepare_mail(recipient, html_content, content,
-                                     bulletin_type=TITLE_NIVO)
+            mail = self.prepare_mail(
+                recipient, html_content, content,
+                title=u"{} - {}".format(TITLE_NIVO, self.dept))
             mail.send(method=method)
 
             data_ref['nivo'][self.dept] = content
@@ -339,8 +347,9 @@ class MFBot(Bot):
         else:
             # text changed -> send the mail and store new text
             self.log.info('%s synth - Sending mail', self.dept)
-            m = self.prepare_mail(recipient, synth_html, synth_txt,
-                                  bulletin_type=TITLE_SYNTH, src_url=url)
+            m = self.prepare_mail(
+                recipient, synth_html, synth_txt,
+                title=u"{} - {}".format(TITLE_SYNTH, self.dept), src_url=url)
             m.send(method=method)
             data_ref['synth'][self.dept] = synth_txt
             self.save_store(data_ref)
@@ -355,18 +364,16 @@ class SLFBot(Bot):
         if not os.path.isfile(self.store):
             self.save_store({})
 
-    def prepare_mail(self, recipient, html_content, txt_content, **kwargs):
+    def prepare_mail(self, recipient, html_content, txt_content, title='',
+                     **kwargs):
         """Substite strings in the templates and return a Mail object."""
 
-        ctx = {'bulletin_type': '', 'dept': '',
-               'src_url': SLF_URL, 'src_name': 'SLF'}
+        ctx = {'title': title, 'src_url': SLF_URL, 'src_name': 'SLF'}
         ctx.update(kwargs)
 
-        bulletin_html = HTML_TPL.format(content=html_content, **ctx)
-        bulletin_txt = TXT_TPL.format(content=txt_content, **ctx)
-        subject = SUBJECT_TPL.format(**ctx)
-
-        return Mail(recipient, bulletin_txt, bulletin_html, subject)
+        bulletin_html = get_html_tpl(content=html_content, **ctx)
+        bulletin_txt = get_txt_tpl(content=txt_content, **ctx)
+        return Mail(recipient, bulletin_txt, bulletin_html, title)
 
     def send(self, lang, recipient, method='smtp'):
         """Send bulletin with images extracted by the phantomjs script"""
@@ -414,8 +421,11 @@ class SLFBot(Bot):
             self.log.info('%s nivo - No change, nothing to do', lang)
         else:
             self.log.info('%s nivo - Sending mail', lang)
-            m = self.prepare_mail(recipient, html_content, CONTENT_NIVO,
-                                  bulletin_type=TITLE_NIVO, dept=lang)
+            title = _(u"Bulletin neige et avalanches - {lang}").format(lang=lang)
+            txt = _(u"""Le bulletin neige et avalanches est constitué d'images,
+celles-ci sont en pièce jointe ou dans la version html de ce mail.""")
+
+            m = self.prepare_mail(recipient, html_content, txt, title=title)
 
             for filename in img_list:
                 m.attach_image(filename)
@@ -437,6 +447,8 @@ def main():
                         help='Recipient of the mail (useful for tests).')
     parser.add_argument('-d', '--debug', action='store_true',
                         help="Debug mode: print logs, set WORK_DIR to cwd.")
+    parser.add_argument('-s', '--source', action='store',
+                        default='all', help='meteofrance, slf or all')
     args = parser.parse_args()
 
     # logging config
@@ -456,29 +468,32 @@ def main():
     logger.setLevel(logging.DEBUG)
     logger.addHandler(handler)
 
-    bot = SLFBot()
-    for lang in SLF_LANGS:
-        try:
-            bot.send(lang, args.recipient, method=args.smtp_method)
-        except Exception:
-            logger.error("Unexpected error: %s" % sys.exc_info()[1])
-
-    for dept in DEPT_LIST:
-        recipient = args.recipient or \
-            "meteofrance-%s@lists.camptocamp.org" % dept.replace('DEPT', '')
-
-        bot = MFBot(dept)
-
-        # 'nivo_text', -> deactivated until it replaces the images bulletin
-        for bulletin_type in ('nivo_images', 'synth_text'):
-            func = getattr(bot, 'send_' + bulletin_type)
-
+    if args.source in ('all', 'slf'):
+        bot = SLFBot()
+        for lang in ['EN']:
+            langs[lang].install(unicode=True)
             try:
-                func(recipient, method=args.smtp_method)
-            except HTTPError:
-                pass
+                bot.send(lang, args.recipient, method=args.smtp_method)
             except Exception:
                 logger.error("Unexpected error: %s" % sys.exc_info()[1])
+
+    if args.source in ('all', 'meteofrance'):
+        for dept in DEPT_LIST:
+            recipient = args.recipient or \
+                "meteofrance-%s@lists.camptocamp.org" % dept.replace('DEPT', '')
+
+            bot = MFBot(dept)
+
+            # 'nivo_text', -> deactivated until it replaces the images bulletin
+            for bulletin_type in ('nivo_images', 'synth_text'):
+                func = getattr(bot, 'send_' + bulletin_type)
+
+                try:
+                    func(recipient, method=args.smtp_method)
+                except HTTPError:
+                    pass
+                except Exception:
+                    logger.error("Unexpected error: %s" % sys.exc_info()[1])
 
 
 def signal_handler(signal, frame):
