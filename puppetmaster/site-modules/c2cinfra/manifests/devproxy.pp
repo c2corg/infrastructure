@@ -44,11 +44,12 @@ auth_basic_user_file /srv/trac/projects/c2corg/conf/htpasswd;
   }
 
   $dashboard = {
-    '/inventory.html'                       => 'inventory',
-    '/pgfouine'                             => 'pgfouine reports',
-    '/haproxy-logs'                         => 'haproxy logs',
-    'https://graphite.dev.camptocamp.org/'  => 'graphite viewer',
-    'http://128.179.66.23:8008/stats'       => 'haproxy stats',
+    '/inventory.html'                         => 'inventory',
+    '/pgfouine'                               => 'pgfouine reports',
+    '/haproxy-logs'                           => 'haproxy logs',
+    'https://graphite.dev.camptocamp.org/'    => 'graphite viewer',
+    'https://puppetboard.dev.camptocamp.org/' => 'puppet dashboard',
+    'http://128.179.66.23:8008/stats'         => 'haproxy stats',
   }
 
   file { '/srv/dev.camptocamp.org/htdocs/dashboard.html':
