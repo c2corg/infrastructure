@@ -4,7 +4,7 @@ class c2cinfra::trac {
   include '::runit'
 
   if ($::lsbdistcodename == 'wheezy') {
-    apt::pin { 'trac from bpo':
+    apt::pin { 'trac_from_bpo':
       packages => 'trac',
       release  => "${::lsbdistcodename}-backports",
       priority => '1010',
