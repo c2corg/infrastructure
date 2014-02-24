@@ -366,7 +366,7 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
               // risk estimation & notation
               output += page.evaluate(function() {
                 var section = $(".article-row:eq(0)");
-                return section.children("p:eq(1)")[0].outerHTML + 
+                return section.children("p:eq(1)")[0].outerHTML +
                        section.find(".bloc-last .right-box").html();
               });
 
@@ -478,7 +478,7 @@ handle_dpt_pages(dpt.mountain_ranges, function(status, url) {
 
   json[dpt.id] = {
     content: output,
-    updated: Date()
+    updated: new Date().getTime()
   };
   try {
     fs.write(config.json_file, JSON.stringify(json));

@@ -17,6 +17,7 @@ Dependencies:
 import argparse
 import cookielib
 import gettext
+import glob
 import json
 import logging
 import logging.handlers
@@ -33,6 +34,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formatdate
 from lxml.html import tostring, fromstring
+from os.path import splitext
 from urllib2 import HTTPError
 
 # config
@@ -141,7 +143,7 @@ class Mail(object):
         # case the HTML message, is best and preferred.
         msg_alternative.attach(MIMEText(html, 'html', encoding))
 
-    def attach_image(self, filename):
+    def attach_image(self, filename, file_id=None):
         """Read the image and attach it to the email."""
 
         with open(os.path.join(WORK_DIR, filename)) as f:
@@ -152,7 +154,8 @@ class Mail(object):
         msg_image = MIMEImage(img)
 
         # Define the image's ID as referenced above
-        msg_image.add_header('Content-ID', '<{}>'.format(filename))
+        file_id = file_id or filename
+        msg_image.add_header('Content-ID', '<{}>'.format(file_id))
         self.msg.attach(msg_image)
 
     def send(self, method='smtp'):
@@ -266,7 +269,9 @@ class MFBot(Bot):
         img_list = re.findall(r'mf_OPP.*?\.png', data['content'])
 
         # generate the <img> codes for each image
-        html_content = re.sub(r'(mf_OPP.*?\.png)', r'cid:\1', data['content'])
+        html_content = re.sub(r'(mf_OPP.*?)\.png',
+                              r'cid:\1-{}.png'.format(data['updated']),
+                              data['content'])
 
         data_ref = self.open_store()
         ref = data_ref['images'].get(self.dept)
@@ -280,7 +285,9 @@ class MFBot(Bot):
                 title=u"{} - {}".format(TITLE_NIVO, self.dept))
 
             for filename in img_list:
-                m.attach_image(filename)
+                m.attach_image(filename,
+                               file_id='{}-{}.png'.format(
+                                   splitext(filename)[0], data['updated']))
 
             m.send(method=method)
             data_ref['images'][self.dept] = data['content']
@@ -469,6 +476,9 @@ def main():
     logger.addHandler(handler)
 
     if args.source in ('all', 'slf'):
+        for img in glob.glob('slf_*.png'):
+            os.remove(img)
+
         bot = SLFBot()
         for lang in ['EN']:
             langs[lang].install(unicode=True)
@@ -478,6 +488,9 @@ def main():
                 logger.error("Unexpected error: %s" % sys.exc_info()[1])
 
     if args.source in ('all', 'meteofrance'):
+        for img in glob.glob('mf_OPP*.png'):
+            os.remove(img)
+
         for dept in DEPT_LIST:
             recipient = args.recipient or \
                 "meteofrance-%s@lists.camptocamp.org" % dept.replace('DEPT', '')
