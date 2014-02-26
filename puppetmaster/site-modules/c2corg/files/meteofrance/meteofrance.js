@@ -453,7 +453,7 @@ function handle_dpt_pages(urls, urlClbk, finalClbk) {
               console.log("An error occured when handling a page");
               phantom.exit(1);
             }
-          }), 1000); // we need some time for the recent snow graph to appear
+          }), 2000); // we need some time for the recent snow graph to appear
         } else {
           console.log("An error occured when retrieving a page");
           phantom.exit(1);
