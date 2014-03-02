@@ -142,7 +142,7 @@ class c2cinfra::apt {
 
   package { 'unattended-upgrades': ensure => present }
 
-  apt::pin { 'backported unattended-upgrades version':
+  apt::pin { 'backported_unattended-upgrades_version':
     packages => 'unattended-upgrades python-apt',
     release  => "${::lsbdistcodename}",
     label    => 'C2corg',
