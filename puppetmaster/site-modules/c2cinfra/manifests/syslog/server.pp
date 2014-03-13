@@ -21,24 +21,6 @@ destination d_hosts {
   );
 };
 
-# PostgreSQL production logs
-
-destination d_postgresql_prod {
-  file('/srv/syslog/postgresql/prod.log');
-};
-
-filter f_postgresql_prod {
-  program('postgres') and
-  host('${db_host}');
-};
-
-log {
-  source(s_remote);
-  filter(f_postgresql_prod);
-  destination(d_postgresql_prod);
-  flags(final);
-};
-
 # HAProxy production logs
 
 destination d_haproxy_prod {
@@ -80,7 +62,7 @@ log {
     notify  => Service["syslog"],
   }
 
-  file { ["/srv/syslog", "/srv/syslog/postgresql", "/srv/syslog/haproxy"]: ensure => directory }
+  file { ["/srv/syslog", "/srv/syslog/haproxy"]: ensure => directory }
 
   augeas { "logrotate syslog-ng files":
     incl    => '/etc/logrotate.d/srv-syslog',
