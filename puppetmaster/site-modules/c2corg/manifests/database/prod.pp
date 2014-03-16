@@ -4,6 +4,7 @@ class c2corg::database::prod inherits c2corg::database::common {
 
   $www_db_user   = hiera('www_db_user')
   $prod_db_pass  = hiera('prod_db_pass')
+  $monit_db_user = hiera('monit_db_user')
   $logstash_host = hiera('logstash_host')
 
   Postgresql::Server::Role[$www_db_user] {
@@ -73,13 +74,18 @@ output {
     notify  => Service['syslog'],
   }
 
+  postgresql::server::role { $monit_db_user:
+    password_hash => postgresql_password($monit_db_user, hiera('monit_db_pass')),
+    superuser     => true,
+  }
+
   collectd::config::plugin { 'postgresql plugin config':
     plugin   => 'postgresql',
     settings => "
   <Database c2corg>
     Port \"5432\"
-    User \"${www_db_user}\"
-    Password \"${prod_db_pass}\"
+    User \"${monit_db_user}\"
+    Password \"${monit_db_pass}\"
   </Database>
 ",
   }
