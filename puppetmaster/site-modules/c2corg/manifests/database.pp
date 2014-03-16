@@ -3,6 +3,11 @@ class c2corg::database {
   class { 'postgresql::globals':
     encoding => 'UTF8',
   } ->
+  file { '/var/log/postgresql':
+    owner => 'root',
+    group => 'postgres',
+    mode  => '1775',
+  } ->
   class { 'postgresql::server':
     pg_hba_conf_defaults => false,
     manage_pg_hba_conf   => true,
