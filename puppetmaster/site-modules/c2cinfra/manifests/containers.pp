@@ -69,17 +69,19 @@ class c2cinfra::containers {
       logical_volume { 'lxcdb0pgbackup': initial_size => '30G' } ->
       logical_volume { 'lxcdb0pgxlog':   initial_size => '5G' }  ->
       logical_volume { 'lxcdb0pgdata':   initial_size => '40G' } ->
+      logical_volume { 'lxcdb0pglog':    initial_size => '5G' } ->
       lxc::container { 'db0.pse.infra.camptocamp.org':
         ctid   => 52,
         suite  => 'wheezy',
         fssize => '5G',
         cap_drop => ['mac_admin','mac_override','sys_module'],
-        extra_devices => ['b 254:5 rwm', 'b 254:6 rwm', 'b 254:7 rwm'],
+        extra_devices => ['b 254:5 rwm', 'b 254:6 rwm', 'b 254:7 rwm', 'b 254:2 rwm'],
       }
 
       @@mknod { 'pgbackup': type => 'b', major => 254, minor => 5, tag => 'db0' }
       @@mknod { 'pgxlog':   type => 'b', major => 254, minor => 6, tag => 'db0' }
       @@mknod { 'pgdata':   type => 'b', major => 254, minor => 7, tag => 'db0' }
+      @@mknod { 'pglog':    type => 'b', major => 254, minor => 2, tag => 'db0' }
 
     }
 
@@ -207,17 +209,19 @@ class c2cinfra::containers {
       logical_volume { 'lxcdb1pgbackup': initial_size => '30G' } ->
       logical_volume { 'lxcdb1pgxlog':   initial_size => '5G' }  ->
       logical_volume { 'lxcdb1pgdata':   initial_size => '40G' } ->
+      logical_volume { 'lxcdb1pglog':    initial_size => '5G' } ->
       lxc::container { 'db1.pse.infra.camptocamp.org':
         ctid   => 53,
         suite  => 'wheezy',
         fssize => '5G',
         cap_drop => ['mac_admin','mac_override','sys_module'],
-        extra_devices => ['b 254:5 rwm', 'b 254:6 rwm', 'b 254:7 rwm'],
+        extra_devices => ['b 254:5 rwm', 'b 254:6 rwm', 'b 254:7 rwm', 'b 254:8 rwm'],
       }
 
       @@mknod { 'pgbackup': type => 'b', major => 254, minor => 5, tag => 'db1' }
       @@mknod { 'pgxlog':   type => 'b', major => 254, minor => 6, tag => 'db1' }
       @@mknod { 'pgdata':   type => 'b', major => 254, minor => 7, tag => 'db1' }
+      @@mknod { 'pglog':    type => 'b', major => 254, minor => 8, tag => 'db1' }
 
     }
   }

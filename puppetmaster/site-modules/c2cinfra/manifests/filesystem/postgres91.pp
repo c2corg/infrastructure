@@ -31,6 +31,20 @@ class c2cinfra::filesystem::postgres91 {
     before  => Service['postgresql'],
   } ->
 
+  # /var/log/postgresql
+  filesystem { '/dev/pglog':
+    ensure  => present,
+    fs_type => 'ext4',
+  } ->
+
+  mount { '/var/log/postgresql':
+    ensure  => mounted,
+    atboot  => true,
+    device  => '/dev/pglog',
+    fstype  => 'ext4',
+    options => 'noatime,nobarrier',
+  } ->
+
   # /var/backups/pgsql
   filesystem { '/dev/pgbackup':
     ensure  => present,
