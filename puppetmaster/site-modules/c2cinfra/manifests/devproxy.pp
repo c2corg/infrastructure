@@ -45,7 +45,7 @@ auth_basic_user_file /srv/trac/projects/c2corg/conf/htpasswd;
 
   $dashboard = {
     '/inventory.html'                         => 'inventory',
-    '/pgfouine'                               => 'pgfouine reports',
+    '/pgreports'                              => 'pgbadger reports',
     '/haproxy-logs'                           => 'haproxy logs',
     'https://graphite.dev.camptocamp.org/'    => 'graphite viewer',
     'https://puppetboard.dev.camptocamp.org/' => 'puppet dashboard',
