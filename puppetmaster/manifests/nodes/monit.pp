@@ -6,7 +6,6 @@ node 'monit' inherits 'base-node' {
   include graphite::legacy::webapp
   include statsd::server::python
   include c2cinfra::syslog::server
-  include c2corg::syslog::pgfouine
   include c2corg::syslog::haproxy
 
   $mpm_package = 'event'
