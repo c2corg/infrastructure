@@ -85,4 +85,11 @@ exec chpst -e "${envdir}" -u _graphite:_graphite /usr/bin/carbon-cache --debug -
     finish_command => '/usr/bin/carbon-cache --debug --pidfile=/var/lib/graphite/carbon-cache.pid --config=/etc/carbon/carbon.conf stop; rm -f /var/lib/graphite/carbon-cache.pid',
   }
 
+  cron { 'purge stale collectd wsps':
+    user    => '_graphite',
+    minute  => '54',
+    hour    => '12',
+    command => 'find /var/lib/graphite/whisper/collectd/ -type f -mtime +60 -delete; find /var/lib/graphite/whisper/collectd/ -type d -empty -delete',
+  }
+
 }
