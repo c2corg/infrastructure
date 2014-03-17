@@ -114,6 +114,10 @@ output {
     Query table_states
     Query disk_io
     Query disk_usage
+    Query queries_by_table
+    Query query_plans_by_table
+    Query table_states_by_table
+    Query disk_io_by_table
     Query replication_lag
   </Database>
 ",
