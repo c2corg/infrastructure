@@ -1,7 +1,8 @@
 class c2cinfra::reprepro {
 
-  $reprepro_basedir = "/srv/deb-repo"
   include reprepro::debian
+
+  $reprepro_basedir = '/var/packages'
 
   file { "${reprepro_basedir}/.ssh/":
     ensure => directory,
