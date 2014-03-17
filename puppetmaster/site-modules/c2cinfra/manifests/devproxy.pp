@@ -3,7 +3,7 @@ class c2cinfra::devproxy {
   include '::nginx::monitoring'
 
   nginx::site { 'devproxy':
-    source => 'puppet:///c2cinfra/nginx/devproxy.conf',
+    source => 'puppet:///modules/c2cinfra/nginx/devproxy.conf',
   }
 
   $resolvers = hiera('resolvers')

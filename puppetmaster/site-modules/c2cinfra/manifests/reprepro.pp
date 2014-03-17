@@ -83,7 +83,7 @@ server {
 
   file { "${reprepro_basedir}/install-puppet.sh":
     ensure => present,
-    source => 'puppet:///puppet/install-puppet.sh',
+    source => 'puppet:///modules/puppet/install-puppet.sh',
   }
 
   package { 'thttpd': ensure => absent } ->

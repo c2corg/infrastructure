@@ -5,7 +5,7 @@ class c2cinfra::common::config {
   file { "/etc/resolv.conf":
     content => inline_template('# file managed by puppet
 search camptocamp.org infra.camptocamp.org
-<% resolvers.each do |nameserver| -%>
+<% @resolvers.each do |nameserver| -%>
 nameserver <%= nameserver %>
 <% end -%>
 options timeout:2 edns0
