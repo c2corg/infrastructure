@@ -5,6 +5,7 @@ class c2corg::database::prod inherits c2corg::database::common {
   $www_db_user   = hiera('www_db_user')
   $prod_db_pass  = hiera('prod_db_pass')
   $monit_db_user = hiera('monit_db_user')
+  $monit_db_pass = hiera('monit_db_pass')
   $logstash_host = hiera('logstash_host')
 
   Postgresql::Server::Role[$www_db_user] {
@@ -75,7 +76,7 @@ output {
   }
 
   postgresql::server::role { $monit_db_user:
-    password_hash => postgresql_password($monit_db_user, hiera('monit_db_pass')),
+    password_hash => postgresql_password($monit_db_user, $monit_db_pass),
     superuser     => true,
   }
 
