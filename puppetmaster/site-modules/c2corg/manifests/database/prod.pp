@@ -83,10 +83,38 @@ output {
   collectd::config::plugin { 'postgresql plugin config':
     plugin   => 'postgresql',
     settings => "
+# calculate replication lag in bytes
+  <Query replication_lag>
+    Statement \"SELECT client_addr, \\
+      sent_offset - ( replay_offset - (sent_xlog - replay_xlog) * 255 * 16 ^ 6 ) \\
+      AS byte_lag FROM ( \\
+        SELECT client_addr, \\
+        ('x'||split_part(sent_location, '/', 1))::text::bit(32)::integer AS sent_xlog, \\
+        ('x'||split_part(replay_location, '/', 1))::text::bit(32)::integer AS replay_xlog, \\
+        ('x'||split_part(sent_location, '/', 2))::text::bit(32)::integer AS sent_offset, \\
+        ('x'||split_part(replay_location, '/', 2))::text::bit(32)::integer AS replay_offset \\
+        FROM pg_stat_replication) \\
+      AS s;\"
+    <Result>
+      Type gauge
+      InstancePrefix repl_lag
+      InstancesFrom client_addr
+      ValuesFrom byte_lag
+    </Result>
+    MinVersion 90100
+  </Query>
   <Database c2corg>
     Port \"5432\"
     User \"${monit_db_user}\"
     Password \"${monit_db_pass}\"
+    Query backends
+    Query transactions
+    Query queries
+    Query query_plans
+    Query table_states
+    Query disk_io
+    Query disk_usage
+    Query replication_lag
   </Database>
 ",
   }
