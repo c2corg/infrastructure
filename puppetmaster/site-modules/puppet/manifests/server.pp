@@ -49,7 +49,7 @@ class puppet::server {
     'master/storeconfigs_backend':  value => 'puppetdb';
     'master/dbadapter':             value => '', ensure => absent;
     # reporting
-    'master/reports': value => 'log,puppetdb,riemann';
+    'master/reports': value => 'log,puppetdb,riemann,graphite';
     # config_version
     'marc/config_version':  value => '/usr/bin/git --git-dir /home/marc/infrastructure/.git rev-parse --short master 2>/dev/null || echo unknown';
     'main/config_version':  value => '/usr/bin/git --git-dir /srv/infrastructure/.git rev-parse --short master 2>/dev/null || echo unknown';
@@ -128,6 +128,17 @@ port = 8081
     content => "---
 :riemann_server: '${riemann_host}'
 :riemann_port: 5555
+",
+  }
+
+  $carbon_host = hiera('carbon_host')
+
+  file { '/etc/puppet/graphite.yaml':
+    ensure  => present,
+    notify  => Service['puppetmaster'],
+    content => "---
+:graphite_server: '${carbon_host}'
+:graphite_port: 2003
 ",
   }
 

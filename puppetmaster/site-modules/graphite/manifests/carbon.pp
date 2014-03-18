@@ -48,6 +48,10 @@ retentions = 5m:1d,15m:7d,60m:5y
 pattern = ^collectd\.
 retentions = 10s:1d,30s:7d,1m:21d,15m:5y
 
+[puppet_reports_policy]
+pattern = ^puppet_reports\.
+retentions = 60m:5y
+
 [default_local_setting]
 pattern = .*
 retentions = 15s:7d,1m:21d,15m:5y
