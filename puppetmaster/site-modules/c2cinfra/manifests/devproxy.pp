@@ -6,11 +6,11 @@ class c2cinfra::devproxy {
     source => 'puppet:///modules/c2cinfra/nginx/devproxy.conf',
   }
 
-  $resolvers = hiera('resolvers')
+  $res = hiera('resolvers')
 
   nginx::conf { 'resolver':
     content => inline_template('# file managed by puppet
-resolver <%= @resolvers.join(" ") %>;
+resolver <%= @res.join(" ") %>;
 '),
   }
 
