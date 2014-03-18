@@ -10,7 +10,7 @@ class c2cinfra::devproxy {
 
   nginx::conf { 'resolver':
     content => inline_template('# file managed by puppet
-resolver <%= resolvers.join(" ") %>;
+resolver <%= @resolvers.join(" ") %>;
 '),
   }
 
