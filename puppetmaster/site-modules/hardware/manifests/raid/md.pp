@@ -13,7 +13,9 @@ class hardware::raid::md {
   } ->
 
   augeas { 'set mdadm mail address':
-    changes => 'set /files/etc/mdadm/mdadm.conf/mailaddr/value root',
+    changes => 'set mailaddr/value root',
+    incl    => '/etc/mdadm/mdadm.conf',
+    lens    => 'Mdadm_conf.lns',
     notify  => Service['mdadm'],
   } ~>
 
