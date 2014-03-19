@@ -14,6 +14,7 @@ else
         when /^192\.168\.192/ then 'c2corg'
         when /^128\.179\.66/  then 'epnet'
         when /^95\.142/       then 'gandi'
+        when /^46\.226\.104/  then 'gandi'
         when /^91\.121/       then 'ovh'
         else 'other'
       end
