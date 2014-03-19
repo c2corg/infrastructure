@@ -9,7 +9,7 @@ class c2cinfra::backup {
     include concat::setup
 
     $destdir = "/srv/backups/${::hostname}/"
-    $destsrv = "backup.ghst.infra.camptocamp.org"
+    $destsrv = "backup0.ovh.infra.camptocamp.org"
 
     concat { "/root/.backups.include":
       owner => "root",
