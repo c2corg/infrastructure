@@ -5,8 +5,9 @@ class c2cinfra::hosts {
   }
 
   $subnet = $::hostname ? {
-    'backup' => 'ghst',
-    default  => 'pse',
+    'backup'  => 'ghst',
+    'backup0' => 'ovh',
+    default   => 'pse',
   }
 
   host { "${::hostname}.${subnet}.infra.camptocamp.org":

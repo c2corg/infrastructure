@@ -3,6 +3,7 @@ class c2cinfra::apt {
   $debmirror = $::datacenter ? {
     /c2corg|epnet|pse/ => 'http://mirror.switch.ch/ftp/mirror',
     'gandi'        => 'http://mirrors.gandi.net',
+    'ovh'          => 'http://debian.mirrors.ovh.net',
     default        => 'http://http.debian.net',
   }
 
