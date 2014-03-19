@@ -49,14 +49,7 @@ class c2cinfra::hn {
   }
 
   if ($::lsbdistcodename == 'wheezy') {
-    apt::pin { 'kernel and initramfs from bpo':
-      packages => 'linux-image-3.10-0.bpo.3-amd64 initramfs-tools',
-      release  => "${::lsbdistcodename}-backports",
-      priority => '1010',
-    }
-
     package { ['firmware-linux', 'firmware-bnx2']: ensure => present }
-    package { 'linux-image-3.10-0.bpo.3-amd64': ensure => present }
   }
 
 }

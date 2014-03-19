@@ -7,6 +7,14 @@ class lxc::host {
 
   package { ['lxc', 'lxctl', 'bridge-utils', 'debootstrap']: ensure => present }
 
+  apt::pin { 'kernel and initramfs from bpo':
+    packages => 'linux-image-3.10-0.bpo.3-amd64 initramfs-tools',
+    release  => "${::lsbdistcodename}-backports",
+    priority => '1010',
+  }
+
+  package { 'linux-image-3.10-0.bpo.3-amd64': ensure => present }
+
   # backported from sid, unless they get included in wheezy
   apt::pin { 'lxc-packages_from_c2corg_repo':
     packages => 'lxc live-debconfig',
