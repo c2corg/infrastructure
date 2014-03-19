@@ -1,0 +1,22 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+        address 91.121.221.105
+        netmask 255.255.255.0
+        network 91.121.221.0
+        broadcast 91.121.221.255
+        gateway 91.121.221.254
+
+iface eth0 inet6 static
+        address 2001:41D0:2:8469::1
+        netmask 128
+        post-up /sbin/ip -f inet6 route add 2001:41D0:2:84ff:ff:ff:ff:ff dev eth0
+        post-up /sbin/ip -f inet6 route add default via 2001:41D0:2:84ff:ff:ff:ff:ff
+        pre-down /sbin/ip -f inet6 route del default via 2001:41D0:2:84ff:ff:ff:ff:ff
+        pre-down /sbin/ip -f inet6 route del 2001:41D0:2:84ff:ff:ff:ff:ff dev eth0
