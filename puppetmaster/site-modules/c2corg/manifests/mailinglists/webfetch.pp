@@ -54,6 +54,13 @@ account default: sympa
     month   => [10,11,12,01,02,03,04,05,06],
   }
 
+  sudoers { 'access to webfetch account for admins':
+    users => '%adm',
+    type  => "user_spec",
+    commands => [ '(webfetch) ALL' ],
+  }
+
+
   file { ['/usr/local/bin/meteofrance.js', '/usr/local/bin/meteofrance.py']:
     ensure => absent,
   }
