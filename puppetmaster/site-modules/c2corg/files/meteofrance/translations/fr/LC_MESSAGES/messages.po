@@ -1,0 +1,82 @@
+# French translations for PROJECT.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-01-30 00:30+0100\n"
+"PO-Revision-Date: 2014-01-30 00:30+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+
+#: meteofrance.py:69
+msgid ""
+"\n"
+"{title}\n"
+"=====================================\n"
+"\n"
+"{content}\n"
+"\n"
+"-------------------------------------------------------------------------------"
+"\n"
+"\n"
+"Ce bulletin est rédigé par {src_name} ({src_url}).\n"
+"La liste de diffusion est gérée par Camptocamp-association\n"
+"(http://www.camptocamp.org).\n"
+"\n"
+"Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse "
+"suivante :\n"
+"http://www.camptocamp.org/users/mailinglists\n"
+"\n"
+"N'hésitez pas à saisir vos sorties pour rapporter vos observations sur\n"
+"les conditions nivologiques et l'activité avalancheuse :\n"
+"http://www.camptocamp.org/outings/wizard\n"
+msgstr ""
+
+#: meteofrance.py:91
+msgid ""
+"\n"
+"<html>\n"
+"<head></head>\n"
+"<body>\n"
+"  <h1>{title}</h1>\n"
+"  <p>{content}</p>\n"
+"  <hr />\n"
+"  <div>\n"
+"  <p>Ce bulletin est rédigé par <a href=\"{src_url}\">{src_name}</a>.<br>"
+"\n"
+"  La liste de diffusion est gérée par\n"
+"  <a href=\"http://www.camptocamp.org/\">Camptocamp-association</a>.</p>\n"
+"  <p>Pour ne plus recevoir de bulletin par email, rendez vous à l'adresse"
+" suivante&nbsp;:\n"
+"  <a "
+"href=\"http://www.camptocamp.org/users/mailinglists\">http://www.camptocamp.org/users/mailinglists</a></p>"
+"\n"
+"  <p>N'hésitez pas à <a "
+"href=\"http://www.camptocamp.org/outings/wizard\">saisir\n"
+"  vos sorties</a> pour rapporter vos observations sur les conditions\n"
+"  nivologiques et l'activité avalancheuse.</p>\n"
+"  </div>\n"
+"</body>\n"
+"</html>\n"
+msgstr ""
+
+#: meteofrance.py:423
+msgid "Bulletin neige et avalanches - {lang}"
+msgstr ""
+
+#: meteofrance.py:424
+msgid ""
+"Le bulletin neige et avalanches est constitué d'images,\n"
+"celles-ci sont en pièce jointe ou dans la version html de ce mail."
+msgstr ""
+
