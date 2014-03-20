@@ -11,10 +11,4 @@ node 'stats' inherits 'base-node' {
     'duty': value => 'prod';
   }
 
-  sudoers { 'temporary root access for saimon':
-    users    => 'saimon',
-    type     => 'user_spec',
-    commands => '(ALL) ALL',
-  }
-
 }
