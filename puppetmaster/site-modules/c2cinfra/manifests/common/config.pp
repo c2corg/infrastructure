@@ -60,11 +60,13 @@ options timeout:2 edns0
   # TODO: investigate this bug, this is silly
   # Gandi VMs have bad filemodes on /
   # This breaks sshd.
-  #file { "slash":
-  #  path   => '/',
-  #  ensure => directory, mode => 0755,
-  #  owner  => "root", group => "root",
-  #}
+  if ($::datacenter == 'gandi') {
+    file { "slash":
+      path   => '/',
+      ensure => directory, mode => 0755,
+      owner  => "root", group => "root",
+    }
+  }
 
   if $::lsbdistcodename == 'wheezy' {
 
