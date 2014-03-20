@@ -26,7 +26,7 @@ class c2corg::stats {
     owner    => 'c2corg',
     group    => 'c2corg',
     provider => 'git',
-    source   => 'git://github.com/saimn/c2c-stats.git',
+    source   => 'https://github.com/c2corg/c2c-stats.git',
   }
 
   package { ['python-numpy', 'libevent-dev']:
