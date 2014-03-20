@@ -3,6 +3,11 @@ node 'ipv6proxy' inherits 'base-node' {
 
   include c2corg::webserver::ipv6gw
 
+  class { 'c2cinfra::openvpn::client':
+    username => 'ipv6proxy-vpn',
+    password => hiera('ipv6proxy_vpn_password'),
+  }
+
   fact::register {
     'role': value => ['proxy ipv6'];
     'duty': value => 'prod';
