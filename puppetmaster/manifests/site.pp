@@ -29,7 +29,7 @@ Apache::Vhost {
   mode  => '0755',
 }
 
-Apache::Vhost-ssl {
+Apache::Vhost::Ssl {
   user  => 'root',
   group => 'root',
   mode  => '0755',
