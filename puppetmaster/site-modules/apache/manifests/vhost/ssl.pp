@@ -182,10 +182,7 @@ define apache::vhost::ssl (
   if $cacert != false {
     $cacertfile = "${apache::params::root}/$name/ssl/cacert.crt"
   } else {
-    $cacertfile = $::operatingsystem ? {
-      /RedHat|CentOS/ => '/etc/pki/tls/certs/ca-bundle.crt',
-      Debian          => '/etc/ssl/certs/ca-certificates.crt',
-    }
+    $cacertfile = '/etc/ssl/certs/ca-certificates.crt'
   }
 
   # If a revocation file is provided
@@ -231,7 +228,6 @@ define apache::vhost::ssl (
       owner   => 'root',
       group   => 'root',
       mode    => '0700',
-      seltype => 'cert_t',
       require => [File["${apache::params::root}/${name}"]],
     }
 
@@ -269,7 +265,6 @@ define apache::vhost::ssl (
       group   => 'root',
       mode    => '0640',
       source  => $certfile_source,
-      seltype => 'cert_t',
       notify  => Exec['apache-graceful'],
       require => [
         File["${apache::params::root}/${name}/ssl"],
@@ -289,7 +284,6 @@ define apache::vhost::ssl (
       group   => 'root',
       mode    => '0600',
       source  => $certkeyfile_source,
-      seltype => 'cert_t',
       notify  => Exec['apache-graceful'],
       require => [
         File["${apache::params::root}/${name}/ssl"],
@@ -305,7 +299,6 @@ define apache::vhost::ssl (
         group   => 'root',
         mode    => '0640',
         source  => $cacert,
-        seltype => 'cert_t',
         notify  => Exec['apache-graceful'],
         require => File["${apache::params::root}/${name}/ssl"],
       }
@@ -318,7 +311,6 @@ define apache::vhost::ssl (
         group   => 'root',
         mode    => '0640',
         source  => $cacrl,
-        seltype => 'cert_t',
         notify  => Exec['apache-graceful'],
         require => File["${apache::params::root}/${name}/ssl"],
       }
@@ -333,7 +325,6 @@ define apache::vhost::ssl (
         group   => 'root',
         mode    => '0640',
         source  => $certchain,
-        seltype => 'cert_t',
         notify  => Exec['apache-graceful'],
         require => File["${apache::params::root}/${name}/ssl"],
       }
@@ -359,7 +350,6 @@ define apache::vhost::ssl (
       path    => $public_csr_path,
       source  => $public_csr_source,
       mode    => '0640',
-      seltype => 'httpd_sys_content_t',
       require => Exec["generate-ssl-cert-$name"],
     }
 

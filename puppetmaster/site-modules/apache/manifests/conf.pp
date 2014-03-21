@@ -40,11 +40,6 @@ define apache::conf($ensure=present, $filename="", $prefix="configuration", $con
   file{ "${name} configuration in ${path}":
     ensure  => $ensure,
     content => "# file managed by puppet\n${configuration}\n",
-    seltype => $::operatingsystem ? {
-      'RedHat' => 'httpd_config_t',
-      'CentOS' => 'httpd_config_t',
-      default  => undef,
-    },
     path    => $filename ? {
       ''      => "${path}/${prefix}-${fname}.conf",
       default => "${path}/${filename}",

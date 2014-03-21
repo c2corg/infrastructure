@@ -51,11 +51,6 @@ define apache::vhost (
         owner   => root,
         group   => root,
         mode    => '0644',
-        seltype => $::operatingsystem ? {
-          redhat => 'httpd_config_t',
-          CentOS => 'httpd_config_t',
-          default => undef,
-        },
         require => Package[$apache::params::pkg],
         notify  => Exec["apache-graceful"],
       }
@@ -65,11 +60,6 @@ define apache::vhost (
         owner  => root,
         group  => root,
         mode   => '0755',
-        seltype => $::operatingsystem ? {
-          redhat => "httpd_sys_content_t",
-          CentOS => "httpd_sys_content_t",
-          default => undef,
-        },
         require => File["root directory"],
       }
 
@@ -81,11 +71,6 @@ define apache::vhost (
         },
         group  => $wwwgroup,
         mode   => $mode,
-        seltype => $::operatingsystem ? {
-          redhat => "httpd_config_t",
-          CentOS => "httpd_config_t",
-          default => undef,
-        },
         require => [File["${apache::params::root}/${name}"]],
       }
 
@@ -94,11 +79,6 @@ define apache::vhost (
         owner  => $wwwuser,
         group  => $wwwgroup,
         mode   => $mode,
-        seltype => $::operatingsystem ? {
-          redhat => "httpd_sys_content_t",
-          CentOS => "httpd_sys_content_t",
-          default => undef,
-        },
         require => [File["${apache::params::root}/${name}"]],
       }
 
@@ -108,11 +88,6 @@ define apache::vhost (
         owner   => $wwwuser,
         group   => $wwwgroup,
         mode    => $mode,
-        seltype => $::operatingsystem ? {
-          redhat => 'httpd_sys_content_t',
-          CentOS => 'httpd_sys_content_t',
-          default => undef,
-        },
         require => File["${apache::params::root}/${name}"],
       }
 
@@ -129,11 +104,6 @@ define apache::vhost (
         owner  => $wwwuser,
         group  => $wwwgroup,
         mode   => $mode,
-        seltype => $::operatingsystem ? {
-          redhat => "httpd_sys_script_exec_t",
-          CentOS => "httpd_sys_script_exec_t",
-          default => undef,
-        },
         require => [File["${apache::params::root}/${name}"]],
       }
 
@@ -201,11 +171,6 @@ define apache::vhost (
         owner  => root,
         group  => root,
         mode   => '0755',
-        seltype => $::operatingsystem ? {
-          redhat => 'httpd_log_t',
-          CentOS => 'httpd_log_t',
-          default => undef,
-        },
         require => File["${apache::params::root}/${name}"],
       }
 
@@ -217,11 +182,6 @@ define apache::vhost (
         owner => root,
         group => adm,
         mode => '0644',
-        seltype => $::operatingsystem ? {
-          redhat => 'httpd_log_t',
-          CentOS => 'httpd_log_t',
-          default => undef,
-        },
         require => File["${apache::params::root}/${name}/logs"],
       }
 
@@ -239,20 +199,13 @@ define apache::vhost (
       }
 
       exec {"enable vhost ${name}":
-        command => $::operatingsystem ? {
-          RedHat => "${apache::params::a2ensite} ${name}",
-          CentOS => "${apache::params::a2ensite} ${name}",
-          default => "${apache::params::a2ensite} ${name}"
-        },
+        command => "${apache::params::a2ensite} ${name}",
         notify  => Exec["apache-graceful"],
-        require => [$::operatingsystem ? {
-          redhat => File["${apache::params::a2ensite}"],
-          CentOS => File["${apache::params::a2ensite}"],
-          default => Package[$apache::params::pkg]},
+        require => [
           File["${apache::params::conf}/sites-available/${name}"],
           File["${apache::params::root}/${name}/htdocs"],
           File["${apache::params::root}/${name}/logs"],
-          File["${apache::params::root}/${name}/conf"]
+          File["${apache::params::root}/${name}/conf"],
         ],
         unless  => "/bin/sh -c '[ -L ${apache::params::conf}/sites-enabled/${name} ] \\
           && [ ${apache::params::conf}/sites-enabled/${name} -ef ${apache::params::conf}/sites-available/${name} ]'",
@@ -277,28 +230,17 @@ define apache::vhost (
       }
 
       exec { "disable vhost ${name}":
-        command => $::operatingsystem ? {
-          RedHat => "/usr/local/sbin/a2dissite ${name}",
-          CentOS => "/usr/local/sbin/a2dissite ${name}",
-          default => "/usr/sbin/a2dissite ${name}"
-        },
+        command => "/usr/sbin/a2dissite ${name}",
         notify  => Exec["apache-graceful"],
-        require => [$::operatingsystem ? {
-          redhat => File["${apache::params::a2ensite}"],
-          CentOS => File["${apache::params::a2ensite}"],
-          default => Package[$apache::params::pkg]}],
-          onlyif => "/bin/sh -c '[ -L ${apache::params::conf}/sites-enabled/${name} ] \\
-            && [ ${apache::params::conf}/sites-enabled/${name} -ef ${apache::params::conf}/sites-available/${name} ]'",
+        require => [Package[$apache::params::pkg]],
+        onlyif => "/bin/sh -c '[ -L ${apache::params::conf}/sites-enabled/${name} ] \\
+          && [ ${apache::params::conf}/sites-enabled/${name} -ef ${apache::params::conf}/sites-available/${name} ]'",
       }
     }
 
     disabled: {
       exec { "disable vhost ${name}":
-        command => $operatingsystem ? {
-          RedHat => "/usr/local/sbin/a2dissite ${name}",
-          CentOS => "/usr/local/sbin/a2dissite ${name}",
-          default => "/usr/sbin/a2dissite ${name}"
-        },
+        command => "${name}",
         notify  => Exec["apache-graceful"],
         require => Package[$apache::params::pkg],
         onlyif => "/bin/sh -c '[ -L ${apache::params::conf}/sites-enabled/${name} ] \\
