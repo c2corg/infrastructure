@@ -46,9 +46,6 @@
 [submodule "puppetmaster/modules/varnish"]
 	path = puppetmaster/modules/varnish
 	url = https://github.com/camptocamp/puppet-varnish
-[submodule "puppetmaster/modules/apache"]
-	path = puppetmaster/modules/apache
-	url = https://github.com/camptocamp/puppet-apache
 [submodule "puppetmaster/modules/postgresql"]
 	path = puppetmaster/modules/postgresql
 	url = https://github.com/puppetlabs/puppet-postgresql
