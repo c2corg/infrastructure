@@ -29,9 +29,20 @@ Example usage:
   include apache::ssl
 
 */
-class apache::ssl inherits apache {
-  case $::operatingsystem {
-    Debian,Ubuntu:  { include apache::ssl::debian}
-    default: { fail "Unsupported operatingsystem ${::operatingsystem}" }
+class apache::ssl {
+
+  include '::apache'
+
+  apache::module {'ssl':
+    ensure => present,
   }
+
+  apache::listen { "443": ensure => present }
+  apache::namevhost { "*:443": ensure => present }
+
+  file { "/usr/local/sbin/generate-ssl-cert.sh":
+    source => "puppet:///modules/${module_name}/generate-ssl-cert.sh",
+    mode   => '0755',
+  }
+
 }
