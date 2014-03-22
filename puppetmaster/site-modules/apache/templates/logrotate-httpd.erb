@@ -9,13 +9,11 @@
     create 644 root adm
     sharedscripts
     prerotate
-        if [ <%= awstats_condition %> ]; then
-            <%= awstats_command %>
+        if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+                run-parts /etc/logrotate.d/httpd-prerotate; \
         fi
     endscript
     postrotate
-        if [ -f <%= httpd_pid_file %> ]; then
-            <%= httpd_reload_cmd %>
-        fi
+        /etc/init.d/apache2 reload > /dev/null
     endscript
 }
