@@ -217,7 +217,7 @@ port = 8081
 
   collectd::config::plugin { 'monitor puppetmasterd':
     plugin   => 'processes',
-    settings => 'ProcessMatch "puppetmasterd" "/usr/bin/puppet master"',
+    settings => 'ProcessMatch "puppetmasterd" "^Rack:.*puppetmasterd"',
   }
 
   collectd::config::plugin { 'puppetdb metrics':
