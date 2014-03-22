@@ -71,4 +71,5 @@ class data::common {
 
   $duty = 'dev'
 
+  $apache_disable_default_vhost = 'false'
 }
