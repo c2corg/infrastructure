@@ -1,12 +1,78 @@
 class puppet::server {
 
-  package { ['puppetmaster', 'vim-puppet', 'puppet-lint', 'puppetdb', 'puppetdb-terminus']:
+  include 'apache::ssl'
+
+  Apache::Listen <| title == '80' |> { ensure => absent }
+  Apache::Listen <| title == '443' |> { ensure => absent }
+  Apache::Namevhost <| title == '*:80' |> { ensure => absent }
+  Apache::Namevhost <| title == '*:443' |> { ensure => absent }
+
+  apt::pin { 'puppetmaster-packages_from_c2corg_repo':
+    packages => 'puppetmaster puppetmaster-common puppetmaster-passenger puppetdb puppetdb-terminus',
+    label    => 'C2corg',
+    release  => "${::lsbdistcodename}",
+    priority => '1010',
+  }
+
+  package { ['puppetmaster', 'puppetmaster-passenger', 'vim-puppet', 'puppet-lint', 'puppetdb', 'puppetdb-terminus']:
     ensure  => present,
+  } ->
+
+  apache::listen { '8140': } ->
+
+  apache::confd { 'passenger':
+    configuration => '
+# you probably want to tune these settings
+PassengerHighPerformance on
+PassengerMaxPoolSize 12
+PassengerPoolIdleTime 1500
+# PassengerMaxRequests 1000
+PassengerStatThrottleRate 120
+RackAutoDetect Off
+RailsAutoDetect Off
+',
+  } ->
+
+  apache::vhost { 'puppetmaster':
+    config_content => "
+<VirtualHost *:8140>
+        SSLEngine on
+        SSLProtocol -ALL +SSLv3 +TLSv1
+        SSLCipherSuite ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:-LOW:-SSLv2:-EXP
+
+        SSLCertificateFile      /var/lib/puppet/ssl/certs/${::hostname}.pem
+        SSLCertificateKeyFile   /var/lib/puppet/ssl/private_keys/${::hostname}.pem
+        SSLCertificateChainFile /var/lib/puppet/ssl/certs/ca.pem
+        SSLCACertificateFile    /var/lib/puppet/ssl/certs/ca.pem
+        # If Apache complains about invalid signatures on the CRL, you can try disabling
+        # CRL checking by commenting the next line, but this is not recommended.
+        SSLCARevocationFile     /var/lib/puppet/ssl/ca/ca_crl.pem
+        SSLVerifyClient optional
+        SSLVerifyDepth  1
+        SSLOptions +StdEnvVars
+
+        # This header needs to be set if using a loadbalancer or proxy
+        RequestHeader unset X-Forwarded-For
+
+        RequestHeader set X-SSL-Subject %{SSL_CLIENT_S_DN}e
+        RequestHeader set X-Client-DN %{SSL_CLIENT_S_DN}e
+        RequestHeader set X-Client-Verify %{SSL_CLIENT_VERIFY}e
+
+        DocumentRoot /usr/share/puppet/rack/puppetmasterd/public/
+        RackBaseURI /
+        <Directory /usr/share/puppet/rack/puppetmasterd/>
+                Options None
+                AllowOverride None
+                Order allow,deny
+                allow from all
+        </Directory>
+</VirtualHost>
+",
   }
 
   service { 'puppetmaster':
-    enable     => true,
-    ensure     => running,
+    enable     => false,
+    ensure     => stopped,
     hasstatus  => true,
     require    => Package['puppetmaster'],
   }
