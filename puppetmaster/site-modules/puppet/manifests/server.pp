@@ -24,9 +24,16 @@ class puppet::server {
     configuration => '
 # you probably want to tune these settings
 PassengerHighPerformance on
-PassengerMaxPoolSize 12
-PassengerPoolIdleTime 1500
+
+# Set this to about 1.5 times the number of CPU cores in your master:
+PassengerMaxPoolSize 6
+
+# Stop processes if they sit idle for 10 minutes
+PassengerPoolIdleTime 600
+
+# Recycle master processes after they service 1000 requests
 # PassengerMaxRequests 1000
+
 PassengerStatThrottleRate 120
 RackAutoDetect Off
 RailsAutoDetect Off
