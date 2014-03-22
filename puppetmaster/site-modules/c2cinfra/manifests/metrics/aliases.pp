@@ -5,6 +5,7 @@ class c2cinfra::metrics::aliases {
     '/var/lib/graphite/whisper/aliases/by-hardware-node',
     '/var/lib/graphite/whisper/aliases/by-duty',
     '/var/lib/graphite/whisper/aliases/by-duty/prod',
+    '/var/lib/graphite/whisper/aliases/by-duty/preprod',
     '/var/lib/graphite/whisper/aliases/by-duty/dev',
     ]:
      ensure  => directory,
