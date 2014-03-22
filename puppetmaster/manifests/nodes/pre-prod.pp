@@ -24,7 +24,7 @@ node 'pre-prod' inherits 'base-node' {
 
   fact::register {
     'role': value => ['apache', 'postgresql', 'pre-prod'];
-    'duty': value => 'dev';
+    'duty': value => 'preprod';
   }
 
 }

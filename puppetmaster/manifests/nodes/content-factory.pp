@@ -12,7 +12,7 @@ node 'content-factory' inherits 'base-node' {
 
   fact::register {
     'role': value => ['apache', 'postgresql', 'pre-publication'];
-    'duty': value => 'dev';
+    'duty': value => 'preprod';
   }
 
   include c2cinfra::backup::postgresql
