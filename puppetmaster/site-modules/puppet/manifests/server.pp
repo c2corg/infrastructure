@@ -93,7 +93,7 @@ RailsAutoDetect Off
   }
 
   Puppet::Config {
-    notify => Service['puppetmaster'],
+    notify => Service['apache'],
   }
 
   @@nat::fwd { 'forward puppetmaster port':
@@ -142,7 +142,7 @@ port = 8081
 ',
     notify  => Service['puppetdb'],
     require => Package['puppetmaster'],
-    before  => Service['puppetmaster'],
+    before  => Service['apache'],
   }
 
   augeas { 'puppetdb database settings':
@@ -198,7 +198,7 @@ port = 8081
   class { '::riemann::client::ruby': } ->
   file { '/etc/puppet/riemann.yaml':
     ensure  => present,
-    notify  => Service['puppetmaster'],
+    notify  => Service['apache'],
     content => "---
 :riemann_server: '${riemann_host}'
 :riemann_port: 5555
@@ -209,7 +209,7 @@ port = 8081
 
   file { '/etc/puppet/graphite.yaml':
     ensure  => present,
-    notify  => Service['puppetmaster'],
+    notify  => Service['apache'],
     content => "---
 :graphite_server: '${carbon_host}'
 :graphite_port: 2003
