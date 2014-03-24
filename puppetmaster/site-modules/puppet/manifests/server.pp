@@ -172,15 +172,16 @@ port = 8081
   file { '/etc/puppet/hiera.yaml':
     ensure  => present,
     content => '---
-:backends: - yaml
-           - puppet
-:hierarchy: - %{hostname}
-            - %{duty}
-            - %{datacenter}
-            - common
+:backends:
+  - yaml
+  - puppet
+:hierarchy:
+  - "%{hostname}"
+  - "%{duty}"
+  - "%{datacenter}"
+  - common
 :yaml:
     :datadir: /etc/puppet/hiera
-
 :puppet:
     :datasource: data
 ',
