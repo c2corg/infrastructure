@@ -14,9 +14,9 @@ define lxc::container (
   require 'lxc::host'
 
   $ctfqdn = $name
-  $ctname = inline_template('<%= name.split(".").first %>')
+  $ctname = inline_template('<%= @name.split(".").first %>')
   $ctip = "${network}.${ctid}"
-  $ctmacaddress = inline_template('00:FF:00:00:00:<%= ("%02x" % ctid).upcase %>')
+  $ctmacaddress = inline_template('00:FF:00:00:00:<%= ("%02x" % @ctid).upcase %>')
 
   $rootpasswd = hiera('lxc_root_password')
 

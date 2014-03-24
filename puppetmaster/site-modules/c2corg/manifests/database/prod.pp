@@ -61,7 +61,7 @@ filter {
 output {
   tcp {
     codec => "json"
-    host  => "<%= logstash_host %>"
+    host  => "<%= @logstash_host %>"
     port  => "55514"
   }
 }

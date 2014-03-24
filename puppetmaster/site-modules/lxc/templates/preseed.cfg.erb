@@ -6,7 +6,7 @@
 lxc-debconfig lxc-debconfig/debconf-frontend select noninteractive
 lxc-debconfig lxc-debconfig/debconf-priority select critical
 
-lxc-debconfig lxc-debconfig/distribution string <%= suite %>
+lxc-debconfig lxc-debconfig/distribution string <%= @suite %>
 #lxc-debconfig lxc-debconfig/architecture select 
 lxc-debconfig lxc-debconfig/architecture string amd64
 lxc-debconfig lxc-debconfig/packages string sudo wget
@@ -15,7 +15,7 @@ lxc-debconfig lxc-debconfig/mirror string http://http.debian.net/debian/
 lxc-debconfig lxc-debconfig/mirror-security string http://http.debian.net/debian-security/
 lxc-debconfig lxc-debconfig/mirror-backports string http://http.debian.net/debian-backports/
 
-lxc-debconfig lxc-debconfig/archives multiselect <%= suite %>-security, <%= suite %>-updates
+lxc-debconfig lxc-debconfig/archives multiselect <%= @suite %>-security, <%= @suite %>-updates
 lxc-debconfig lxc-debconfig/archive-areas multiselect main
 
 lxc-debconfig lxc-debconfig/auto boolean false
@@ -24,20 +24,20 @@ lxc-debconfig lxc-debconfig/capabilities string mac_admin mac_override sys_admin
 #lxc-debconfig lxc-debconfig/mount0/entry string 
 #lxc-debconfig lxc-debconfig/late-host-command string 
 
-lxc-debconfig lxc-debconfig/late-command string /install-puppet.sh <%= suite %> <%= ctname %>
+lxc-debconfig lxc-debconfig/late-command string /install-puppet.sh <%= @suite %> <%= @ctname %>
 
-lxc-debconfig lxc-debconfig/eth0-mac string <%= ctmacaddress %>
+lxc-debconfig lxc-debconfig/eth0-mac string <%= @ctmacaddress %>
 lxc-debconfig lxc-debconfig/eth0-bridge string br0
-lxc-debconfig lxc-debconfig/eth0-veth string veth-<%= ctname %>
+lxc-debconfig lxc-debconfig/eth0-veth string veth-<%= @ctname %>
 
 # live-debconfig
-live-debconfig live-debconfig/hostname/hostname string <%= ctfqdn %>
+live-debconfig live-debconfig/hostname/hostname string <%= @ctfqdn %>
 live-debconfig live-debconfig/ifupdown/eth0-comment string The primary network interface
 #live-debconfig live-debconfig/ifupdown/eth0-method select dhcp
 live-debconfig live-debconfig/ifupdown/eth0-method string static
-live-debconfig live-debconfig/ifupdown/eth0-address string <%= ctip %>
+live-debconfig live-debconfig/ifupdown/eth0-address string <%= @ctip %>
 #live-debconfig live-debconfig/ifupdown/eth0-broadcast string 
-live-debconfig live-debconfig/ifupdown/eth0-gateway string <%= network %>.1
+live-debconfig live-debconfig/ifupdown/eth0-gateway string <%= @network %>.1
 live-debconfig live-debconfig/ifupdown/eth0-netmask string 255.255.255.0
 #live-debconfig live-debconfig/ifupdown/eth0-network string 
 #live-debconfig live-debconfig/ifupdown/nameservers string 
@@ -63,6 +63,6 @@ user-setup passwd/make-user boolean false
 # wheezy
 #user-setup passwd/user-default-groups string audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth debian-tor
 user-setup passwd/root-login boolean true
-user-setup passwd/root-password password <%= rootpasswd %>
-user-setup passwd/root-password-again password <%= rootpasswd %>
+user-setup passwd/root-password password <%= @rootpasswd %>
+user-setup passwd/root-password-again password <%= @rootpasswd %>
 user-setup passwd/shadow boolean true

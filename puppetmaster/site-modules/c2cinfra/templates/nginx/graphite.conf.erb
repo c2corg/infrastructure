@@ -11,7 +11,7 @@ server {
 
   location / {
     include c2cauth.conf;
-    uwsgi_pass <%= carbon_host %>:3031;
+    uwsgi_pass <%= @carbon_host %>:3031;
   }
 }
 

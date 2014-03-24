@@ -1,14 +1,14 @@
-# /var/lib/lxc/<%= ctname %>/config
+# /var/lib/lxc/<%= @ctname %>/config
 
 ## Container
-lxc.utsname                             = <%= ctname %>
+lxc.utsname                             = <%= @ctname %>
 lxc.arch                                = x86_64
-#lxc.console                            = /var/log/lxc/<%= ctname %>.console
+#lxc.console                            = /var/log/lxc/<%= @ctname %>.console
 lxc.tty                                 = 6
 lxc.pts                                 = 1024
 
 ## Capabilities
-<% cap_drop.each do |cap| -%>
+<% @cap_drop.each do |cap| -%>
 lxc.cap.drop                            = <%= cap %>
 <% end -%>
 ## Devices
@@ -40,7 +40,7 @@ lxc.cgroup.devices.allow                = c 5:0 rwm
 lxc.cgroup.devices.allow                = c 1:9 rwm
 # /dev/zero
 lxc.cgroup.devices.allow                = c 1:5 rwm
-<% extra_devices.each do |device| -%>
+<% @extra_devices.each do |device| -%>
 lxc.cgroup.devices.allow                = <%= device %>
 <% end -%>
 
@@ -53,13 +53,13 @@ lxc.cgroup.devices.allow                = <%= device %>
 ## Filesystem
 lxc.mount.entry                         = proc proc proc nodev,noexec,nosuid 0 0
 lxc.mount.entry                         = sysfs sys sysfs defaults,ro 0 0
-#lxc.mount.entry                        = /srv/<%= ctname %> /var/lib/lxc/<%= ctname %>/rootfs/srv/<%= ctname %> none defaults,bind 0 0
+#lxc.mount.entry                        = /srv/<%= @ctname %> /var/lib/lxc/<%= @ctname %>/rootfs/srv/<%= @ctname %> none defaults,bind 0 0
 
 ## Network: The primary network interface
 lxc.network.type                        = veth
 lxc.network.flags                       = up
-lxc.network.hwaddr                      = <%= ctmacaddress %>
+lxc.network.hwaddr                      = <%= @ctmacaddress %>
 lxc.network.link                        = br0
 lxc.network.name                        = eth0
-lxc.network.veth.pair                   = <%= ("veth-" + ctname)[0,15] %>
-lxc.rootfs = /dev/vg0/lxc<%= ctname %>
+lxc.network.veth.pair                   = <%= ("veth-" + @ctname)[0,15] %>
+lxc.rootfs = /dev/vg0/lxc<%= @ctname %>

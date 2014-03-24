@@ -1,15 +1,15 @@
-subject <%= subject %>
+subject <%= @subject %>
 
 visibility noconceal
 
-send <%= send_from %>
+send <%= @send_from %>
 
 clean_delay_queuemod 15
 
 owner
-email <%= listmaster %>
+email <%= @listmaster %>
 
-anonymous_sender "<%= anon_name %>" <<%= name %>@<%= hname %>>
+anonymous_sender "<%= @anon_name %>" <<%= @name %>@<%= @hname %>>
 
 review owner
 
@@ -26,5 +26,5 @@ serial 0
 #other_email foo@bar.com
 #apply forced
 
-<%= "footer_type append" unless footer == 'absent' %>
+<%= "footer_type append" unless @footer == 'absent' %>
 

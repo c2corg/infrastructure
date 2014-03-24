@@ -46,10 +46,10 @@ log_level	0
 ###\\\\ General definition ////###
 
 ## Main robot hostname
-domain		<%= hname %>
+domain		<%= @hname %>
 
 ## Listmasters email list colon separated
-listmaster		<%= listmaster %>
+listmaster		<%= @listmaster %>
 
 ## Local part of sympa email adresse
 ## Effective address will be [EMAIL]@[HOST]
@@ -182,26 +182,26 @@ bg_color	#ffffcc
 
 ## Database driver (DBD)
 #db_type		mysql
-db_type		<%= dbtype %>
+db_type		<%= @dbtype %>
 
 ## Name of your database
 #db_name		sympa
-db_name		<%= dbname %>
+db_name		<%= @dbname %>
 
 ## Your database hostname
 #db_host		mysql.c2c
-db_host		<%= dbhost %>
+db_host		<%= @dbhost %>
 
 ## Username to connect to the DB
 #db_user		apache
-db_user		<%= dbuser %>
+db_user		<%= @dbuser %>
 
 ## Password for the user
 #db_passwd		apache
-db_passwd		<%= dbpwd %>
+db_passwd		<%= @dbpwd %>
 
 ## TCP port for the database connection
 #db_port		3306
-db_port		<%= dbport %>
+db_port		<%= @dbport %>
 
 #-- Database configuration end
