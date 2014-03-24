@@ -66,7 +66,7 @@ Tag "puppet_config_version:<%= scope.catalog.version %>"
 Tag "<%= r %>"
 <% end -%>
 <Node riemann>
-  Host "<%= scope.function_hiera("riemann_host") %>"
+  Host "<%= scope.function_hiera(["riemann_host"]) %>"
 </Node>
 '),
   }
