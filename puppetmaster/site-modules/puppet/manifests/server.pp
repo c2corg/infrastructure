@@ -157,7 +157,7 @@ port = 8081
   }
 
   sudoers { 'puppet server':
-    users => '%adm',
+    users => '%puppetmasters',
     type  => "user_spec",
     commands => [
       '(root) /usr/bin/puppet cert *',
