@@ -33,7 +33,7 @@ account default: sympa
     group  => 'webfetch',
   } ->
 
-  package { ['python-lxml', 'python-argparse']:
+  package { ['python-lxml', 'python-argparse', 'pythonbabel']:
     ensure => present,
   } ->
 
