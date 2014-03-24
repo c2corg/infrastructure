@@ -216,6 +216,12 @@ port = 8081
 ",
   }
 
+  group { 'puppetmasters': ensure => present }
+
+  User <| title == 'marc' or title == 'xbrrr' |> {
+    groups +> 'puppetmasters',
+  }
+
   collectd::config::plugin { 'monitor puppetmasterd':
     plugin   => 'processes',
     settings => 'ProcessMatch "puppetmasterd" "^Rack:.*puppetmasterd"',

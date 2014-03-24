@@ -1,6 +1,8 @@
 # VM
 node 'pm' inherits 'base-node' {
 
+  realize C2cinfra::Account::User['xbrrr']
+
   include puppet::server
   include c2cinfra::mcollective::client
   include buildenv::deb
