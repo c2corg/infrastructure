@@ -187,15 +187,7 @@ define apache::vhost (
 
       # README file
       file {"${apache::params::root}/${name}/README":
-        ensure  => present,
-        owner   => root,
-        group   => root,
-        mode    => '0644',
-        content => $readme ? {
-          false => template("apache/README_vhost.erb"),
-          default => $readme,
-        },
-        require => File["${apache::params::root}/${name}"],
+        ensure  => absent,
       }
 
       exec {"enable vhost ${name}":
