@@ -56,7 +56,8 @@ RailsAutoDetect Off
         SSLCARevocationFile     /var/lib/puppet/ssl/ca/ca_crl.pem
         SSLVerifyClient optional
         SSLVerifyDepth  1
-        SSLOptions +StdEnvVars
+        # The `ExportCertData` option is needed for agent certificate expiration warnings
+        SSLOptions +StdEnvVars +ExportCertData
 
         # This header needs to be set if using a loadbalancer or proxy
         RequestHeader unset X-Forwarded-For
@@ -82,6 +83,12 @@ RailsAutoDetect Off
     ensure     => stopped,
     hasstatus  => true,
     require    => Package['puppetmaster'],
+  }
+
+  etcdefault { 'disable puppetmaster at boot':
+    file   => 'puppetmaster',
+    key    => 'START',
+    value  => 'no',
   }
 
   service { 'puppetdb':
