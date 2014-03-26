@@ -24,6 +24,11 @@ class c2corg::webserver::metaskirando {
       minute  => [0,15,30,45],
       require => File["/var/www/metaskirando.camptocamp.org/private/data"],
     }
+
+    apache::directive { 'php error level':
+      directive => 'php_value error_reporting "E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED"',
+      vhost     => 'metaskirando.camptocamp.org',
+    }
   }
 
 }
