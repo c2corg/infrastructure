@@ -8,7 +8,7 @@ class puppet::client {
   }
 
   apt::pin { 'puppet-packages_from_c2corg_repo':
-    packages => 'puppet puppet-common vim-puppet',
+    packages => 'puppet puppet-common vim-puppet ruby-rgen',
     label    => 'C2corg',
     release  => "${::lsbdistcodename}",
     priority => '1010',
