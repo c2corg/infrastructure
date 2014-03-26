@@ -3,7 +3,6 @@ node 'base-node' {
 
   include augeas
   include openssl
-  include puppet::hiera
   include concat::setup
   include c2cinfra::account
   include c2cinfra::mta
