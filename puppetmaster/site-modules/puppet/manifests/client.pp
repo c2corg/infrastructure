@@ -38,10 +38,10 @@ class puppet::client {
     ensure    => undef,
     enable    => false,
     hasstatus => true,
-    require   => [Package['puppet'], Etcdefault['enable puppet at boot']],
+    require   => [Package['puppet'], Etcdefault['disable puppet at boot']],
   }
 
-  etcdefault { 'enable puppet at boot':
+  etcdefault { 'disable puppet at boot':
     file   => 'puppet',
     key    => 'START',
     value  => 'no',
