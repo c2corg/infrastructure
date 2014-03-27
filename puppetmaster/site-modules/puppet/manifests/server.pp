@@ -76,6 +76,12 @@ RailsAutoDetect Off
         </Directory>
 </VirtualHost>
 ",
+  } ->
+
+  file_line { 'passenger needs to run in an utf-8 environment':
+    path   => '/etc/apache2/envvars',
+    line   => 'export LANG="en_US.UTF-8"',
+    notify => Service['apache'],
   }
 
   service { 'puppetmaster':
