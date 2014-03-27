@@ -95,7 +95,7 @@ define c2cinfra::account::user ($ensure=present, $user, $account, $groups=[]) {
         account => $account,
         user    => $user,
         type    => "rsa",
-        key     => "AAAAB3NzaC1yc2EAAAABJQAAAIBrrc0zhIjYB/MVdLIgtMb0IvDYrh3qHdeFL5X/PeYQrkkDSA1toPCWT7jn7matxntwccMmlrOgIWw1NpiDxtq3uJ/hviYCGn6L0zcLx/QjHNPKC8JZdKdyL5fTpT9dAA96SEQJWDThGAXEqXwwpm9YQkFRpBCttHZnTLxBW+UYuQ==",
+        key     => "AAAAB3NzaC1yc2EAAAADAQABAAABAQCbVv+Igm4+p4PlVak4Qu0agfh91NytfWrbQnxprtEy0xHBHLhYysMr29+bLdwViLU9pIO9cuDhdr5bjLvlEDQ8gl8ZILnaBPwO/OX/xaXY1Otgh5IIxpwOXkLhsEWYUUwr6V7ekLLChDusBMRRr5MXcuBC2RolprNoibzVc+KRGlfa5z9/4lyP4uFX5qrPCSuqZIR1m0OLUwPPRuKONdnKIg+i+Okem+LwZV2vnM5lPHp0qoTZ/1ZfYuev/tadtNyfMJlIZfNHbE73coGZqKf07qI57ADkAX5IFqWn1R7bBC4llKuj8r+BtzSN7xEg5Fnl8q6C1cB0TKUdsqOjjzxb",
         require => User[$account],
       }
     }
