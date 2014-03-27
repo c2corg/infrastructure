@@ -40,3 +40,7 @@ resources { 'user':
   purge              => true,
   unless_system_user => '999',
 }
+
+resources { 'firewall':
+  purge => true,
+}
