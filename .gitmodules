@@ -16,9 +16,6 @@
 [submodule "puppetmaster/modules/reprepro"]
 	path = puppetmaster/modules/reprepro
 	url = https://github.com/camptocamp/puppet-reprepro
-[submodule "puppetmaster/modules/iptables"]
-	path = puppetmaster/modules/iptables
-	url = https://github.com/kbarber/puppet-iptables
 [submodule "puppetmaster/modules/sudo"]
 	path = puppetmaster/modules/sudo
 	url = https://github.com/puppetlabs/puppetlabs-sudo
@@ -88,3 +85,6 @@
 [submodule "puppetmaster/site-modules/haproxy/files/collectd-haproxy"]
 	path = puppetmaster/site-modules/haproxy/files/collectd-haproxy
 	url = https://github.com/mfournier/collectd-haproxy
+[submodule "puppetmaster/modules/firewall"]
+	path = puppetmaster/modules/firewall
+	url = https://github.com/puppetlabs/puppetlabs-firewall.git
