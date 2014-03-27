@@ -2,7 +2,7 @@ define nat::setup($iface, $lan) {
 
   include nat
 
-  iptables { $name:
+  firewall { $name:
     table    => "nat",
     proto    => "all",
     chain    => "POSTROUTING",

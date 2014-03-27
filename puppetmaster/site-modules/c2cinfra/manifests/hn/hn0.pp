@@ -5,7 +5,7 @@ class c2cinfra::hn::hn0 inherits c2cinfra::hn {
 
   class { 'firewall': }
 
-  nat::setup { "setup nat for private LAN":
+  nat::setup { "001 setup nat for private LAN":
     iface => "eth2",
     lan   => "192.168.192.0/24",
   }

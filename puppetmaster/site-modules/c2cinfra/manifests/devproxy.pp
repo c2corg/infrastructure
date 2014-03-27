@@ -23,7 +23,7 @@ auth_basic_user_file /srv/trac/projects/c2corg/conf/htpasswd;
 ',
   }
 
-  @@nat::fwd { 'forward http port':
+  @@nat::fwd { '001 forward http port':
     host  => '103',
     from  => '80',
     to    => '80',
@@ -31,7 +31,7 @@ auth_basic_user_file /srv/trac/projects/c2corg/conf/htpasswd;
     tag   => 'portfwd',
   }
 
-  @@nat::fwd { 'forward https port':
+  @@nat::fwd { '001 forward https port':
     host  => '103',
     from  => '443',
     to    => '443',

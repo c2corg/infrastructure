@@ -109,7 +109,7 @@ RailsAutoDetect Off
     notify => Service['apache'],
   }
 
-  @@nat::fwd { 'forward puppetmaster port':
+  @@nat::fwd { '001 forward puppetmaster port':
     host  => '101',
     from  => '8140',
     to    => '8140',

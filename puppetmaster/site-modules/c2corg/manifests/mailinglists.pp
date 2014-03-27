@@ -20,7 +20,7 @@ class c2corg::mailinglists {
     hname => $hname,
   }
 
-  @@nat::fwd { 'forward smtp port':
+  @@nat::fwd { '001 forward smtp port':
     host  => '102',
     from  => '25',
     to    => '25',
