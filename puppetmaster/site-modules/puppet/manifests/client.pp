@@ -74,6 +74,13 @@ class puppet::client {
     "${agent}/certname":   value => $::hostname;
   }
 
+  if $::lsbdistcodename != 'squeeze' {
+    package { 'ruby-msgpack': ensure => present } ->
+    puppet::config {
+      "${agent}/preferred_serialization_format": value => 'msgpack';
+    }
+  }
+
   augeas { "rm other puppet conf target":
     lens    => 'Puppet.lns',
     incl    => '/etc/puppet/puppet.conf',

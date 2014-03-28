@@ -1,5 +1,7 @@
 class puppet::server {
 
+#TODO: apply https://github.com/dalen/puppet/commit/29d7997c
+
   include 'apache::ssl'
 
   Apache::Listen <| title == '80' |> { ensure => absent }
