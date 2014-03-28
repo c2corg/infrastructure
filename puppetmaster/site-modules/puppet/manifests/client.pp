@@ -15,7 +15,7 @@ class puppet::client {
   }
 
   apt::pin { 'facter_from_c2corg_repo':
-    packages => 'facter',
+    packages => 'facter virt-what',
     label    => 'C2corg',
     release  => "${::lsbdistcodename}",
     priority => '1010',
