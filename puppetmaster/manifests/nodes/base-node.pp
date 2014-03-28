@@ -37,7 +37,7 @@ node 'base-node' {
     include c2cinfra::collectd::node
   }
 
-  if $::lxc_type == 'container' {
+  if $::virtual == 'lxc' {
     include lxc::guest
   }
 

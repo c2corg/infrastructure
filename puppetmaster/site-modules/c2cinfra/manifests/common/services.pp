@@ -14,7 +14,6 @@ class c2cinfra::common::services {
   package { "nscd": ensure => absent }
 
   if (str2bool($::is_virtual) == true) { $run_ntp = false }
-  elsif (str2bool($::lxc_container) == true) { $run_ntp = false }
   else { $run_ntp = true }
 
   service { "ntp":

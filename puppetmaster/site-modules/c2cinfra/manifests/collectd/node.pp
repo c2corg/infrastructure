@@ -135,15 +135,15 @@ VerboseInterface "All"
     ]: }
   }
 
-  # TODO: find a way to also run this plugin on LXC hosts
-  if (!$::lxc_type) or ($::lxc_type == 'container') {
+  if ($::role !~ /lxc/) {
+    # TODO: find a way to also run this plugin on LXC hosts
     collectd::config::plugin { 'monitor collectd itself':
       plugin   => 'processes',
       settings => 'ProcessMatch "collectd" "collectd.*/etc/collectd/collectd.conf"',
     }
   }
 
-  if $::lxc_type == 'container' {
+  if ($::virtual == 'lxc') {
     package { 'udev': ensure => purged }
   }
 

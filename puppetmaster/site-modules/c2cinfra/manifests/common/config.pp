@@ -43,8 +43,7 @@ options timeout:2 edns0
     'sysstat history': key => 'HISTORY', value => '30';
   }
 
-  #TODO: if $::virtual == 'physical' {
-  if ($::virtual == 'physical' and $::lxc_container == 'false') {
+  if ($::virtual == 'physical') {
     augeas { "disable ctrl-alt-delete":
       incl    => '/etc/inittab',
       lens    => 'Inittab.lns',
