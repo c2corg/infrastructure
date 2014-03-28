@@ -3,6 +3,9 @@ class c2cinfra::hn::hn0 inherits c2cinfra::hn {
 
   include hardware::raid::smartarray
 
+  resources { 'firewall':
+    purge => true,
+  }
   class { 'firewall': }
 
   nat::setup { "001 setup nat for private LAN":
