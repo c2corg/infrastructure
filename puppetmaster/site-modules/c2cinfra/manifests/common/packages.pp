@@ -6,7 +6,7 @@ class c2cinfra::common::packages {
     "ack-grep", "arping", "at", "atop",
     "bash-completion", "bc", "bind9-host", "bsdmainutils", "bzr",
     "curl", "cron", "cvs",
-    "dc", "dnsutils",
+    "dc", "debian-goodies", "dnsutils",
     "elinks", "emacs23-nox", "ethtool",
     "fping", "ftp",
     "git-core", "git-svn",
