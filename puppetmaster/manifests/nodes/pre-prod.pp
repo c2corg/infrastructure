@@ -5,6 +5,7 @@ node 'pre-prod' inherits 'base-node' {
   realize C2cinfra::Account::User['xbrrr']
   realize C2cinfra::Account::User['gottferdom']
   realize C2cinfra::Account::User['gerbaux']
+  realize C2cinfra::Account::User['stef74']
 
   include c2corg::database::preprod
 
