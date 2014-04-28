@@ -25,9 +25,15 @@ class c2cinfra::collectd::node {
   collectd::plugin { [
     'processes',
     'protocols',
-    'tcpconns',
     'users',
   ]: }
+
+  collectd::config::plugin { 'tcpconns plugin config':
+    plugin   => 'tcpconns',
+    settings => '
+      ListeningPorts true
+',
+  }
 
   collectd::config::plugin { 'df plugin config':
     plugin   => 'df',
