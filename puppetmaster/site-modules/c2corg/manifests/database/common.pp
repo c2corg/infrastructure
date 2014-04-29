@@ -1,7 +1,8 @@
 class c2corg::database::common inherits c2corg::database {
 
-  $www_db_user = hiera('www_db_user')
-  $ml_db_user  = hiera('ml_db_user')
+  $www_db_user  = hiera('www_db_user')
+  $ml_db_user   = hiera('ml_db_user')
+  $solr_db_user = hiera('solr_db_user')
 
   Postgresql::Server::Pg_hba_rule {
     type        => 'hostssl',
@@ -23,6 +24,11 @@ class c2corg::database::common inherits c2corg::database {
   postgresql::server::pg_hba_rule { 'sympa access to c2corg':
     database    => 'c2corg',
     user        => $ml_db_user,
+  }
+
+  postgresql::server::pg_hba_rule { 'solr access to c2corg':
+    database    => 'c2corg',
+    user        => $solr_db_user,
   }
 
   package { ['pgtune', 'sysbench', 'ptop', 'check-postgres']: }

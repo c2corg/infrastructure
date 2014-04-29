@@ -33,6 +33,7 @@ class data::common {
 
   $www_db_user = "www-data"
   $ml_db_user = "sympa"
+  $solr_db_user = "solr"
   $replication_db_user = "replication"
   $monit_db_user = "monitoring"
   $mco_user = "mco"
@@ -49,6 +50,7 @@ class data::common {
   $mco_psk  = "psk"
 
   $ml_db_pass = "password"
+  $solr_db_pass = "password"
 
   $advertising_admin = "password"
 

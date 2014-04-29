@@ -91,8 +91,9 @@ class c2corg::database {
     target  => '/etc/ssl/certs/ssl-cert-snakeoil.pem',
   }
 
-  $www_db_user = hiera('www_db_user')
-  $ml_db_user  = hiera('ml_db_user')
+  $www_db_user  = hiera('www_db_user')
+  $ml_db_user   = hiera('ml_db_user')
+  $solr_db_user = hiera('solr_db_user')
 
   postgis::database { ['c2corg', 'metaengine']:
     owner   => $www_db_user,
@@ -105,6 +106,20 @@ class c2corg::database {
 
   postgresql::server::role { $ml_db_user:
     password_hash => postgresql_password($ml_db_user, hiera('ml_db_pass')),
+  }
+
+  postgresql::server::role { $solr_db_user:
+    password_hash => postgresql_password($solr_db_user, hiera('solr_db_pass')),
+  }
+
+  $grant_cmd = "GRANT SELECT ON ALL TABLES IN SCHEMA \"public\" TO \"${solr_db_user}\""
+  postgresql_psql { $grant_cmd:
+    db         => 'c2corg',
+    psql_user  => $postgresql::server::user,
+    psql_group => $postgresql::server::group,
+    psql_path  => $postgresql::server::psql_path,
+    unless     => "SELECT 1 WHERE has_table_privilege('${solr_db_user}', 'documents', 'SELECT')",
+    require    => Class['postgresql::server']
   }
 
 }
