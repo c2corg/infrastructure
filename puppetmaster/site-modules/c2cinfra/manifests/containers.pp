@@ -206,6 +206,12 @@ class c2cinfra::containers {
         fssize => '5G',
       }
 
+      lxc::container { 'solr.pse.infra.camptocamp.org':
+        ctid   => 76,
+        suite  => 'wheezy',
+        fssize => '3G',
+      }
+
       logical_volume { 'lxcdb1pgbackup': initial_size => '30G' } ->
       logical_volume { 'lxcdb1pgxlog':   initial_size => '5G' }  ->
       logical_volume { 'lxcdb1pgdata':   initial_size => '40G' } ->
