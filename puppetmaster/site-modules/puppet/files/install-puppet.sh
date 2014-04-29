@@ -16,7 +16,7 @@ Pin: release l=C2corg, a=${suite}
 Pin-Priority: 1100
 EOF
 
-apt-get update && apt-get -y install puppet facter ruby-hiera ruby-hiera-puppet augeas-tools
+apt-get update && apt-get -y install puppet facter hiera augeas-tools
 
 cat << EOF | augtool
 set /files/etc/resolv.conf/search/domain[1] pse.infra.camptocamp.org
