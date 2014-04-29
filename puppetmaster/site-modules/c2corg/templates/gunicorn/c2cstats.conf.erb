@@ -6,7 +6,7 @@ CONFIG = {
   'python': '<%= @virtualenv %>/bin/python',
   'working_dir': '<%= @dir %>',
   'environment': {
-    'C2CSTATS_SETTINGS': '<%= scope.lookupvar('c2corg::stats::conffile') %>',
+    'C2CSTATS_SETTINGS': '<%= scope['::c2corg::stats::conffile'] %>',
     'PYTHONPATH': '<%= @virtualenv %>',
   },
   'args': (
