@@ -1,9 +1,9 @@
 class c2corg::solr {
 
   $solr_version = '4.7.2'
-  $dbhost = hiera('db_host')
-  $dbuser = hiera('www_db_user')
-  $dbpass = hiera('preprod_db_pass')
+  $dbhost = hiera('db_solr_host')
+  $dbuser = hiera('solr_db_user')
+  $dbpass = hiera('solr_db_pass')
 
   realize C2cinfra::Account::User['c2corg']
 
