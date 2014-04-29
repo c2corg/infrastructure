@@ -43,7 +43,7 @@ class c2corg::solr {
       value => "\"-Xmx256m -Djava.awt.headless=true -Dsolr.solr.home=/srv/solr-dih/ -Dc2corg.dbhost=${dbhost} -Dc2corg.dbuser=${dbuser} -Dc2corg.dbpass=${dbpass}\"";
     'bind jetty to all ifaces':
       key   => 'JETTY_HOST',
-      value => '0.0.0.0';
+      value => '127.0.0.1';
     'jetty uses default java':
       key   => 'JAVA_HOME',
       value => '/usr';
