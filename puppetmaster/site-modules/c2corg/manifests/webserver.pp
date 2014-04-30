@@ -20,6 +20,7 @@ class c2corg::webserver {
     commands => [
       '(root) /etc/init.d/apache2',
       '(root) /usr/sbin/invoke-rc.d apache2 *',
+      '(root) /usr/sbin/service apache2 *',
       '(root) /usr/sbin/apachectl',
       '(root) /usr/sbin/apache2ctl',
     ],

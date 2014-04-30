@@ -102,6 +102,7 @@ class c2corg::solr {
     commands => [
       '(root) /etc/init.d/jetty8',
       '(root) /usr/sbin/invoke-rc.d jetty8 *',
+      '(root) /usr/sbin/service jetty8 *',
     ],
   }
 

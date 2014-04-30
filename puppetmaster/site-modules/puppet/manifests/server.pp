@@ -181,6 +181,8 @@ port = 8081
       '(root) /etc/init.d/puppetdb',
       '(root) /usr/sbin/invoke-rc.d puppetmaster *',
       '(root) /usr/sbin/invoke-rc.d puppetdb *',
+      '(root) /usr/sbin/service puppetmaster *',
+      '(root) /usr/sbin/service puppetdb *',
     ],
   }
 

@@ -89,6 +89,7 @@ CACHE_THRESHOLD = 10000
     commands => [
       '(root) /etc/init.d/gunicorn',
       '(root) /usr/sbin/invoke-rc.d gunicorn *',
+      '(root) /usr/sbin/service gunicorn *',
     ],
   }
 
