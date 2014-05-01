@@ -4,6 +4,7 @@ node 'pm' inherits 'base-node' {
   realize C2cinfra::Account::User['xbrrr']
 
   include puppet::server
+  include salt::master
   include c2cinfra::mcollective::client
   include buildenv::deb
 
