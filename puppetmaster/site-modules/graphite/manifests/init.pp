@@ -3,7 +3,7 @@ class graphite {
   if (versioncmp($::operatingsystemrelease, 7) >= 0) {
 
     if ($::lsbdistcodename == 'wheezy') {
-      apt::pin { 'backport graphite and carbon':
+      apt::pin { 'backport_graphite_and_carbon':
         packages => 'graphite-web graphite-carbon python-whisper libjs-jquery-flot python-django-tagging',
         label    => 'C2corg',
         release  => 'wheezy',

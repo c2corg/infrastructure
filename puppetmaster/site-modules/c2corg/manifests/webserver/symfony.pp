@@ -12,7 +12,7 @@ class c2corg::webserver::symfony {
   package { 'imagemagick': }
   package { ['ruby-compass', 'node-uglify', 'optipng']: }
 
-  apt::pin { 'uglifyjs from bpo':
+  apt::pin { 'uglifyjs_from_bpo':
     packages => 'nodejs node-uglify',
     release  => "${::lsbdistcodename}-backports",
     priority => '1010',

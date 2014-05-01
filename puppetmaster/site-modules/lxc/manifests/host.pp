@@ -7,7 +7,7 @@ class lxc::host {
 
   package { ['lxc', 'lxctl', 'bridge-utils', 'debootstrap']: ensure => present }
 
-  apt::pin { 'kernel and initramfs from bpo':
+  apt::pin { 'kernel_and_initramfs_from_bpo':
     packages => 'linux-image-3.10-0.bpo.3-amd64 initramfs-tools',
     release  => "${::lsbdistcodename}-backports",
     priority => '1010',

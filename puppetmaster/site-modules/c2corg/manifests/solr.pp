@@ -7,14 +7,14 @@ class c2corg::solr {
 
   realize C2cinfra::Account::User['c2corg']
 
-  apt::pin { 'backport derby':
+  apt::pin { 'backport_derby':
     packages => 'libderby-java',
     label    => 'C2corg',
     release  => 'wheezy',
     priority => '1100',
   }
 
-  apt::pin { 'custom solr package':
+  apt::pin { 'custom_solr_package':
     packages => 'solr',
     label    => 'C2corg',
     release  => 'wheezy',

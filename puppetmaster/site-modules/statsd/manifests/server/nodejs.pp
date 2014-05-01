@@ -6,7 +6,7 @@ class statsd::server::nodejs {
     priority => '1010',
   }
 
-  apt::pin { 'nodejs from bpo':
+  apt::pin { 'nodejs_from_bpo':
     packages => 'nodejs',
     release  => "${::lsbdistcodename}-backports",
     priority => '1010',
