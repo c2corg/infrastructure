@@ -11,7 +11,7 @@ class hardware::omsa {
   apt::source { 'dell-openmanage':
     location => "http://linux.dell.com/repo/community/deb/${version}",
     release  => '/',
-    repos    => ''
+    repos    => '',
   }
 
   apt::pin { 'dell-openmanage':
