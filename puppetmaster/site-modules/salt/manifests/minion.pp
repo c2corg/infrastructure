@@ -38,6 +38,8 @@ class salt::minion {
     tag     => 'saltstack',
   }
 
-  @@file { "/etc/salt/pki/master/minions/${::hostname}": }
+  @@file { "/etc/salt/pki/master/minions/${::hostname}":
+    tag => 'saltstack',
+  }
 
 }
