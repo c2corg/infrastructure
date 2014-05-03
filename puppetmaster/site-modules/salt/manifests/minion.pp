@@ -39,7 +39,9 @@ class salt::minion {
   }
 
   @@file { "/etc/salt/pki/master/minions/${::hostname}":
-    tag => 'saltstack',
+    ensure  => present,
+    require => Exec["authorize salt minion ${::hostname}"],
+    tag     => 'saltstack',
   }
 
 }
