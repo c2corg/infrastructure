@@ -47,7 +47,7 @@ account default: sympa
 
   cron { 'bulletin nivo':
     ensure  => present,
-    command => 'cd /srv/nivo-bulletins && ./meteofrance.py -s meteofrance -m msmtp 2>&1 | logger -i -t bulletin-nivo',
+    command => 'cd /srv/nivo-bulletins && ./meteofrance+slf.py -s meteofrance -m msmtp 2>&1 | logger -i -t bulletin-nivo',
     user    => 'webfetch',
     minute  => 15,
     hour    => [8,10,12,16,17,18,19],
