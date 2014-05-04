@@ -28,11 +28,12 @@ class c2cinfra::collectd::node {
     'users',
   ]: }
 
+  $included_classes = pdbquery('resources', ['and', ['=', ['node', 'name'], $::hostname], ['=', 'type', 'Class']])
+  $apache_listen= pdbquery('resources', ['and', ['=', ['node', 'name'], $::hostname], ['=', 'type', 'Apache::Listen']])
+
   collectd::config::plugin { 'tcpconns plugin config':
     plugin   => 'tcpconns',
-    settings => '
-      ListeningPorts true
-',
+    settings => template('c2cinfra/collectd/tcpconns.erb'),
   }
 
   collectd::config::plugin { 'df plugin config':

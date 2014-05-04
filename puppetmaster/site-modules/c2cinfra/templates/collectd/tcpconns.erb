@@ -1,0 +1,46 @@
+<%
+  classes = included_classes.map {|c| c['title'] }
+  ports_mapping = {
+    'C2cinfra::Devproxy' => ['80', '443'],
+    'C2cinfra::Reprepro' => ['80'],
+    'C2cinfra::Trac' => ['8080', '3031'],
+    'C2cinfra::Ssh::Sshd' => ['22'],
+    'C2corg::Solr' => ['8080'],
+    'C2corg::Stats' => ['8000'],
+    'C2corg::Varnish::Instance' => ['80', '6082'],
+    'C2corg::Webserver::Ipv6gw' => ['80'],
+    'Graphite::Carbon' => ['2003', '2004', '7002'],
+    'Graphite::Webapp' => ['8080', '3031'],
+    'Haproxy' => ['80', '8008'],
+    'Memcached' => ['11211'],
+    'Postgresql::Server' => ['5432'],
+    'Puppet::Board' => ['8081', '3032'],
+    'Puppet::Server' => ['8080', '8081'],
+    'Riemann' => ['2003', '5555', '5556', '5558'],
+    'Riemann::Dash' => ['8080'],
+    'Salt::Master' => ['4505', '4506'],
+    'Sympa::Mta' => ['25'],
+    'Unbound' => ['53', '953'],
+  }
+
+  ports_mapping.each do |klass, port_list|
+    if classes.include?(klass)
+      port_list.each do |port|
+-%>
+  LocalPort <%= port %>
+<%
+      end
+    end
+  end
+
+  apache_listen.each do |res|
+    if res['title'].include?(':')
+      port = res['title'].split(':')[1]
+    else
+      port = res['title']
+    end
+-%>
+  LocalPort <%= port %>
+<%
+  end
+-%>
