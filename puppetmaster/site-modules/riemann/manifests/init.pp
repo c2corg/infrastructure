@@ -9,4 +9,12 @@ class riemann {
     enable    => true,
     hasstatus => true,
   }
+
+  cron { 'remove old riemann logs':
+    user    => 'riemann',
+    minute  => '06',
+    hour    => '06',
+    command => 'find /var/log/riemann/ -type f -mtime +7 -delete',
+  }
+
 }
