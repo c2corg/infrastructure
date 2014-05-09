@@ -5,7 +5,7 @@ class riemann::server {
   } ->
 
   service { 'riemann':
-    ensure    => present,
+    ensure    => running,
     enable    => true,
     hasstatus => true,
   }
