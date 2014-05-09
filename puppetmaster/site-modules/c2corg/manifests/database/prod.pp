@@ -1,6 +1,6 @@
 class c2corg::database::prod inherits c2corg::database::common {
 
-  include '::logstash'
+  include '::logstash::server'
 
   $www_db_user   = hiera('www_db_user')
   $prod_db_pass  = hiera('prod_db_pass')
