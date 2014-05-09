@@ -12,14 +12,24 @@ class salt {
 
   apt::pin { 'saltstack':
     packages   => 'salt-common salt-master salt-minion salt-syndic',
-    originator => "saltstack.com",
+    originator => 'saltstack.com',
     priority   => '1010',
   }
 
-  apt::pin { 'zmq_from_bpo':
-    packages => 'python-zmq libzmq3',
-    release  => "${::lsbdistcodename}-backports",
-    priority => '1010',
+  if $::lsbdistcodename == 'wheezy' {
+    apt::pin { 'zmq_from_bpo':
+      packages => 'python-zmq libzmq3',
+      release  => "${::lsbdistcodename}-backports",
+      priority => '1010',
+    }
+  }
+
+  if $::lsbdistcodename == 'squeeze' {
+    apt::pin { 'zmq_from_saltstack':
+      packages   => 'python-zmq libzmq3',
+      originator => 'saltstack.com',
+      priority   => '1010',
+    }
   }
 
 }
