@@ -118,7 +118,7 @@ class c2corg::database {
     psql_user  => $postgresql::server::user,
     psql_group => $postgresql::server::group,
     psql_path  => $postgresql::server::psql_path,
-    unless     => "SELECT 1 WHERE has_table_privilege('${solr_db_user}', 'documents', 'SELECT')",
+    unless     => "SELECT 1 WHERE has_table_privilege('${solr_db_user}', 'spatial_ref_sys', 'SELECT')",
     require    => Class['postgresql::server']
   }
 
