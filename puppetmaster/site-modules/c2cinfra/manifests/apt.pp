@@ -174,6 +174,15 @@ APT::Install-Suggests "0";
     content  => template('c2cinfra/apt/50unattended-upgrades.erb'),
   }
 
+  apt::conf { 'cache-cleanup':
+    ensure   => present,
+    priority => '10',
+    content  => '// file mananged by puppet
+APT::Periodic::MaxSize "50";
+APT::Periodic::MaxAge "7";
+',
+  }
+
   file { '/etc/apt/apt.conf.d/99unattended-upgrade':
     ensure => absent,
   }
