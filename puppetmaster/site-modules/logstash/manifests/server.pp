@@ -1,4 +1,4 @@
-class logstash {
+class logstash::server {
 
   package { 'logstash': ensure => present } ->
 

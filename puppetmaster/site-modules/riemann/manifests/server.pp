@@ -1,4 +1,4 @@
-class riemann {
+class riemann::server {
 
   package { ['java7-runtime-headless', 'riemann']:
     ensure => present,

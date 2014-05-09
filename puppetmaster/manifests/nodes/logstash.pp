@@ -1,7 +1,7 @@
 # VM
 node 'logstash' inherits 'base-node' {
 
-  include '::logstash'
+  include '::logstash::server'
   include '::nginx'
   include '::c2corg::syslog::pgbadger'
 

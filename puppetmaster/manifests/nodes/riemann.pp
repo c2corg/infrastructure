@@ -1,7 +1,7 @@
 # VM
 node 'riemann' inherits 'base-node' {
 
-  include '::riemann'
+  include '::riemann::server'
   include '::riemann::dash'
 
   fact::register {
