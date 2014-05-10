@@ -1,6 +1,6 @@
 class riemann::server {
 
-  package { ['java7-runtime-headless', 'riemann']:
+  package { ['openjdk-7-jre-headless', 'riemann']:
     ensure => present,
   } ->
 
