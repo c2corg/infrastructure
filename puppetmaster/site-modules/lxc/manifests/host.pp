@@ -15,14 +15,6 @@ class lxc::host {
 
   package { 'linux-image-3.10-0.bpo.3-amd64': ensure => present }
 
-  # backported from sid, unless they get included in wheezy
-  apt::pin { 'lxc-packages_from_c2corg_repo':
-    packages => 'lxc live-debconfig',
-    label    => 'C2corg',
-    release  => "${::lsbdistcodename}",
-    priority => '1010',
-  }
-
   file { '/cgroup': ensure => directory }
 
   mount { '/cgroup':
@@ -82,16 +74,15 @@ class lxc::host {
     source => 'file:///etc/ssh/authorized_keys/root.keys',
   }
 
-  # not needed, just to be able to copy it from apt's cache
-  package { 'live-debconfig':
-    ensure => $livecfgver,
-  }
+  $pkgrepo = hiera('pkgrepo_host')
+  $live_debconfig_url = "http://${pkgrepo}/c2corg/pool/main/l/live-debconfig/live-debconfig_${livecfgver}_all.deb"
 
-  # hackish way to make live-debconfig.deb available to new containers
+  exec { 'fetch local live-debconfig package copy':
+    command => "wget -P /usr/share/lxc/packages/ ${live_debconfig_url}",
+    creates => "/usr/share/lxc/packages/live-debconfig_${livecfgver}_all.deb",
+  } ->
   file { "/usr/share/lxc/packages/live-debconfig_${livecfgver}_all.deb":
-    source => "file:///var/cache/apt/archives/live-debconfig_${livecfgver}_all.deb",
-    replace => false,
-    require => Package['live-debconfig'],
+    ensure => present,
   }
 
   c2cinfra::metrics::dir { "by-hardware-node/${::hostname}": }
