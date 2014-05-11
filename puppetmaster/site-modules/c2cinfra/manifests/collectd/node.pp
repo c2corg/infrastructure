@@ -73,6 +73,7 @@ Tag "<%= r %>"
 <% end -%>
 <Node riemann>
   Host "<%= scope.function_hiera(["riemann_host"]) %>"
+  TTLFactor 5.0
 </Node>
 '),
   }
