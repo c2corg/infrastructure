@@ -5,6 +5,7 @@ class c2cinfra::collectd::node {
       'filecount' => '300',
       'df'        => '60',
       'lvm'       => '60',
+      'md'        => '60',
       'entropy'   => '60',
       'ipmi'      => '60',
     },

@@ -28,6 +28,10 @@ retentions = 60:90d
 pattern = ^collectd\..*\.lvm-.*
 retentions = 30s:1d,2m:7d,10m:21d,30m:5y
 
+[collectd_policy_md]
+pattern = ^collectd\..*\.md-.*
+retentions = 30s:1d,2m:7d,10m:21d,30m:5y
+
 [collectd_policy_df]
 pattern = ^collectd\..*\.df-.*
 retentions = 30s:1d,2m:7d,10m:21d,30m:5y
