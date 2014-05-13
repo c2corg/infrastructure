@@ -10,6 +10,7 @@ class c2cinfra::backup {
 
     $destdir = "/srv/backups/${::hostname}/"
     $destsrv = "backup0.ovh.infra.camptocamp.org"
+    $riemann = hiera('riemann_host')
 
     concat { "/root/.backups.include":
       owner => "root",
@@ -22,7 +23,7 @@ class c2cinfra::backup {
       account => "root",
       type    => "rsa",
       key     => $::backupkey,
-      opts    => "command=\"rsync --server -logDtprRe.iLsf --delete --numeric-ids . ${destdir}\",no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc,no-pty",
+      opts    => "command=\"rsync --server -logDtprRze.iLsf --delete --numeric-ids . ${destdir}\",no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-user-rc,no-pty",
       tag     => "backups",
     }
 
@@ -34,8 +35,14 @@ class c2cinfra::backup {
       tag         => "backups",
     }
 
-    cron { "rsync important stuff to backup server":
-      command => "test ! -f /var/run/backup.lock && (touch /var/run/backup.lock && timeout 23h rsync --rsh='ssh -i /root/.backupkey' --archive --numeric-ids --delete --relative --quiet $(cat /root/.backups.include) root@${destsrv}:${destdir} || echo 'backup failed'; rm -f /var/run/backup.lock)",
+    file { '/usr/local/bin/backup-host.sh':
+      ensure => present,
+      mode   => '0755',
+      source => 'puppet:///modules/c2cinfra/backup/backup-host.sh',
+    } ->
+
+    cron { 'rsync important stuff to backup server':
+      command => "/usr/local/bin/backup-host.sh root@${destsrv}:${destdir} ${riemann}",
       hour    => fqdn_rand(6),
       minute  => fqdn_rand(59),
     }
