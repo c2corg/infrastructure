@@ -7,6 +7,7 @@ class c2cinfra::backup {
 
   if $::backupkey {
     include concat::setup
+    include riemann::client::python
 
     $destdir = "/srv/backups/${::hostname}/"
     $destsrv = "backup0.ovh.infra.camptocamp.org"
@@ -45,6 +46,18 @@ class c2cinfra::backup {
       command => "/usr/local/bin/backup-host.sh root@${destsrv}:${destdir} ${riemann}",
       hour    => fqdn_rand(6),
       minute  => fqdn_rand(59),
+    }
+
+    file { '/usr/local/bin/last_backup.py':
+      ensure => present,
+      mode   => '0755',
+      source => 'puppet:///modules/c2cinfra/backup/last_backup.py',
+    } ->
+
+    cron { 'check last backup date':
+      command => "/usr/local/bin/last_backup.py ${riemann}",
+      minute  => fqdn_rand(59),
+      user    => 'nobody',
     }
   }
 
