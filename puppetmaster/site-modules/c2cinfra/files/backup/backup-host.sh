@@ -11,7 +11,7 @@ host=$(hostname -s)
 lockfile="/var/run/backup.lock"
 ttl=124800 # 48h
 
-function _msg() {
+_msg() {
   echo "$1"
   curl -s -X POST -m 30 -d "{\"host\":\"${host}\",\"service\":\"offsite backup exit status\",\"state\":\"${2}\",\"description\":\"${1}\",\"ttl\":${ttl},\"tags\":[\"backups\"]}" $riemann_url > /dev/null
 }
