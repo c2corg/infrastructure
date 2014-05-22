@@ -62,6 +62,12 @@ class c2cinfra::containers {
         fssize => '15G',
       }
 
+      lxc::container { 'pkg.pse.infra.camptocamp.org':
+        ctid   => 125,
+        suite  => 'wheezy',
+        fssize => '6G',
+      }
+
     }
 
     'hn3': {
@@ -136,12 +142,6 @@ class c2cinfra::containers {
         ctid   => 55,
         suite  => 'wheezy',
         fssize => '2G',
-      }
-
-      lxc::container { 'pkg.pse.infra.camptocamp.org':
-        ctid   => 125,
-        suite  => 'wheezy',
-        fssize => '6G',
       }
 
       lxc::container { 'pm.pse.infra.camptocamp.org':

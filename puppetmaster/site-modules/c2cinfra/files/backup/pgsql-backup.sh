@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 BKPDIR="/var/backups/pgsql"
 BKPFMT="custom"
