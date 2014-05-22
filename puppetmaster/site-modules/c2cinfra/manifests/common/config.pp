@@ -12,6 +12,11 @@ options timeout:2 edns0
 '),
   }
 
+  file { '/etc/hostname':
+    ensure  => present,
+    content => "${::hostname}\n",
+  }
+
   file { "/etc/timezone":
     content => "Europe/Zurich\n",
     notify  => Exec["configure timezone"],
