@@ -68,6 +68,36 @@ class c2cinfra::containers {
         fssize => '6G',
       }
 
+      lxc::container { 'dev.pse.infra.camptocamp.org':
+        ctid   => 103,
+        suite  => 'wheezy',
+        fssize => '6G',
+      }
+
+      lxc::container { 'content-factory.pse.infra.camptocamp.org':
+        ctid   => 140,
+        suite  => 'squeeze',
+        fssize => '10G',
+      }
+
+      lxc::container { 'pre-prod.pse.infra.camptocamp.org':
+        ctid   => 141,
+        suite  => 'wheezy',
+        fssize => '15G',
+      }
+
+      lxc::container { 'lists.pse.infra.camptocamp.org':
+        ctid   => 102,
+        suite  => 'squeeze',
+        fssize => '3G',
+      }
+
+      lxc::container { 'msgbroker.pse.infra.camptocamp.org':
+        ctid   => 55,
+        suite  => 'wheezy',
+        fssize => '2G',
+      }
+
     }
 
     'hn3': {
@@ -120,54 +150,6 @@ class c2cinfra::containers {
         fssize => '38G',
       }
 
-      lxc::container { 'memcache1.pse.infra.camptocamp.org':
-        ctid   => 66,
-        suite  => 'wheezy',
-        fssize => '2G',
-      }
-
-      lxc::container { 'lists.pse.infra.camptocamp.org':
-        ctid   => 102,
-        suite  => 'squeeze',
-        fssize => '3G',
-      }
-
-      lxc::container { 'dnscache.pse.infra.camptocamp.org':
-        ctid   => 50,
-        suite  => 'wheezy',
-        fssize => '2G',
-      }
-
-      lxc::container { 'msgbroker.pse.infra.camptocamp.org':
-        ctid   => 55,
-        suite  => 'wheezy',
-        fssize => '2G',
-      }
-
-      lxc::container { 'pm.pse.infra.camptocamp.org':
-        ctid   => 101,
-        suite  => 'squeeze',
-        fssize => '6G',
-      }
-
-      lxc::container { 'dev.pse.infra.camptocamp.org':
-        ctid   => 103,
-        suite  => 'wheezy',
-        fssize => '6G',
-      }
-
-      lxc::container { 'content-factory.pse.infra.camptocamp.org':
-        ctid   => 140,
-        suite  => 'squeeze',
-        fssize => '10G',
-      }
-
-      lxc::container { 'pre-prod.pse.infra.camptocamp.org':
-        ctid   => 141,
-        suite  => 'wheezy',
-        fssize => '15G',
-      }
-
     }
 
     'hn6': {
@@ -210,6 +192,24 @@ class c2cinfra::containers {
         ctid   => 76,
         suite  => 'wheezy',
         fssize => '3G',
+      }
+
+      lxc::container { 'pm.pse.infra.camptocamp.org':
+        ctid   => 101,
+        suite  => 'squeeze',
+        fssize => '6G',
+      }
+
+      lxc::container { 'memcache1.pse.infra.camptocamp.org':
+        ctid   => 66,
+        suite  => 'wheezy',
+        fssize => '2G',
+      }
+
+      lxc::container { 'dnscache.pse.infra.camptocamp.org':
+        ctid   => 50,
+        suite  => 'wheezy',
+        fssize => '2G',
       }
 
       logical_volume { 'lxcdb1pgbackup': initial_size => '30G' } ->
