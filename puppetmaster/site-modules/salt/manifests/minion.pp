@@ -31,6 +31,7 @@ extension_modules: opt/salt_ext
   file { '/opt/salt_ext':
     ensure  => directory,
     source  => 'puppet:///modules/salt/salt_ext',
+    ignore  => '*.pyc',
     recurse => true,
     purge   => true,
     force   => true,
