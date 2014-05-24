@@ -4,15 +4,36 @@ class salt::minion {
 
   package { ['salt-minion', 'python-augeas', 'python-git']: ensure => present } ->
 
+  file { '/etc/salt/minion.d/':
+    ensure  => directory,
+    recurse => true,
+    purge   => true,
+    force   => true,
+    notify  => Service['salt-minion'],
+  } ->
+
   file { '/etc/salt/minion.d/minion.conf':
     ensure  => present,
-    content => "master: pm\nid: ${::hostname}\n",
+    content => "# file managed by puppet
+master: pm
+id: ${::hostname}
+extension_modules: opt/salt_ext
+",
     notify  => Service['salt-minion'],
   } ->
 
   file { '/etc/salt/grains':
     ensure  => present,
     content => template('salt/grains.erb'),
+    notify  => Service['salt-minion'],
+  } ->
+
+  file { '/opt/salt_ext':
+    ensure  => directory,
+    source  => 'puppet:///modules/salt/salt_ext',
+    recurse => true,
+    purge   => true,
+    force   => true,
     notify  => Service['salt-minion'],
   } ->
 
