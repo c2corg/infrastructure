@@ -111,13 +111,13 @@ class c2cinfra::containers {
         suite  => 'wheezy',
         fssize => '5G',
         cap_drop => ['mac_admin','mac_override','sys_module'],
-        extra_devices => ['b 254:5 rwm', 'b 254:6 rwm', 'b 254:7 rwm', 'b 254:2 rwm'],
+        extra_devices => ['b 254:2 rwm', 'b 254:3 rwm', 'b 254:4 rwm', 'b 254:6 rwm'],
       }
 
-      @@mknod { 'pgbackup': type => 'b', major => 254, minor => 5, tag => 'db0' }
-      @@mknod { 'pgxlog':   type => 'b', major => 254, minor => 6, tag => 'db0' }
-      @@mknod { 'pgdata':   type => 'b', major => 254, minor => 7, tag => 'db0' }
-      @@mknod { 'pglog':    type => 'b', major => 254, minor => 2, tag => 'db0' }
+      @@mknod { 'pgbackup': type => 'b', major => 254, minor => 2, tag => 'db0' }
+      @@mknod { 'pgxlog':   type => 'b', major => 254, minor => 3, tag => 'db0' }
+      @@mknod { 'pgdata':   type => 'b', major => 254, minor => 4, tag => 'db0' }
+      @@mknod { 'pglog':    type => 'b', major => 254, minor => 6, tag => 'db0' }
 
     }
 
