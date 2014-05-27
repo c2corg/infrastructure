@@ -18,6 +18,7 @@ defaults
   contimeout 5s
   clitimeout 50s
   srvtimeout 50s
+  errorfile  408 /dev/null # http://blog.haproxy.com/2014/05/26/haproxy-and-http-errors-408-in-chrome/
 
 frontend c2corg
   bind    *:80
