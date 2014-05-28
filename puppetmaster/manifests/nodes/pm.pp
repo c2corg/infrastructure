@@ -5,7 +5,6 @@ node 'pm' inherits 'base-node' {
 
   include puppet::server
   include salt::master
-  include c2cinfra::mcollective::client
   include buildenv::deb
 
   fact::register {

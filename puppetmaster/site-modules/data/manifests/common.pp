@@ -37,7 +37,6 @@ class data::common {
   $solr_db_user = "solr"
   $replication_db_user = "replication"
   $monit_db_user = "monitoring"
-  $mco_user = "mco"
 
   # All defined keys & passwords. Values used in production are stored on the
   # puppetmaster in /etc/puppet/hiera/
@@ -46,9 +45,6 @@ class data::common {
   $dev_db_pass = "password"
   $replication_db_pass = "password"
   $monit_db_pass = "password"
-
-  $mco_pass = "password"
-  $mco_psk  = "psk"
 
   $ml_db_pass = "password"
   $solr_db_pass = "password"
