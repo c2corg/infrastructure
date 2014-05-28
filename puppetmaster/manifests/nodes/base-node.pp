@@ -35,10 +35,7 @@ node 'base-node' {
     include puppet::client
     include c2cinfra::mcollective::node
     include c2cinfra::collectd::node
-
-    if ($::duty != 'prod') {
-      include salt::minion
-    }
+    include salt::minion
   }
 
   if $::virtual == 'lxc' {
