@@ -92,12 +92,6 @@ class c2cinfra::containers {
         fssize => '3G',
       }
 
-      lxc::container { 'msgbroker.pse.infra.camptocamp.org':
-        ctid   => 55,
-        suite  => 'wheezy',
-        fssize => '2G',
-      }
-
     }
 
     'hn3': {
