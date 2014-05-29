@@ -73,11 +73,9 @@ options timeout:2 edns0
   }
 
   if $::lsbdistcodename == 'wheezy' {
-
     file { '/etc/alternatives/ruby':
       ensure => link,
       target => '/usr/bin/ruby1.9.1',
-      notify => Service['mcollective'],
     }
   }
 
