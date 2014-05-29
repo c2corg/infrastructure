@@ -51,31 +51,4 @@ node 'base-node' {
   # manually run puppet.
   realize C2cinfra::Account::User['marc']
 
-  service { 'mcollective':
-    ensure    => stopped,
-  } ->
-
-  package { [
-    'mcollective',
-    'ruby-stomp',
-    'mcollective-client',
-    'mcollective-filemgr-client',
-    'mcollective-package-client',
-    'mcollective-puppet-client',
-    'mcollective-service-client',
-    'mcollective-filemgr-agent',
-    'mcollective-package-agent',
-    'mcollective-puppet-agent',
-    'mcollective-service-agent',
-    ]: ensure => purged,
-  }
-
-  cron { 'update mcollective facts.yaml':
-    user   => 'root',
-    ensure => absent,
-  } ->
-
-  file { ['/usr/local/sbin/update-facts-dot-yaml.sh', '/etc/mcollective/facts.yaml']:
-    ensure => absent,
-  }
 }
