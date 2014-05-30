@@ -2,7 +2,7 @@ class riemann::dash {
 
   include '::runit'
 
-  package { ['ruby-riemann-dash', 'ruby-sinatra', 'ruby-multi-json', 'ruby-erubis', 'ruby-sass']:
+  package { ['ruby-riemann-dash', 'ruby-sinatra', 'ruby-multi-json', 'ruby-erubis', 'ruby-sass', 'ruby-fog']:
     ensure => present,
   } ->
 
