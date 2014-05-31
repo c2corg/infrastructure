@@ -34,7 +34,7 @@ for line in output:
     elif re.match('^drive.+pos', key, flags=re.IGNORECASE):
       id = 'PD ' + val
 
-    if key in ['Firmware state', 'State', 'Media Error Count', 'Other Error Count', 'Predictive Failure Count']:
+    if key in ['Firmware state', 'State', 'Media Error Count', 'Predictive Failure Count']:
       event = {}
       event['host'] = HOST
       event['ttl'] = TTL
