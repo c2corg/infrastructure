@@ -32,4 +32,17 @@ class c2cinfra::hn::hn8 inherits c2cinfra::hn {
       value => "\"serial --speed=57600 --unit=0 --word=8 --parity=no --stop=1\"";
   }
 
+  resources { 'firewall':
+    purge => true,
+  }
+  class { 'firewall': }
+
+  nat::setup { "001 setup nat for private LAN":
+    iface => "eth1",
+    lan   => "192.168.192.0/24",
+  }
+
+  # apply all dynamically exported resources declared elsewhere
+  Nat::Fwd <<| tag == 'portfwd' |>>
+
 }
