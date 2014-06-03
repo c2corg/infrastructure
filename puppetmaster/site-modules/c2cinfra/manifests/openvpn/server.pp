@@ -17,6 +17,7 @@ class c2cinfra::openvpn::server {
     notify => Service['openvpn'],
   }
 
+  package { 'libpam-pwdfile': } ->
   file { '/etc/pam.d/c2corg-openvpn':
     before  => Service['openvpn'],
     content => '# file managed by puppet
