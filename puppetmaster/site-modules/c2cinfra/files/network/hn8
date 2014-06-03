@@ -5,6 +5,13 @@
 auto lo
 iface lo inet loopback
 
+# The primary network interface w/default gateway
+auto eth1
+iface eth1 inet static
+ address 128.179.66.13
+ netmask 255.255.255.0
+ gateway 128.179.66.1
+
 # internal network/vlan w/default gateway
 auto vlan192
 iface vlan192 inet manual
@@ -16,4 +23,8 @@ iface br0 inet static
   bridge_stp off
   address 192.168.192.9
   netmask 255.255.255.0
-  gateway 192.168.192.1
+
+auto br0:gw
+iface br0:gw inet static
+  address 192.168.192.1
+  netmask 255.255.255.0

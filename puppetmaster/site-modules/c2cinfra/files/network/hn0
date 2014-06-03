@@ -17,13 +17,6 @@ iface eth1 inet static
 	address 10.10.4.1
 	netmask 255.255.255.0
 
-# The primary network interface w/default gateway
-auto eth2
-iface eth2 inet static
-	address 128.179.66.13
-	netmask 255.255.255.0
-	gateway 128.179.66.1
-
 # internal network/vlan
 auto vlan192
 iface vlan192 inet manual
@@ -33,6 +26,7 @@ auto br0
 iface br0 inet static
   bridge_ports vlan192
   bridge_stp off
-  address 192.168.192.1
+  address 192.168.192.2
   netmask 255.255.255.0
+  gateway 192.168.192.1
 
