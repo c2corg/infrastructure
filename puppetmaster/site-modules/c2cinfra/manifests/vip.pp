@@ -12,7 +12,13 @@ class c2cinfra::vip {
     content => '#!/bin/sh
 # file managed by puppet
 
-/sbin/ifup eth1:ucarp
+( set -x
+  /sbin/ip addr add 128.179.66.23/24 dev eth1:ucarp
+  /sbin/ip ro add 128.179.66.0/24 dev eth1 src 128.179.66.23 table 66
+  /sbin/ip ro add default via 128.179.66.1 table 66
+  /sbin/ip rule add from 128.179.66.23 table 66
+  /usr/sbin/arping -c 3 -B -S 128.179.66.23 -i eth1
+) 2>&1 | logger -t vip-up
 ',
   }
   file { '/etc/network/vip-down.sh':
@@ -22,7 +28,10 @@ class c2cinfra::vip {
     content => '#!/bin/sh
 # file managed by puppet
 
-/sbin/ifdown eth1:ucarp
+( set -x
+  /sbin/ip rule del from 128.179.66.23 table 66
+  /sbin/ip addr del 128.179.66.23/24 dev eth1:ucarp
+) 2>&1 | logger -t vip-down
 ',
   }
 }
