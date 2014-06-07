@@ -3,7 +3,6 @@ apt-get -y update
 apt-get -y install linux-headers-$(uname -r) build-essential
 apt-get -y install zlib1g-dev libssl-dev libreadline-gplv2-dev
 apt-get -y install curl unzip
-apt-get clean
 
 # Set up sudo
 echo 'vagrant ALL=NOPASSWD:ALL' > /etc/sudoers.d/vagrant
@@ -12,7 +11,7 @@ echo 'vagrant ALL=NOPASSWD:ALL' > /etc/sudoers.d/vagrant
 echo 'UseDNS no' >> /etc/ssh/sshd_config
 
 # Remove 5s grub timeout to speed up booting
-echo <<EOF > /etc/default/grub
+cat <<EOF > /etc/default/grub
 # If you change this file, run 'update-grub' afterwards to update
 # /boot/grub/grub.cfg.
 
