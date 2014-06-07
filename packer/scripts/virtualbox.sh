@@ -20,6 +20,9 @@ if test -f .vbox_version ; then
   umount /mnt
   rm -f VBoxLinuxAdditions.iso
 
+  # workaround for https://github.com/mitchellh/vagrant/issues/3341 & https://www.virtualbox.org/ticket/12879
+  test -e /usr/lib/VBoxGuestAdditions || ln -s /opt/VBoxGuestAdditions*/lib/VBoxGuestAdditions /usr/lib/VBoxGuestAdditions
+
   # Start the newly build driver
   /etc/init.d/vboxadd start
 fi
