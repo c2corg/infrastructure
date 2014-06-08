@@ -18,7 +18,7 @@
         "keyboard-configuration/xkb-keymap=us <wait>",
         "<enter><wait>"
       ],
-      "disk_size": 10140,
+      "disk_size": 25350,
       "guest_os_type": "Debian_64",
       "headless": true,
       "http_directory": "http",
