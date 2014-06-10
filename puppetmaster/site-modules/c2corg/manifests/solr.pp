@@ -106,4 +106,15 @@ class c2corg::solr {
     ],
   }
 
+  sysctl::value {
+    'kernel.shmmax': value => '37019648';
+    'kernel.shmall': value => '2097152';
+  } ->
+
+  postgresql::server::config_entry {
+    'max_standby_archive_delay'  : value => '-1';
+    'max_standby_streaming_delay': value => '-1';
+    'max_connections'            : value => '200';
+  }
+
 }
