@@ -114,7 +114,7 @@ class c2corg::solr {
   postgresql::server::config_entry {
     'max_standby_archive_delay'  : value => '-1';
     'max_standby_streaming_delay': value => '-1';
-    'max_connections'            : value => '200';
+    'max_connections'            : value => '50';
   }
 
 }
