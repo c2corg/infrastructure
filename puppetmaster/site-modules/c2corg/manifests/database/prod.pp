@@ -26,6 +26,8 @@ class c2corg::database::prod inherits c2corg::database::common {
     'log_rotation_size'          : value => '0';
     'log_rotation_age'           : value => '60';
     'log_file_mode'              : value => '0644';
+    'log_temp_files'             : value => '0';
+    'log_lock_waits'             : value => 'on';
     'syslog_facility'            : ensure => absent;
   }
 
