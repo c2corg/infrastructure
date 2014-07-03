@@ -22,14 +22,14 @@ class c2corg::syslog::pgbadger {
     user    => 'nobody',
     minute  => '15',
     hour    => '00',
-    command => '/usr/bin/pgbadger -I -q /srv/logs/postgresql/csvlogs/pglog-$(/bin/date --date="yesterday" +\%d)-*.csv.gz -O /srv/logs/postgresql/reports/',
+    command => '/usr/bin/pgbadger -I -q /srv/logs/postgresql/csvlogs/pglog-$(/bin/date --date="yesterday" +\%d)-*.csv -O /srv/logs/postgresql/reports/',
   }
 
   cron { 'purge old pgsql raw logs':
     user    => 'logstash',
     minute  => '45',
     hour    => '00',
-    command => 'find /srv/logs/postgresql/csvlogs/ -type f -mtime +7 -delete',
+    command => 'find /srv/logs/postgresql/csvlogs/ -type f -mtime +3 -delete',
   }
 
   ::nginx::site { 'pgbadger':
