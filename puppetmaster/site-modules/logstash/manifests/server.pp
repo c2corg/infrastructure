@@ -1,6 +1,6 @@
 class logstash::server {
 
-  package { 'logstash': ensure => present } ->
+  package { ['logstash', 'logstash-contrib']: ensure => present } ->
 
   etcdefault { 'start logstash at boot':
     file  => 'logstash',
