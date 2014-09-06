@@ -120,6 +120,7 @@ unbind-key C-b
 bind-key a send-prefix  # C-a a sends literal C-a
 bind-key C-right next-window
 bind-key C-left previous-window
+bind-key C-space next-window
 bind-key / command-prompt "find-window %1"
 
 # toggle last window like screen
