@@ -125,6 +125,21 @@ output {
 ",
   }
 
+  collectd::config::chain { 'IgnoreTempTables':
+    type     => 'precache',
+    targets  => ['stop', 'write'],
+    matches  => ['regex'],
+    settings => '
+<Rule "ignore_pgsql_temp_tables">
+  <Match "regex">
+    Plugin "^postgresql$"
+    TypeInstance "pg_temp_.+_tmp_table"
+  </Match>
+  Target "stop"
+</Rule>
+',
+  }
+
   collectd::config::plugin { 'monitor postgres process':
     plugin   => 'processes',
     settings => 'Process postgres',
