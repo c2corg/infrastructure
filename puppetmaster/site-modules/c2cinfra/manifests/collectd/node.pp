@@ -25,7 +25,6 @@ class c2cinfra::collectd::node {
 
   collectd::plugin { [
     'processes',
-    'protocols',
     'users',
   ]: }
 
@@ -134,7 +133,6 @@ VerboseInterface "All"
       'contextswitch',
       'disk',
       'entropy',
-      'irq',
       'load',
       'lvm',
       'memory',
