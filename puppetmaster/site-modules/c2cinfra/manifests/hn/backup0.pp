@@ -2,6 +2,7 @@
 class c2cinfra::hn::backup0 inherits c2cinfra::hn {
 
   include hardware::raid::md
+  include hardware::raid::zfs
 
   collectd::config::plugin { 'ping home':
     plugin   => 'ping',
