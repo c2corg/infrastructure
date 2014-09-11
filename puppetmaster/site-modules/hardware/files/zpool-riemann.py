@@ -10,8 +10,8 @@ SERVER = argv[1]
 TTL    = int(argv[2])
 ZPOOL  = argv[3]
 
-zpool_list = [ 'zpool', 'list', '-H', '-o', 'health', ZPOOL]
-zpool_status = [ 'zpool', 'status', '-x', ZPOOL]
+zpool_list = [ '/sbin/zpool', 'list', '-H', '-o', 'health', ZPOOL]
+zpool_status = [ '/sbin/zpool', 'status', '-x', ZPOOL]
 
 def check(cmd, match):
   with Popen(cmd, stdout=PIPE, shell=False).stdout as stdout:
