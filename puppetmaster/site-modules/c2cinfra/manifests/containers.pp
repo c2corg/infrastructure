@@ -16,15 +16,7 @@ class c2cinfra::containers {
         ctid   => 70,
         suite  => 'squeeze',
         fstype => 'ext3',
-        fssize => '210G',
-      }
-
-      lxc::container { 'monit.pse.infra.camptocamp.org':
-        ensure => absent,
-        ctid   => 126,
-        suite  => 'squeeze',
-        fstype => 'ext3',
-        fssize => '120G',
+        fssize => '250G',
       }
 
       lxc::container { 'test-alex.pse.infra.camptocamp.org':
