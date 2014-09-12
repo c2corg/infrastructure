@@ -11,7 +11,7 @@ node 'test-alex' inherits 'base-node' {
   }
 
   c2cinfra::backup::dir {
-    ['/srv/www/camptocamp.org/']:
+    ['/srv/www/camptocamp.org/', '/home']:
   }
 
 }
