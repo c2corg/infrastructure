@@ -120,7 +120,13 @@ Tag "<%= r %>"
     collectd::config::plugin { 'setup netlink plugin':
       plugin   => 'netlink',
       settings => '
-VerboseInterface "All"
+Interface "lo"
+Interface "br0"
+Interface "tun0"
+VerboseInterface "eth0"
+VerboseInterface "eth1"
+VerboseInterface "eth2"
+VerboseInterface "eth3"
 ',
     }
   }
