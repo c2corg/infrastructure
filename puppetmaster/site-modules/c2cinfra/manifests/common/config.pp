@@ -44,7 +44,7 @@ options timeout:2 edns0
   }
 
   etcdefault {
-    'enable sysstat':  key => 'ENABLED', value => 'true';
+    'disable sysstat': key => 'ENABLED', value => 'false';
     'sysstat history': key => 'HISTORY', value => '30';
   }
 
