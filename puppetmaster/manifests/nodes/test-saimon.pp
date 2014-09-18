@@ -11,7 +11,7 @@ node 'test-saimon' inherits 'base-node' {
   }
 
   c2cinfra::backup::dir {
-    ['/srv/www/camptocamp.org/', '/home']:
+    ['/home']:
   }
 
 }
