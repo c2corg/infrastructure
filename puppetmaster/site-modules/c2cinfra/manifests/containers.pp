@@ -156,7 +156,7 @@ class c2cinfra::containers {
       lxc::container { 'metrics.pse.infra.camptocamp.org':
         ctid   => 127,
         suite  => 'wheezy',
-        fssize => '100G',
+        fssize => '120G',
       }
 
     }
