@@ -1,3 +1,5 @@
 puppetmaster/site-modules/c2corg/files/meteofrance/*.json
 puppetmaster/site-modules/c2corg/files/meteofrance/*.png
 puppetmaster/site-modules/c2corg/files/meteofrance/**/*.mo
+.vagrant/
+packer/packer_cache/

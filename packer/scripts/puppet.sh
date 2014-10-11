@@ -15,19 +15,20 @@ Pin: release l=C2corg, a=${suite}
 Pin-Priority: 1100
 EOF
 
-apt-get update && apt-get -y install puppet facter ruby-hiera ruby-hiera-puppet augeas-tools
+apt-get update && apt-get -y install puppet facter hiera augeas-tools
 
 cat << EOF > /etc/puppet/hiera.yaml
 ---
-:backends: - yaml
-           - puppet
-:hierarchy: - %{hostname}
-            - %{duty}
-            - %{datacenter}
-            - common
+:backends:
+  - yaml
+  - puppet
+:hierarchy:
+  - "%{hostname}"
+  - "%{duty}"
+  - "%{datacenter}"
+  - common
 :yaml:
     :datadir: /etc/puppet/hiera
-
 :puppet:
     :datasource: data
 EOF
