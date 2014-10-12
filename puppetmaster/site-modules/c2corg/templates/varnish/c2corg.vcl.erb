@@ -153,6 +153,9 @@ sub vcl_recv {
     set req.grace = 14d;
     return(lookup);
   }
+
+  /* normalize user agent in X-UA-Device header */
+  call detect_ua;
 }
 
 sub vcl_fetch {
@@ -198,17 +201,43 @@ sub vcl_fetch {
 
   set beresp.grace = 14d; // time to keep expired objects in cache
 
+  /* So, this is a bit conterintuitive. The backend creates content based on
+   * the normalized User-Agent, but we use Vary on X-UA-Device so Varnish will
+   * use the same cached object for all U-As that map to the same X-UA-Device.
+   * If the backend mentions that it has crafted special content based
+   * on the User-Agent, replace User-Agent by X-UA-Device so that we cache
+   * based on normalized value  */
+  if (req.http.X-UA-Device && beresp.http.Vary) {
+    set beresp.http.Vary = regsub(beresp.http.Vary, "User-Agent", "X-UA-Device");
+  }
+  /* ncomment the following line for debug */
+  //set beresp.http.X-UA-Device = req.http.X-UA-Device;
 }
 
 sub vcl_deliver {
-
-  // Add a header indicating hit/miss
+  /* Add a header indicating hit/miss */
   if (obj.hits > 0) {
     set resp.http.X-Cache = "HIT";
     set resp.http.X-Cache-Hits = obj.hits;
   } else {
     set resp.http.X-Cache = "MISS";
   }
+
+  /* To keep any caches in the wild from serving wrong content to client #2
+   * behind them, we need to transform the Vary on the way out */
+  if ((req.http.X-UA-Device) && (resp.http.Vary)) {
+    set resp.http.Vary = regsub(resp.http.Vary, "X-UA-Device", "User-Agent");
+  }
+}
+
+sub vcl_miss {
+  /* Override the User-Agent header before it is sent to the backend */
+  call override_ua;
+}
+
+sub vcl_pass {
+  /* Override the User-Agent header before it is sent to the backend */
+  call override_ua;
 }
 
 sub vcl_error {
@@ -220,3 +249,22 @@ sub vcl_error {
   }
 }
 
+sub detect_ua {
+  /* Some detection engine that set req.http.X-UA-Device */
+  if (req.http.User-Agent) {
+    if (req.http.User-Agent ~ "(?i)/(Mobile|Symbian|Nokia|SAMSUNG|BlackBerry|Mini|Android)/") {
+      set req.http.X-UA-Device = "Mobile-browser";
+    } else {
+      set req.http.X-UA-Device = "Standard-browser";
+    }
+  }
+}
+
+sub override_ua {
+  if (req.http.X-UA-Device) {
+    /* Override User-Agent with normalized value */
+    set bereq.http.User-Agent = req.http.X-UA-Device;
+    /* Send original value with X-UA-Device, just in case... */
+    set bereq.http.X-UA-Device = req.http.User-Agent;
+  }
+}
