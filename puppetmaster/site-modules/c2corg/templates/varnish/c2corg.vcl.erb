@@ -234,7 +234,7 @@ sub vcl_pass {
 sub detect_ua {
   /* Some detection engine that set req.http.X-UA-Device */
   if (req.http.User-Agent) {
-    if (req.http.User-Agent ~ "(?i)/(Mobile|Symbian|Nokia|SAMSUNG|BlackBerry|Mini|Android)/") {
+    if (req.http.User-Agent ~ "(Mobile|Symbian|Nokia|SAMSUNG|BlackBerry|Mini|Android)") {
       set req.http.X-UA-Device = "Mobile-browser";
     } else {
       set req.http.X-UA-Device = "Standard-browser";
