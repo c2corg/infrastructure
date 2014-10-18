@@ -1,12 +1,14 @@
 class c2corg::apacheconf::redirections {
 
-  /* redirect requests without www. Should be replaced by a Redirect rule */
+  /* redirect requests without www, or obsolete m.camptocamp.org
+     should be replaced by a Redirect rule */
 
   apache::directive { "avoid being indexed twice by search engines":
     vhost     => "camptocamp.org",
     directive => '
 RewriteEngine On
-RewriteCond %{HTTP_HOST} =camptocamp.org
+RewriteCond %{HTTP_HOST} =camptocamp.org [OR]
+RewriteCond %{HTTP_HOST} =m.camptocamp.org
 RewriteRule /(.*) http://www.camptocamp.org/$1 [R=301,L]
 '
   }
