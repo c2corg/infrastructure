@@ -92,15 +92,6 @@ sub vcl_recv {
          req.http.host ~ "(?i)^camptocamp\.org") {
     set req.backend = symfony;
 
-    /* redirect cookie-less mobile devices, else the redirection sent by
-     * symfony gets cached by varnish and sent to every cookie-less visitor
-     * (cf #752) */
-    if (!req.http.Cookie &&
-        req.http.host ~ "(?i)www\..*camptocamp\.org" &&
-        req.http.User-Agent ~ "(?i)Mobile|Symbian|Nokia|SAMSUNG|BlackBerry|Mini|Android") {
-      error 750 "Moved Temporarily";
-    }
-
     /* allow static content and RSS feeds to get served directly from cache */
     if (req.url ~ "^/static|/rss/|\.rss$|type=rss" ) {
       remove req.http.Cookie;
@@ -210,7 +201,7 @@ sub vcl_fetch {
   if (req.http.X-UA-Device && beresp.http.Vary) {
     set beresp.http.Vary = regsub(beresp.http.Vary, "User-Agent", "X-UA-Device");
   }
-  /* ncomment the following line for debug */
+  /* uncomment the following line for debug */
   //set beresp.http.X-UA-Device = req.http.X-UA-Device;
 }
 
@@ -238,15 +229,6 @@ sub vcl_miss {
 sub vcl_pass {
   /* Override the User-Agent header before it is sent to the backend */
   call override_ua;
-}
-
-sub vcl_error {
-  /* Mobile device redirection */
-  if (obj.status == 750) {
-    set obj.http.Location = "http://" + regsub(req.http.Host, "(?i)www", "m") + req.url;
-    set obj.status = 302;
-    return(deliver);
-  }
 }
 
 sub detect_ua {
