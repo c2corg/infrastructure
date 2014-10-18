@@ -4,12 +4,10 @@ class c2corg::apacheconf::content-factory inherits c2corg::apacheconf {
     aliases +> [
       $::hostname,
       "www.${::hostname}",
-      "m.${::hostname}",
       "s.${::hostname}",
       $::fqdn,
       "${::hostname}.dev.camptocamp.org",
       "www.${::hostname}.dev.camptocamp.org",
-      "m.${::hostname}.dev.camptocamp.org",
       "s.${::hostname}.dev.camptocamp.org",
     ],
   }
