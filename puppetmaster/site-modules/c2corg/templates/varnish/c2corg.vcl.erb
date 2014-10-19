@@ -81,15 +81,22 @@ sub vcl_recv {
   }
 
   /* backend definition */
-  if (req.http.host ~ "^(?i)s\..*camptocamp\.org") {
+
+  if (req.http.host ~ "(?i)^m\..*camptocamp\.org" ||
+      req.http.host ~ "(?i)^camptocamp\.org") {
+
+    /* camptocamp.org and m.camptocamp.org should be redirected to www.camptocamp.org */
+    error 750 "Moved Permanently";
+  }
+  
+  elsif (req.http.host ~ "(?i)^s\..*camptocamp\.org") {
     set req.backend = symfony;
 
     /* everything should get served directly from cache */
     remove req.http.Cookie;
   }
 
-  elsif (req.http.host ~ "(?i)(www|m)\..*camptocamp\.org" ||
-         req.http.host ~ "(?i)^camptocamp\.org") {
+  elsif (req.http.host ~ "(?i)^www\..*camptocamp\.org") {
     set req.backend = symfony;
 
     /* allow static content and RSS feeds to get served directly from cache */
@@ -99,11 +106,11 @@ sub vcl_recv {
 
   }
 
-  elsif (req.http.host ~ "^(?i)stats\..*camptocamp\.org") {
+  elsif (req.http.host ~ "(?i)^stats\..*camptocamp\.org") {
     set req.backend = stats;
   }
 
-  elsif (req.http.host ~ "^(?i)meta\..*camptocamp\.org") {
+  elsif (req.http.host ~ "(?i)^meta\..*camptocamp\.org") {
     set req.backend = meta;
 
     /* allow metaengine RSS to get cached */
@@ -113,11 +120,11 @@ sub vcl_recv {
 
   }
 
-  elsif (req.http.host ~ "^(?i)metaskirando\..*camptocamp\.org") {
+  elsif (req.http.host ~ "(?i)^metaskirando\..*camptocamp\.org") {
     set req.backend = metaskirando;
   }
 
-  elseif (req.http.host ~ "^(?i)((www\.)?skirando\.ch|(www\.)?escalade-online\.com)|(skirando|alpinisme|escalade)\.camptocamp\.com") {
+  elseif (req.http.host ~ "(?i)^((www\.)?skirando\.ch|(www\.)?escalade-online\.com)|(skirando|alpinisme|escalade)\.camptocamp\.com") {
     set req.backend = v4redirections;
   }
 
@@ -157,8 +164,7 @@ sub vcl_fetch {
     remove beresp.http.Set-Cookie;
   }
 
-  elsif (req.http.host ~ "(?i)(www|m)\..*camptocamp\.org" ||
-         req.http.host ~ "(?i)^camptocamp\.org") {
+  elsif (req.http.host ~ "(?i)^www\..*camptocamp\.org") {
     if (req.url ~ "^/static") {
       /* allow static content to get stored in cache, TTL in cache is defined
        * by headers sent from backend */
@@ -181,7 +187,7 @@ sub vcl_fetch {
     }
   }
 
-  elsif (req.http.host ~ "^(?i)meta\..*camptocamp\.org") {
+  elsif (req.http.host ~ "(?i)^meta\..*camptocamp\.org") {
 
     /* set metaengine RSS cache policy */
     if (req.url ~ "^/outings" ) {
@@ -229,6 +235,16 @@ sub vcl_miss {
 sub vcl_pass {
   /* Override the User-Agent header before it is sent to the backend */
   call override_ua;
+}
+
+sub vcl_error {
+  /* m. is obsolete and permanently redirected to www.
+   * we also check that camptocamp.org is redirected to www.camptocamp.org */
+  if (obj.status == 750) {
+    set obj.http.Location = "http://www." + regsub(req.http.host, "^m\.", "") + req.url;
+    set obj.status = 301;
+    return(deliver);
+  }
 }
 
 sub detect_ua {
