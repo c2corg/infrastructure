@@ -127,10 +127,13 @@ RailsAutoDetect Off
     'master/manifestdir': value => '/srv/infrastructure/puppetmaster/manifests';
     'master/manifest':    value => '/srv/infrastructure/puppetmaster/manifests/site.pp';
     # environments
-    'master/environments':  value => 'marc';
+    'master/environments':  value => 'marc xbrrr';
     'marc/modulepath':      value => '/home/marc/infrastructure/puppetmaster/modules:/home/marc/infrastructure/puppetmaster/site-modules';
     'marc/manifestdir':     value => '/home/marc/infrastructure/puppetmaster/manifests';
     'marc/manifest':        value => '/home/marc/infrastructure/puppetmaster/manifests/site.pp';
+    'xbrrr/modulepath':      value => '/home/xbrrr/infrastructure/puppetmaster/modules:/home/xbrrr/infrastructure/puppetmaster/site-modules';
+    'xbrrr/manifestdir':     value => '/home/xbrrr/infrastructure/puppetmaster/manifests';
+    'xbrrr/manifest':        value => '/home/xbrrr/infrastructure/puppetmaster/manifests/site.pp';
     # collected resources
     'master/storeconfigs':          value => true;
     'master/thin_storeconfigs':     value => false;
