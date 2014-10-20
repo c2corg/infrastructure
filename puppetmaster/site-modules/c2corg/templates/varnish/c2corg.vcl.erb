@@ -1,3 +1,5 @@
+import std;
+
 backend symfony {
   .host = "<%= @symfony_master_host %>";
   .port = "80";
@@ -243,6 +245,15 @@ sub vcl_error {
   if (obj.status == 750) {
     set obj.http.Location = "http://www." + regsub(req.http.host, "^m\.", "") + req.url;
     set obj.status = 301;
+    return(deliver);
+  }
+
+  /* backend is unavailable */
+  elsif (obj.status == 503) {
+    set obj.http.Content-Type = "text/html; charset=utf-8";
+    synthetic
+      std.fileread("/etc/varnish/503-guru.html") +
+      "<footer>Guru meditation: " + req.xid + "</footer></body></html>";
     return(deliver);
   }
 }
