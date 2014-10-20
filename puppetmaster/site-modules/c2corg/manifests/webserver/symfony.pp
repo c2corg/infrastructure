@@ -7,7 +7,7 @@ class c2corg::webserver::symfony {
   include postgresql::client
 
   apache::module { ['headers', 'expires']: }
-  package { ['php5-pgsql', 'php5-gd', 'php-pear']: }
+  package { ['php5-pgsql', 'php5-gd', 'php-pear', 'php5-solr']: }
   package { 'gettext': }
   package { 'imagemagick': }
   package { ['ruby-compass', 'node-uglify', 'optipng']: }
