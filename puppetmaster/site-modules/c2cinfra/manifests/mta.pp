@@ -13,4 +13,8 @@ class c2cinfra::mta {
     require => File['ca-certificates.crt'],
   }
 
+  postfix::config { 'smtpd_tls_mandatory_protocols':
+    value => '!SSLv2,!SSLv3',
+  }
+
 }

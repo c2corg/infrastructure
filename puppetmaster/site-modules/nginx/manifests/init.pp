@@ -24,4 +24,8 @@ class nginx ($package='nginx-full') {
     refreshonly => true,
   }
 
+  ::nginx::conf { 'force-tls':
+    content => 'ssl_protocols TLSv1 TLSv1.1 TLSv1.2;',
+  }
+
 }

@@ -46,7 +46,7 @@ RailsAutoDetect Off
     config_content => "
 <VirtualHost *:8140>
         SSLEngine on
-        SSLProtocol -ALL +SSLv3 +TLSv1
+        SSLProtocol ALL -SSLv2 -SSLv3
         SSLCipherSuite ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:-LOW:-SSLv2:-EXP
 
         SSLCertificateFile      /var/lib/puppet/ssl/certs/${::hostname}.pem
@@ -170,6 +170,15 @@ port = 8081
       'set database/node-ttl 30d',
       'set database/node-purge-ttl 30d',
       'set database/report-ttl 14d',
+    ],
+    notify  => Service['puppetdb'],
+  }
+
+  augeas { 'puppetdb jetty settings':
+    incl    => '/etc/puppetdb/conf.d/jetty.ini',
+    lens    => 'Rsyncd.lns',
+    changes => [
+      'set jetty/ssl-protocols "TLSv1, TLSv1.1, TLSv1.2"',
     ],
     notify  => Service['puppetdb'],
   }
