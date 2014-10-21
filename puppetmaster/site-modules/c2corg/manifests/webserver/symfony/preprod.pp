@@ -2,6 +2,7 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
 
   $sitename = "pre-prod.dev.camptocamp.org"
   $statsd_host = hiera('statsd_host')
+  $solr_host = hiera('solr_host')
   $www_db_user = hiera('www_db_user')
   $preprod_db_pass = hiera('preprod_db_pass')
   $preprod_gmaps_key = hiera('preprod_gmaps_key')
@@ -36,6 +37,7 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
     'DB_USER'               => '${www_db_user}',
     'DB_PASS'               => '${preprod_db_pass}',
     'STATSD_HOST'           => '${statsd_host}',
+    'SOLR_HOST'             => '${solr_host}',
     'SERVER_NAME'           => 'www.${sitename}',
     'MOBILE_VERSION_HOST'   => 'm.${sitename}',
     'CLASSIC_VERSION_HOST'  => 'www.${sitename}',

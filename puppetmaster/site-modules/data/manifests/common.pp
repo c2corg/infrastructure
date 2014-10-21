@@ -25,6 +25,7 @@ class data::common {
   $metaskirando_host     = '127.0.0.1'
   $v4redirections_host   = '127.0.0.1'
   $varnish_host          = '127.0.0.1'
+  $solr_host             = '127.0.0.1'
 
   $c2corg_vip = '128.179.66.23'
 

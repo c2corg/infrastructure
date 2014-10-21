@@ -12,5 +12,6 @@ class data::prod {
   $metaskirando_host     = '192.168.192.62'
   $v4redirections_host   = '192.168.192.62'
   $varnish_host          = '192.168.192.60'
+  $solr_host             = '192.168.192.76'
 
 }

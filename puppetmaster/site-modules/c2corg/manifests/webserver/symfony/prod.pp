@@ -5,6 +5,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
   $db_host = hiera('db_host')
   $db_port = hiera('db_port')
   $statsd_host = hiera('statsd_host')
+  $solr_host = hiera('solr_host')
   $www_db_user = hiera('www_db_user')
   $prod_db_pass = hiera('prod_db_pass')
   $advertising_admin = hiera('advertising_admin')
@@ -34,6 +35,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
     'DB_HOST'               => '${db_host}',
     'DB_PORT'               => '${db_port}',
     'STATSD_HOST'           => '${statsd_host}',
+    'SOLR_HOST'             => '${solr_host}',
     'SERVER_NAME'           => 'www.${sitename}',
     'MOBILE_VERSION_HOST'   => 'm.${sitename}',
     'CLASSIC_VERSION_HOST'  => 'www.${sitename}',
