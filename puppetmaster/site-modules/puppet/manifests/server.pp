@@ -140,7 +140,7 @@ RailsAutoDetect Off
     'master/storeconfigs_backend':  value => 'puppetdb';
     'master/dbadapter':             value => '', ensure => absent;
     # reporting
-    'master/reports': value => 'log,puppetdb,riemann,graphite';
+    'master/reports': value => 'puppetdb,riemann,graphite,log';
     # config_version
     'marc/config_version':  value => '/usr/bin/git --git-dir /home/marc/infrastructure/.git rev-parse --short master 2>/dev/null || echo unknown';
     'main/config_version':  value => '/usr/bin/git --git-dir /srv/infrastructure/.git rev-parse --short master 2>/dev/null || echo unknown';
