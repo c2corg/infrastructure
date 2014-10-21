@@ -15,9 +15,9 @@ defaults
   option     redispatch
   retries    3
   maxconn    2000
-  contimeout 5s
-  clitimeout 50s
-  srvtimeout 50s
+  timeout    connect 5s
+  timeout    client  50s
+  timeout    server  50s
   errorfile  408 /dev/null # http://blog.haproxy.com/2014/05/26/haproxy-and-http-errors-408-in-chrome/
 
 frontend c2corg
