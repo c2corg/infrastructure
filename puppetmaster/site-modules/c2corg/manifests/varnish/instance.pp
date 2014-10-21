@@ -13,10 +13,10 @@ class c2corg::varnish::instance {
   $metaskirando_host     = hiera('metaskirando_host')
   $v4redirections_host   = hiera('v4redirections_host')
 
-  file { '503-guru.html':
-    path   => '/etc/varnish/503-guru.html',
-    ensure => file,
-    source => 'puppet:///modules/c2corg/varnish/503-guru.html'
+  file { '/etc/varnish/503-guru.html':
+    ensure => present,
+    source => 'puppet:///modules/c2corg/varnish/503-guru.html',
+    before => Varnish::Instance[$::hostname],
   }
 
   case $::hostname {
