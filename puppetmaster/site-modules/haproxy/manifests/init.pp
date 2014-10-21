@@ -1,5 +1,13 @@
 class haproxy {
 
+  if $::lsbdistcodename == 'wheezy' {
+    apt::pin { 'haproxy_from_bpo':
+      packages => 'haproxy init-system-helpers',
+      release  => "${::lsbdistcodename}-backports",
+      priority => '1010',
+    }
+  }
+
   package { "haproxy":
     ensure => present,
     before => File["/etc/haproxy/haproxy.cfg"],
