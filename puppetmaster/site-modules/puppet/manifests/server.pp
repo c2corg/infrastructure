@@ -16,6 +16,7 @@ class puppet::server {
     priority => '1010',
   }
 
+  package { 'openjdk-7-jre-headless': } ->
   package { ['puppetmaster', 'puppetmaster-passenger', 'vim-puppet', 'puppet-lint', 'puppetdb', 'puppetdb-terminus']:
     ensure  => present,
   } ->
