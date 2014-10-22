@@ -2,6 +2,7 @@
 
 import bernhard
 import os, time
+from datetime import datetime
 from sys import argv
 from socket import gethostname
 
@@ -17,21 +18,24 @@ event['ttl'] = 7200
 event['tags'] = ['backups']
 
 if os.path.exists(STATEFILE):
-  timediff = time.time() - os.stat(STATEFILE).st_mtime
-  event['metric'] = int(timediff)
+  lastbackup = os.stat(STATEFILE).st_mtime
+  timediff = time.time() - lastbackup
 
   if timediff < 0:
     event['state'] = 'critical'
-    event['description'] = 'in the future, this is wrong!'
+    description = 'in the future, this is wrong!'
   elif 90000 < timediff < 180000: # 1d+1h, resp. 2d+2h
     event['state'] = 'warning'
-    event['description'] = 'older than 1 day'
+    description = 'older than 1 day'
   elif timediff > 180000:
     event['state'] = 'critical'
-    event['description'] = 'older than 2 days'
+    description = 'older than 2 days'
   else:
     event['state'] = 'ok'
-    event['description'] = 'within last 24h'
+    description = 'within last 24h'
+
+    event['description'] = "%s: %s" % (description, datetime.utcfromtimestamp(lastbackup).strftime("%Y-%m-%d %H:%m:%S"))
+
 
 else:
   event['description'] = 'no statefile found'
