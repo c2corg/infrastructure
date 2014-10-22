@@ -5,15 +5,18 @@ class lxc::host {
   # Ensure this matches what version is present in reprepro
   $livecfgver = '4.0~a8-1'
 
+  $kernelver = '3.16-0.bpo.2'
+
   package { ['lxc', 'lxctl', 'bridge-utils', 'debootstrap']: ensure => present }
 
+
   apt::pin { 'kernel_and_initramfs_from_bpo':
-    packages => 'linux-image-3.10-0.bpo.3-amd64 initramfs-tools',
+    packages => "linux-image-${kernelver}-amd64 initramfs-tools",
     release  => "${::lsbdistcodename}-backports",
     priority => '1010',
   }
 
-  package { 'linux-image-3.10-0.bpo.3-amd64': ensure => present }
+  package { "linux-image-${kernelver}-amd64": ensure => present }
 
   file { '/cgroup': ensure => directory }
 
