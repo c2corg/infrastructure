@@ -17,6 +17,7 @@ Unattended-Upgrade::Origins-Pattern {
 Dpkg::Options { "--force-confold"; }
 
 APT::Periodic::Unattended-Upgrade "1";
+APT::Periodic::Update-Package-Lists "1";
 
 Unattended-Upgrade::AutoFixInterruptedDpkg "false";
 Unattended-Upgrade::MinimalSteps "true";
