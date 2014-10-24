@@ -1,6 +1,7 @@
 # VM
-node 'logstash' inherits 'base-node' {
+node 'logstash' {
 
+  include c2cinfra::common
   include '::logstash::server'
   include '::nginx'
   include '::c2corg::syslog::pgbadger'

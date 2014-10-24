@@ -1,6 +1,7 @@
 # VM
-node 'stats' inherits 'base-node' {
+node 'stats' {
 
+  include c2cinfra::common
   realize C2cinfra::Account::User['saimon']
   realize C2cinfra::Account::User['xbrrr']
 

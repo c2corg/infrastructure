@@ -1,6 +1,7 @@
 # X3550 M3
-node 'hn4' inherits 'base-node' {
+node 'hn4' {
 
+  include c2cinfra::common
   include c2cinfra::hn::hn4
 
   class { 'lxc::host': } ->

@@ -1,6 +1,7 @@
 # VM
-node 'test-xbrrr' inherits 'base-node' {
+node 'test-xbrrr' {
 
+  include c2cinfra::common
   class { 'c2corg::dev::env::symfony':
     developer => 'xbrrr',
     rootaccess => false, # already has root access on every node

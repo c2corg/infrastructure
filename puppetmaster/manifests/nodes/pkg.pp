@@ -1,6 +1,7 @@
 # VM
-node 'pkg' inherits 'base-node' {
+node 'pkg' {
 
+  include c2cinfra::common
   include c2cinfra::reprepro
 
   fact::register {

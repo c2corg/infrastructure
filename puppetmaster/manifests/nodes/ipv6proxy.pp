@@ -1,6 +1,7 @@
 # xen VM hosted at gandi.net (46.226.111.1)
-node 'ipv6proxy' inherits 'base-node' {
+node 'ipv6proxy' {
 
+  include c2cinfra::common
   include c2corg::webserver::ipv6gw
 
   class { 'c2cinfra::openvpn::client':

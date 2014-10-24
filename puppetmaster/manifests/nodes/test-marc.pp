@@ -1,6 +1,7 @@
 # VM
-node 'test-marc' inherits 'base-node' {
+node 'test-marc' {
 
+  include c2cinfra::common
   class { 'c2corg::dev::env::plain':
     developer => 'marc',
     rootaccess => false, # already has root access on every node

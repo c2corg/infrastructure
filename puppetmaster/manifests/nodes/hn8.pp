@@ -1,6 +1,7 @@
 # PowerEdge 1950
-node 'hn8' inherits 'base-node' {
+node 'hn8' {
 
+  include c2cinfra::common
   include c2cinfra::hn::hn8
 
   class { 'lxc::host': } ->

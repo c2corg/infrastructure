@@ -1,6 +1,7 @@
 # PowerEdge 1850
-node 'hn5' inherits 'base-node' {
+node 'hn5' {
 
+  include c2cinfra::common
   include c2cinfra::hn::hn5
 
   include c2cinfra::vip

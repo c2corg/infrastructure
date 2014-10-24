@@ -1,6 +1,7 @@
 # VM
-node 'test-saimon' inherits 'base-node' {
+node 'test-saimon' {
 
+  include c2cinfra::common
   class { 'c2corg::dev::env::plain':
     developer => 'saimon',
   }

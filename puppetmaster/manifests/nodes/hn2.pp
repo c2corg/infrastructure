@@ -1,6 +1,7 @@
 # PowerEdge 2950
-node 'hn2' inherits 'base-node' {
+node 'hn2' {
 
+  include c2cinfra::common
   include c2cinfra::hn::hn2
 
   class { 'lxc::host': } ->

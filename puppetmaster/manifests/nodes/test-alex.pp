@@ -1,6 +1,7 @@
 # VM
-node 'test-alex' inherits 'base-node' {
+node 'test-alex' {
 
+  include c2cinfra::common
   class { 'c2corg::dev::env::symfony':
     developer => 'alex',
   }

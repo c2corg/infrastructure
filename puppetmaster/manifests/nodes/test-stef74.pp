@@ -1,6 +1,7 @@
 # VM
-node 'test-stef74' inherits 'base-node' {
+node 'test-stef74' {
 
+  include c2cinfra::common
   class { 'c2corg::dev::env::plain':
     developer => 'stef74',
   }

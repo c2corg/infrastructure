@@ -1,6 +1,7 @@
 # VM
-node 'pm' inherits 'base-node' {
+node 'pm' {
 
+  include c2cinfra::common
   realize C2cinfra::Account::User['xbrrr']
 
   include puppet::server

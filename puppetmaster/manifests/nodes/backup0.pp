@@ -1,6 +1,7 @@
 # hosted at ovh.net (91.121.221.105)
-node 'backup0' inherits 'base-node' {
+node 'backup0' {
 
+  include c2cinfra::common
   include c2cinfra::hn::backup0
   include c2cinfra::filesystem::backup0
   include c2cinfra::backup::server

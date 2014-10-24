@@ -1,6 +1,7 @@
 # VM
-node 'solr' inherits 'base-node' {
+node 'solr' {
 
+  include c2cinfra::common
   realize C2cinfra::Account::User['stef74']
 
   include c2corg::solr

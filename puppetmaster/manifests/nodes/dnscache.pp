@@ -1,6 +1,7 @@
 # VM
-node 'dnscache' inherits 'base-node' {
+node 'dnscache' {
 
+  include c2cinfra::common
   include unbound
 
   fact::register {

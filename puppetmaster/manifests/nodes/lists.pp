@@ -1,6 +1,7 @@
 # VM
-node 'lists' inherits 'base-node' {
+node 'lists' {
 
+  include c2cinfra::common
   #TODO: graph/monitor postfix & sympa
   #TODO: SPF headers
 

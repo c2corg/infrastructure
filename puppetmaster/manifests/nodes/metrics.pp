@@ -1,6 +1,7 @@
 # VM
-node 'metrics' inherits 'base-node' {
+node 'metrics' {
 
+  include c2cinfra::common
   include '::graphite::carbon'
   include '::graphite::webapp'
   include '::statsd::server::nodejs'

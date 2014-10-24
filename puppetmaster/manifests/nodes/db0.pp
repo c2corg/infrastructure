@@ -1,6 +1,7 @@
 # VM
-node 'db0' inherits 'base-node' {
+node 'db0' {
 
+  include c2cinfra::common
   include c2corg::database::prod
   include c2corg::database::replication::master
   include c2cinfra::filesystem::postgres91

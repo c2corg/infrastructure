@@ -1,6 +1,7 @@
 # ProLiant DL360 G4p
-node 'hn0' inherits 'base-node' {
+node 'hn0' {
 
+  include c2cinfra::common
   include c2cinfra::hn::hn0
 
   class { 'lxc::host': } ->

@@ -1,6 +1,7 @@
 # VM
-node 'www-failover' inherits 'base-node' {
+node 'www-failover' {
 
+  include c2cinfra::common
   realize C2cinfra::Account::User['alex']
   realize C2cinfra::Account::User['xbrrr']
   realize C2cinfra::Account::User['gottferdom']

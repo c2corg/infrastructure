@@ -1,6 +1,7 @@
 # VM
-node 'rproxy' inherits 'base-node' {
+node 'rproxy' {
 
+  include c2cinfra::common
   include c2corg::varnish::instance
 
   fact::register {

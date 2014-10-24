@@ -1,6 +1,7 @@
 # VM
-node 'dev' inherits 'base-node' {
+node 'dev' {
 
+  include c2cinfra::common
   include '::nginx'
   include '::c2cinfra::trac'
   include '::c2cinfra::wikiassoce'

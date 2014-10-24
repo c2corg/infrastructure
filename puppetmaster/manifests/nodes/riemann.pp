@@ -1,6 +1,7 @@
 # VM
-node 'riemann' inherits 'base-node' {
+node 'riemann' {
 
+  include c2cinfra::common
   include '::riemann::server'
   include '::riemann::dash'
 

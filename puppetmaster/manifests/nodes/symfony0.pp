@@ -1,6 +1,7 @@
 # VM
-node 'symfony0' inherits 'base-node' {
+node 'symfony0' {
 
+  include c2cinfra::common
   realize C2cinfra::Account::User['alex']
   realize C2cinfra::Account::User['xbrrr']
   realize C2cinfra::Account::User['gottferdom']

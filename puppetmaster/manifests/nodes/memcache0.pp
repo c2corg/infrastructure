@@ -1,6 +1,7 @@
 # VM
-node 'memcache0' inherits 'base-node' {
+node 'memcache0' {
 
+  include c2cinfra::common
   class {'memcached':
     max_memory => 32,
   }

@@ -1,6 +1,7 @@
 # VM
-node 'content-factory' inherits 'base-node' {
+node 'content-factory' {
 
+  include c2cinfra::common
   include c2corg::database::dev
 
   include c2corg::webserver::symfony::content-factory
