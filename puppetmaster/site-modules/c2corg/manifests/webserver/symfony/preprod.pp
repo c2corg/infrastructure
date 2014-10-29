@@ -45,6 +45,7 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
     'STATIC_BASE_URL'       => '//s.${sitename}',
     'GMAPS_KEY'             => '${preprod_gmaps_key}',
     'GEOPORTAIL_KEY'        => '${preprod_geoportail_key}',
+    'SOLR_ENABLE'           => '1'
   }
 %>
 export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
