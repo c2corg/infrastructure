@@ -40,6 +40,20 @@ class haproxy {
     notify  => Service["haproxy"],
   }
 
+  file { "/srv/sslcerts":
+    ensure => directory,
+  }
+
+  file { "/srv/sslcerts/camptocamp.org.pem":
+    ensure  => present,
+    owner   => "root",
+    group   => "root",
+    mode    => 0400,
+    content => hiera('haproxy_ssl_cert'),
+    notify  => Service["haproxy"],
+  }
+
+
   file { "/etc/rsyslog.d/zzz-haproxy.conf":
     ensure  => present,
     notify  => Service["syslog"],
