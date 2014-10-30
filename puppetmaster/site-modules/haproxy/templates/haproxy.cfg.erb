@@ -34,7 +34,7 @@ frontend c2corg
   capture response header Content-Type len 15
   capture response header X-Cache len 4
 
-frontend c2corg-https
+frontend c2corg_https
   bind    <%= @ipaddress_br0 %>:443 ssl no-sslv3 crt /srv/sslcerts/camptocamp.org.pem
   default_backend website
   #option  httpclose # prevent client-side keepalive

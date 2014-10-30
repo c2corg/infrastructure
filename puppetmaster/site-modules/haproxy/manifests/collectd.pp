@@ -18,6 +18,7 @@ Import haproxy
 <Module haproxy>
   Socket \"/var/run/haproxy.sock\"
   ProxyMonitor c2corg
+  ProxyMonitor c2corg_https
   ProxyMonitor website
 </Module>
 ",
