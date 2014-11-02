@@ -36,8 +36,6 @@ class c2corg::webserver::symfony::dev($developer) inherits c2corg::webserver::sy
     'DB_USER'               => '${www_db_user}',
     'DB_PASS'               => '${dev_db_pass}',
     'SERVER_NAME'           => 'www.${sitename}',
-    'MOBILE_VERSION_HOST'   => 'm.${sitename}',
-    'CLASSIC_VERSION_HOST'  => 'www.${sitename}',
   }
 %>
 export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'

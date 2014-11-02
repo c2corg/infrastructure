@@ -10,7 +10,6 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
   $prod_db_pass = hiera('prod_db_pass')
   $advertising_admin = hiera('advertising_admin')
   $ganalytics_key = hiera('ganalytics_key')
-  $mobile_ganalytics_key = hiera('mobile_ganalytics_key')
   $metaengine_key = hiera('metaengine_key')
   $prod_gmaps_key = hiera('prod_gmaps_key')
   $prod_geoportail_key = hiera('prod_geoportail_key')
@@ -37,15 +36,12 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
     'STATSD_HOST'           => '${statsd_host}',
     'SOLR_HOST'             => '${solr_host}',
     'SERVER_NAME'           => 'www.${sitename}',
-    'MOBILE_VERSION_HOST'   => 'm.${sitename}',
-    'CLASSIC_VERSION_HOST'  => 'www.${sitename}',
     'STATIC_HOST'           => 's.${sitename}',
     'STATIC_BASE_URL'       => '//s.${sitename}',
     'SMTP'                  => '${smtp_server}',
     'ADVERTISING_RW_DIR'    => '${advertising_rw_dir}',
     'ADVERTISING_ADMIN'     => '${advertising_admin}',
     'GANALYTICS_KEY'        => '${ganalytics_key}',
-    'MOBILE_GANALYTICS_KEY' => '${mobile_ganalytics_key}',
     'METAENGINE_KEY'        => '${metaengine_key}',
     'GMAPS_KEY'             => '${prod_gmaps_key}',
     'GEOPORTAIL_KEY'        => '${prod_geoportail_key}',

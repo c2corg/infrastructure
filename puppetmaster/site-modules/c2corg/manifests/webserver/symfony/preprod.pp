@@ -39,8 +39,6 @@ class c2corg::webserver::symfony::preprod inherits c2corg::webserver::symfony {
     'STATSD_HOST'           => '${statsd_host}',
     'SOLR_HOST'             => '${solr_host}',
     'SERVER_NAME'           => 'www.${sitename}',
-    'MOBILE_VERSION_HOST'   => 'm.${sitename}',
-    'CLASSIC_VERSION_HOST'  => 'www.${sitename}',
     'STATIC_HOST'           => 's.${sitename}',
     'STATIC_BASE_URL'       => '//s.${sitename}',
     'GMAPS_KEY'             => '${preprod_gmaps_key}',
