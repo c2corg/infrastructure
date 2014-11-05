@@ -27,4 +27,9 @@ class sympa($dbhost, $dbport, $dbtype, $dbname, $dbuser, $dbpwd, $hname, $listma
     require => [File["/etc/sympa/sympa.conf"], Package['libdbd-pg-perl']],
   }
 
+  collectd::config::plugin { 'monitor sympa':
+    plugin   => 'processes',
+    settings => 'ProcessMatch "sympa" "/usr/bin/perl.*/usr/lib/sympa"',
+  }
+
 }
