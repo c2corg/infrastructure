@@ -95,7 +95,7 @@ true()                     smtp,smime,md5   -> reject
   }
 
   Mailalias {
-    recipient => 'marc.fournier+slf@camptocamp.org,lionel.besson@gmail.com',
+    recipient => 'lionel.besson@gmail.com',
     notify    => Exec["newaliases"],
   }
 
