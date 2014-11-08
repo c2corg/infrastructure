@@ -102,49 +102,36 @@ true()                     smtp,smime,md5   -> reject
     hname      => $hname,
   }
 
-  #sympa::list { "avalanche":
-  #  send_from  => "meteofrance_slf",
-  #  subject    => "bulletin avalanche SLF",
-  #  anon_name  => "Bulletin SLF",
-  #  listmaster => $listmaster,
-  #  hname      => $hname,
-  #}
-
-  #sympa::list { "avalanche.en":
-  #  send_from  => "meteofrance_slf",
-  #  subject    => "avalanche bulletin SLF",
-  #  anon_name  => "SLF bulletin",
-  #  listmaster => $listmaster,
-  #  hname      => $hname,
-  #}
-
-  #sympa::list { "lawinen":
-  #  send_from  => "meteofrance_slf",
-  #  subject    => "Lawinenbulletin SLF",
-  #  anon_name  => "Lawinenbulletin SLF",
-  #  listmaster => $listmaster,
-  #  hname      => $hname,
-  #}
-
-  #sympa::list { "valanghe":
-  #  send_from  => "meteofrance_slf",
-  #  subject    => "bollettino valanghe SLF",
-  #  anon_name  => "Bollettino SLF",
-  #  listmaster => $listmaster,
-  #  hname      => $hname,
-  #}
-
-  Mailalias {
-    recipient => 'lionel.besson@gmail.com',
-    notify    => Exec["newaliases"],
+  sympa::list { "avalanche":
+    send_from  => "meteofrance_slf",
+    subject    => "bulletin avalanche SLF",
+    anon_name  => "Bulletin SLF",
+    listmaster => $listmaster,
+    hname      => $hname,
   }
 
-  mailalias {
-    ['avalanche-owner', 'avalanche',
-     'lawinen-owner', 'lawinen',
-     'valanghe-owner', 'valanghe',
-     'avalanche.en-owner', 'avalanche.en',
-    ]: ensure    => absent,
+  sympa::list { "avalanche.en":
+    send_from  => "meteofrance_slf",
+    subject    => "avalanche bulletin SLF",
+    anon_name  => "SLF bulletin",
+    listmaster => $listmaster,
+    hname      => $hname,
+  }
+
+  sympa::list { "lawinen":
+    send_from  => "meteofrance_slf",
+    subject    => "Lawinenbulletin SLF",
+    anon_name  => "Lawinenbulletin SLF",
+    listmaster => $listmaster,
+    hname      => $hname,
+  }
+
+  sympa::list { "valanghe":
+    send_from  => "meteofrance_slf",
+    subject    => "bollettino valanghe SLF",
+    anon_name  => "Bollettino SLF",
+    listmaster => $listmaster,
+    hname      => $hname,
   }
 
 }
