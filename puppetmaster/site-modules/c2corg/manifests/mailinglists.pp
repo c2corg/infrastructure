@@ -37,6 +37,7 @@ true()                                               smtp,smime,md5    -> reject
   }
 
   sympa::scenari { "slf":
+    ensure => absent,
     content => '
 match([sender],/@slf\.ch$/)         smtp              -> do_it
 true()                              smtp,smime,md5    -> reject
@@ -44,6 +45,14 @@ true()                              smtp,smime,md5    -> reject
   }
 
   sympa::scenari { "meteofrance":
+    ensure => absent,
+    content => '
+match([sender],/nobody@lists.*\.camptocamp\.org$/)    smtp              -> do_it
+true()                                          smtp,smime,md5    -> reject
+',
+  }
+
+  sympa::scenari { "meteofrance_slf":
     content => '
 match([sender],/nobody@lists.*\.camptocamp\.org$/)    smtp              -> do_it
 true()                                          smtp,smime,md5    -> reject
