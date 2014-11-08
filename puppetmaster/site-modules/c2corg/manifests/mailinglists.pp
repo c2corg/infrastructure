@@ -94,11 +94,42 @@ true()                     smtp,smime,md5   -> reject
     anon_name  => "Institut Geologic de Catalunya",
     listmaster => $listmaster,
     hname      => $hname,
-
   }
 
   c2corg::mailinglists::meteofrance {[
     '04','05','06','09','2a','2b','31','38','64','65','66','73','74','andorre']:
+    listmaster => $listmaster,
+    hname      => $hname,
+  }
+
+  sympa::list { "avalanche":
+    send_from  => "meteofrance_slf",
+    subject    => "bulletin avalanche SLF",
+    anon_name  => "Bulletin SLF",
+    listmaster => $listmaster,
+    hname      => $hname,
+  }
+
+  sympa::list { "avalanche.en":
+    send_from  => "meteofrance_slf",
+    subject    => "avalanche bulletin SLF",
+    anon_name  => "SLF bulletin",
+    listmaster => $listmaster,
+    hname      => $hname,
+  }
+
+  sympa::list { "lawinen":
+    send_from  => "meteofrance_slf",
+    subject    => "Lawinenbulletin SLF",
+    anon_name  => "Lawinenbulletin SLF",
+    listmaster => $listmaster,
+    hname      => $hname,
+  }
+
+  sympa::list { "valanghe":
+    send_from  => "meteofrance_slf",
+    subject    => "bollettino valanghe SLF",
+    anon_name  => "Bollettino SLF",
     listmaster => $listmaster,
     hname      => $hname,
   }
@@ -113,7 +144,7 @@ true()                     smtp,smime,md5   -> reject
      'lawinen-owner', 'lawinen',
      'valanghe-owner', 'valanghe',
      'avalanche.en-owner', 'avalanche.en',
-    ]: ensure    => present,
+    ]: ensure    => absent,
   }
 
 }
