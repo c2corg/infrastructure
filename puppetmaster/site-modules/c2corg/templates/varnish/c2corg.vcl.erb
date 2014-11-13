@@ -156,6 +156,11 @@ sub vcl_recv {
 
   /* normalize user agent in X-UA-Device header */
   call detect_ua;
+
+  /* refuse https traffic */
+  if (req.http.X-Forwarded-Proto == "https" && req.url != "/login") {
+    error 403 "Not yet";
+  }
 }
 
 sub vcl_fetch {
