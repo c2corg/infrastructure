@@ -157,9 +157,11 @@ sub vcl_recv {
   /* normalize user agent in X-UA-Device header */
   call detect_ua;
 
-  /* refuse https traffic */
-  if (req.http.X-Forwarded-Proto == "https" && req.url != "/login") {
-    error 403 "Not yet";
+  /* refuse https traffic, excepet for login on c2c
+   * we don't specify backend though, so that it should still work
+   * even if we are on failover */
+  if (req.http.X-Forwarded-Proto == "https" && !(req.url == "/login" && req.request == "POST")) {
+    error 403 "C2C is not available on https yet";
   }
 }
 
