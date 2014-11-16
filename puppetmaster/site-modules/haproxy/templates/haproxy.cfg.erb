@@ -5,6 +5,7 @@ global
   group haproxy
   stats socket /var/run/haproxy.sock user haproxy group haproxy
   daemon
+  tune.ssl.lifetime 600
   # cipher suite and dh param from http://mozilla.github.io/server-side-tls/ssl-config-generator/
   # with intermediate profile
   tune.ssl.default-dh-param 2048
