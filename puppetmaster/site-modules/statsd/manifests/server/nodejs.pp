@@ -40,6 +40,7 @@ class statsd::server::nodejs {
   graphitePort: 2003
 , graphiteHost: \"${riemann_host}\"
 , port: 8125
+, flushInterval: 30000
 }
 ",
   }
