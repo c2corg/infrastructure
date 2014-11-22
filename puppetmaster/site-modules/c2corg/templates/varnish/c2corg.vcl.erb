@@ -160,9 +160,9 @@ sub vcl_recv {
   /* refuse https traffic, excepet for login on c2c
    * we don't specify backend though, so that it should still work
    * even if we are on failover */
-  if (req.http.X-Forwarded-Proto == "https" && !(req.url == "/login" && req.request == "POST")) {
+  /*if (req.http.X-Forwarded-Proto == "https" && !(req.url == "/login" && req.request == "POST")) {
     error 403 "C2C is not available on https yet";
-  }
+  }*/
 }
 
 sub vcl_fetch {

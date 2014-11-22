@@ -46,7 +46,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
     'GMAPS_KEY'             => '${prod_gmaps_key}',
     'GEOPORTAIL_KEY'        => '${prod_geoportail_key}',
     'GEOPORTAIL_HTTPS_KEY'  => '${prod_https_geoportail_key}',
-    'HTTPS_LOGIN'           => 'true'
+    'HTTPS_LOGIN'           => 'false'
   }
 %>
 export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'

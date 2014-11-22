@@ -36,7 +36,7 @@ frontend c2corg
   capture response header X-Cache len 4
 
 frontend c2corg_https
-  bind    *:443 ssl no-sslv3 crt /srv/sslcerts/camptocamp.org.pem
+  bind    <%= @ipaddress_br0 %>:443 ssl no-sslv3 crt /srv/sslcerts/camptocamp.org.pem
   default_backend website
   #option  httpclose # prevent client-side keepalive
   timeout client 5000 # keep-alive on client-side
@@ -48,7 +48,7 @@ frontend c2corg_https
   capture response header X-Cache len 4
 
 backend website
-  #redirect scheme https if !{ ssl_fc } # make site https only
+  #redirect scheme https if !{ ssl_fc } # make site https only # to put in frontend
   balance roundrobin
   server  cache    <%= @varnish_host %>:80 check inter 5000 downinter 500 # active node
   server  main     <%= @symfony_master_host %>:80 check inter 5000 backup # 1st failover node
