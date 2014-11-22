@@ -13,7 +13,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
   $metaengine_key = hiera('metaengine_key')
   $prod_gmaps_key = hiera('prod_gmaps_key')
   $prod_geoportail_key = hiera('prod_geoportail_key')
-  $prod_https_geoportail_key hier('prod_https_geoportail_key')
+  $prod_https_geoportail_key = hiera('prod_https_geoportail_key')
 
   $advertising_rw_dir = "/srv/www/camptocamp.org/www-data/persistent/advertising"
 
