@@ -49,7 +49,7 @@ class haproxy {
     owner   => "root",
     group   => "root",
     mode    => 0400,
-    content => hiera('haproxy_startssl_cert'),
+    content => hiera('haproxy_ssl_cert'),
     notify  => Service["haproxy"],
   }
 
