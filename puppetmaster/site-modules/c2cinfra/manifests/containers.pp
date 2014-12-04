@@ -159,12 +159,6 @@ class c2cinfra::containers {
         fssize => '120G',
       }
 
-      lxc::container { 'camo.pse.infra.camptocamp.org':
-        ctid   => 83,
-        suite  => 'wheezy',
-        fssize => '2G',
-      }
-
     }
 
     'hn8': {
