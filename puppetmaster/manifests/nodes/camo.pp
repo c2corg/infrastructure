@@ -1,5 +1,9 @@
 # VM
-node 'camo' inherits 'base-node' {
+node 'camo' {
+
+  include c2cinfra::common
+
+  include c2corg::camo
   
   fact::register {
     'role': value => ['image proxy'];
