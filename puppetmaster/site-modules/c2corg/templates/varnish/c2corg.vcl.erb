@@ -169,9 +169,10 @@ sub vcl_recv {
 
 sub vcl_fetch {
 
-  if (req.http.host ~ "(?i)^s\..*camptocamp\.org") {
-    /* everything on s.camptocamp.org should be cached, TTL in cache is defined
-     * by headers sent from backend */
+  if (req.http.host ~ "(?i)^(s|camo)\..*camptocamp\.org") {
+    /* everything on s.camptocamp.org or camo.camptocamp.org
+     * should be cached, TTL in cache is defined by headers
+     * sent from backend */
     remove beresp.http.Set-Cookie;
   }
 
