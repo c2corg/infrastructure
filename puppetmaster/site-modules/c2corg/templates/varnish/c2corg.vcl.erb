@@ -81,7 +81,8 @@ backend v4redirections {
 
 sub vcl_recv {
 
-  if ( req.url == "/probe.txt" || req.url == "/status" ) {
+  if (req.url == "/probe.txt" ||
+      (req.http.host ~ "(?i)^camo\..*camptocamp\.org" && req.url == "/favicon.ico")) {
     // switch to eject varnish from haproxy
     error 200 "I am healthy";
     //error 502 "I am sick";
