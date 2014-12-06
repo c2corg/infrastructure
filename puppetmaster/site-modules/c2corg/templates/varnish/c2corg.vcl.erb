@@ -37,6 +37,11 @@ backend stats {
   .port = "8000";
 }
 
+backend camo {
+  .host = "<%= @camo_host %>";
+  .port = "8081";
+}
+
 backend meta {
   .host = "<%= @metac2c_host %>";
   .port = "80";
@@ -76,7 +81,7 @@ backend v4redirections {
 
 sub vcl_recv {
 
-  if ( req.url == "/probe.txt" ) {
+  if ( req.url == "/probe.txt" || req.url == "/status" ) {
     // switch to eject varnish from haproxy
     error 200 "I am healthy";
     //error 502 "I am sick";
@@ -110,6 +115,10 @@ sub vcl_recv {
 
   elsif (req.http.host ~ "(?i)^stats\..*camptocamp\.org") {
     set req.backend = stats;
+  }
+
+  elsif (req.http.host ~ "(?i)^camo\..*camptocamp\.org") {
+    set req.backend = camo;
   }
 
   elsif (req.http.host ~ "(?i)^meta\..*camptocamp\.org") {

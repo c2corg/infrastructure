@@ -12,6 +12,7 @@ class c2corg::varnish::instance {
   $metac2c_host          = hiera('metac2c_host')
   $metaskirando_host     = hiera('metaskirando_host')
   $v4redirections_host   = hiera('v4redirections_host')
+  $camo_host             = hiera('camo_host')
 
   file { '/etc/varnish/503-guru.html':
     ensure => present,
