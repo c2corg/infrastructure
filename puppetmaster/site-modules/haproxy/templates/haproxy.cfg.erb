@@ -37,7 +37,11 @@ frontend c2corg
 
 frontend c2corg_https
   bind    *:443 ssl no-sslv3 crt /srv/sslcerts/camptocamp.org.pem
+
+  acl is_camo hdr_end(host) -i camo.camptocamp.org
+  use_backend camo if is_camo
   default_backend website
+
   #option  httpclose # prevent client-side keepalive
   timeout client 5000 # keep-alive on client-side
   option  forwardfor header X-Origin-IP # avoid messing around with X-Forwarded-For #678
@@ -54,6 +58,13 @@ backend website
   server  main     <%= @symfony_master_host %>:80 check inter 5000 backup # 1st failover node
   server  failover <%= @symfony_failover_host %>:80 check inter 5000 backup # 2nd failover node
   option  httpchk HEAD /probe.txt HTTP/1.1\r\nHost:\ www.camptocamp.org
+  option  http-server-close # no keep-alive on server-side
+
+backend camo
+  balance roundrobin
+  server  varnish <%= @varnish_host %>:80 check inter 5000 downinter 500 # use varnish by default
+  server  camo    <%= @camo_host %>:8081 check inter 5000 backup # fallback directly to camo if varnish is down
+  option  httpchk HEAD /probe.txt HTTP/1.1\r\nHost:\ camo.camptocamp.org
   option  http-server-close # no keep-alive on server-side
 
 listen stats *:8008
