@@ -49,7 +49,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
     'GEOPORTAIL_KEY'        => '${prod_geoportail_key}',
     'GEOPORTAIL_HTTPS_KEY'  => '${prod_https_geoportail_key}',
     'USE_CAMO'              => 'true',
-    'CAMO_KEY'              => '${camo_key'},
+    'CAMO_KEY'              => '${camo_key}',
     'HTTPS_LOGIN'           => 'false'
   }
 %>
