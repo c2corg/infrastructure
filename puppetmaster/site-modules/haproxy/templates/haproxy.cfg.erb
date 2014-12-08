@@ -26,44 +26,37 @@ defaults
   errorfile  408 /dev/null # http://blog.haproxy.com/2014/05/26/haproxy-and-http-errors-408-in-chrome/
 
 frontend c2corg
-  bind    *:80
-  default_backend website
-  #option  httpclose # prevent client-side keepalive
-  timeout client 5000 # keep-alive on client-side
-  option  forwardfor header X-Origin-IP # avoid messing around with X-Forwarded-For #678
-  capture request  header Host len 4
-  capture response header Content-Type len 15
-  capture response header X-Cache len 4
+  bind *:80
+  bind *:443 ssl no-sslv3 crt /srv/sslcerts/camptocamp.org.pem
 
-frontend c2corg_https
-  bind    *:443 ssl no-sslv3 crt /srv/sslcerts/camptocamp.org.pem
+  reqadd   X-Forwarded-Proto:\ https if { ssl_fc }
+  reqadd   X-Forwarded-Proto:\ http if !{ ssl_fc }
 
   acl is_camo hdr_end(host) -i camo.camptocamp.org
   use_backend camo if is_camo
   default_backend website
 
-  #option  httpclose # prevent client-side keepalive
-  timeout client 5000 # keep-alive on client-side
-  option  forwardfor header X-Origin-IP # avoid messing around with X-Forwarded-For #678
-  reqadd  X-Forwarded-Proto:\ https
-  # rspadd  Strict-Transport-Security:\ max-age=15768000 # enable HSTS
-  capture request  header Host len 4
-  capture response header Content-Type len 15
-  capture response header X-Cache len 4
+  #option   httpclose # prevent client-side keepalive
+  timeout  client 5000 # keep-alive on client-side
+  option   forwardfor header X-Origin-IP # avoid messing around with X-Forwarded-For #678
+  #rspadd   Strict-Transport-Security:\ max-age=15768000 # enable HSTS
+  #redirect scheme https code 301 if !{ ssl_fc } # make site https only 
+  capture  request header Host len 4
+  capture  response header Content-Type len 15
+  capture  response header X-Cache len 4
 
 backend website
-  #redirect scheme https if !{ ssl_fc } # make site https only # to put in frontend
   balance roundrobin
-  server  cache    <%= @varnish_host %>:80 check inter 5000 downinter 500 # active node
-  server  main     <%= @symfony_master_host %>:80 check inter 5000 backup # 1st failover node
+  server  cache    <%= @varnish_host %>:80          check inter 5000 downinter 500 # use varnish by default
+  server  main     <%= @symfony_master_host %>:80   check inter 5000 backup # 1st failover node
   server  failover <%= @symfony_failover_host %>:80 check inter 5000 backup # 2nd failover node
   option  httpchk HEAD /probe.txt HTTP/1.1\r\nHost:\ www.camptocamp.org
   option  http-server-close # no keep-alive on server-side
 
 backend camo
   balance roundrobin
-  server  varnish <%= @varnish_host %>:80 check inter 5000 downinter 500 # use varnish by default
-  server  camo    <%= @camo_host %>:8081 check inter 5000 backup # fallback directly to camo if varnish is down
+  server  cache <%= @varnish_host %>:80 check inter 5000 downinter 500 # use varnish by default
+  server  camo  <%= @camo_host %>:8081  check inter 5000 backup # failover node
   option  httpchk HEAD /probe.txt HTTP/1.1\r\nHost:\ camo.camptocamp.org
   option  http-server-close # no keep-alive on server-side
 
