@@ -3,7 +3,7 @@ class c2corg::camo {
   $camo_dir      = '/srv/camo'
   $camo_version  = 'v2.1.0'
   $camo_port     = '8081'
-  $camo_logging  = 'debug'
+  $camo_logging  = 'disabled'
   $camo_hostname = 'camo.camptocamp.org'
   $camo_key      = hiera('camo_key')
 
