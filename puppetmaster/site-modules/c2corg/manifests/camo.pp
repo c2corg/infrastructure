@@ -56,7 +56,7 @@ ${camo_dir}/log/camo.log {
   delaycompress
   missingok
   notifempty
-  create 644 root root 
+  create 644 c2corg c2corg 
 }",
     require => Package["logrotate"],
   }
