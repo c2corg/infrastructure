@@ -39,11 +39,19 @@ frontend c2corg
   #option   httpclose # prevent client-side keepalive
   timeout  client 5000 # keep-alive on client-side
   option   forwardfor header X-Origin-IP # avoid messing around with X-Forwarded-For #678
-  #rspadd   Strict-Transport-Security:\ max-age=15768000 # enable HSTS
-  #redirect scheme https code 301 if !{ ssl_fc } # make site https only 
   capture  request header Host len 4
   capture  response header Content-Type len 15
   capture  response header X-Cache len 4
+
+  # make site https only
+  #redirect scheme https code 301 if !{ ssl_fc }
+
+  # enable HSTS
+  #rspadd Strict-Transport-Security:\ max-age=15768000
+
+  # make sure we have secure cookies on https
+  #acl secured_cookie res.hdr(Set-Cookie),lower -m sub secure
+  #rspirep ^(set-cookie:.*) \1;\ Secure if { ssl_fc } !secured_cookie
 
 backend website
   balance roundrobin
