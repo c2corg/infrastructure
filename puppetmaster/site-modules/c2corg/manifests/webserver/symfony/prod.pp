@@ -50,7 +50,8 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
     'GEOPORTAIL_HTTPS_KEY'  => '${prod_https_geoportail_key}',
     'USE_CAMO'              => 'true',
     'CAMO_KEY'              => '${camo_key}',
-    'HTTPS_LOGIN'           => 'false'
+    'HTTPS_LOGIN'           => 'false',
+    'SOLR_ENABLE'           => '1'
   }
 %>
 export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
