@@ -44,6 +44,7 @@ server:
   chroot: ""
   root-hints: "/etc/unbound/named.cache"
   private-domain: "infra.camptocamp.org"
+  auto-trust-anchor-file: "/var/lib/unbound/root.key"
 remote-control:
   control-enable: yes
   control-interface: 127.0.0.1
