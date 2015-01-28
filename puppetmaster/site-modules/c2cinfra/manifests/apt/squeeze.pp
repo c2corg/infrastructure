@@ -28,4 +28,10 @@ class c2cinfra::apt::squeeze inherits c2cinfra::apt {
     content => 'APT::Default-Release "oldstable";', # warning: changing this can break the system !
   }
 
+  apt::source { 'debian-squeeze-lts':
+    location  => "${debmirror}/debian/",
+    release   => 'squeeze-lts',
+    repos     => 'main contrib non-free',
+  }
+
 }
