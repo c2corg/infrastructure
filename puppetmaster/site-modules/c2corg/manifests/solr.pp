@@ -40,7 +40,7 @@ class c2corg::solr {
       value => '0';
     'jetty8 java opts':
       key   => 'JAVA_OPTIONS',
-      value => "\"-Xmx256m -Djava.awt.headless=true -Dsolr.solr.home=/srv/solr-dih/ -Dc2corg.dbhost=${dbhost} -Dc2corg.dbuser=${dbuser} -Dc2corg.dbpass=${dbpass}\"";
+      value => "\"-Xmx512m -Djava.awt.headless=true -Dsolr.solr.home=/srv/solr-dih/ -Dc2corg.dbhost=${dbhost} -Dc2corg.dbuser=${dbuser} -Dc2corg.dbpass=${dbpass}\"";
     'bind jetty to all ifaces':
       key   => 'JETTY_HOST',
       value => '0.0.0.0';
