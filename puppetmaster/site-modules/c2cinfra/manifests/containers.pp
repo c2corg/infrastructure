@@ -178,7 +178,7 @@ class c2cinfra::containers {
       lxc::container { 'solr.pse.infra.camptocamp.org':
         ctid   => 76,
         suite  => 'wheezy',
-        fssize => '12G',
+        fssize => '15G',
       }
 
       lxc::container { 'camo.pse.infra.camptocamp.org':
