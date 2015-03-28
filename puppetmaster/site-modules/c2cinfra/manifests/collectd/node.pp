@@ -12,8 +12,10 @@ class c2cinfra::collectd::node {
   }
 
   collectd::config::global {
-    'FQDNLookup': value => 'false';
-    'Hostname':   value => "${::hostname}";
+    'FQDNLookup':           value => 'false';
+    'Hostname':             value => "${::hostname}";
+    'WriteQueueLimitHigh':  value => '10000';
+    'WriteQueueLimitLow':   value => '10000';
   }
 
   apt::pin { 'collectd_from_c2corg':
@@ -73,6 +75,7 @@ Tag "<%= r %>"
 <% end -%>
 <Node riemann>
   Host "<%= scope.function_hiera(["riemann_host"]) %>"
+  Protocol TCP
   TTLFactor 5.0
 </Node>
 '),
@@ -86,7 +89,7 @@ Tag "<%= r %>"
 <Node carbon>
   Host \"${carbon_host}\"
   Port \"2003\"
-  Protocol \"udp\"
+  Protocol \"tcp\"
   Prefix \"collectd.\"
 </Node>
 ",
