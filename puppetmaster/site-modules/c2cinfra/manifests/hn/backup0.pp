@@ -8,6 +8,7 @@ class c2cinfra::hn::backup0 inherits c2cinfra::hn {
     plugin   => 'ping',
     settings => '
 Host "128.179.66.1"
+Host "128.179.66.23"
 ',
   }
 
