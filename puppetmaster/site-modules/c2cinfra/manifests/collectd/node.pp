@@ -16,6 +16,7 @@ class c2cinfra::collectd::node {
     'Hostname':             value => "${::hostname}";
     'WriteQueueLimitHigh':  value => '10000';
     'WriteQueueLimitLow':   value => '10000';
+    'CollectInternalStats': value => 'true';
   }
 
   apt::pin { 'collectd_from_c2corg':
@@ -57,9 +58,9 @@ class c2cinfra::collectd::node {
   collectd::config::plugin { 'setup unixsock plugin':
     plugin   => 'unixsock',
     settings => '
-SocketFile "/var/run/collectd-unixsock"
-SocketGroup "root"
-DeleteSocket true
+      SocketFile "/var/run/collectd-unixsock"
+      SocketGroup "root"
+      DeleteSocket true
 ',
   }
 
@@ -67,8 +68,8 @@ DeleteSocket true
     plugin   => 'write_riemann',
     settings => inline_template('
 Tag collectd
-Tag "<%= @duty %>"
-Tag "<%= @lsbdistcodename %>"
+Attribute "duty" "<%= @duty %>"
+Attribute "distro" "<%= @lsbdistcodename %>"
 <% @role ||= "" -%>
 <% @role.split(",").each do |r| -%>
 Tag "<%= r %>"
@@ -95,41 +96,19 @@ Tag "<%= r %>"
 ",
   }
 
-  collectd::config::plugin { 'aggregate CPU metrics':
-    plugin   => 'aggregation',
-    settings => '
-<Aggregation>
-  Plugin "cpu"
-  Type "cpu"
-
-  SetPlugin "cpu"
-  SetPluginInstance "%{aggregation}"
-
-  GroupBy "Host"
-  GroupBy "TypeInstance"
-
-  CalculateSum true
-  CalculateAverage true
-  CalculateMinimum true
-  CalculateMaximum true
-</Aggregation>
-',
-  }
-
-
   if $::lsbdistcodename == 'squeeze' {
     collectd::plugin { 'interface': }
   } else {
     collectd::config::plugin { 'setup netlink plugin':
       plugin   => 'netlink',
       settings => '
-Interface "lo"
-Interface "br0"
-Interface "tun0"
-VerboseInterface "eth0"
-VerboseInterface "eth1"
-VerboseInterface "eth2"
-VerboseInterface "eth3"
+      Interface "lo"
+      Interface "br0"
+      Interface "tun0"
+      VerboseInterface "eth0"
+      VerboseInterface "eth1"
+      VerboseInterface "eth2"
+      VerboseInterface "eth3"
 ',
     }
   }
@@ -138,17 +117,58 @@ VerboseInterface "eth3"
   if $::manufacturer or $::datacenter == 'gandi' {
 
     collectd::plugin { [
-      'cpu',
       'contextswitch',
-      'disk',
       'entropy',
       'load',
       'lvm',
-      'memory',
-      'swap',
       'vmem',
     ]: }
+
+    collectd::config::plugin { 'cpu plugin config':
+      plugin   => 'cpu',
+      settings => '
+        ValuesPercentage true
+        ReportByState true
+        ReportByCpu false
+',
+    }
+
+    collectd::config::plugin { 'memory plugin config':
+      plugin   => 'memory',
+      settings => '
+        ValuesAbsolute   true
+        ValuesPercentage true
+',
+    }
+
+    collectd::config::plugin { 'swap plugin config':
+      plugin   => 'swap',
+      settings => '
+        ReportBytes      true
+        ValuesAbsolute   true
+        ValuesPercentage true
+',
+    }
+
+    collectd::config::plugin { 'disk plugin config':
+      plugin   => 'disk',
+      settings => '
+        UdevNameAttr "DM_NAME"
+',
+    }
+
   }
+
+  if (member(query_nodes('Service[ntp]'), $::fqdn)) {
+    collectd::config::plugin { 'ntpd plugin config':
+      plugin   => 'ntpd',
+      settings => '
+        ReverseLookups false
+        IncludeUnitID true
+',
+    }
+  }
+
 
   if ($::role !~ /lxc/) {
     # TODO: find a way to also run this plugin on LXC hosts

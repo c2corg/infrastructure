@@ -9,4 +9,6 @@ class hardware::raid::zfs {
     require => Class['riemann::client::python'],
   }
 
+  collectd::plugin { 'zfs_arc': }
+
 }
