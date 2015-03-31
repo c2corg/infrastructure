@@ -1,6 +1,6 @@
 class haproxy::collectd {
 
-  $path   = '/usr/lib/collectd'
+  $path   = '/usr/local/lib/python2.7/site-packages'
   $plugin = "${path}/haproxy.py"
 
   file { 'haproxy collectd plugin':
