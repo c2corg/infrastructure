@@ -25,7 +25,7 @@ class c2cinfra::apt::jessie inherits c2cinfra::apt {
   }
 
   Apt::Conf['default-release'] {
-    content => 'APT::Default-Release "testing";', # warning: changing this can break the system !
+    content => 'APT::Default-Release "stable";', # warning: changing this can break the system !
   }
 
 }

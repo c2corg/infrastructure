@@ -25,7 +25,7 @@ class c2cinfra::apt::squeeze inherits c2cinfra::apt {
   }
 
   Apt::Conf['default-release'] {
-    content => 'APT::Default-Release "oldstable";', # warning: changing this can break the system !
+    content => 'APT::Default-Release "oldoldstable";', # warning: changing this can break the system !
   }
 
   apt::source { 'debian-squeeze-lts':
