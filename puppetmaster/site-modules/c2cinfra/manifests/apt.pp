@@ -45,6 +45,23 @@ class c2cinfra::apt {
     repos     => 'main contrib non-free',
   }
 
+  apt::source { 'debian-jessie':
+    location  => "${debmirror}/debian/",
+    release   => 'jessie',
+    repos     => 'main contrib non-free',
+  }
+
+  apt::source { 'debian-jessie-security':
+    location  => "http://security.debian.org/",
+    release   => 'jessie/updates',
+    repos     => 'main contrib non-free',
+  }
+
+  apt::source { 'debian-jessie-proposed-updates':
+    location  => "${debmirror}/debian/",
+    release   => 'jessie-proposed-updates',
+    repos     => 'main contrib non-free',
+  }
 
   apt::source { 'c2corg':
     location  => "http://${pkgrepo}/c2corg/",
