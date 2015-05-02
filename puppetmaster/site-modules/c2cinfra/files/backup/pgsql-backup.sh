@@ -18,9 +18,3 @@ for i in `psql -U postgres -c "select datname from pg_database where datname <> 
 test -f $BKPDIR/pgsql_$DAY.tar.gz && rm $BKPDIR/pgsql_$DAY.tar.gz
 tar -C $TMPDIR -c -f $BKPDIR/pgsql_$DAY.tar `ls $TMPDIR`
 rm -fr $TMPDIR
-
-if [ $(date +%d) = "01" ]; then
-    test -f $BKPDIR/pgsql_$MONTH.tar.gz && rm $BKPDIR/pgsql_$MONTH.tar.gz
-    cp $BKPDIR/pgsql_$DAY.tar $BKPDIR/pgsql_$MONTH.tar
-fi
-
