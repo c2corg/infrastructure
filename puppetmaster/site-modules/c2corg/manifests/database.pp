@@ -83,12 +83,18 @@ class c2corg::database {
   }
 
   file {"${::postgresql::server::datadir}/server.key":
-    ensure  => link,
-    target  => '/etc/ssl/private/ssl-cert-snakeoil.key',
+    ensure  => file,
+    mode    => '0600',
+    owner   => 'postgres',
+    group   => 'postgres',
+    source  => 'file:///etc/ssl/private/ssl-cert-snakeoil.key',
   }
   file {"${::postgresql::server::datadir}/server.crt":
-    ensure  => link,
-    target  => '/etc/ssl/certs/ssl-cert-snakeoil.pem',
+    ensure  => file,
+    mode    => '0644',
+    owner   => 'postgres',
+    group   => 'postgres',
+    source  => 'file:///etc/ssl/certs/ssl-cert-snakeoil.pem',
   }
 
   $www_db_user  = hiera('www_db_user')
