@@ -64,7 +64,7 @@ class c2cinfra::containers {
       lxc::container { 'dev.pse.infra.camptocamp.org':
         ctid   => 103,
         suite  => 'wheezy',
-        fssize => '6G',
+        fssize => '8G',
       }
 
       lxc::container { 'content-factory.pse.infra.camptocamp.org':
