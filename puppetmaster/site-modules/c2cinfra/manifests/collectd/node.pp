@@ -19,10 +19,9 @@ class c2cinfra::collectd::node {
     'CollectInternalStats': value => 'true';
   }
 
-  apt::pin { 'collectd_from_c2corg':
+  apt::pin { 'collectd_from_bpo':
     packages => 'collectd collectd-core collectd-dbg collectd-dev collectd-utils libcollectdclient-dev libcollectdclient1',
-    label    => 'C2corg',
-    release  =>  "${::lsbdistcodename}",
+    release  => "${::lsbdistcodename}-backports",
     priority => '1010',
   }
 
