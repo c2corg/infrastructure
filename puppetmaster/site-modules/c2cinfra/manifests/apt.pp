@@ -193,10 +193,13 @@ APT::Install-Suggests "0";
   # used in 50unattended-upgrades.erb
   if ($::lsbdistrelease == 'testing') {
     $pattern = 'a=testing'
-    $extra = ''
+    $extra = []
   } else {
     $pattern = "n=${::lsbdistcodename}"
-    $extra = "o=Debian Backports,n=${::lsbdistcodename}-backports"
+    $extra = [
+      "o=Debian Backports,n=${::lsbdistcodename}-backports",
+      "o=Debian Backports,n=${::lsbdistcodename}-backports-sloppy"
+    ]
   }
 
   apt::conf { 'unattended-upgrades':

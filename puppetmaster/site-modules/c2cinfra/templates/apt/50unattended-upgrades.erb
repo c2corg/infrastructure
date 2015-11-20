@@ -2,8 +2,8 @@ Unattended-Upgrade::Origins-Pattern {
   "o=Debian,<%= @pattern %>";
   "o=Debian,<%= @pattern %>-updates";
   "o=Debian,<%= @pattern %>-proposed-updates";
-<% unless @extra.empty? -%>
-  "<%= @extra %>";
+<% @extra.each do |e| -%>
+  "<%= e %>";
 <% end -%>
 
   "o=Debian,n=<%= @lsbdistcodename %>,l=Debian-Security";
