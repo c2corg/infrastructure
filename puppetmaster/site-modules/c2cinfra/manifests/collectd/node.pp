@@ -19,9 +19,9 @@ class c2cinfra::collectd::node {
     'CollectInternalStats': value => 'true';
   }
 
-  apt::pin { 'collectd_from_bpo':
+  apt::pin { 'collectd_from_bpo_sloppy':
     packages => 'collectd collectd-core collectd-dbg collectd-dev collectd-utils libcollectdclient-dev libcollectdclient1',
-    release  => "${::lsbdistcodename}-backports",
+    release  => "${::lsbdistcodename}-backports-sloppy",
     priority => '1010',
   }
 

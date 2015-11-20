@@ -80,6 +80,14 @@ class c2cinfra::apt {
     }
   }
 
+  if ($::lsbdistrelease == 'wheezy') {
+    apt::source { 'debian-backports-sloppy':
+      location => "${debmirror}/debian/",
+      release  => "${::lsbdistcodename}-backports-sloppy",
+      repos    => 'main contrib non-free',
+    }
+  }
+
   # c2corg reprepro signing key
   apt::key { '6C074B04':
     key_source => "http://${pkgrepo}/pubkey.txt",
@@ -136,6 +144,12 @@ class c2cinfra::apt {
   apt::pin { 'backports':
     packages => '*',
     release  => "${::lsbdistcodename}-backports",
+    priority => '50',
+  }
+
+  apt::pin { 'backports-sloppy':
+    packages => '*',
+    release  => "${::lsbdistcodename}-backports-sloppy",
     priority => '50',
   }
 
