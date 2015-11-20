@@ -80,7 +80,7 @@ class c2cinfra::apt {
     }
   }
 
-  if ($::lsbdistrelease == 'wheezy') {
+  if ($::lsbdistcodename =~ /wheezy|squeeze/ ) {
     apt::source { 'debian-backports-sloppy':
       location => "${debmirror}/debian/",
       release  => "${::lsbdistcodename}-backports-sloppy",
