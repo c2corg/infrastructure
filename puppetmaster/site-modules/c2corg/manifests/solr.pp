@@ -32,7 +32,7 @@ class c2corg::solr {
   }
 
   package { ['openjdk-7-jdk', 'jetty8', 'solr']: } ->
-  package { ['libpostgresql-jdbc-java', 'libhsqldb-java', 'libderby-java']: } ->
+  package { ['libpostgresql-jdbc-java', 'libhsqldb-java', 'libderby-java', 'libslf4j-java', 'libcommons-logging-java', 'liblog4j1.2-java']: } ->
 
   etcdefault {
     'enable jetty8 at boot':
@@ -68,6 +68,12 @@ class c2corg::solr {
     ensure => link,
     target => "/opt/solr-${solr_version}/example/lib/ext",
     force  => true,
+  }
+
+  file { '/usr/share/jetty8/resources/log4j.properties':
+    ensure => present,
+    source => 'puppet:///modules/c2corg/solr/log4j.properties',
+    notify => Service['jetty8'],
   }
 
   vcsrepo { '/srv/solr-dih':
