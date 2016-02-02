@@ -11,6 +11,10 @@ class c2corg::apacheconf::prod inherits c2corg::apacheconf {
 ',
   }
 
+  Apache::Vhost["camptocamp.org"] {
+    accesslog_format => "%h %{X-Origin-IP}i %l %u %t \\\"%r\\\" %>s %b",
+  }
+
   if ($::hostname !~ /failover/) {
 
     # TODO: deduplicate this
