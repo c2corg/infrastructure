@@ -15,7 +15,6 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
   $prod_geoportail_key = hiera('prod_geoportail_key')
   $prod_https_geoportail_key = hiera('prod_https_geoportail_key')
   $camo_key = hiera('camo_key')
-  $donate_vads_prod_certificate = hiera('donate_vads_prod_certificate')
 
   $advertising_rw_dir = "/srv/www/camptocamp.org/www-data/persistent/advertising"
 
@@ -52,8 +51,7 @@ class c2corg::webserver::symfony::prod inherits c2corg::webserver::symfony {
     'USE_CAMO'              => 'true',
     'CAMO_KEY'              => '${camo_key}',
     'HTTPS_LOGIN'           => 'false',
-    'SOLR_ENABLE'           => '1',
-    'DONATE_VADS_PROD_CERTIFICATE' => '${donate_vads_prod_certificate}'
+    'SOLR_ENABLE'           => '1'
   }
 %>
 export C2CORG_VARS='<%= c2corg_vars.map{ |k,v| \"#{k}=#{v}\" }.join(';') %>'
