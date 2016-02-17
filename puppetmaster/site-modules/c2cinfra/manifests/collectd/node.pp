@@ -47,7 +47,6 @@ class c2cinfra::collectd::node {
       MountPoint "/dev/shm"
       MountPoint "/lib/init/rw"
       IgnoreSelected true
-      ReportReserved true
       ReportInodes true
       ValuesAbsolute true
       ValuesPercentage true
