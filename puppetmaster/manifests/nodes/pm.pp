@@ -5,8 +5,11 @@ node 'pm' {
   realize C2cinfra::Account::User['xbrrr']
 
   include puppet::server
-  include salt::master
   include buildenv::deb
+
+  service { 'salt-master':
+    ensure => stopped,
+  }
 
   fact::register {
     'role': value => ['puppetmaster', 'config management'];

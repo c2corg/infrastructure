@@ -33,7 +33,9 @@ class c2cinfra::common {
   else {
     include ::puppet::client
     include ::c2cinfra::collectd::node
-    include ::salt::minion
+    service { 'salt-minion':
+      ensure => stopped,
+    }
   }
 
   if $::virtual == 'lxc' {
