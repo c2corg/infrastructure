@@ -5,7 +5,7 @@ class lxc::host {
   # Ensure this matches what version is present in reprepro
   $livecfgver = '4.0~a8-1'
 
-  $kernelver = '3.16-0.bpo.2'
+  $kernelver = '3.16.0-0.bpo.4'
 
   package { ['lxc', 'lxctl', 'bridge-utils', 'debootstrap']: ensure => present }
 
