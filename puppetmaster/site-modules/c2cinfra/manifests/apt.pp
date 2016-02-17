@@ -163,7 +163,7 @@ class c2cinfra::apt {
   apt::conf { 'apt-cache-limit':
     ensure   => present,
     priority => '10',
-    content  => 'APT::Cache-Limit 60000000;',
+    content  => 'APT::Cache-Limit 120000000;',
   }
 
   apt::conf { 'default-release':
