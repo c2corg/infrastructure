@@ -10,8 +10,6 @@ Unattended-Upgrade::Origins-Pattern {
   "o=Debian,a=testing,l=Debian-Security";
 
   "l=C2corg,n=<%= @lsbdistcodename %>";
-
-  "l=Debian Salt Backporting,o=saltstack.com";
 };
 
 Dpkg::Options { "--force-confold"; }
