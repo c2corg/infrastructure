@@ -8,6 +8,7 @@ class c2cinfra::collectd::node {
       'md'        => '60',
       'entropy'   => '60',
       'ipmi'      => '60',
+      'uptime'    => '60',
     },
   }
 

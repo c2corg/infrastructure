@@ -49,6 +49,10 @@ retentions = 30s:1d,2m:7d,10m:21d,30m:5y
 pattern = ^collectd\..*\.ipmi
 retentions = 30s:1d,2m:7d,10m:21d,30m:5y
 
+[collectd_policy_uptime]
+pattern = ^collectd\..*\.uptime
+retentions = 30s:1d,2m:7d,10m:21d,30m:5y
+
 [collectd_policy_filecount]
 pattern = ^collectd\..*\.filecount-.*
 retentions = 5m:1d,15m:7d,60m:5y
