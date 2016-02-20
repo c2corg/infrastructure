@@ -22,7 +22,7 @@ class c2cinfra::containers {
       lxc::container { 'test-alex.pse.infra.camptocamp.org':
         ctid   => 201,
         suite  => 'squeeze',
-        fssize => '15G',
+        fssize => '18G',
       }
 
       lxc::container { 'test-xbrrr.pse.infra.camptocamp.org':
