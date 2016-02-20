@@ -33,8 +33,9 @@ class c2cinfra::common {
   else {
     include ::puppet::client
     include ::c2cinfra::collectd::node
-    service { 'salt-minion':
-      ensure => stopped,
+
+    package { ['salt-minion', 'salt-common']:
+      ensure => absent,
     }
   }
 

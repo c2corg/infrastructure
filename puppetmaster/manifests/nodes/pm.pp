@@ -7,8 +7,8 @@ node 'pm' {
   include puppet::server
   include buildenv::deb
 
-  service { 'salt-master':
-    ensure => stopped,
+  package { 'salt-master':
+    ensure => absent,
   }
 
   fact::register {
