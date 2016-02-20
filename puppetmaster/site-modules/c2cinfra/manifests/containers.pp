@@ -167,12 +167,6 @@ class c2cinfra::containers {
         fssize => '3G',
       }
 
-      lxc::container { 'logstash.pse.infra.camptocamp.org':
-        ctid   => 129,
-        suite  => 'wheezy',
-        fssize => '25G',
-      }
-
       lxc::container { 'solr.pse.infra.camptocamp.org':
         ctid   => 76,
         suite  => 'wheezy',

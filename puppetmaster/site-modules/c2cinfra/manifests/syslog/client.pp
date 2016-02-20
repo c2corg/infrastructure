@@ -1,7 +1,5 @@
 class c2cinfra::syslog::client {
 
-  $logstash_server = hiera('logstash_host')
-
   package { "syslog":
     name   => "rsyslog",
     ensure => present,
@@ -15,12 +13,7 @@ class c2cinfra::syslog::client {
 
   file { "local syslog config":
     path    => "/etc/rsyslog.d/remotelogs.conf",
-    ensure  => present,
-    content => inline_template('# file managed by puppet
-$SystemLogRateLimitInterval 0
-$MaxMessageSize 64k
-*.*    @<%= @logstash_server %>:5544;RSYSLOG_ForwardFormat
-'),
+    ensure  => absent,
     require => Package["syslog"],
     notify  => Service["syslog"],
   }
