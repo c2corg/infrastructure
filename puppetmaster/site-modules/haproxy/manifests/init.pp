@@ -55,9 +55,9 @@ class haproxy {
   }
 
 
-  file { "/etc/rsyslog.d/zzz-haproxy.conf":
+  file { '/etc/rsyslog.d/49-haproxy.conf':
     ensure  => present,
-    notify  => Service["syslog"],
+    notify  => Service['syslog'],
     content => '# file managed by puppet
 
 # enable local UDP syslog service, as haproxy runs chrooted
@@ -68,6 +68,11 @@ $UDPServerRun 514
 # localy discard logs coming from haproxy
 local1.* ~
 ',
+  }
+
+  file { '/etc/rsyslog.d/zzz-haproxy.conf':
+    ensure => absent,
+    notify => Service['syslog'],
   }
 
 }
