@@ -35,12 +35,15 @@ for probe in result:
 
   if probe['State'] == 'Nominal':
     event['state'] = 'ok'
+  elif probe['State'] == 'N/A':
+    event['state'] = 'ok'
   elif probe['State'] == 'Critical':
     event['state'] = 'critical'
   else:
     event['state'] = probe['State']
 
-  event['attributes'] = {'type': probe['Type'], 'status': probe['Event']}
+  event['attributes'] = {'type': probe['Type']}
+  event['description'] = probe['Event']
 
   if probe['Reading'] != 'N/A':
     event['metric'] = float(probe['Reading'])
