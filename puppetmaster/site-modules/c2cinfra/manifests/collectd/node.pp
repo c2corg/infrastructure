@@ -158,7 +158,7 @@ Tag "<%= r %>"
 
   }
 
-  if (member(query_nodes('Service[ntp]'), $::fqdn)) {
+  if (str2bool($::is_virtual) != true) {
     collectd::config::plugin { 'ntpd plugin config':
       plugin   => 'ntpd',
       settings => '
