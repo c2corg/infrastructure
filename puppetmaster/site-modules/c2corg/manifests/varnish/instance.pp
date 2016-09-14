@@ -41,13 +41,6 @@ class c2corg::varnish::instance {
       Apache::Listen <| title == '80' |> { ensure => absent }
       apache::listen { '127.0.0.1:80': ensure => present }
     }
-
-    test-marc: {
-      varnish::instance { $::hostname:
-        vcl_content => template('c2corg/varnish/c2corg.vcl.erb'),
-        storage     => ["file,/var/lib/varnish/${::hostname}/varnish_storage.bin,512M"],
-      }
-    }
   }
 
   if $::lsbdistcodename == 'squeeze' {

@@ -31,12 +31,6 @@ class c2cinfra::containers {
         fssize => '15G',
       }
 
-      lxc::container { 'test-marc.pse.infra.camptocamp.org':
-        ctid   => 203,
-        suite  => 'squeeze',
-        fssize => '15G',
-      }
-
       lxc::container { 'test-stef74.pse.infra.camptocamp.org':
         ctid   => 204,
         suite  => 'wheezy',
