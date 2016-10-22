@@ -24,8 +24,8 @@ define c2cinfra::account::user ($ensure=present, $user, $account, $groups=[]) {
       c2cinfra::ssh::userkey { "$name on $account":
         account => $account,
         user    => $user,
-        type    => "dss",
-        key     => "AAAAB3NzaC1kc3MAAACBAPxBNSR4YKDNmE3Mob7SInQOLg2Qr/ZLUqAwyXxYTagx9itC1fSuG2BZzTUF61iF3uQN57bzaduq9PY4MmkgbtW2AdDVeV3mbh5L4AxBWGJx/6rp7mJeRkVt9ve3P4APton8djhoDY1YbwzusVALtZlvNDnO3Y9skgte0GJ4en/3AAAAFQCMCrNEPeIfTDlLAJHqVwxR28aKHwAAAIEArJwQx4G5K3LiK+SltbzOR+hwmJARADOVy58/TR+q4ITjLQVWQ/iMov0S6KCXv/yJ4DtombwkVFyTkVbMN6mh9PpOixlAs7Azyam8OeP94JF/g6jgAylZa0OEdzSPeKnD3dYrr3s187oKZ4imuhPKQabMQqu/0eB8QS/kZfpRv00AAACBAKkhTfegNtwTq5hPKRfLUr/vZkpLriW/vw8lFaTC+x6QesLDxX+JaE0c/+DjKtxQHhFeQCTTuLKwr7zR5Ejbtz64ssAMiAeZEO/i3WmywHTwxe4BisGC+gaGLr9u45ml3zskquc1oXEiRdi6ttKZAfb7TetjOSC1oCzRoZMoqZTe",
+        type    => "rsa",
+        key     => "AAAAB3NzaC1yc2EAAAADAQABAAACAQDPuy8DB/1Qu7bpWwFnOzhcFDbHCqS4+lMWh1szlZQPi7PL7lU3T09F9yHLg8F7CbkZ1jCpenOJ+t1xjZQAGHLsPrp5SUA0aKBY1D0gef2VNVoSLgzkSSjGtbeJ0xlb4HgUBbkplbm63NmJEqvLvLBZ6Uw94ztsZiMMF2N2fP3D/zIywuOcKMtKeYFmRvbZSkxlh3xLPq1Mlgn2lk4cUQIlghiwx98ymuqiBfA8kY4/sd7Xum0lSDM2aSVXbQ3qQ3uIGOgb8oIkNQvI+wRxUgE5RYUOUdm8UMfvWLjSdu5zu5n3Dw0PXbsEsbTuOZ1t8T1wCbxblZDWC/DiMxSSTzO34JLDiv6Knd8qfdLe6IsW7jri/m3CZ5cQKmOZv8xlEOUywd0dOhVeKyEsjMyGtr6CjnsnMyB2QUVtmiFk3tJkCs355zx7YYRf7ARhIH9TA0/4a2KbOQy94NMEVXNE6gBCZ9E52toBhcEeTGt4ctRhI0d6fQoAb/ZFOtRT0gO9EfEhsQq+dIQIF2QyH8iiHVRNeAq6P83Pj9qXgIMrl691uTHArI2KNZS8CseQXyjEqthospDQ5DByFAE1OhydWdA8LFeBSPOprPr2e75PGSzxkWf8sRKv4+7cMPCrGWGGaYV/fVOIeJrHQs6hphJdQ4TWKRfBcqjJPOpH5WILLVqYCw==",
         require => User[$account],
       }
     }
