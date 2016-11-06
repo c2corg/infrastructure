@@ -174,11 +174,13 @@ class c2cinfra::apt {
 
   package { 'unattended-upgrades': ensure => present }
 
-  apt::pin { 'backported_unattended-upgrades_version':
-    packages => 'unattended-upgrades python-apt',
-    release  => "${::lsbdistcodename}",
-    label    => 'C2corg',
-    priority => '1100',
+  if ($::lsbdistcodename =~ /wheezy|squeeze/ ) {
+    apt::pin { 'backported_unattended-upgrades_version':
+      packages => 'unattended-upgrades python-apt',
+      release  => "${::lsbdistcodename}",
+      label    => 'C2corg',
+      priority => '1100',
+    }
   }
 
   apt::conf { 'avoid-installing-unnecessary-stuff':

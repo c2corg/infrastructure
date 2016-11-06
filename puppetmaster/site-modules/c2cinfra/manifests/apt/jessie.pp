@@ -1,5 +1,17 @@
 class c2cinfra::apt::jessie inherits c2cinfra::apt {
 
+  Apt::Source['debian-squeeze'] {
+    ensure => absent,
+  }
+
+  Apt::Source['debian-squeeze-security'] {
+    ensure => absent,
+  }
+
+  Apt::Source['debian-squeeze-proposed-updates'] {
+    ensure => absent,
+  }
+
   Apt::Pin['squeeze'] {
     priority => '50',
   }
