@@ -49,17 +49,27 @@ options timeout:2 edns0
   }
 
   if ($::virtual == 'physical') {
-    augeas { "disable ctrl-alt-delete":
-      incl    => '/etc/inittab',
-      lens    => 'Inittab.lns',
-      context => "/files/etc/inittab/*[action='ctrlaltdel']/",
-      changes => [
-        'set runlevels 12345',
-        "set process '/bin/echo ctrlaltdel disabled'"
-      ],
-      notify  => Exec['refresh init'],
+    if ($::lsbdistcodename != 'jessie') {
+      augeas { "disable ctrl-alt-delete":
+        incl    => '/etc/inittab',
+        lens    => 'Inittab.lns',
+        context => "/files/etc/inittab/*[action='ctrlaltdel']/",
+        changes => [
+          'set runlevels 12345',
+          "set process '/bin/echo ctrlaltdel disabled'"
+        ],
+        notify  => Exec['refresh init'],
+      }
     }
   }
+
+  if ($::lsbdistcodename == 'jessie') {
+    exec { 'systemctl-daemon-reload':
+      refreshonly => true,
+      command     => 'systemctl daemon-reload',
+    }
+  }
+
 
   # TODO: investigate this bug, this is silly
   # Gandi VMs have bad filemodes on /

@@ -35,6 +35,13 @@ Apache::Vhost::Ssl {
   mode  => '0755',
 }
 
+Service {
+  provider => $::lsbdistcodename ? {
+    'jessie' => 'systemd',
+    default  => undef,
+  }
+}
+
 # purge unmanaged users.
 resources { 'user':
   purge              => true,
