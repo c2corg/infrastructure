@@ -4,7 +4,12 @@ test -z $1 && exit 1
 test -z $2 && exit 1
 
 suite=$1
-repo="pkg.pse.infra.camptocamp.org"
+
+if [ "$(ip ro ls | awk '/^default/ { print $3 }')" = "192.168.192.1" ]; then
+  repo="pkg.pse.infra.camptocamp.org"
+else
+  repo="pkg.dev.camptocamp.org"
+fi
 
 echo "deb http://${repo}/c2corg/ ${suite} main" > /etc/apt/sources.list.d/c2corg.list
 
