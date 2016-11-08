@@ -49,6 +49,13 @@ class c2cinfra::reprepro {
     sign_with     => "pkgs@c2corg",
   }
 
+  reprepro::distribution { "jessie-c2corg":
+    repository  => "c2corg",
+    codename    => "jessie",
+    suite       => "jessie",
+    description => "c2corg jessie repository",
+  }
+
   reprepro::distribution { "wheezy-c2corg":
     repository  => "c2corg",
     codename    => "wheezy",
