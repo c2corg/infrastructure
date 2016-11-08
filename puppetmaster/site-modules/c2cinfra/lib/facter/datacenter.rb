@@ -16,6 +16,7 @@ else
         when /^95\.142/       then 'gandi'
         when /^46\.226\.111/  then 'gandi'
         when /^91\.121/       then 'ovh'
+        when /^159\.100/      then 'exoscale'
         else 'other'
       end
     end
