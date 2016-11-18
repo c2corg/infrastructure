@@ -3,7 +3,7 @@ class c2cinfra::common::packages {
   include gnupg
 
   package { [
-    "ack-grep", "arping", "at", "atop",
+    "ack-grep", "apt-transport-https", "arping", "at", "atop",
     "bash-completion", "bc", "bind9-host", "bsdmainutils", "bzr",
     "curl", "cron", "cvs",
     "dc", "debian-goodies", "dnsutils",
