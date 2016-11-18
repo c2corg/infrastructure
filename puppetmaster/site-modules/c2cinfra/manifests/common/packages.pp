@@ -37,4 +37,10 @@ class c2cinfra::common::packages {
     }
   }
 
+  package { [
+    'cloud-init',
+    ]: ensure => purged,
+
+  }
+
 }
