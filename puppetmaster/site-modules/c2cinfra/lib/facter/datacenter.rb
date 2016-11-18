@@ -1,5 +1,11 @@
 vlan = Facter.value(:vlans)
-addr = Facter.value(:ipaddress)
+addr = if !Facter.value(:ipaddress_docker0).nil?
+         Facter.value(:ipaddress_eth0)
+       elsif !Facter.value(:ipaddress_br0).nil?
+         Facter.value(:ipaddress_br0)
+       else
+         Facter.value(:ipaddress)
+       end
 
 if vlan.is_a?(String) and vlan.split(',').include?('192')
   Facter.add('datacenter') do
