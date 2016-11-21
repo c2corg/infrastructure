@@ -1,5 +1,7 @@
 class docker {
 
+  include '::docker::logging'
+
   $docker_version = "1.12.3-0~${::lsbdistcodename}"
   $kernel_version = "4.7.0-0.bpo.1"
 
