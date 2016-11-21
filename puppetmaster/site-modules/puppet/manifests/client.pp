@@ -2,7 +2,7 @@ class puppet::client {
 
   # undo workaround for expired release files in snapshot.debian.org
   apt::conf { 'snapshot-validity':
-    ensure    => present,
+    ensure    => absent,
     priority  => '90',
     content   => 'Acquire::Check-Valid-Until "true";',
   }

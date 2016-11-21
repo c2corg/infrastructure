@@ -28,10 +28,24 @@ class c2cinfra::apt::squeeze inherits c2cinfra::apt {
     content => 'APT::Default-Release "oldoldstable";', # warning: changing this can break the system !
   }
 
+  Apt::Source['debian-backports'] {
+    ensure => absent,
+  }
+
+  Apt::Source['debian-backports-sloppy'] {
+    ensure => absent,
+  }
+
   apt::source { 'debian-squeeze-lts':
-    location  => "${debmirror}/debian/",
+    location  => 'http://archive.debian.org/debian',
     release   => 'squeeze-lts',
     repos     => 'main contrib non-free',
+  }
+
+  apt::conf { 'check-valid-until':
+    ensure   => present,
+    priority => '10',
+    content => 'Acquire::Check-Valid-Until false;',
   }
 
 }

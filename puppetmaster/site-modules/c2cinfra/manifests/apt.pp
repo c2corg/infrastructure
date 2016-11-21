@@ -10,18 +10,20 @@ class c2cinfra::apt {
   $pkgrepo = hiera('pkgrepo_host')
 
   apt::source { 'debian-squeeze':
-    location  => "${debmirror}/debian/",
+    location  => "http://archive.debian.org/debian/",
     release   => 'squeeze',
     repos     => 'main contrib non-free',
   }
 
   apt::source { 'debian-squeeze-security':
+    ensure    => absent,
     location  => "http://security.debian.org/",
     release   => 'squeeze/updates',
     repos     => 'main contrib non-free',
   }
 
   apt::source { 'debian-squeeze-proposed-updates':
+    ensure    => absent,
     location  => "${debmirror}/debian/",
     release   => 'squeeze-proposed-updates',
     repos     => 'main contrib non-free',
@@ -71,10 +73,7 @@ class c2cinfra::apt {
 
   if ($::lsbdistrelease != 'testing') {
     apt::source { 'debian-backports':
-      location => $::lsbdistcodename ? {
-        'squeeze' => 'http://backports.debian.org/debian-backports',
-        default   => "${debmirror}/debian/",
-      },
+      location  => "${debmirror}/debian/",
       release   => "${::lsbdistcodename}-backports",
       repos     => 'main contrib non-free',
     }
