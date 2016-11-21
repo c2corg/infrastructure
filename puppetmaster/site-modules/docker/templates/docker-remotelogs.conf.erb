@@ -1,0 +1,33 @@
+module(load="omrelp")
+module(load="mmjsonparse")
+module(load="imjournal" PersistStateInterval="100" StateFile="/var/spool/rsyslog/imjournal.state")
+
+template(name="JSONForwardFormatWithToken" type="string" string="<%%PRI%>%TIMESTAMP:::date-rfc3339% %HOSTNAME% %syslogtag:1:64% TOKEN@<%= @logging_token %> %$!all-json-plain%\n")
+
+ruleset(
+  name="forward"
+  queue.type="LinkedList"
+) {
+  action(type="mmjsonparse")
+  action(type="omrelp"
+         name="downstream"
+         target="<%= @logging_target %>"
+         template="JSONForwardFormatWithToken"
+         port="5515"
+         queue.type="LinkedList"
+         queue.filename="fwd_queue"
+         action.resumeretrycount="-1"
+         queue.dequeuebatchsize="100"
+         queue.saveonshutdown="on"
+         queue.discardseverity="8"
+         queue.timeoutenqueue="0"
+         queue.maxdiskspace="1g"
+         queue.highwatermark="8000"
+         queue.lowwatermark="2000"
+         queue.size="10000"
+         queue.discardmark="9750"
+         tls="on"
+  )
+}
+
+call forward
