@@ -20,9 +20,17 @@ class c2cinfra::collectd::node {
     'CollectInternalStats': value => 'true';
   }
 
-  apt::pin { 'collectd_from_bpo_sloppy':
+  apt::pin { 'collectd':
     packages => 'collectd collectd-core collectd-dbg collectd-dev collectd-utils libcollectdclient-dev libcollectdclient1',
-    release  => "${::lsbdistcodename}-backports-sloppy",
+    release  => $::lsbdistcodename ? {
+      'squeeze' => 'squeeze',
+      'wheezy'  => 'wheezy-backports-sloppy',
+      'jessie'  => 'jessie-backports',
+    },
+    label    => $::lsbdistcodename ? {
+      'squeeze' => 'C2corg',
+      default   => undef,
+    },
     priority => '1010',
   }
 
