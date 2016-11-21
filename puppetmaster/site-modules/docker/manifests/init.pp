@@ -22,7 +22,10 @@ class docker {
     release  => 'debian-jessie',
     repos    => 'main',
   } ->
-  file { '/etc/systemd/system/docker.service':
+  file { '/etc/systemd/system/docker.service.d/':
+    ensure => directory,
+  } ->
+  file { '/etc/systemd/system/docker.service.d/override.conf':
     ensure  => present,
     notify  => Exec['systemctl-daemon-reload'],
     content => '# file managed by puppet
