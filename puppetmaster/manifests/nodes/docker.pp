@@ -1,4 +1,4 @@
-# VM
+# exoscale VMs
 node /^docker.*/ {
 
   include c2cinfra::common

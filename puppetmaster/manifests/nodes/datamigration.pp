@@ -1,4 +1,4 @@
-# VM
+# exoscale VM
 node 'datamigration' {
 
   include c2cinfra::common

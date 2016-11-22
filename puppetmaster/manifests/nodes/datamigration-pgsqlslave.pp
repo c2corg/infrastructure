@@ -1,4 +1,4 @@
-# VM
+# exoscale VM
 node 'datamigration-pgsqlslave' {
 
   include c2cinfra::common
