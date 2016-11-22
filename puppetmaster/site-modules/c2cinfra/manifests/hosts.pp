@@ -9,6 +9,7 @@ class c2cinfra::hosts {
     'ipv6proxy' => 'ghst',
     'backup0'   => 'ovh',
     /^docker.*/ => 'exoscale',
+    /^datamigration.*/ => 'exoscale',
     default     => 'pse',
   }
 
