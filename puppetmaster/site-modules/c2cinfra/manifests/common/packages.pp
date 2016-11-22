@@ -4,7 +4,7 @@ class c2cinfra::common::packages {
 
   package { [
     "ack-grep", "apt-transport-https", "arping", "at", "atop",
-    "bash-completion", "bc", "bind9-host", "bsdmainutils", "bzr",
+    "bash-completion", "bc", "bind9-host", "binutils", "bsdmainutils", "bzr",
     "curl", "cron", "cvs",
     "dc", "debian-goodies", "dnsutils",
     "elinks", "emacs23-nox", "ethtool",
