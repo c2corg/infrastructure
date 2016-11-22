@@ -20,14 +20,14 @@ class docker::logging {
 
   file_line { 'rsyslog: disable imuxsock':
     path   => "/etc/rsyslog.conf",
-    match  => 'module.+load=.imuxsock.*',
+    match  => '(module.+load|\$ModLoad).+imuxsock.*',
     line   => '# module(load="imuxsock") # disabled',
     notify => Service['syslog'],
   }
 
   file_line { 'rsyslog: disable imklog':
     path   => "/etc/rsyslog.conf",
-    match  => 'module.+load=.imklog.*',
+    match  => '(module.+load|\$ModLoad).+imklog.*',
     line   => '# module(load="imklog") # disabled',
     notify => Service['syslog'],
   }
