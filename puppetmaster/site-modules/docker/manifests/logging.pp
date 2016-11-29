@@ -31,4 +31,14 @@ class docker::logging {
     line   => '# module(load="imklog") # disabled',
     notify => Service['syslog'],
   }
+
+  file_line { 'journald: disable syslog forwarding':
+    path => '/etc/systemd/journald.conf',
+    line => 'ForwardToSyslog=no',
+  } ~>
+  service { 'systemd-journald':
+    enable => true,
+    ensure => running,
+  }
+
 }
