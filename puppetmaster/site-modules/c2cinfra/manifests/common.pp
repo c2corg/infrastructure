@@ -32,7 +32,15 @@ class c2cinfra::common {
   }
   else {
     include ::puppet::client
-    include ::c2cinfra::collectd::node
+
+    # collectd installed inside a container on docker hosts
+    if ($::role != 'docker') {
+      include ::c2cinfra::collectd::node
+    } else {
+      package { ['collectd', 'collectd-core', 'collectd-utils', 'libcollectdclient1']:
+        ensure => purged,
+      }
+    }
 
     package { ['salt-minion', 'salt-common']:
       ensure => absent,

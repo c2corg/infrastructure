@@ -54,7 +54,7 @@ class puppet::client {
   }
 
   # TODO: find a way to also run this plugin on LXC hosts
-  if ($::role !~ /lxc/) {
+  if ($::role !~ /lxc|docker/) {
     collectd::config::plugin { 'monitor puppet agent':
       plugin   => 'processes',
       settings => 'ProcessMatch "puppetd" "/usr/bin/puppet agent"',
