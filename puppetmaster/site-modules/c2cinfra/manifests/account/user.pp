@@ -110,6 +110,16 @@ define c2cinfra::account::user ($ensure=present, $user, $account, $groups=[]) {
       }
     }
 
+    "tsauerwein": {
+      c2cinfra::ssh::userkey { "$name on $account":
+        account => $account,
+        user    => $user,
+        type    => "rsa",
+        key     => "AAAAB3NzaC1yc2EAAAADAQABAAABAQDz3sh3miHkWttWH3oHxKx4Psf8VKwUDbUC6vvMysz89rizhwgOJrH434gnxZn7jpu9hMgv4A0eGnZ+eZbHlYHxyM2f6R99sH7+RQpYoLuQltVXF3eY8+R+8KgR0pdMRTqgeMeyuOl8ZMFqLszl3j6zyxrrCatobt/lJnLTyhoIY4nG9HzO6rCrt5EaxlkIlLYUcEmXcFaYveyQG8h1q5MjU/BGYZf7j5j5Jmkap/1gd/BuL2dR7xZPqpuTMxF/dvgwCMao8DGKCreNwyEpAuzEgqJpY+k663/DPqKtoQ8nlDmbQTGBTocA1tHp9IVfEgmfjc9ogNlS9VOsrN+0aSIF",
+        require => User[$account],
+      }
+    }
+
     # the key is vagrant's official unsecure key:
     # https://github.com/mitchellh/vagrant/blob/master/keys/vagrant.pub
     "vagrant": {
