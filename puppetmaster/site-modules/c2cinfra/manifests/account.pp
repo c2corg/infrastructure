@@ -38,6 +38,14 @@ class c2cinfra::account {
       tag    => ['trempoline'],
       groups => ["adm", "www-data"];
 
+    "amorvan": user => "amorvan", account => "amorvan",
+      tag    => ['docker-compose'],
+      groups => ["adm"];
+
+    "tsauerwein": user => "tsauerwein", account => "tsauerwein",
+      tag    => ['docker-compose'],
+      groups => ["adm"];
+
     "c2corg": user => "c2corg", account => "c2corg",
       groups => ["adm", "www-data"];
 
