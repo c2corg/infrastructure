@@ -10,6 +10,7 @@ class c2cinfra::hosts {
     'backup0'   => 'ovh',
     /^docker.*/ => 'exoscale',
     /^datamigration.*/ => 'exoscale',
+    /^compose.*/ => 'exoscale',
     default     => 'pse',
   }
 
