@@ -7,47 +7,47 @@ class c2cinfra::account {
   @c2cinfra::account::user {
     "marc": user => "marc", account => "marc",
       tag    => ['trempoline','docker-compose'],
-      groups => ["adm", "www-data"];
+      groups => ["adm", "users", "www-data"];
 
     "alex": user => "alex", account => "alex",
       tag    => ['trempoline','docker-compose'],
-      groups => ["adm", "www-data"];
+      groups => ["adm", "users", "www-data"];
 
     "gottferdom": user => "gottferdom", account => "gottferdom",
       tag    => ['trempoline','docker-compose'],
-      groups => ["adm", "www-data"];
+      groups => ["adm", "users", "www-data"];
 
     "xbrrr": user => "xbrrr", account => "xbrrr",
       tag    => ['trempoline','docker-compose'],
-      groups => ["adm", "www-data"];
+      groups => ["adm", "users", "www-data"];
 
     "gerbaux": user => "gerbaux", account => "gerbaux",
-      groups => ["adm", "www-data"];
+      groups => ["adm", "users", "www-data"];
 
     "jose": user => "jose", account => "jose",
-      groups => ["adm", "www-data"];
+      groups => ["adm", "users", "www-data"];
 
     "bubu": user => "bubu", account => "bubu",
-      groups => ["adm", "www-data"];
+      groups => ["adm", "users", "www-data"];
 
     "saimon": user => "saimon", account => "saimon",
       tag    => ['trempoline'],
-      groups => ["adm", "www-data"];
+      groups => ["adm", "users", "www-data"];
 
     "stef74": user => "stef74", account => "stef74",
       tag    => ['trempoline'],
-      groups => ["adm", "www-data"];
+      groups => ["adm", "users", "www-data"];
 
     "amorvan": user => "amorvan", account => "amorvan",
       tag    => ['docker-compose'],
-      groups => ["adm"];
+      groups => ["adm", "users"];
 
     "tsauerwein": user => "tsauerwein", account => "tsauerwein",
       tag    => ['docker-compose'],
-      groups => ["adm"];
+      groups => ["adm", "users"];
 
     "c2corg": user => "c2corg", account => "c2corg",
-      groups => ["adm", "www-data"];
+      groups => ["adm", "users", "www-data"];
 
     "vagrant": user => "vagrant", account => "vagrant";
 
