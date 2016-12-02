@@ -6,19 +6,19 @@ class c2cinfra::account {
 
   @c2cinfra::account::user {
     "marc": user => "marc", account => "marc",
-      tag    => ['trempoline'],
+      tag    => ['trempoline','docker-compose'],
       groups => ["adm", "www-data"];
 
     "alex": user => "alex", account => "alex",
-      tag    => ['trempoline'],
+      tag    => ['trempoline','docker-compose'],
       groups => ["adm", "www-data"];
 
     "gottferdom": user => "gottferdom", account => "gottferdom",
-      tag    => ['trempoline'],
+      tag    => ['trempoline','docker-compose'],
       groups => ["adm", "www-data"];
 
     "xbrrr": user => "xbrrr", account => "xbrrr",
-      tag    => ['trempoline'],
+      tag    => ['trempoline','docker-compose'],
       groups => ["adm", "www-data"];
 
     "gerbaux": user => "gerbaux", account => "gerbaux",
