@@ -43,4 +43,8 @@ class c2cinfra::common::packages {
 
   }
 
+  if ($::datacenter == 'exoscale') {
+    package { 'cloud-initramfs-growroot': ensure => present }
+  }
+
 }
